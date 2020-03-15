@@ -17,5 +17,5 @@ public:
 	void Draw();	//ƒhƒ[
 	float x, y;
 private:
-
+	int stage;//‰¼
 };

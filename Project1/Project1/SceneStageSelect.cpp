@@ -37,6 +37,9 @@ void CSceneStageSelect::InitScene()
 	//SEî•ñ‚Ì“o˜^
 	Audio::LoadAudio(0, L"‘fŞ/BGM/rain1.wav", SOUND_TYPE::BACK_MUSIC);
 
+	//‰æ‘œî•ñ‚ğ“o˜^
+	Draw::LoadImageW(L"‘fŞ/‰¼/Stage”wŒi‰¼.png", 0, TEX_SIZE_2048);
+
 	Audio::Start(0);
 }
 

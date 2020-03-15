@@ -61,7 +61,7 @@
       <Filter>ソース ファイル\StageSelect</Filter>
     </ClInclude>
     <ClInclude Include="main.h">
-      <Filter>リソース ファイル</Filter>
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
