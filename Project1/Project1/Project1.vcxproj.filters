@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\StageSelect">
+      <UniqueIdentifier>{aad5ad1e-60a9-4943-a9b7-aa31e2b5fd4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameHead.h">
@@ -54,6 +57,12 @@
     <ClInclude Include="GameL\WinInputs.h">
       <Filter>リソース ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="SceneStageSelect.h">
+      <Filter>ソース ファイル\StageSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjStageSelect.h">
+      <Filter>ソース ファイル\StageSelect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -94,6 +103,12 @@
     </ClCompile>
     <ClCompile Include="GameL\WinInputs.cpp">
       <Filter>リソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneStageSelect.cpp">
+      <Filter>ソース ファイル\StageSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjStageSelect.cpp">
+      <Filter>ソース ファイル\StageSelect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
