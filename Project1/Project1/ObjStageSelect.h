@@ -4,7 +4,6 @@
 //使用するネームスペース
 using namespace GameL;
 
-//マクロ
 
 //オブジェクト：ステージセレクト
 class CObjStageSelect : public CObj

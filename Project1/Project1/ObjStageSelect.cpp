@@ -41,7 +41,7 @@ void CObjStageSelect::Action()
 		
 		if (Input::GetVKey('Z') == true)
 		{
-			for (int i = 0;i > 3;i++)
+			for (int i = 0;i < 3;i++)
 			{
 				if (stage == i)
 				{
@@ -50,6 +50,10 @@ void CObjStageSelect::Action()
 			}
 			
 		}
+	}
+	if (Input::GetVKey('X') == true)
+	{
+		;
 	}
 }
 
@@ -64,15 +68,15 @@ void CObjStageSelect::Draw()
 	RECT_F dst; //•`‰ææ•\Ž¦ˆÊ’u
 
 	//hoge1
-	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 1280.0f;
-	src.m_bottom = 720.0f;
+	src.m_top = ZERO_G;
+	src.m_left = ZERO_G;
+	src.m_right = HD_RIGIT;
+	src.m_bottom = HD_BUTTOM;
 
-	dst.m_top = 0.0f;
-	dst.m_left = 0.0f;
-	dst.m_right = 1280.0f;
-	dst.m_bottom = 720.0f;
+	dst.m_top = ZERO_G;
+	dst.m_left = ZERO_G;
+	dst.m_right = HD_RIGIT;
+	dst.m_bottom = HD_BUTTOM;
 	Draw::Draw(0, &src, &dst, c, 0.0f);
 
 	//hoge1
