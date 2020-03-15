@@ -35,7 +35,7 @@ void CSceneStageSelect::InitScene()
 	Objs::InsertObj(p, OBJ_STAGE_SELECT, 1);
 
 	//SEèÓïÒÇÃìoò^
-	Audio::LoadAudio(0, L"BGM/rain1.wav", SOUND_TYPE::BACK_MUSIC);
+	Audio::LoadAudio(0, L"ëfçﬁ/BGM/rain1.wav", SOUND_TYPE::BACK_MUSIC);
 
 	Audio::Start(0);
 }
