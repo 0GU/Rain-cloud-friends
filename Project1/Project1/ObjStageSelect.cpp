@@ -11,49 +11,66 @@
 
 void CObjStageSelect::Init()
 {
-	stage = 1;
+	stageflag = 1;
+	keyflag = true;
 }
 
 //アクション
 void CObjStageSelect::Action()
 {
-	if (Input::GetVKey(VK_RIGHT)==true)
+	if (Input::GetVKey(VK_RIGHT)==true&&keyflag==true)
 	{
-		if (stage == 3)
+		keyflag = false;
+		Audio::Start(1);
+		if (stageflag == 3)
 		{
 			;//何もしない
 		}
 		else
 		{
-			stage++;
+			stageflag+=1;
 		}
 	}
-	if (Input::GetVKey(VK_LEFT)==true)
+	 if (Input::GetVKey(VK_LEFT)==true&&keyflag==true)
 	{
-		if (stage == 1)
+		keyflag = false;
+		Audio::Start(1);
+		if (stageflag == 1)
 		{
 			;//何もしない
 		}
 		else
 		{
-			stage--;
+			stageflag-=1;
 		}
 		
-		if (Input::GetVKey('Z') == true)
-		{
-			for (int i = 1 ;i < stage;i++)
-			{
-				if (stage == i)
-				{
-					;//そのステージに移行
-				}
-			}
-			
-		}
+		
 	}
-	if (Input::GetVKey('X') == true)
+	
+
+	if (Input::GetVKey('X') == true && keyflag == true)
 	{
+		keyflag = false;
+		Audio::Start(2);
 		;//titleシーンに移行
+	}
+	if (Input::GetVKey('Z') == true && keyflag == true)
+	{
+		keyflag = false;
+		Audio::Start(2);
+		for (int i = 1;i < stageflag;i++)
+		{
+			if (stageflag == i)
+			{
+				;//そのステージに移行
+			}
+		}
+
+	}
+	if (Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false &&
+		Input::GetVKey('X') == false && Input::GetVKey('Z') == false && keyflag == false)
+	{
+		keyflag = true;
 	}
 }
 
@@ -66,8 +83,7 @@ void CObjStageSelect::Draw()
 
 	RECT_F src; //描画元切り取り位置の設定
 	RECT_F dst; //描画先表示位置
-
-	//hoge1
+	//hoge背景1
 	src.m_top = ZERO_G;
 	src.m_left = ZERO_G;
 	src.m_right = HD_RIGIT;
@@ -78,38 +94,111 @@ void CObjStageSelect::Draw()
 	dst.m_right = HD_RIGIT;
 	dst.m_bottom = HD_BUTTOM;
 	Draw::Draw(0, &src, &dst, c, 0.0f);
+	
+	//Stage1選択
+	if (stageflag == 1)
+	{
+		//stage1
+		src.m_right = 300.0f;
+		src.m_bottom = 200.0f;
 
-	//hoge1
-	src.m_top = 0.0f;
+		dst.m_top = 350.0f;
+		dst.m_left = 100.0f;
+		dst.m_right = 400.0f;
+		dst.m_bottom = 550.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+
+		//stage2
+		src.m_left = 301.0f;
+		src.m_right = 601.0f;
+
+		dst.m_left = 500.0f;
+		dst.m_right = 800.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+
+		//stage3
+		dst.m_left = 900.0f;
+		dst.m_right = 1200.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+	}
+	//Stage2選択
+	if (stageflag == 2)
+	{
+		
+		//stage1
+		src.m_top = ZERO_G;
+		src.m_left = 301.0f;
+		src.m_right = 601.0f;
+		src.m_bottom = 200.0f;
+
+		dst.m_top = 350.0f;
+		dst.m_left = 100.0f;
+		dst.m_right = 400.0f;
+		dst.m_bottom = 550.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+
+		// stage2
+		
+		src.m_left = ZERO_G;
+		src.m_right = 300.0f;
+	
+
+		dst.m_top = 350.0f;
+		dst.m_left = 500.0f;
+		dst.m_right = 800.0f;
+		dst.m_bottom = 550.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+		
+
+		//stage3
+		src.m_left = 301.0f;
+		src.m_right = 601.0f;
+
+		dst.m_left = 900.0f;
+		dst.m_right = 1200.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+	}
+	//Stage3選択
+	if (stageflag == 3)
+	{
+		//stage1
+		src.m_top = ZERO_G;
+		src.m_left = 301.0f;
+		src.m_right = 601.0f;
+		src.m_bottom = 200.0f;
+
+		dst.m_top = 350.0f;
+		dst.m_left = 100.0f;
+		dst.m_right = 400.0f;
+		dst.m_bottom = 550.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+
+		//stage2
+		dst.m_left = 500.0f;
+		dst.m_right = 800.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+
+		//stage3
+		src.m_left = ZERO_G;
+		src.m_right = 300.0f;
+
+
+		dst.m_left = 900.0f;
+		dst.m_right = 1200.0f;
+
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+	}
+	
+	src.m_top = 200.0f;
 	src.m_left = 0.0f;
-	src.m_right = 0.0f;
-	src.m_bottom = 0.0f;
+	src.m_right = 800.0f;
+	src.m_bottom = 320.0f;
 
-	dst.m_top = 0.0f;
-	dst.m_left = 0.0f;
-	dst.m_right = 0.0f;
-	dst.m_bottom = 0.0f;
+	dst.m_top = 650.0f;
+	dst.m_left = 200.0f;
+	dst.m_right = 1100.0f;
+	dst.m_bottom = 700.0f;
+	Draw::Draw(1, &src, &dst, c, 0.0f);
 
-	//hoge1
-	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 0.0f;
-	src.m_bottom = 0.0f;
-
-	dst.m_top = 0.0f;
-	dst.m_left = 0.0f;
-	dst.m_right = 0.0f;
-	dst.m_bottom = 0.0f;
-
-	//hoge1
-	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 0.0f;
-	src.m_bottom = 0.0f;
-
-	dst.m_top = 0.0f;
-	dst.m_left = 0.0f;
-	dst.m_right = 0.0f;
-	dst.m_bottom = 0.0f;
-
+	
 }

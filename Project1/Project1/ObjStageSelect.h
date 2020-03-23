@@ -16,5 +16,6 @@ public:
 	void Draw();	//ƒhƒ[
 	float x, y;
 private:
-	int stage;//‰¼
+	int stageflag;//‰¼
+	bool keyflag;//‰¼
 };
