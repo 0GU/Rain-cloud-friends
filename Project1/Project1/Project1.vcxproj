@@ -34,6 +34,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="ObjStageSelect.h" />
     <ClInclude Include="SceneStageSelect.h" />
+    <ClInclude Include="テンプレート.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp" />
@@ -51,6 +52,7 @@
     <ClCompile Include="GameL\WinInputs.cpp" />
     <ClCompile Include="ObjStageSelect.cpp" />
     <ClCompile Include="SceneStageSelect.cpp" />
+    <ClCompile Include="テンプレート.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -43,10 +43,12 @@ struct UserData
 
 //0定数マクロ
 #define ZERO_G (0.0f) //グラフィック用
-#define ZERO (0)
+#define ZERO (0)//０マクロ通常
+
 //HD画質用定数マクロ
 #define HD_RIGIT (1280.0f)
 #define HD_BUTTOM (720.0f)
+
 
 //------------------------------------------------
 //ゲーム内で使用するクラスヘッダ------------------

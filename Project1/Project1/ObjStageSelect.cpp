@@ -41,11 +41,11 @@ void CObjStageSelect::Action()
 		
 		if (Input::GetVKey('Z') == true)
 		{
-			for (int i = 0;i < 3;i++)
+			for (int i = 1 ;i < stage;i++)
 			{
 				if (stage == i)
 				{
-					;
+					;//そのステージに移行
 				}
 			}
 			
@@ -53,7 +53,7 @@ void CObjStageSelect::Action()
 	}
 	if (Input::GetVKey('X') == true)
 	{
-		;
+		;//titleシーンに移行
 	}
 }
 
