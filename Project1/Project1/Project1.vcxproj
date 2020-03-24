@@ -32,7 +32,11 @@
     <ClInclude Include="GameL\UserData.h" />
     <ClInclude Include="GameL\WinInputs.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="ObjEnemy.h" />
+    <ClInclude Include="ObjHero.h" />
+    <ClInclude Include="ObjStage.h" />
     <ClInclude Include="ObjStageSelect.h" />
+    <ClInclude Include="SceneGameMain.h" />
     <ClInclude Include="SceneStageSelect.h" />
     <ClInclude Include="テンプレート.h" />
   </ItemGroup>
@@ -50,7 +54,11 @@
     <ClCompile Include="GameL\SetWindow.cpp" />
     <ClCompile Include="GameL\UserData.cpp" />
     <ClCompile Include="GameL\WinInputs.cpp" />
+    <ClCompile Include="ObjEnemy.cpp" />
+    <ClCompile Include="ObjHero.cpp" />
+    <ClCompile Include="ObjStage.cpp" />
     <ClCompile Include="ObjStageSelect.cpp" />
+    <ClCompile Include="SceneGameMain.cpp" />
     <ClCompile Include="SceneStageSelect.cpp" />
     <ClCompile Include="テンプレート.cpp" />
   </ItemGroup>
@@ -77,8 +85,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
