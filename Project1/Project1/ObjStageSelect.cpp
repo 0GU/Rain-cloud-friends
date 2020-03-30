@@ -8,6 +8,7 @@
 
 #include"GameHead.h"
 #include"ObjStageSelect.h"
+#include<Windows.h>
 
 void CObjStageSelect::Init()
 {
@@ -58,11 +59,14 @@ void CObjStageSelect::Action()
 	{
 		keyflag = false;
 		Audio::Start(2);
+		;
 		for (int i = 1;i < stageflag;i++)
 		{
-			if (stageflag == i)
+			if (stageflag == 2)
 			{
-				;//そのステージに移行
+				Audio::Stop(0);
+				Sleep(500);
+				Scene::SetScene(new CSceneGameMain());//そのステージに移行
 			}
 		}
 
