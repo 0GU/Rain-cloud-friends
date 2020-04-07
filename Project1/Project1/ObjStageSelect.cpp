@@ -81,6 +81,12 @@ void CObjStageSelect::Action()
 //ドロー
 void CObjStageSelect::Draw()
 {
+	//フェードアウト用
+	int AniData[8]{
+		0,1,2,3,4,5,6,7,
+	};
+
+
 	//描画カラー情報
 	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
 
@@ -193,12 +199,63 @@ void CObjStageSelect::Draw()
 		Draw::Draw(1, &src, &dst, c, 0.0f);
 	}
 	
-	src.m_top = 200.0f;
+	//Stage1
+	src.m_top = 321.0f;
 	src.m_left = 0.0f;
+	src.m_right = 301.0f;
+	src.m_bottom = 421.0f;
+
+	dst.m_top = 201.0f;
+	dst.m_left = 100.0f;
+	dst.m_right = 401.0f;
+	dst.m_bottom = 321.0f;
+	Draw::Draw(1, &src, &dst, c, 0.0f);
+
+
+	//Stage2
+	src.m_top = 321.0f;
+	src.m_left = 302.0f;
+	src.m_right = 602.0f;
+	src.m_bottom = 421.0f;
+
+	dst.m_top = 201.0f;
+	dst.m_left = 500.0f;
+	dst.m_right = 800.0f;
+	dst.m_bottom = 321.0f;
+	Draw::Draw(1, &src, &dst, c, 0.0f);
+
+
+	//Stage3
+	src.m_top = 321.0f;
+	src.m_left = 603.0f;
+	src.m_right = 903.0f;
+	src.m_bottom = 421.0f;
+
+	dst.m_top = 201.0f;
+	dst.m_left = 900.0f;
+	dst.m_right = 1200.0f;
+	dst.m_bottom = 321.0f;
+	Draw::Draw(1, &src, &dst, c, 0.0f);
+
+	//ステージ選択
+	src.m_top = 423.0f;
+	src.m_left = 0.0f;
+	src.m_right = 801.0f;
+	src.m_bottom = 544.0f;
+
+	dst.m_top = 50.0f;
+	dst.m_left = 250.0f;
+	dst.m_right = 1050.0f;
+	dst.m_bottom = 171.0f;
+	Draw::Draw(1, &src, &dst, c, 0.0f);
+
+	//下の説明文
+	src.m_top = 200.0f;
+	src.m_left = .0f;
 	src.m_right = 800.0f;
 	src.m_bottom = 320.0f;
 
-	dst.m_top = 650.0f;
+	dst.m_top = 580.0f;
 	dst.m_left = 200.0f;
 	dst.m_right = 1100.0f;
 	dst.m_bottom = 700.0f;
