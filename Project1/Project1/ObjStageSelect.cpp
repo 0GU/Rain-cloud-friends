@@ -12,13 +12,36 @@
 
 void CObjStageSelect::Init()
 {
+	//初期化
 	stageflag = 1;
 	keyflag = true;
+
+	m_y1 = 0.0f;
+	m_y2 = 0.0f;
+
+	m_scroll = 0.0f;
+	move_flag = false;
+	scroll_flag = false;
 }
 
 //アクション
 void CObjStageSelect::Action()
 {
+
+	//背景スクロール
+	if (scroll_flag == false)
+	{
+		m_y1 += 50.0f;
+		if (m_y1 > 800.0f)
+		{
+			m_y1 = 800.0f;
+		}
+	}
+	
+
+		
+
+
 	if (Input::GetVKey(VK_RIGHT)==true&&keyflag==true)
 	{
 		keyflag = false;
@@ -55,37 +78,39 @@ void CObjStageSelect::Action()
 		Audio::Start(2);
 		;//titleシーンに移行
 	}
-	if (Input::GetVKey('Z') == true && keyflag == true)
+
+
+	if (Input::GetVKey('Z') == true &&  stageflag == 2)
 	{
 		keyflag = false;
+		Audio::Stop(0);
 		Audio::Start(2);
-		;
-		for (int i = 1;i < stageflag;i++)
-		{
-			if (stageflag == 2)
-			{
-				Audio::Stop(0);
-				Sleep(500);
-				Scene::SetScene(new CSceneGameMain());//そのステージに移行
-			}
-		}
-
+		scroll_flag = true;
+		move_flag = true;
+	}
+	if (move_flag == true)
+	{
+		m_y1 -= 50.0f;
+	}
+	if (m_y1 == 0.0f)
+	{
+		Scene::SetScene(new CSceneGameMain());//そのステージに移行
 	}
 	if (Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false &&
 		Input::GetVKey('X') == false && Input::GetVKey('Z') == false && keyflag == false)
 	{
 		keyflag = true;
+
 	}
+
+
+
 }
 
 //ドロー
 void CObjStageSelect::Draw()
 {
-	//フェードアウト用
-	int AniData[8]{
-		0,1,2,3,4,5,6,7,
-	};
-
+	
 
 	//描画カラー情報
 	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
@@ -93,6 +118,7 @@ void CObjStageSelect::Draw()
 
 	RECT_F src; //描画元切り取り位置の設定
 	RECT_F dst; //描画先表示位置
+
 	//hoge背景1
 	src.m_top = ZERO_G;
 	src.m_left = ZERO_G;
@@ -261,5 +287,15 @@ void CObjStageSelect::Draw()
 	dst.m_bottom = 700.0f;
 	Draw::Draw(1, &src, &dst, c, 0.0f);
 
-	
+	//下の説明文
+	src.m_top = 0.0f;
+	src.m_left = 0.0f;
+	src.m_right = 16.0f;
+	src.m_bottom = 16.0f;
+
+	dst.m_top = 800.0f + m_y1;
+	dst.m_left = 0.0f;
+	dst.m_right = 1280.0f;
+	dst.m_bottom = 0.0f + m_y1;
+	Draw::Draw(2, &src, &dst, c, 0.0f);
 }

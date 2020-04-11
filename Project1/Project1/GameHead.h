@@ -52,6 +52,11 @@ struct UserData
 #define HD_RIGIT (1280.0f)
 #define HD_BUTTOM (720.0f)
 
+//スクロールマクロ(仮)
+#define BACKGROUND_SCROLL_T (0.0f)//上
+#define BACKGROUND_SCROLL_B (0.0f)//下
+#define SCROLL_DISTANCE (800.0f)//スクロールの到達点
+
 
 //------------------------------------------------
 //ゲーム内で使用するクラスヘッダ------------------

@@ -42,6 +42,7 @@ void CSceneStageSelect::InitScene()
 	//‰æ‘œî•ñ‚ğ“o˜^
 	Draw::LoadImageW(L"‘fŞ/‰¼/Stage”wŒi‰¼.png", 0, TEX_SIZE_2048);
 	Draw::LoadImageW(L"‘fŞ/‰¼/TestStage.png", 1, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰¼/Animation.png", 2, TEX_SIZE_1024);
 
 	Audio::Start(0);
 }
