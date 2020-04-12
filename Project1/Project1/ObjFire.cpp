@@ -14,6 +14,7 @@ CObjFire::CObjFire(float x, float y)
 
 }
 
+
 void CObjFire::Init()
 {
 	m_ani_time = 0;
