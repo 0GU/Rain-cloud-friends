@@ -80,7 +80,7 @@ void CObjStageSelect::Action()
 	}
 
 
-	if (Input::GetVKey('Z') == true &&  stageflag == 2)
+	if (Input::GetVKey('Z') == true &&  stageflag == 2 && keyflag == true)
 	{
 		keyflag = false;
 		Audio::Stop(0);
@@ -96,6 +96,7 @@ void CObjStageSelect::Action()
 	{
 		Scene::SetScene(new CSceneGameMain());//そのステージに移行
 	}
+
 	if (Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false &&
 		Input::GetVKey('X') == false && Input::GetVKey('Z') == false && keyflag == false)
 	{
