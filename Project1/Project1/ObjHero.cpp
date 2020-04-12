@@ -10,6 +10,11 @@
 //使用するネームスペース
 using namespace GameL;
 
+CObjHero::CObjHero(int stage)
+{
+	reset = stage;
+}
+
 //イニシャライズ
 void CObjHero::Init()
 {
@@ -44,7 +49,7 @@ void CObjHero::Action()
 	if (m_py > 1000.0f)
 	{
 		//場外に出たらリスタート
-		Scene::SetScene(new CSceneGameMain());
+		Scene::SetScene(new CSceneGameMain(reset));
 	}
 
 

@@ -81,6 +81,9 @@
     <ClInclude Include="ObjEnemy.h">
       <Filter>ソース ファイル\GameMain</Filter>
     </ClInclude>
+    <ClInclude Include="ObjFire.h">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -141,6 +144,9 @@
       <Filter>ソース ファイル\GameMain</Filter>
     </ClCompile>
     <ClCompile Include="ObjEnemy.cpp">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjFire.cpp">
       <Filter>ソース ファイル\GameMain</Filter>
     </ClCompile>
   </ItemGroup>

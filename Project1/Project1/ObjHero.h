@@ -8,7 +8,7 @@ using namespace GameL;
 class CObjHero : public CObj
 {
 public:
-	CObjHero() {};
+	CObjHero(int stage) ;
 	~CObjHero() {};
 	void Init();	//イニシャライズ
 	void Action();  //アクション
@@ -55,4 +55,6 @@ private:
 
 	//test
 	float px, py; //交点
+
+	int reset;
 };

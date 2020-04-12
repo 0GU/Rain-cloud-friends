@@ -18,9 +18,9 @@ using namespace GameL;
 #include "GameHead.h"
 
 //コンストラクタ
-CSceneGameMain::CSceneGameMain()
+CSceneGameMain::CSceneGameMain(int num)
 {
-
+	stageselect = num;
 }
 
 //デストラクタ
@@ -35,6 +35,9 @@ void CSceneGameMain::InitScene()
 	//外部データの読み込み(ステージ情報)
 	unique_ptr<wchar_t> p;  //ステージ情報ポインター
 	int size;				//ステージ情報の大きさ
+	if(stageselect==1)
+	p = Save::ExternalDataOpen(L"ギミック確認.csv", &size);//外部データ読み込み
+	else if(stageselect==2)
 	p = Save::ExternalDataOpen(L"ステージデータ.csv", &size);//外部データ読み込み
 
 	int map[10][100];
@@ -58,11 +61,12 @@ void CSceneGameMain::InitScene()
 
 	//画像情報を登録
 	Draw::LoadImageW(L"素材/仮/image.png", 0, TEX_SIZE_2048);
+	Draw::LoadImageW(L"素材/仮/mapcip.png", 1, TEX_SIZE_1024);
 
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成
-	CObjHero* obj = new CObjHero();
+	CObjHero* obj = new CObjHero(stageselect);
 	Objs::InsertObj(obj, OBJ_HERO, 10);
 
 	//stageオブジェクト作成

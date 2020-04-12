@@ -119,6 +119,12 @@ void CObjStage::Draw()
 				{
 					;//ìGîzíuópÇÃî‘çÜÇÃÇΩÇﬂâΩÇ‡ÇµÇ»Ç¢
 				}
+				else if (m_map[i][j] == 5)
+				{
+					CObjFire* objf = new CObjFire(j * 64.0f, i * 64.0f);
+					Objs::InsertObj(objf, OBJ_FIRE, 10);
+					m_map[i][j] = 0;
+				}
 				else
 				{
 					BlockDraw(320.0f + 0.0f, 0.0f, &dst, c);
