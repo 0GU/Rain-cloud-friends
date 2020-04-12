@@ -9,9 +9,10 @@ using namespace GameL;
 class CSceneGameMain : public CScene
 {
 public:
-	CSceneGameMain();
+	CSceneGameMain(int num);
 	~CSceneGameMain();
 	void InitScene();//ゲームタイトルの初期化メソッド
 	void Scene();	 //ゲームタイトルの実行中メソッド
 private:
+	int stageselect;
 };
