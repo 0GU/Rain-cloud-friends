@@ -293,11 +293,87 @@ void CObjStageSelect::Draw()
 	src.m_right = 800.0f;
 	src.m_bottom = 320.0f;
 
-	dst.m_top = 580.0f;
+	dst.m_top = 630.0f;
 	dst.m_left = 200.0f;
 	dst.m_right = 1100.0f;
 	dst.m_bottom = 700.0f;
 	Draw::Draw(1, &src, &dst, c, 0.0f);
+
+
+	//--------------Ç±Ç±Ç©ÇÁé¥
+	//é¥ÅiâºÅj
+	src.m_top = 0.0f;
+	src.m_left = 0.0f;
+	src.m_right = 366.0f;
+	src.m_bottom = 400.0f;
+
+	dst.m_top = 560.0f;
+	dst.m_left = 120.0f;
+	dst.m_right = 220.0f;
+	dst.m_bottom = 620.0f;
+
+	Draw::Draw(3, &src, &dst, c, 0.0f);
+
+
+	dst.m_top = 560.0f;
+	dst.m_left = 200.0f;
+	dst.m_right = 300.0f;
+	dst.m_bottom = 620.0f;
+
+	Draw::Draw(3, &src, &dst, c, 0.0f);
+
+
+	dst.m_top = 560.0f;
+	dst.m_left = 280.0f;
+	dst.m_right = 380.0f;
+	dst.m_bottom = 620.0f;
+
+	Draw::Draw(3, &src, &dst, c, 0.0f);
+
+
+	dst.m_top = 560.0f;
+	dst.m_left = 520.0f;
+	dst.m_right = 620.0f;
+	dst.m_bottom = 620.0f;
+
+	Draw::Draw(3, &src, &dst, c, 0.0f);
+
+	dst.m_top = 560.0f;
+	dst.m_left = 680.0f;
+	dst.m_right = 780.0f;
+	dst.m_bottom = 620.0f;
+
+	Draw::Draw(3, &src, &dst, c, 0.0f);
+
+	dst.m_top = 560.0f;
+	dst.m_left = 600.0f;
+	dst.m_right = 700.0f;
+	dst.m_bottom = 620.0f;
+
+	Draw::Draw(3, &src, &dst, c, 0.0f);
+
+	dst.m_top = 560.0f;
+	dst.m_left = 920.0f;
+	dst.m_right = 1020.0f;
+	dst.m_bottom = 620.0f;
+
+	Draw::Draw(3, &src, &dst, c, 0.0f);
+
+	dst.m_top = 560.0f;
+	dst.m_left = 1000.0f;
+	dst.m_right = 1100.0f;
+	dst.m_bottom = 620.0f;
+
+	Draw::Draw(3, &src, &dst, c, 0.0f);
+
+	dst.m_top = 560.0f;
+	dst.m_left = 1080.0f;
+	dst.m_right = 1180.0f;
+	dst.m_bottom = 620.0f;
+
+	Draw::Draw(3, &src, &dst, c, 0.0f);
+
+	//-------------------Ç±Ç±Ç‹Ç≈
 
 	//çïâÊñ 
 	src.m_top = 0.0f;
