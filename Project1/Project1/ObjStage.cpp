@@ -21,14 +21,22 @@ CObjStage::CObjStage(int map[10][100])
 void CObjStage::Init()
 {
 	m_scroll = 0.0f;
-
-
+	m_y1 = 0.0f;
+	black_scroll = false;
 }
 
 //アクション
 void CObjStage::Action()
 {
-	
+	//黒画面スクロール
+	if (black_scroll == false)
+	{
+		m_y1 += 50.0f;
+		if (m_y1 > 800.0f)
+		{
+			m_y1 = 800.0f;
+		}
+	}
 	//主人公の位置を取得
 	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
 	float hx = hero->GetX();
@@ -134,7 +142,17 @@ void CObjStage::Draw()
 	}
 
 
+	//黒画面
+	src.m_top = 0.0f;
+	src.m_left = 0.0f;
+	src.m_right = 16.0f;
+	src.m_bottom = 16.0f;
 
+	dst.m_top = 800.0f + m_y1;
+	dst.m_left = 0.0f;
+	dst.m_right = 1280.0f;
+	dst.m_bottom = 0.0f + m_y1;
+	Draw::Draw(2, &src, &dst, c, 0.0f);
 }
 
 //BlockDrawMethod関数

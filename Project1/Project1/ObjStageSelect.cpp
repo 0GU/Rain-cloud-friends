@@ -28,13 +28,14 @@ void CObjStageSelect::Init()
 void CObjStageSelect::Action()
 {
 
-	//背景スクロール
+	//黒画面スクロール
 	if (scroll_flag == false)
 	{
 		m_y1 += 50.0f;
 		if (m_y1 > 800.0f)
 		{
 			m_y1 = 800.0f;
+			scroll_flag = true;
 		}
 	}
 	
@@ -85,9 +86,19 @@ void CObjStageSelect::Action()
 		keyflag = false;
 		Audio::Stop(0);
 		Audio::Start(2);
-		scroll_flag = true;
+
 		move_flag = true;
 	}
+
+	if (Input::GetVKey('C') == true &&  keyflag == true)
+	{
+		keyflag = false;
+		Audio::Stop(0);
+		Audio::Start(2);
+
+		Scene::SetScene(new CSceneClear());//そのステージに移行
+	}
+
 	if (move_flag == true)
 	{
 		m_y1 -= 50.0f;
@@ -288,7 +299,7 @@ void CObjStageSelect::Draw()
 	dst.m_bottom = 700.0f;
 	Draw::Draw(1, &src, &dst, c, 0.0f);
 
-	//下の説明文
+	//黒画面
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
 	src.m_right = 16.0f;

@@ -6,21 +6,20 @@ using namespace GameL;
 
 
 //オブジェクト：ステージセレクト
-class CObjStageSelect : public CObj
+class CObjClear : public CObj
 {
 public:
-	CObjStageSelect() {};
-	~CObjStageSelect() {};
+	CObjClear() {};
+	~CObjClear() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
 	void Draw();	//ドロー
+	float x, y;
 private:
-	int stageflag;//仮
-	bool keyflag;//仮
-	float m_y1;//黒画面用(仮)
-	float m_y2;
+	int hoge;//仮
+	bool key_flag;//キー押し確認用
 
-	float m_scroll;
+	float m_y1;//黒画面用(仮)
 	bool  move_flag;
 	bool scroll_flag;
 };

@@ -48,6 +48,7 @@ void CObjHero::Action()
 	//落下によるゲームオーバー＆リスタート
 	if (m_py > 1000.0f)
 	{
+
 		//場外に出たらリスタート
 		Scene::SetScene(new CSceneGameMain(reset));
 	}

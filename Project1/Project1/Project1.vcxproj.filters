@@ -19,6 +19,9 @@
     <Filter Include="ソース ファイル\GameMain">
       <UniqueIdentifier>{814c519b-8025-4f9f-86d6-25fffb10a63c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\StageClear%28仮%29">
+      <UniqueIdentifier>{7ee38b17-8d2e-442f-98b9-7f7ccbb0798d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameHead.h">
@@ -84,6 +87,15 @@
     <ClInclude Include="ObjFire.h">
       <Filter>ソース ファイル\GameMain</Filter>
     </ClInclude>
+    <ClInclude Include="SceneClear.h">
+      <Filter>ソース ファイル\StageClear%28仮%29</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjClear.h">
+      <Filter>ソース ファイル\StageClear%28仮%29</Filter>
+    </ClInclude>
+    <ClInclude Include="シーンテンプレ.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -148,6 +160,15 @@
     </ClCompile>
     <ClCompile Include="ObjFire.cpp">
       <Filter>ソース ファイル\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneClear.cpp">
+      <Filter>ソース ファイル\StageClear%28仮%29</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjClear.cpp">
+      <Filter>ソース ファイル\StageClear%28仮%29</Filter>
+    </ClCompile>
+    <ClCompile Include="シーンテンプレ.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

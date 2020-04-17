@@ -11,6 +11,7 @@ enum OBJ_NAME
 	OBJ_HERO,
 	OBJ_ENEMY,
 	OBJ_FIRE,
+	OBJ_CLEAR,
 };
 //------------------------------------------------
 
@@ -73,11 +74,13 @@ struct UserData
 #include"ObjHero.h"
 #include"ObjEnemy.h"
 #include"ObjFire.h"
+#include"ObjClear.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
 #include"SceneStageSelect.h"
 #include"SceneGameMain.h"
+#include"SceneClear.h"
 //-----------------------------------------------
 
 //シーンスタートクラス---------------------------

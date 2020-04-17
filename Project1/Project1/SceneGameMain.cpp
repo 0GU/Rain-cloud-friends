@@ -62,7 +62,7 @@ void CSceneGameMain::InitScene()
 	//画像情報を登録
 	Draw::LoadImageW(L"素材/仮/image.png", 0, TEX_SIZE_2048);
 	Draw::LoadImageW(L"素材/仮/mapcip.png", 1, TEX_SIZE_1024);
-
+	Draw::LoadImageW(L"素材/仮/Animation.png", 2, TEX_SIZE_64);
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成
@@ -72,6 +72,7 @@ void CSceneGameMain::InitScene()
 	//stageオブジェクト作成
 	CObjStage* objb = new CObjStage(map);
 	Objs::InsertObj(objb, OBJ_STAGE, 9);
+
 
 }
 
