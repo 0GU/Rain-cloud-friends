@@ -75,6 +75,7 @@ struct UserData
 #include"ObjEnemy.h"
 #include"ObjFire.h"
 #include"ObjClear.h"
+#include"ObjPose.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
@@ -86,5 +87,4 @@ struct UserData
 //シーンスタートクラス---------------------------
 //ゲーム開始時のシーンクラス登録
 #define SET_GAME_START CSceneStageSelect
-
 //-----------------------------------------------
