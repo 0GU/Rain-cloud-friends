@@ -12,6 +12,7 @@ enum OBJ_NAME
 	OBJ_ENEMY,
 	OBJ_FIRE,
 	OBJ_CLEAR,
+	OBJ_POSE,
 };
 //------------------------------------------------
 
