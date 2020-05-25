@@ -33,8 +33,9 @@ void CSceneClear::InitScene()
 	CObjClear* p = new CObjClear();
 	Objs::InsertObj(p, OBJ_CLEAR, 1);
 	//SEî•ñ‚Ì“o˜^
-	//Audio::LoadAudio(0, L"‘fŞ/BGM/rain1.wav", SOUND_TYPE::BACK_MUSIC);
+//	Audio::LoadAudio(0, L"‘fŞ/SE/Clear.wav", EFFECT);
 
+//	Audio::Start(0);
 	//‰æ‘œî•ñ‚ğ“o˜^
 	Draw::LoadImageW(L"‘fŞ/‰¼/White.png", 0, TEX_SIZE_64);
 	Draw::LoadImageW(L"‘fŞ/‰¼/StageClear.png", 1, TEX_SIZE_1024);
