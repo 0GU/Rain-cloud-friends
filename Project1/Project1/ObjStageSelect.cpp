@@ -81,7 +81,7 @@ void CObjStageSelect::Action()
 	}
 
 
-	if (Input::GetVKey('Z') == true &&  stageflag == 1 && keyflag == true)
+	if (Input::GetVKey('Z') == true &&  stageflag == 2 && keyflag == true)
 	{
 		keyflag = false;
 		Audio::Stop(0);
@@ -89,27 +89,12 @@ void CObjStageSelect::Action()
 
 		move_flag = true;
 	}
-	if (Input::GetVKey('Z') == true && stageflag == 2 && keyflag == true)
-	{
-		keyflag = false;
-		Audio::Stop(0);
-		Audio::Start(2);
 
-		move_flag = true;
-	}
-	if (Input::GetVKey('Z') == true && stageflag == 3 && keyflag == true)
-	{
-		keyflag = false;
-		Audio::Stop(0);
-		Audio::Start(2);
-
-		move_flag = true;
-	}
 	if (Input::GetVKey('C') == true &&  keyflag == true)
 	{
 		keyflag = false;
-//		Audio::Stop(0);
-//		Audio::Start(2);
+		Audio::Stop(0);
+		Audio::Start(2);
 
 		Scene::SetScene(new CSceneClear());//そのステージに移行
 	}
@@ -130,7 +115,7 @@ void CObjStageSelect::Action()
 
 	}
 
-//
+
 
 }
 
