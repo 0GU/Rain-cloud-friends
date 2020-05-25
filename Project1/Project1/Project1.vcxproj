@@ -36,6 +36,7 @@
     <ClInclude Include="ObjEnemy.h" />
     <ClInclude Include="ObjFire.h" />
     <ClInclude Include="ObjHero.h" />
+    <ClInclude Include="ObjPose.h" />
     <ClInclude Include="ObjStage.h" />
     <ClInclude Include="ObjStageSelect.h" />
     <ClInclude Include="SceneClear.h" />
@@ -64,6 +65,7 @@
     <ClCompile Include="ObjEnemy.cpp" />
     <ClCompile Include="ObjFire.cpp" />
     <ClCompile Include="ObjHero.cpp" />
+    <ClCompile Include="ObjPose.cpp" />
     <ClCompile Include="ObjStage.cpp" />
     <ClCompile Include="ObjStageSelect.cpp" />
     <ClCompile Include="SceneClear.cpp" />
