@@ -38,12 +38,12 @@ void CObjStageSelect::Action()
 			scroll_flag = true;
 		}
 	}
-	
-
-		
 
 
-	if (Input::GetVKey(VK_RIGHT)==true&&keyflag==true)
+
+
+
+	if (Input::GetVKey(VK_RIGHT) == true && keyflag == true)
 	{
 		keyflag = false;
 		Audio::Start(1);
@@ -53,10 +53,10 @@ void CObjStageSelect::Action()
 		}
 		else
 		{
-			stageflag+=1;
+			stageflag += 1;
 		}
 	}
-	 if (Input::GetVKey(VK_LEFT)==true&&keyflag==true)
+	if (Input::GetVKey(VK_LEFT) == true && keyflag == true)
 	{
 		keyflag = false;
 		Audio::Start(1);
@@ -66,22 +66,22 @@ void CObjStageSelect::Action()
 		}
 		else
 		{
-			stageflag-=1;
+			stageflag -= 1;
 		}
-		
-		
+
+
 	}
-	
+
 
 	if (Input::GetVKey('X') == true && keyflag == true)
 	{
 		keyflag = false;
 		Audio::Start(2);
-		Scene::SetScene(new CSceneGameMain(stageflag));
+		;//titleシーンに移行
 	}
 
 
-	if (Input::GetVKey('Z') == true &&  stageflag == 2 && keyflag == true)
+	if (Input::GetVKey('Z') == true && stageflag == 1 && keyflag == true)
 	{
 		keyflag = false;
 		Audio::Stop(0);
@@ -89,12 +89,27 @@ void CObjStageSelect::Action()
 
 		move_flag = true;
 	}
-
-	if (Input::GetVKey('C') == true &&  keyflag == true)
+	if (Input::GetVKey('Z') == true && stageflag == 2 && keyflag == true)
 	{
 		keyflag = false;
 		Audio::Stop(0);
 		Audio::Start(2);
+
+		move_flag = true;
+	}
+	if (Input::GetVKey('Z') == true && stageflag == 3 && keyflag == true)
+	{
+		keyflag = false;
+		Audio::Stop(0);
+		Audio::Start(2);
+
+		move_flag = true;
+	}
+	if (Input::GetVKey('C') == true && keyflag == true)
+	{
+		keyflag = false;
+		//		Audio::Stop(0);
+		//		Audio::Start(2);
 
 		Scene::SetScene(new CSceneClear());//そのステージに移行
 	}
@@ -115,14 +130,14 @@ void CObjStageSelect::Action()
 
 	}
 
-
+	//
 
 }
 
 //ドロー
 void CObjStageSelect::Draw()
 {
-	
+
 
 	//描画カラー情報
 	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
@@ -142,7 +157,7 @@ void CObjStageSelect::Draw()
 	dst.m_right = HD_RIGIT;
 	dst.m_bottom = HD_BUTTOM;
 	Draw::Draw(0, &src, &dst, c, 0.0f);
-	
+
 	//Stage1選択
 	if (stageflag == 1)
 	{
@@ -172,7 +187,7 @@ void CObjStageSelect::Draw()
 	//Stage2選択
 	if (stageflag == 2)
 	{
-		
+
 		//stage1
 		src.m_top = ZERO_G;
 		src.m_left = 301.0f;
@@ -186,17 +201,17 @@ void CObjStageSelect::Draw()
 		Draw::Draw(1, &src, &dst, c, 0.0f);
 
 		// stage2
-		
+
 		src.m_left = ZERO_G;
 		src.m_right = 300.0f;
-	
+
 
 		dst.m_top = 350.0f;
 		dst.m_left = 500.0f;
 		dst.m_right = 800.0f;
 		dst.m_bottom = 550.0f;
 		Draw::Draw(1, &src, &dst, c, 0.0f);
-		
+
 
 		//stage3
 		src.m_left = 301.0f;
@@ -236,7 +251,7 @@ void CObjStageSelect::Draw()
 
 		Draw::Draw(1, &src, &dst, c, 0.0f);
 	}
-	
+
 	//Stage1
 	src.m_top = 321.0f;
 	src.m_left = 0.0f;
