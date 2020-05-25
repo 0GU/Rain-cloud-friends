@@ -60,7 +60,7 @@ void CObjHero::Action()
 	{
 		if (m_hit_down == true)
 		{
-			m_vy = -20;
+			m_vy = -10;
 		}
 	}
 
@@ -239,6 +239,32 @@ void CObjHero::Action()
 					m_vy = 0.0f;
 					m_hit_down = true;
 				}
+			}
+		}
+	}
+
+	//火と当たっているか
+	if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
+	{
+		//主人公が敵とどの角度で当たっているかを確認
+		HIT_DATA** hit_data;						//当たった時の細かな情報を入れるための構造体
+		hit_data = hit->SearchObjNameHit(OBJ_FIRE);//hit_dataに主人公と当たっている他全てのHitBoxとの情報を入れる
+
+		for (int i = 0; i < hit->GetCount(); i++)
+		{
+			//敵の左右に当たったら
+			float r = hit_data[i]->r;
+			if (r < 45 && r >= 0 || r>315)
+			{
+				m_vx = -5.0f;//左に移動させる
+			}
+			if (r > 135 && r < 225)
+			{
+				m_vx = +5.0f;//右に移動させる
+			}
+			if (r >= 225 && r < 315)
+			{
+
 			}
 		}
 	}

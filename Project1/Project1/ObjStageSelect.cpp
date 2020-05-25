@@ -77,7 +77,7 @@ void CObjStageSelect::Action()
 	{
 		keyflag = false;
 		Audio::Start(2);
-		;//titleƒV[ƒ“‚ÉˆÚs
+		Scene::SetScene(new CSceneGameMain(stageflag));
 	}
 
 

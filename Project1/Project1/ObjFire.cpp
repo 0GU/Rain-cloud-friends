@@ -10,7 +10,7 @@
 CObjFire::CObjFire(float x, float y)
 {
 	m_px = x;			//位置
-	m_py = y;
+	m_py = y-64.0;
 
 }
 
@@ -23,7 +23,7 @@ void CObjFire::Init()
 	m_ani_max_time = 4;  //アニメーション間隔幅
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_FIRE, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 128, ELEMENT_RED, OBJ_FIRE, 1);
 }
 
 //アクション
@@ -72,10 +72,10 @@ void CObjFire::Draw()
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	//表示位置の設定
-	dst.m_top = -64.0f + m_py;						//↓描画に対してスクロールの影響を与える
+	dst.m_top =  m_py;						//↓描画に対してスクロールの影響を与える
 	dst.m_left = 64.0f + m_px + block->GetScroll();
 	dst.m_right = 0.0f  + m_px + block->GetScroll();
-	dst.m_bottom = 64.0f + m_py;
+	dst.m_bottom = 128.0f + m_py;
 
 	//描画
 	Draw::Draw(1, &src, &dst, c, 0.0f);
