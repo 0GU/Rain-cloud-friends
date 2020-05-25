@@ -22,5 +22,5 @@ private:
 
 	float m_scroll;
 	bool  move_flag;
-	bool scroll_flag;
+	bool scroll_flag;//‚Í‚Í‚Á
 };
