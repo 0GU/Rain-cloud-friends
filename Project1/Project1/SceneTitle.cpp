@@ -16,26 +16,27 @@ using namespace GameL;
 #include "GameHead.h"
 
 //コンストラクタ
-CSceneTemp::CSceneTemp()
+CSceneTitle::CSceneTitle()
 {
-
+	CObjTitle* p = new CObjTitle;
+	Objs::InsertObj(p, OBJ_TITLE, 1);
 }
 
 //デストラクタ
-CSceneTemp::~CSceneTemp()
+CSceneTitle::~CSceneTitle()
 {
 
 }
 
 //ゲームタイトル初期化メソッド
-void CSceneTemp::InitScene()
+void CSceneTitle::InitScene()
 {
 
 
 }
 
 //ゲームタイトル実行メソッド
-void CSceneTemp::Scene()
+void CSceneTitle::Scene()
 {
 
 }
