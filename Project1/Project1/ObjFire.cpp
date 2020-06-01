@@ -49,9 +49,10 @@ void CObjFire::Action()
 		//ブロック情報を持ってくる
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
-	//HitBoxの位置の変更
-	CHitBox* hit = Hits::GetHitBox(this);
-	hit->SetPos(m_px + block->GetScroll(), m_py+block->GetScrollY());
+		//HitBoxの位置の変更
+		CHitBox* hit = Hits::GetHitBox(this);
+		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
+	}
 }
 
 //ドロー

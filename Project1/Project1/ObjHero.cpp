@@ -209,7 +209,7 @@ void CObjHero::Draw()
 void CObjHero::EnemyHit(int enemynum)
 {
 	CHitBox* hit = Hits::GetHitBox(this);
-	CObjStage*pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	//主人公が敵とどの角度で当たってるか確認
 	HIT_DATA** hit_data = NULL;
 
@@ -259,96 +259,54 @@ void CObjHero::EnemyHit(int enemynum)
 						b->SetScroll(b->GetScroll() - 5.0);
 					}
 
-				//頭に乗せる処理
-				if (m_vx < -1.0f)
-				{
-					//ジャンプしてる場合は下記の影響を出ないようにする
-				}
-				else
-				{
-					//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
-					//また、地面に当たってる判定にする
-					m_vy = 0.0f;
-					m_hit_down = true;
+					//頭に乗せる処理
+					if (m_vx < -1.0f)
+					{
+						//ジャンプしてる場合は下記の影響を出ないようにする
+					}
+					else
+					{
+						//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
+						//また、地面に当たってる判定にする
+						m_vy = 0.0f;
+						m_hit_down = true;
+					}
 				}
 			}
 		}
-	}
 
-	//火と当たっているか
-	if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
-	{
-		//主人公が敵とどの角度で当たっているかを確認
-		HIT_DATA** hit_data;						//当たった時の細かな情報を入れるための構造体
-		hit_data = hit->SearchObjNameHit(OBJ_FIRE);//hit_dataに主人公と当たっている他全てのHitBoxとの情報を入れる
-
-		for (int i = 0; i < hit->GetCount(); i++)
+		//火と当たっているか
+		if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
 		{
-			//敵の左右に当たったら
-			float r = hit_data[i]->r;
-			if (r < 45 && r >= 0 || r>315)
-			{
-				m_vx = -5.0f;//左に移動させる
-			}
-			if (r > 135 && r < 225)
-			{
-				m_vx = +5.0f;//右に移動させる
-			}
-			if (r >= 225 && r < 315)
-			{
+			//主人公が敵とどの角度で当たっているかを確認
+			HIT_DATA** hit_data;						//当たった時の細かな情報を入れるための構造体
+			hit_data = hit->SearchObjNameHit(OBJ_FIRE);//hit_dataに主人公と当たっている他全てのHitBoxとの情報を入れる
 
+			for (int i = 0; i < hit->GetCount(); i++)
+			{
+				//敵の左右に当たったら
+				float r = hit_data[i]->r;
+				if (r < 45 && r >= 0 || r>315)
+				{
+					m_vx = -5.0f;//左に移動させる
+				}
+				if (r > 135 && r < 225)
+				{
+					m_vx = +5.0f;//右に移動させる
+				}
+				if (r >= 225 && r < 315)
+				{
+
+				}
 			}
 		}
+
+		//位置の更新
+		m_px += m_vx;
+		m_py += m_vy;
+
+		//HitBoxの位置の変更
+		hit->SetPos(m_px, m_py);
+
 	}
-
-	//位置の更新
-	m_px += m_vx;
-	m_py += m_vy;
-
-	//HitBoxの位置の変更
-	hit->SetPos(m_px, m_py);
-
-}
-
-//ドロー
-void CObjHero::Draw()
-{
-	int AniData[4] =
-	{
-		1,0,2,0,
-	};
-
-	//描画カラー情報
-	float c[4] = { 1.0f,0.5f,1.0f,1.0f };
-
-	RECT_F src; //描画元切り取り位置
-	RECT_F dst; //描画先表示位置
-
-	//切り取り位置の設定
-	src.m_top = 0.0f;
-	src.m_left = 0.0f + AniData[m_ani_frame] * 64;
-	src.m_right = 64.0f + AniData[m_ani_frame] * 64;
-	src.m_bottom = 64.0f;
-
-	//表示位置の設定
-	dst.m_top = 0.0f + m_py;
-	dst.m_left = (64.0f * m_posture) + m_px;
-	dst.m_right = (64 - 64.0f * m_posture) + m_px;
-	dst.m_bottom = 64.0f + m_py;
-
-	//描画
-	Draw::Draw(0, &src, &dst, c, 0.0f);
-
-	//交点
-	float cc[4] = { 1.0f,0.0f,0.0f,1.0f };
-	src.m_top = 0.0f;
-	src.m_left = 320.0f;
-	src.m_right = 320.0f + 64.0f;
-	src.m_bottom = 64.0f;
-	dst.m_top = py;
-	dst.m_left = px;
-	dst.m_right = dst.m_left + 10.0f;
-	dst.m_bottom = dst.m_top + 10.0f;
-	Draw::Draw(0, &src, &dst, cc, 0.0f);
-
 }
