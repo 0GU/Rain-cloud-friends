@@ -1,20 +1,18 @@
 #pragma once
-//使用するヘッダー
-#include"GameL/SceneObjManager.h"
+#pragma once
+//使用するヘッダーファイル
+#include "GameL\SceneManager.h"
+
 //使用するネームスペース
 using namespace GameL;
 
-
-//オブジェクト：ステージセレクト
-class CObjTemp : public CObj
+//シーン：タイトル
+class CSceneTitle :public CScene
 {
 public:
-	CObjTemp() {};
-	~CObjTemp() {};
-	void Init();	//イニシャライズ
-	void Action();	//アクション
-	void Draw();	//ドロー
-	float x, y;
+	CSceneTitle() ;
+	~CSceneTitle() ;
+	void InitScene();//ゲームタイトルの初期化メソッド
+	void Scene();	 //ゲームタイトルの実行中メソッド
 private:
-	int hoge;//仮
 };

@@ -24,24 +24,29 @@ void CObjStage::Init()
 	my_scroll = 0.0f;
 	m_y1 = 0.0f;
 	black_scroll = false;
+	stay_flag = false;
 }
 
 //アクション
 void CObjStage::Action()
 {
-	//黒画面スクロール
-	if (black_scroll == false)
+	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
+	stay_flag = p->GetFlag();
+	if (stay_flag == false)
 	{
-		m_y1 += 50.0f;
-		if (m_y1 > 800.0f)
+		//黒画面スクロール
+		if (black_scroll == false)
 		{
-			m_y1 = 800.0f;
+			m_y1 += 50.0f;
+			if (m_y1 > 800.0f)
+			{
+				m_y1 = 800.0f;
+			}
 		}
-	}
-	//主人公の位置を取得
-	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
-	float hx = hero->GetX();
-	float hy = hero->GetY();
+		//主人公の位置を取得
+		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+		float hx = hero->GetX();
+		float hy = hero->GetY();
 
 	//後方スクロールライン
 	if (hx < 80)
@@ -75,8 +80,8 @@ void CObjStage::Action()
 	//主人公の位置+500を敵出現ラインにする
 	float line = hx + (-mx_scroll) + 500;
 
-	//敵出現ラインを要素番号化
-	int ex = ((int)line) / 64;
+		//敵出現ラインを要素番号化
+		int ex = ((int)line) / 64;
 
 	//敵出現ラインの列を検索
 	for (int i = 0; i < 15; i++)
@@ -88,9 +93,11 @@ void CObjStage::Action()
 			CObjEnemy* obje = new CObjEnemy(ex * 64.0f, i * 64.0f);
 			Objs::InsertObj(obje, OBJ_ENEMY, 10);
 
-			//敵出現場所の値を0にする
-			m_map[i][ex] = 0;
+				//敵出現場所の値を0にする
+				m_map[i][ex] = 0;
+			}
 		}
+
 	}
 	
 }

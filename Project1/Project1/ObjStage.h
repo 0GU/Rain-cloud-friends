@@ -49,4 +49,5 @@ private:
 	);
 	float m_y1;
 	bool black_scroll;
+	bool stay_flag;
 };

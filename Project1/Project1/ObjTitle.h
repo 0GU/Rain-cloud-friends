@@ -5,12 +5,12 @@
 using namespace GameL;
 
 
-//オブジェクト：ステージセレクト
-class CObjTemp : public CObj
+//オブジェクト：タイトル
+class CObjTitle : public CObj
 {
 public:
-	CObjTemp() {};
-	~CObjTemp() {};
+	CObjTitle() {};
+	~CObjTitle() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
 	void Draw();	//ドロー

@@ -21,6 +21,7 @@ void CObjFire::Init()
 	m_ani_frame = 0;		//静止フレームを初期にする
 
 	m_ani_max_time = 4;  //アニメーション間隔幅
+	stay_flag = false;
 
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 128, ELEMENT_RED, OBJ_FIRE, 1);
@@ -29,20 +30,24 @@ void CObjFire::Init()
 //アクション
 void CObjFire::Action()
 {
-	m_ani_time++;
-	if (m_ani_time > m_ani_max_time)
+	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
+	stay_flag = p->GetFlag();
+	if (stay_flag == false)
 	{
-		m_ani_frame += 1;
-		m_ani_time = 0;
-	}
+		m_ani_time++;
+		if (m_ani_time > m_ani_max_time)
+		{
+			m_ani_frame += 1;
+			m_ani_time = 0;
+		}
 
-	if (m_ani_frame == 6)
-	{
-		m_ani_frame = 0;
-	}
+		if (m_ani_frame == 6)
+		{
+			m_ani_frame = 0;
+		}
 
-	//ブロック情報を持ってくる
-	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+		//ブロック情報を持ってくる
+		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
 	//HitBoxの位置の変更
 	CHitBox* hit = Hits::GetHitBox(this);
