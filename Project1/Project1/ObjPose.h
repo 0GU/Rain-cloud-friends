@@ -14,7 +14,7 @@ public:
 	void Init();	//イニシャライズ
 	void Action();	//アクション
 	void Draw();	//ドロー
-	
+	bool GetFlag() { return stay_flag; }
 private:
 
 	float m_px;

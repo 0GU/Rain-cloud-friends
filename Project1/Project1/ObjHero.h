@@ -31,6 +31,8 @@ public:
 	void SetLeft(bool b) { m_hit_left = b; }
 	void SetRight(bool b) { m_hit_right = b; }
 
+	void EnemyHit(int enemynume);
+
 private:
 	float m_px;			//ˆÊ’u
 	float m_py;
@@ -57,4 +59,7 @@ private:
 	float px, py; //Œð“_
 
 	int reset;
+
+	bool hit_flag;
+	bool stay_flag;
 };

@@ -37,4 +37,5 @@ private:
 
 	//ˆÚ“®‚ÌŒü‚«§Œä—p
 	bool m_move;
+	bool stay_flag;
 };
