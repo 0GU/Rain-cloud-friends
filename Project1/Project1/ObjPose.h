@@ -21,4 +21,6 @@ private:
 	float m_py;
 	bool delete_flag;
 	bool stay_flag;
+
+	bool select_flag;
 };
