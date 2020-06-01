@@ -40,9 +40,9 @@ void CSceneGameMain::InitScene()
 	else if(stageselect==2)
 	p = Save::ExternalDataOpen(L"ステージデータ.csv", &size);//外部データ読み込み
 
-	int map[10][100];
+	int map[15][100];
 	int count = 1;
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 15; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{

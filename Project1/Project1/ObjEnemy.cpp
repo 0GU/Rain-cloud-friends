@@ -118,7 +118,7 @@ void CObjEnemy::Action()
 
 	//HitBox‚ÌˆÊ’u‚Ì•ÏX
 	CHitBox* hit = Hits::GetHitBox(this);
-	hit->SetPos(m_px + block->GetScroll(), m_py);
+	hit->SetPos(m_px + block->GetScroll(), m_py+block->GetScrollY());
 
 }
 
@@ -145,10 +145,10 @@ void CObjEnemy::Draw()
 	//ƒuƒƒbƒNî•ñ‚ðŽ‚Á‚Ä‚­‚é
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	//•\Ž¦ˆÊ’u‚ÌÝ’è
-	dst.m_top = 0.0f + m_py;						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ð—^‚¦‚é
+	dst.m_top = 0.0f + m_py + block->GetScrollY();						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ð—^‚¦‚é
 	dst.m_left = (64.0f * m_posture) + m_px + block->GetScroll();
 	dst.m_right = (64 - 64.0f * m_posture) + m_px + block->GetScroll();
-	dst.m_bottom = 64.0f + m_py;
+	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
 
 	//•`‰æ
 	Draw::Draw(0, &src, &dst, c, 0.0f);

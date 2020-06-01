@@ -10,17 +10,18 @@
 //使用するネームスペース
 using namespace GameL;
 
-CObjStage::CObjStage(int map[10][100])
+CObjStage::CObjStage(int map[15][100])
 {
 	
 
 	//マップデータをコピー
-	memcpy(m_map, map, sizeof(int) * (10 * 100));
+	memcpy(m_map, map, sizeof(int) * (15 * 100));
 }
 //イニシャライズ
 void CObjStage::Init()
 {
-	m_scroll = 0.0f;
+	mx_scroll = 0.0f;
+	my_scroll = 0.0f;
 	m_y1 = 0.0f;
 	black_scroll = false;
 }
@@ -46,25 +47,39 @@ void CObjStage::Action()
 	if (hx < 80)
 	{
 		hero->SetX(80);				//主人公はラインを超えないようにする
-		m_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
+		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
 	//前方スクロールライン
 	if (hx > 300)
 	{
 		hero->SetX(300);			//主人公はラインを超えないようにする
-		m_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
+		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
+	}
+
+	//上方スクロールライン
+	if (hy < 10)
+	{
+		hero->SetY(10);				//主人公はラインを超えないようにする
+		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
+	}
+
+	//下方スクロールライン
+	if (hy > 500)
+	{
+		hero->SetY(500);			//主人公はラインを超えないようにする
+		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
 	//敵出現ライン
 	//主人公の位置+500を敵出現ラインにする
-	float line = hx + (-m_scroll) + 500;
+	float line = hx + (-mx_scroll) + 500;
 
 	//敵出現ラインを要素番号化
 	int ex = ((int)line) / 64;
 
 	//敵出現ラインの列を検索
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 15; i++)
 	{
 		//列の中から4を探す
 		if (m_map[i][ex] == 4)
@@ -102,15 +117,15 @@ void CObjStage::Draw()
 	Draw::Draw(0, &src, &dst, c, 0.0f);
 
 	//マップチップによるblock設置
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 15; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
 			if (m_map[i][j] > 0)
 			{
 				//表示位置の設定
-				dst.m_top = i * 64.0f;
-				dst.m_left = j * 64.0f + m_scroll;
+				dst.m_top = i * 64.0f+my_scroll;
+				dst.m_left = j * 64.0f + mx_scroll;
 				dst.m_right = dst.m_left + 64.0;
 				dst.m_bottom = dst.m_top + 64.0;
 				if (m_map[i][j] == 2)
@@ -203,7 +218,7 @@ void CObjStage::BlockHit(
 	*bt = 0;
 
 	//m_mapの全要素にアクセス
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 15; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
@@ -214,16 +229,16 @@ void CObjStage::BlockHit(
 				float by = i * 64.0f;
 
 				//スクロールの影響
-				float scroll = scroll_on ? m_scroll : 0;
-
+				float scroll = scroll_on ? mx_scroll : 0;
+				float scroll_y = scroll_on ? my_scroll : 0;
 				//オブジェクトとブロックの当たり判定
-				if ((*x + (-scroll) + 64.0f > bx) && (*x + (-scroll) < bx + 64.0f) && (*y + 64.0f > by) && (*y < by + 64.0f))
+				if ((*x + (-scroll) + 64.0f > bx) && (*x + (-scroll) < bx + 64.0f) && (*y + (-scroll_y) + 64.0f > by) && (*y + (-scroll_y) < by + 64.0f))
 				{
 					//上下左右判定
 
 					//vectorの作成
 					float rvx = (*x + (-scroll)) - bx;
-					float rvy = *y - by;
+					float rvy = (*y + (-scroll_y)) - by;
 
 					//長さを求める
 					float len = sqrt(rvx * rvx + rvy * rvy);
@@ -253,7 +268,7 @@ void CObjStage::BlockHit(
 						{
 							//上
 							*down = true;//オブジェクトの下の部分が衝突している
-							*y = by - 64.0f;//ブロックの位置-オブジェクトの幅
+							*y = by - 64.0f + (scroll_y);//ブロックの位置-オブジェクトの幅
 							//種類を渡すのスタートとゴールのみ変更する
 							if (m_map[i][j] >= 2)
 								* bt = m_map[i][j];//ブロックの要素（type）をオブジェクトに渡す
@@ -271,7 +286,7 @@ void CObjStage::BlockHit(
 						{
 							//下
 							*up = true;//オブジェクトの上の部分が衝突している
-							*y = by + 64.0f;//ブロックの位置+オブジェクトの幅
+							*y = by + 64.0f + (scroll_y);//ブロックの位置+オブジェクトの幅
 							if (*vy < 0)
 							{
 								*vy = 0.0f;
@@ -402,7 +417,7 @@ bool CObjStage::HeroBlockCrossPoint(
 	};
 
 	//m_mapの全要素にアクセス
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 15; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{

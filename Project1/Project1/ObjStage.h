@@ -8,15 +8,16 @@ using namespace GameL;
 class CObjStage : public CObj
 {
 public:
-	CObjStage(int map[10][100]);
+	CObjStage(int map[15][100]);
 	~CObjStage() {};
 	void Init();	//イニシャライズ
 	void Action();  //アクション
 	void Draw();	//ドロー
 
-	void SetScroll(float s) { m_scroll = s; }
-	float GetScroll() { return m_scroll; }
-
+	void SetScroll(float s) { mx_scroll = s; }
+	float GetScroll() { return mx_scroll; }
+	void SetScrollY(float sy) { my_scroll = sy; }
+	float GetScrollY() { return my_scroll; }
 	//ブロックとの当たり判定
 	void BlockHit(
 		float* x, float* y, bool scroll_on,
@@ -32,10 +33,10 @@ public:
 
 private:
 	void BlockDraw(float x, float y, RECT_F* dst, float c[]);
-	int m_map[10][100]; //マップ情報
+	int m_map[15][100]; //マップ情報
 
-	float m_scroll;		//左右スクロール用
-
+	float mx_scroll;		//左右スクロール用
+	float my_scroll;		//上下スクロール用
 
 	float Dot(float ax, float ay, float bx, float by);		//内積
 	float Cross(float ax, float ay, float bx, float by);	//外積

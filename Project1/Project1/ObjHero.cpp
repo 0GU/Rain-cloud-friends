@@ -60,7 +60,7 @@ void CObjHero::Action()
 	{
 		if (m_hit_down == true)
 		{
-			m_vy = -10;
+			m_vy = -20;//‚Æ‚è‚ ‚¦‚¸-10
 		}
 	}
 
@@ -225,7 +225,6 @@ void CObjHero::Action()
 					m_px = 300;
 					b->SetScroll(b->GetScroll() - 5.0);
 				}
-
 
 				//“ª‚Éæ‚¹‚éˆ—
 				if (m_vx < -1.0f)
