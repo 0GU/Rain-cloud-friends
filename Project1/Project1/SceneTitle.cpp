@@ -1,45 +1,41 @@
-// 使用するヘッダーファイル
-#include"GameL/DrawTexture.h"
-#include"GameL/WinInputs.h"
-#include"GameL/SceneManager.h"
-#include"GameL/DrawFont.h"
-#include"GameL/Audio.h"
-#include"GameL/UserData.h"
 
-#include"GameHead.h"
-#include"テンプレート.h"
+//STLデバッグ機能をOFFにする
+#define _SECURE_SCL (0)
+#define _HAS_ITERATOR_DEBUGGING (0)
 
-void CObjTemp::Init()
+//GameLで使用するヘッダー
+#include "GameL\SceneObjManager.h"
+#include "GameL\DrawFont.h"
+#include "GameL\Audio.h"
+#include "GameL\DrawTexture.h"
+
+//使用するネームスペース
+using namespace GameL;
+
+//使用するヘッダー
+#include "GameHead.h"
+
+//コンストラクタ
+CSceneTemp::CSceneTemp()
 {
 
 }
 
-//アクション
-void CObjTemp::Action()
+//デストラクタ
+CSceneTemp::~CSceneTemp()
 {
 
 }
 
-//ドロー
-void CObjTemp::Draw()
+//ゲームタイトル初期化メソッド
+void CSceneTemp::InitScene()
 {
-	//描画カラー情報
-	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
 
 
-	RECT_F src; //描画元切り取り位置の設定
-	RECT_F dst; //描画先表示位置
+}
 
-	//hoge1
-	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 0.0f;
-	src.m_bottom = 0.0f;
-
-	dst.m_top = 0.0f;
-	dst.m_left = 0.0f;
-	dst.m_right = 0.0f;
-	dst.m_bottom = 0.0f;
-
+//ゲームタイトル実行メソッド
+void CSceneTemp::Scene()
+{
 
 }
