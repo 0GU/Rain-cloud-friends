@@ -19,6 +19,7 @@ public:
 	float GetVY() { return m_vy; }
 	float GetVX() { return m_vx; }
 	int GetBT() { return m_block_type; }
+	float GetHP() { return m_hp; }
 
 	void SetX(float x) { m_px = x; }
 	void SetY(float y) { m_py = y; }
@@ -62,4 +63,7 @@ private:
 
 	bool hit_flag;
 	bool stay_flag;
+
+	float m_hp;			//体力（仮）
+	int   m_hit_time;	//ダメージ間隔
 };

@@ -24,6 +24,9 @@ void CObjHero::Init()
 	m_vy = 0.0f;
 	m_posture = 1.0f;		//右向き0.0f  左向き1.0f
 
+	m_hp = 1.0f;			//体力（仮）
+	m_hit_time = 0;		//ダメージ間隔
+
 	m_ani_time = 0;
 	m_ani_frame = 1;		//静止フレームを初期にする
 
@@ -47,6 +50,9 @@ void CObjHero::Init()
 //アクション
 void CObjHero::Action()
 {
+	if (m_hit_time > 0)
+		m_hit_time--;
+
 	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
 	stay_flag = p->GetFlag();
 	//落下によるゲームオーバー＆リスタート
@@ -56,6 +62,13 @@ void CObjHero::Action()
 		//場外に出たらリスタート
 		Scene::SetScene(new CSceneGameMain(reset));
 	}
+	//HPが0でリスタート（仮）
+	if (m_hp <= 0.0f)
+	{
+		Scene::SetScene(new CSceneGameMain(reset));
+
+	}
+
 	//ブロックとの当たり判定実行
 	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	pb->BlockHit(&m_px, &m_py, true,
@@ -234,10 +247,20 @@ void CObjHero::EnemyHit(int enemynum)
 				if (r < 45 && r >= 0 || r>315)
 				{
 					m_vx = -5.0f;//左に移動させる
+					if (m_hit_time == 0)
+					{
+						m_hit_time = 60;
+						m_hp -= 0.1f;//ダメージ
+					}
 				}
 				if (r > 135 && r < 225)
 				{
 					m_vx = +5.0f;//右に移動させる
+					if (m_hit_time == 0)
+					{
+						m_hit_time = 60;
+						m_hp -= 0.1f;//ダメージ
+					}
 				}
 				if (r >= 225 && r < 315)
 				{

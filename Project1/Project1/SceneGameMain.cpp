@@ -66,6 +66,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/仮/Pose.png", 3, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/選択.png", 4, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/蜘蛛.png", 4, TEX_SIZE_64);
+	Draw::LoadImageW(L"素材/仮/HP(透過).png", 6, TEX_SIZE_128);
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成
@@ -84,7 +85,9 @@ void CSceneGameMain::InitScene()
 	CObjCloud* objc = new CObjCloud(stageselect);
 	Objs::InsertObj(objc, OBJ_CLOUD, 10);
 
-
+	//体力バーオブジェクト作成
+	CObjHp* objh = new CObjHp();
+	Objs::InsertObj(objh, OBJ_HP, 11);
 }
 
 //ゲームメイン実行メソッド

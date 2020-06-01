@@ -15,6 +15,7 @@ enum OBJ_NAME
 	OBJ_POSE,
 	OBJ_TITLE,
 	OBJ_CLOUD,
+	OBJ_HP,
 };
 //------------------------------------------------
 
@@ -81,6 +82,7 @@ struct UserData
 #include"ObjPose.h"
 #include"ObjTitle.h"
 #include"ObjCloud.h"
+#include"ObjHp.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
