@@ -77,12 +77,14 @@ struct UserData
 #include"ObjFire.h"
 #include"ObjClear.h"
 #include"ObjPose.h"
+//#include"ObjTitle.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
 #include"SceneStageSelect.h"
 #include"SceneGameMain.h"
 #include"SceneClear.h"
+//#include"SceneTitle.h"
 //-----------------------------------------------
 
 //シーンスタートクラス---------------------------
