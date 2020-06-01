@@ -65,6 +65,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/仮/Animation.png", 2, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/Pose.png", 3, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/選択.png", 4, TEX_SIZE_64);
+	Draw::LoadImageW(L"素材/仮/蜘蛛.png", 4, TEX_SIZE_64);
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成
@@ -78,6 +79,10 @@ void CSceneGameMain::InitScene()
 	//Poseオブジェクト作成
 	CObjPose* objp = new CObjPose(0,0);
 	Objs::InsertObj(objp, OBJ_POSE, 11);
+
+	//主人公オブジェクト作成
+	CObjCloud* objc = new CObjCloud(stageselect);
+	Objs::InsertObj(objc, OBJ_CLOUD, 10);
 
 
 }

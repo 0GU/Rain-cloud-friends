@@ -14,6 +14,7 @@ enum OBJ_NAME
 	OBJ_CLEAR,
 	OBJ_POSE,
 	OBJ_TITLE,
+	OBJ_CLOUD,
 };
 //------------------------------------------------
 
@@ -79,6 +80,7 @@ struct UserData
 #include"ObjClear.h"
 #include"ObjPose.h"
 #include"ObjTitle.h"
+#include"ObjCloud.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
