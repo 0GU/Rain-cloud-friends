@@ -105,6 +105,9 @@
     <ClInclude Include="SceneTitle.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ObjCloud.h">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -187,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="SceneTitle.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjCloud.cpp">
+      <Filter>ソース ファイル\GameMain</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
