@@ -6,12 +6,12 @@
 //使用するネームスペース
 using namespace GameL;
 
-//シーン：てんぷれ
-class CSceneTemp :public CScene
+//シーン：タイトル
+class CSceneTitle :public CScene
 {
 public:
-	CSceneTemp() {};
-	~CSceneTemp() {};
+	CSceneTitle() ;
+	~CSceneTitle() ;
 	void InitScene();//ゲームタイトルの初期化メソッド
 	void Scene();	 //ゲームタイトルの実行中メソッド
 private:
