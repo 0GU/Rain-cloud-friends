@@ -27,10 +27,14 @@ void CObjCloud::Init()
 //アクション
 void CObjCloud::Action()
 {
-	if (Input::GetVKey(VK_LEFT) == true)
+	if (Input::GetVKey('A') == true)
 		m_px -= m_vx;
-	if (Input::GetVKey(VK_RIGHT) == true)
+	if (Input::GetVKey('D')== true)
 		m_px += m_vx;
+	if (Input::GetVKey('W') == true)
+		m_py -= m_vy;
+	if (Input::GetVKey('S') == true)
+		m_py += m_vy;
 }
 
 //ドロー
