@@ -275,7 +275,7 @@ void CObjHero::Action()
 
 	//HitBoxの位置の変更
 	hit->SetPos(m_px, m_py);
-
+	
 }
 
 //ドロー
