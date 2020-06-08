@@ -14,6 +14,8 @@ public:
 	void Action();  //アクション
 	void Draw();	//ドロー
 
+	float GetHP() { return m_hp; }
+
 	
 private:
 	int reset;
@@ -22,6 +24,8 @@ private:
 	float m_py;
 	float m_vx;
 	float m_vy;
+
+	float m_hp;			//体力（仮）
 
 	bool stay_flag;
 	bool rain_flag;

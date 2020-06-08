@@ -17,10 +17,17 @@ void CObjHp::Action()
 {
 	//主人公から体力の情報を持ってくる
 	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
-	hp_len = hero->GetHP();
+	he_hp = hero->GetHP();
 
-	if (hp_len <= 0.0f)
-		hp_len = 0.0f;
+	//雲から体力の情報を持ってくる
+	CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
+	cl_hp = cloud->GetHP();
+
+	//hpが0以下なら0にする
+	if (he_hp <= 0.0f)
+		he_hp = 0.0f;
+	if (cl_hp <= 0.0f)
+		cl_hp = 0.0f;
 }
 
 //ドロー
@@ -33,17 +40,17 @@ void CObjHp::Draw()
 	RECT_F src; //描画元切り取り位置の設定
 	RECT_F dst; //描画先表示位置
 
-	//HPゲージ
+	//主人公：HPゲージ
 	//切り取り位置の設定
 	src.m_top = 17.0f;
 	src.m_bottom = 27.0f;
 
-	if (hp_len > 0.5)
+	if (he_hp > 0.5)
 	{
 		src.m_left = 0.0f;
 		src.m_right = src.m_left + 10.0f;
 	}
-	else if (hp_len > 0.2)
+	else if (he_hp > 0.2)
 	{
 		src.m_left = 11.0f;
 		src.m_right = src.m_left + 10.0f;
@@ -54,12 +61,41 @@ void CObjHp::Draw()
 		src.m_right = src.m_left + 10.0f;
 	}
 
-
 	//表示位置の設定
 	dst.m_top = 53.0f;
 	dst.m_left = 53.0f;
-	dst.m_right = ((174.0f - dst.m_left) * hp_len) + dst.m_left;
-	dst.m_bottom = 63.0f;
+	dst.m_right = ((174.0f - dst.m_left) * he_hp) + dst.m_left;
+	dst.m_bottom = dst.m_top+10.0f;
+
+	//描画
+	Draw::Draw(6, &src, &dst, c, 0.0f);
+
+	//雲：HPゲージ
+	//切り取り位置の設定
+	src.m_top = 17.0f;
+	src.m_bottom = 27.0f;
+
+	if (cl_hp > 0.5)
+	{
+		src.m_left = 33.0f;
+		src.m_right = src.m_left + 10.0f;
+	}
+	else if (cl_hp > 0.2)
+	{
+		src.m_left = 11.0f;
+		src.m_right = src.m_left + 10.0f;
+	}
+	else
+	{
+		src.m_left = 22.0f;
+		src.m_right = src.m_left + 10.0f;
+	}
+
+	//表示位置の設定
+	dst.m_top = 73.0f;
+	dst.m_left = 53.0f;
+	dst.m_right = ((174.0f - dst.m_left) * cl_hp) + dst.m_left;
+	dst.m_bottom = dst.m_top + 10.0f;
 
 	//描画
 	Draw::Draw(6, &src, &dst, c, 0.0f);
@@ -72,14 +108,18 @@ void CObjHp::Draw()
 	src.m_right = 127.0f;
 	src.m_bottom = 16.0f;
 
-	//表示位置の設定
+	//表示位置：主人公
 	dst.m_top = 50.0f;
 	dst.m_left = 50.0f;
 	dst.m_right = 177.0f;
 	dst.m_bottom = 66.0f;
-
 	//描画
 	Draw::Draw(6, &src, &dst, c, 0.0f);
 
+	//表示位置：雲
+	dst.m_top = 70.0f;
+	dst.m_bottom = 86.0f;
+	//描画
+	Draw::Draw(6, &src, &dst, c, 0.0f);
 
 }
