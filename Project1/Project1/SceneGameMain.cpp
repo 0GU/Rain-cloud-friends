@@ -67,6 +67,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/仮/選択.png", 4, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/蜘蛛.png", 4, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/HP(透過).png", 6, TEX_SIZE_128);
+	Draw::LoadImageW(L"素材/画像/雲.png", 7, TEX_SIZE_128);
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成

@@ -319,8 +319,8 @@ void CObjStageSelect::Draw()
 	//é¥ÅiâºÅj
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 366.0f;
-	src.m_bottom = 400.0f;
+	src.m_right = 512.0f;
+	src.m_bottom = 512.0f;
 
 	dst.m_top = 560.0f;
 	dst.m_left = 120.0f;
