@@ -20,6 +20,10 @@ CSceneTitle::CSceneTitle()
 {
 	CObjTitle* p = new CObjTitle;
 	Objs::InsertObj(p, OBJ_TITLE, 1);
+
+	//画像情報を登録
+	Draw::LoadImageW(L"素材/仮/タイトル.png", 0, TEX_SIZE_2048);
+	Draw::LoadImageW(L"素材/画像/タイトル文字.png", 1, TEX_SIZE_2048);
 }
 
 //デストラクタ
