@@ -111,6 +111,9 @@
     <ClInclude Include="ObjHp.h">
       <Filter>ソース ファイル\GameMain</Filter>
     </ClInclude>
+    <ClInclude Include="ObjRain.h">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -198,6 +201,9 @@
       <Filter>ソース ファイル\GameMain</Filter>
     </ClCompile>
     <ClCompile Include="ObjHp.cpp">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjRain.cpp">
       <Filter>ソース ファイル\GameMain</Filter>
     </ClCompile>
   </ItemGroup>
