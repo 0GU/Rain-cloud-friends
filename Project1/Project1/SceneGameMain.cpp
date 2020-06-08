@@ -50,7 +50,15 @@ void CSceneGameMain::InitScene()
 			swscanf_s(&p.get()[count], L"%d", &w);
 
 			map[i][j] = w;
-			count += 2;
+			
+			if (w >= 10)
+			{
+				count += 3;
+			}
+			else
+			{
+				count += 2;
+			}
 		}
 	}
 
