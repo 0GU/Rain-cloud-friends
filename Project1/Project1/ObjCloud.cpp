@@ -35,6 +35,9 @@ void CObjCloud::Action()
 		m_py -= m_vy;
 	if (Input::GetVKey('S') == true)
 		m_py += m_vy;
+	CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+
+	
 }
 
 //ÉhÉçÅ[

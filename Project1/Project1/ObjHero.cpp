@@ -267,6 +267,8 @@ void CObjHero::EnemyHit(int enemynum)
 					//敵の移動方向を主人公の位置に加算
 					if (enemynum == 1)
 						m_px += ((CObjEnemy*)hit_data[i]->o)->GetVx();
+					
+
 					CObjStage* b = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 					//後方スクロールライン
 					if (m_px < 80)
@@ -298,30 +300,9 @@ void CObjHero::EnemyHit(int enemynum)
 			}
 		}
 
-		//火と当たっているか
-		if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
+		if (hit_flag == false)
 		{
-			//主人公が敵とどの角度で当たっているかを確認
-			HIT_DATA** hit_data;						//当たった時の細かな情報を入れるための構造体
-			hit_data = hit->SearchObjNameHit(OBJ_FIRE);//hit_dataに主人公と当たっている他全てのHitBoxとの情報を入れる
-
-			for (int i = 0; i < hit->GetCount(); i++)
-			{
-				//敵の左右に当たったら
-				float r = hit_data[i]->r;
-				if (r < 45 && r >= 0 || r>315)
-				{
-					m_vx = -5.0f;//左に移動させる
-				}
-				if (r > 135 && r < 225)
-				{
-					m_vx = +5.0f;//右に移動させる
-				}
-				if (r >= 225 && r < 315)
-				{
-
-				}
-			}
+			hit_flag = true;
 		}
 
 		//位置の更新
@@ -332,4 +313,5 @@ void CObjHero::EnemyHit(int enemynum)
 		hit->SetPos(m_px, m_py);
 
 	}
+
 }
