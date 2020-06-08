@@ -5,16 +5,16 @@
 using namespace GameL;
 
 //オブジェクト：主人公
-class CObjCloud : public CObj
+class CObjRain : public CObj
 {
 public:
-	CObjCloud(int stage);
-	~CObjCloud() {};
+	CObjRain(float x,float y);
+	~CObjRain() {};
 	void Init();	//イニシャライズ
 	void Action();  //アクション
 	void Draw();	//ドロー
 
-	
+
 private:
 	int reset;
 
@@ -22,7 +22,4 @@ private:
 	float m_py;
 	float m_vx;
 	float m_vy;
-
-	bool stay_flag;
-	bool rain_flag;
 };

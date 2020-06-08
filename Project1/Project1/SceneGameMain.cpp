@@ -65,8 +65,9 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰¼/Animation.png", 2, TEX_SIZE_64);
 	Draw::LoadImageW(L"‘fŞ/‰¼/Pose.png", 3, TEX_SIZE_64);
 	Draw::LoadImageW(L"‘fŞ/‰¼/‘I‘ğ.png", 4, TEX_SIZE_64);
-	Draw::LoadImageW(L"‘fŞ/‰¼/’wå.png", 4, TEX_SIZE_64);
+	Draw::LoadImageW(L"‘fŞ/‰¼/’wå.png", 5, TEX_SIZE_64);
 	Draw::LoadImageW(L"‘fŞ/‰¼/HP(“§‰ß).png", 6, TEX_SIZE_128);
+	Draw::LoadImageW(L"‘fŞ/‰¼/ito.png", 7, TEX_SIZE_128);
 	//Audio::Start(0);
 
 	//ålŒöƒIƒuƒWƒFƒNƒgì¬
