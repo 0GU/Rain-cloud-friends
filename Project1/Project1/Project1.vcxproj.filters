@@ -108,6 +108,9 @@
     <ClInclude Include="ObjCloud.h">
       <Filter>ソース ファイル\GameMain</Filter>
     </ClInclude>
+    <ClInclude Include="ObjHp.h">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -192,6 +195,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ObjCloud.cpp">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjHp.cpp">
       <Filter>ソース ファイル\GameMain</Filter>
     </ClCompile>
   </ItemGroup>
