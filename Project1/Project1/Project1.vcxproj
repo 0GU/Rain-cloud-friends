@@ -39,6 +39,7 @@
     <ClInclude Include="ObjHero.h" />
     <ClInclude Include="ObjHp.h" />
     <ClInclude Include="ObjPose.h" />
+    <ClInclude Include="ObjRain.h" />
     <ClInclude Include="ObjStage.h" />
     <ClInclude Include="ObjStageSelect.h" />
     <ClInclude Include="ObjTitle.h">
@@ -81,6 +82,7 @@
     <ClCompile Include="ObjHero.cpp" />
     <ClCompile Include="ObjHp.cpp" />
     <ClCompile Include="ObjPose.cpp" />
+    <ClCompile Include="ObjRain.cpp" />
     <ClCompile Include="ObjStage.cpp" />
     <ClCompile Include="ObjStageSelect.cpp" />
     <ClCompile Include="ObjTitle.cpp">
