@@ -17,6 +17,7 @@ enum OBJ_NAME
 	OBJ_CLOUD,
 	OBJ_HP,
 	OBJ_RAIN,
+	OBJ_RESTART,
 };
 //------------------------------------------------
 
@@ -36,6 +37,7 @@ enum HIT_ELEMENTS
 	ELEMENT_BLUE,
 	ELEMENT_BLACK,
 	ELEMENT_WHITE,
+	ELEMENT_RESET,
 };
 //------------------------------------------------h
 
@@ -85,6 +87,7 @@ struct UserData
 #include"ObjCloud.h"
 #include"ObjHp.h"
 #include"ObjRain.h"
+#include"ObjRestart.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------

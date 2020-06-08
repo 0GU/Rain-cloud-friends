@@ -10,12 +10,12 @@
 //使用するネームスペース
 using namespace GameL;
 
-CObjStage::CObjStage(int map[15][100])
+CObjStage::CObjStage(int map[16][100])
 {
 	
 
 	//マップデータをコピー
-	memcpy(m_map, map, sizeof(int) * (15 * 100));
+	memcpy(m_map, map, sizeof(int) * (16 * 100));
 }
 //イニシャライズ
 void CObjStage::Init()
@@ -63,16 +63,16 @@ void CObjStage::Action()
 	}
 
 	//上方スクロールライン
-	if (hy < 10)
+	if (hy < 64)
 	{
-		hero->SetY(10);				//主人公はラインを超えないようにする
+		hero->SetY(64);				//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
 	//下方スクロールライン
-	if (hy > 500)
+	if (hy > 536)
 	{
-		hero->SetY(500);			//主人公はラインを超えないようにする
+		hero->SetY(536);			//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -84,7 +84,7 @@ void CObjStage::Action()
 		int ex = ((int)line) / 64;
 
 	//敵出現ラインの列を検索
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 16; i++)
 	{
 		//列の中から4を探す
 		if (m_map[i][ex] == 4)
@@ -124,7 +124,7 @@ void CObjStage::Draw()
 	Draw::Draw(0, &src, &dst, c, 0.0f);
 
 	//マップチップによるblock設置
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 16; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
@@ -153,6 +153,12 @@ void CObjStage::Draw()
 				{
 					CObjFire* objf = new CObjFire(j * 64.0f, i * 64.0f);
 					Objs::InsertObj(objf, OBJ_FIRE, 10);
+					m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 99)
+				{
+					CObjRestart* objg = new CObjRestart(j * 64.0f, i * 64.0f);
+					Objs::InsertObj(objg, OBJ_RESTART, 10);
 					m_map[i][j] = 0;
 				}
 				else
@@ -225,7 +231,7 @@ void CObjStage::BlockHit(
 	*bt = 0;
 
 	//m_mapの全要素にアクセス
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 16; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
@@ -424,7 +430,7 @@ bool CObjStage::HeroBlockCrossPoint(
 	};
 
 	//m_mapの全要素にアクセス
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 16; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{

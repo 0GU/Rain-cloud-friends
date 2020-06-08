@@ -114,6 +114,9 @@
     <ClInclude Include="ObjRain.h">
       <Filter>ソース ファイル\GameMain</Filter>
     </ClInclude>
+    <ClInclude Include="ObjRestart.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -205,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="ObjRain.cpp">
       <Filter>ソース ファイル\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjRestart.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

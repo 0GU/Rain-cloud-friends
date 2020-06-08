@@ -55,12 +55,7 @@ void CObjHero::Action()
 
 	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
 	stay_flag = p->GetFlag();
-	//落下によるゲームオーバー＆リスタート
-	if (m_py > 1000.0f)
-	{
-		//場外に出たらリスタート
-		Scene::SetScene(new CSceneGameMain(reset));
-	}
+
 	//HPが0でリスタート（仮）
 	if (m_hp <= 0.0f)
 	{
@@ -163,6 +158,12 @@ void CObjHero::Action()
 			EnemyHit(enemynum);
 		}
 
+		//落下によるゲームオーバー＆リスタート
+		if (hit->CheckObjNameHit(OBJ_RESTART) != nullptr)
+		{
+			//場外に出たらリスタート
+			Scene::SetScene(new CSceneGameMain(reset));
+		}
 
 		//位置の更新
 		m_px += m_vx;
