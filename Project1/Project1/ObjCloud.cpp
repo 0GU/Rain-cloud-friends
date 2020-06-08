@@ -22,6 +22,7 @@ void CObjCloud::Init()
 	m_py = 100.0f;
 	m_vx = 5.0f;
 	m_vy = 5.0f;
+	m_hp = 1.0f;
 	stay_flag = false;
 	rain_flag = false;
 
@@ -50,11 +51,12 @@ void CObjCloud::Action()
 			m_py += m_vy;
 	}
 
-	if (Input::GetVKey('C') == true && rain_flag == true)
+	if (Input::GetVKey('C') == true && rain_flag == true && m_hp > 0.0f)
 	{
 		CObjRain* objr = new CObjRain(m_px, m_py+64);
 		Objs::InsertObj(objr, OBJ_RAIN, 10);
 		rain_flag = false;
+		m_hp -= 0.1f;	//hpå∏è≠
 	}
 	if (Input::GetVKey('C') == false && rain_flag == false)
 	{

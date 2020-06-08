@@ -16,5 +16,6 @@ public:
 	void Draw();	//ドロー
 	float x, y;
 private:
-	float hp_len;	//体力量
+	float he_hp;	//体力量：主人公
+	float cl_hp;	//体力量：雲
 };
