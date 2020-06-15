@@ -11,6 +11,7 @@ enum OBJ_NAME
 	OBJ_HERO,
 	OBJ_ENEMY,
 	OBJ_FIRE,
+	OBJ_PLANT,
 	OBJ_CLEAR,
 	OBJ_POSE,
 	OBJ_TITLE,
@@ -82,6 +83,7 @@ struct UserData
 #include"ObjHero.h"
 #include"ObjEnemy.h"
 #include"ObjFire.h"
+#include"ObjPlant.h"
 #include"ObjClear.h"
 #include"ObjPose.h"
 #include"ObjTitle.h"
