@@ -106,8 +106,8 @@ void CObjClear::Draw()
 	//é¥ÅiâºÅj
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 366.0f;
-	src.m_bottom = 400.0f;
+	src.m_right =	512.0f;
+	src.m_bottom = 512.0f;
 
 	dst.m_top = 400.0f;
 	dst.m_left = 20.0f;
@@ -133,8 +133,8 @@ void CObjClear::Draw()
 	//çïâÊñ 
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 16.0f;
-	src.m_bottom = 16.0f;
+	src.m_right = 1024.0f;
+	src.m_bottom = 1024.0f;
 
 	dst.m_top = 800.0f + m_y1;
 	dst.m_left = 0.0f;
