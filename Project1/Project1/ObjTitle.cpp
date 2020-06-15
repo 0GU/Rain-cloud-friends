@@ -37,27 +37,27 @@ void CObjTitle::Draw()
 	//ƒ^ƒCƒgƒ‹”wŒi
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 900.0f;
-	src.m_bottom = 636.0f;
+	src.m_right = 1024.0f;
+	src.m_bottom = 1024.0f;
 
 	dst.m_top = 0.0f;
 	dst.m_left = 0.0f;
 	dst.m_right = 1280.0f;
 	dst.m_bottom = 720.0f;
 
-//	Draw::Draw(0, &src, &dst, c, 0.0f);
+	Draw::Draw(0, &src, &dst, c, 0.0f);
 
 	//ƒ^ƒCƒgƒ‹”wŒi
-	src.m_top = 250.0f;
+	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 512.0f;
-	src.m_bottom = 320.0f;
+	src.m_right = 1024.0f;
+	src.m_bottom = 256.0f;
 
-	dst.m_top = 0.0f;
-	dst.m_left = 00.0f;
-	dst.m_right =200.0f;
-	dst.m_bottom = 200.0f;
+	dst.m_top = 100.0f;
+	dst.m_left = 180.0f;
+	dst.m_right =1100.0f;
+	dst.m_bottom = 400.0f;
 
-	//Draw::Draw(1, &src, &dst, c, 0.0f);
+	Draw::Draw(1, &src, &dst, c, 0.0f);
 
 }
