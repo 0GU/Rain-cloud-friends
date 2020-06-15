@@ -18,6 +18,7 @@ enum OBJ_NAME
 	OBJ_HP,
 	OBJ_RAIN,
 	OBJ_RESTART,
+	OBJ_CHASE_ENEMY,
 };
 //------------------------------------------------
 
@@ -88,6 +89,7 @@ struct UserData
 #include"ObjHp.h"
 #include"ObjRain.h"
 #include"ObjRestart.h"
+#include"ObjChaseEnemy.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
