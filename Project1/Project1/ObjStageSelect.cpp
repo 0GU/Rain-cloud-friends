@@ -81,7 +81,7 @@ void CObjStageSelect::Action()
 	}
 
 
-	if (Input::GetVKey('Z') == true && stageflag == 1 && keyflag == true)
+	if (Input::GetVKey('Z') == true && stageflag == 1 && keyflag == true)//Stage1
 	{
 		keyflag = false;
 		Audio::Stop(0);
@@ -89,7 +89,7 @@ void CObjStageSelect::Action()
 
 		move_flag = true;
 	}
-	if (Input::GetVKey('Z') == true && stageflag == 2 && keyflag == true)
+	if (Input::GetVKey('Z') == true && stageflag == 2 && keyflag == true)//Stage2
 	{
 		keyflag = false;
 		Audio::Stop(0);
@@ -97,7 +97,7 @@ void CObjStageSelect::Action()
 
 		move_flag = true;
 	}
-	if (Input::GetVKey('Z') == true && stageflag == 3 && keyflag == true)
+	if (Input::GetVKey('Z') == true && stageflag == 3 && keyflag == true)//Stage3
 	{
 		keyflag = false;
 		Audio::Stop(0);
@@ -105,7 +105,7 @@ void CObjStageSelect::Action()
 
 		move_flag = true;
 	}
-	if (Input::GetVKey('C') == true && keyflag == true)
+	if (Input::GetVKey('C') == true && keyflag == true)//ÉNÉäÉAâÊñ test
 	{
 		keyflag = false;
 		//		Audio::Stop(0);
@@ -393,8 +393,8 @@ void CObjStageSelect::Draw()
 	//çïâÊñ 
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 16.0f;
-	src.m_bottom = 16.0f;
+	src.m_right = 1024.0f;
+	src.m_bottom = 1024.0f;
 
 	dst.m_top = 800.0f + m_y1;
 	dst.m_left = 0.0f;
