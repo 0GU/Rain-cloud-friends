@@ -103,7 +103,14 @@ void CObjChaseEnemy::Action()
 
 
 		//位置の更新
-		m_px += m_vx;
+		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+		float hx = hero->GetX();
+		float hy = hero->GetY();
+
+		if (m_px - hx + pb->GetScroll() <= 400.0f && m_px - hx + pb->GetScroll() >= -400.0f)
+		{
+			m_px += m_vx;
+		}
 		m_py += m_vy;
 
 		//ブロック情報を持ってくる
