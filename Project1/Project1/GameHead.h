@@ -84,6 +84,7 @@ struct UserData
 #include"ObjEnemy.h"
 #include"ObjFire.h"
 #include"ObjPlant.h"
+#include"ObjGrowPlant.h"
 #include"ObjClear.h"
 #include"ObjPose.h"
 #include"ObjTitle.h"
