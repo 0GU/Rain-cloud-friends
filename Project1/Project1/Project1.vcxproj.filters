@@ -120,6 +120,9 @@
     <ClInclude Include="ObjPlant.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ObjChaseEnemy.h">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -214,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="ObjRestart.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjChaseEnemy.cpp">
+      <Filter>ソース ファイル\GameMain</Filter>
     </ClCompile>
     <ClCompile Include="ObjPlant.cpp">
       <Filter>ソース ファイル</Filter>
