@@ -24,6 +24,14 @@ CSceneTitle::CSceneTitle()
 	//‰æ‘œî•ñ‚ğ“o˜^
 	Draw::LoadImageW(L"‘fŞ/‰¼/ƒ^ƒCƒgƒ‹.png", 0, TEX_SIZE_2048);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/title.png", 1, TEX_SIZE_2048);
+	Draw::LoadImageW(L"‘fŞ/‰¼/Animation.png", 2, TEX_SIZE_64);
+
+	//SEî•ñ‚Ì“o˜^
+	Audio::LoadAudio(0, L"‘fŞ/BGM/rain1.wav", SOUND_TYPE::BACK_MUSIC);
+	Audio::LoadAudio(1, L"‘fŞ/SE/button01.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(2, L"‘fŞ/SE/button02.wav", SOUND_TYPE::EFFECT);
+
+	Audio::Start(0);
 }
 
 //ƒfƒXƒgƒ‰ƒNƒ^
