@@ -49,6 +49,10 @@ struct UserData
 {
 	int mSeveData;	//サンプルセーブデータ
 
+	bool Stage_1[5];//1:0,2:1,3:2,4:3
+	bool Stage_2[5];
+	bool Stage_3[5];
+	
 };
 //------------------------------------------------
 
@@ -84,6 +88,7 @@ struct UserData
 #include"ObjEnemy.h"
 #include"ObjFire.h"
 #include"ObjPlant.h"
+#include"ObjGrowPlant.h"
 #include"ObjClear.h"
 #include"ObjPose.h"
 #include"ObjTitle.h"

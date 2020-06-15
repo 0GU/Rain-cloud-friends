@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ObjGrowPlant.h" />
     <ClInclude Include="ObjChaseEnemy.h" />
     <ClInclude Include="ObjCloud.h" />
     <ClInclude Include="GameHead.h" />
@@ -67,6 +68,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ObjGrowPlant.cpp" />
     <ClCompile Include="ObjChaseEnemy.cpp" />
     <ClCompile Include="ObjCloud.cpp" />
     <ClCompile Include="GameL\Audio.cpp" />
