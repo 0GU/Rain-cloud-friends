@@ -23,6 +23,8 @@ void CObjFire::Init()
 	m_ani_max_time = 4;  //アニメーション間隔幅
 	stay_flag = false;
 
+	HP = 3;
+
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 128, ELEMENT_RED, OBJ_FIRE, 1);
 }
@@ -52,6 +54,16 @@ void CObjFire::Action()
 		//HitBoxの位置の変更
 		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
+
+		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
+		{
+			HP -= 1;
+		}
+		if (HP <= 0)
+		{
+			this->SetStatus(false);//自身に削除命令を出す
+			Hits::DeleteHitBox(this);//保有するHitBoxに削除する
+		}
 	}
 }
 
