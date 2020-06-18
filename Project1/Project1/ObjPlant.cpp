@@ -27,7 +27,7 @@ void CObjPlant::Init()
 	HP = 3;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 128, ELEMENT_RED, OBJ_FIRE, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_PLANT, 1);
 }
 
 //アクション
@@ -56,11 +56,13 @@ void CObjPlant::Action()
 			{
 				if (i+1==grow)
 				{
-
+					CObjGrowPlant* obj = new CObjGrowPlant(m_px,m_py-i*64,true);
+					Objs::InsertObj(obj, OBJ_PLANT, 10);
 				}
 				else
 				{
-
+					CObjGrowPlant* objs = new CObjGrowPlant(m_px, m_py - i * 64, false);
+					Objs::InsertObj(objs, OBJ_PLANT, 10);
 				}
 			}
 			grow_flag = false;
