@@ -18,4 +18,6 @@ public:
 private:
 	float he_hp;	//‘Ì—Í—ÊFålŒö
 	float cl_hp;	//‘Ì—Í—ÊF‰_
+	float cl_MAX_HP;
+	bool flag;
 };
