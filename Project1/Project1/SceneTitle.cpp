@@ -18,6 +18,18 @@ using namespace GameL;
 //コンストラクタ
 CSceneTitle::CSceneTitle()
 {
+	
+}
+
+//デストラクタ
+CSceneTitle::~CSceneTitle()
+{
+
+}
+
+//ゲームタイトル初期化メソッド
+void CSceneTitle::InitScene()
+{
 	CObjTitle* p = new CObjTitle;
 	Objs::InsertObj(p, OBJ_TITLE, 1);
 
@@ -32,18 +44,6 @@ CSceneTitle::CSceneTitle()
 	Audio::LoadAudio(2, L"素材/SE/button02.wav", SOUND_TYPE::EFFECT);
 
 	Audio::Start(0);
-}
-
-//デストラクタ
-CSceneTitle::~CSceneTitle()
-{
-
-}
-
-//ゲームタイトル初期化メソッド
-void CSceneTitle::InitScene()
-{
-
 
 }
 
