@@ -1,25 +1,13 @@
-//使用するヘッダーファイル
-#include "GameL\DrawTexture.h"
-#include "GameL\WinInputs.h"
-#include "GameL\SceneManager.h"
+// 使用するヘッダーファイル
+#include"GameL/DrawTexture.h"
+#include"GameL/WinInputs.h"
+#include"GameL/SceneManager.h"
 #include "GameL\HitBoxManager.h"
 
-#include "GameHead.h"
-#include "ObjEnemy.h"
+#include"GameHead.h"
+#include"ObjChaseEnemy.h"
 
-//使用するネームスペース
-using namespace GameL;
-
-CObjEnemy::CObjEnemy(float x, float y)
-{
-	m_px = x;			//位置
-	m_py = y;
-
-}
-
-
-//イニシャライズ
-void CObjEnemy::Init()
+void CObjChaseEnemy::Init()
 {
 	m_vx = 0.0f;			//移動ベクトル
 	m_vy = 0.0f;
@@ -46,7 +34,7 @@ void CObjEnemy::Init()
 }
 
 //アクション
-void CObjEnemy::Action()
+void CObjChaseEnemy::Action()
 {
 	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
 	stay_flag = p->GetFlag();
@@ -57,7 +45,6 @@ void CObjEnemy::Action()
 		{
 			;
 		}
-
 		//通常速度
 		m_speed_power = 0.5f;
 		m_ani_max_time = 4;
@@ -114,56 +101,49 @@ void CObjEnemy::Action()
 			&m_vx, &m_vy, &d
 		);
 
+
 		//位置の更新
-		m_px += m_vx;
+		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+		float hx = hero->GetX();
+		float hy = hero->GetY();
+
+		if (m_px - hx + pb->GetScroll() <= 400.0f && m_px - hx + pb->GetScroll() >= -400.0f)
+		{
+			m_px += m_vx;
+		}
 		m_py += m_vy;
 
 		//ブロック情報を持ってくる
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
-	//HitBoxの位置の変更
-	CHitBox* hit = Hits::GetHitBox(this);
-	hit->SetPos(m_px + block->GetScroll(), m_py+block->GetScrollY());
-
-	//落下したら消滅
-	if (hit->CheckObjNameHit(OBJ_RESTART)!=nullptr)
-	{
-		this->SetStatus(false);
-		Hits::DeleteHitBox(this);
-	}
+		//HitBoxの位置の変更
+		CHitBox* hit = Hits::GetHitBox(this);
+		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 
 	}
-	
+
 }
 
 //ドロー
-void CObjEnemy::Draw()
+void CObjChaseEnemy::Draw()
 {
-	int AniData[4] =
-	{
-		1,0,2,0,
-	};
-
 	//描画カラー情報
-	float c[4] = { 1.0f,1.0f,0.5f,1.0f };
+	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
 
-	RECT_F src; //描画元切り取り位置
+
+	RECT_F src; //描画元切り取り位置の設定
 	RECT_F dst; //描画先表示位置
 
-	//切り取り位置の設定
-	src.m_top = 64.0f;
-	src.m_left = 0.0f + AniData[m_ani_frame] * 64;
-	src.m_right = 64.0f + AniData[m_ani_frame] * 64;
-	src.m_bottom = src.m_top + 64.0f;
+	//hoge1
+	src.m_top = 0.0f;
+	src.m_left = 0.0f;
+	src.m_right = 0.0f;
+	src.m_bottom = 0.0f;
 
-	//ブロック情報を持ってくる
-	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-	//表示位置の設定
-	dst.m_top = 0.0f + m_py + block->GetScrollY();						//↓描画に対してスクロールの影響を与える
-	dst.m_left = (64.0f * m_posture) + m_px + block->GetScroll();
-	dst.m_right = (64 - 64.0f * m_posture) + m_px + block->GetScroll();
-	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
+	dst.m_top = 0.0f;
+	dst.m_left = 0.0f;
+	dst.m_right = 0.0f;
+	dst.m_bottom = 0.0f;
 
-	//描画
-	Draw::Draw(9, &src, &dst, c, 0.0f);
+
 }

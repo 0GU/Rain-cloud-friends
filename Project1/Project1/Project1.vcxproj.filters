@@ -22,6 +22,15 @@
     <Filter Include="ソース ファイル\StageClear%28仮%29">
       <UniqueIdentifier>{7ee38b17-8d2e-442f-98b9-7f7ccbb0798d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ギミック">
+      <UniqueIdentifier>{838b8170-8eb4-418b-be50-acfed05f0095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMain\敵">
+      <UniqueIdentifier>{09e52d91-dcf9-4cd6-a542-7ab777b59fc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMain\プレイヤー関係">
+      <UniqueIdentifier>{4c0b01ef-7658-4628-8429-a635a2306842}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameHead.h">
@@ -78,15 +87,6 @@
     <ClInclude Include="ObjStage.h">
       <Filter>ソース ファイル\GameMain</Filter>
     </ClInclude>
-    <ClInclude Include="ObjHero.h">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjEnemy.h">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjFire.h">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClInclude>
     <ClInclude Include="SceneClear.h">
       <Filter>ソース ファイル\StageClear%28仮%29</Filter>
     </ClInclude>
@@ -105,17 +105,35 @@
     <ClInclude Include="SceneTitle.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ObjCloud.h">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjHp.h">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjRain.h">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClInclude>
     <ClInclude Include="ObjRestart.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjGrowPlant.h">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjPlant.h">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjFire.h">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjChaseEnemy.h">
+      <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjEnemy.h">
+      <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjCloud.h">
+      <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjHero.h">
+      <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjHp.h">
+      <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjRain.h">
+      <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -173,15 +191,6 @@
     <ClCompile Include="ObjStage.cpp">
       <Filter>ソース ファイル\GameMain</Filter>
     </ClCompile>
-    <ClCompile Include="ObjHero.cpp">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjEnemy.cpp">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjFire.cpp">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClCompile>
     <ClCompile Include="SceneClear.cpp">
       <Filter>ソース ファイル\StageClear%28仮%29</Filter>
     </ClCompile>
@@ -200,17 +209,35 @@
     <ClCompile Include="SceneTitle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ObjCloud.cpp">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjHp.cpp">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjRain.cpp">
-      <Filter>ソース ファイル\GameMain</Filter>
-    </ClCompile>
     <ClCompile Include="ObjRestart.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjGrowPlant.cpp">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjPlant.cpp">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjFire.cpp">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjChaseEnemy.cpp">
+      <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjEnemy.cpp">
+      <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjCloud.cpp">
+      <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjHero.cpp">
+      <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjHp.cpp">
+      <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjRain.cpp">
+      <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

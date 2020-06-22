@@ -15,6 +15,12 @@ public:
 	void Action();	//アクション
 	void Draw();	//ドロー
 	float x, y;
+	float m_y1;//黒画面用(仮)
 private:
 	int hoge;//仮
+	float m_scroll;
+	bool  move_flag;
+	bool scroll_flag;//ははっ
+	bool key_flag;//キー押し確認用
+
 };

@@ -38,7 +38,7 @@ void CSceneClear::InitScene()
 	//‰æ‘œî•ñ‚ğ“o˜^
 	Draw::LoadImageW(L"‘fŞ/‰¼/White.png", 0, TEX_SIZE_64);
 	Draw::LoadImageW(L"‘fŞ/‰¼/StageClear.png", 1, TEX_SIZE_1024);
-	Draw::LoadImageW(L"‘fŞ/‰¼/Shizuku.png", 2, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/‚µ‚¸‚­(…).png", 2, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰¼/Animation.png", 3, TEX_SIZE_64);
 }
 

@@ -11,6 +11,7 @@ enum OBJ_NAME
 	OBJ_HERO,
 	OBJ_ENEMY,
 	OBJ_FIRE,
+	OBJ_PLANT,
 	OBJ_CLEAR,
 	OBJ_POSE,
 	OBJ_TITLE,
@@ -18,6 +19,7 @@ enum OBJ_NAME
 	OBJ_HP,
 	OBJ_RAIN,
 	OBJ_RESTART,
+	OBJ_CHASE_ENEMY,
 };
 //------------------------------------------------
 
@@ -47,6 +49,10 @@ struct UserData
 {
 	int mSeveData;	//サンプルセーブデータ
 
+	bool Stage_1[5];//1:0,2:1,3:2,4:3
+	bool Stage_2[5];
+	bool Stage_3[5];
+	
 };
 //------------------------------------------------
 
@@ -81,6 +87,8 @@ struct UserData
 #include"ObjHero.h"
 #include"ObjEnemy.h"
 #include"ObjFire.h"
+#include"ObjPlant.h"
+#include"ObjGrowPlant.h"
 #include"ObjClear.h"
 #include"ObjPose.h"
 #include"ObjTitle.h"
@@ -88,6 +96,7 @@ struct UserData
 #include"ObjHp.h"
 #include"ObjRain.h"
 #include"ObjRestart.h"
+#include"ObjChaseEnemy.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------

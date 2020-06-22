@@ -22,6 +22,8 @@ void CObjStageSelect::Init()
 	m_scroll = 0.0f;
 	move_flag = false;
 	scroll_flag = false;
+	Clear_flag = false;
+	title_flag = false;
 }
 
 //アクション
@@ -42,8 +44,8 @@ void CObjStageSelect::Action()
 
 
 
-
-	if (Input::GetVKey(VK_RIGHT) == true && keyflag == true)
+	//ここからステージコマンド------------------
+	if (Input::GetVKey(VK_RIGHT) == true && keyflag == true && scroll_flag == true)
 	{
 		keyflag = false;
 		Audio::Start(1);
@@ -56,7 +58,7 @@ void CObjStageSelect::Action()
 			stageflag += 1;
 		}
 	}
-	if (Input::GetVKey(VK_LEFT) == true && keyflag == true)
+	if (Input::GetVKey(VK_LEFT) == true && keyflag == true && scroll_flag == true)
 	{
 		keyflag = false;
 		Audio::Start(1);
@@ -73,15 +75,19 @@ void CObjStageSelect::Action()
 	}
 
 
-	if (Input::GetVKey('X') == true && keyflag == true)
+	if (Input::GetVKey('X') == true && keyflag == true && scroll_flag == true)
 	{
+		
 		keyflag = false;
 		Audio::Start(2);
-		;//titleシーンに移行
+
+		move_flag = true;
+		
+	
 	}
 
 
-	if (Input::GetVKey('Z') == true && stageflag == 1 && keyflag == true)
+	if (Input::GetVKey('Z') == true && stageflag == 1 && keyflag == true && scroll_flag == true)//Stage1
 	{
 		keyflag = false;
 		Audio::Stop(0);
@@ -89,7 +95,7 @@ void CObjStageSelect::Action()
 
 		move_flag = true;
 	}
-	if (Input::GetVKey('Z') == true && stageflag == 2 && keyflag == true)
+	if (Input::GetVKey('Z') == true && stageflag == 2 && keyflag == true && scroll_flag == true)//Stage2
 	{
 		keyflag = false;
 		Audio::Stop(0);
@@ -97,7 +103,7 @@ void CObjStageSelect::Action()
 
 		move_flag = true;
 	}
-	if (Input::GetVKey('Z') == true && stageflag == 3 && keyflag == true)
+	if (Input::GetVKey('Z') == true && stageflag == 3 && keyflag == true && scroll_flag == true)//Stage3
 	{
 		keyflag = false;
 		Audio::Stop(0);
@@ -105,7 +111,8 @@ void CObjStageSelect::Action()
 
 		move_flag = true;
 	}
-	if (Input::GetVKey('C') == true && keyflag == true)
+	//ここまで------------------------
+	if (Input::GetVKey('C') == true && keyflag == true && scroll_flag == true)//クリア画面test
 	{
 		keyflag = false;
 		//		Audio::Stop(0);
@@ -114,17 +121,39 @@ void CObjStageSelect::Action()
 		Scene::SetScene(new CSceneClear());//そのステージに移行
 	}
 
+	if (Input::GetVKey('B') == true && keyflag == true && Clear_flag == true && scroll_flag == true)//クリアフラグ仮
+	{
+		keyflag = false;
+		Clear_flag = false;
+	}
+
+	if (Input::GetVKey('B') == true && keyflag == true && Clear_flag == false && scroll_flag == true)//クリアフラグ仮
+	{
+		keyflag = false;
+		Clear_flag = true;
+	}
+
 	if (move_flag == true)
 	{
 		m_y1 -= 50.0f;
 	}
+
 	if (m_y1 == 0.0f)
 	{
-		Scene::SetScene(new CSceneGameMain(stageflag));//そのステージに移行
+		m_y1 = 0.0f;
+		if (title_flag == true)
+		{
+			Scene::SetScene(new CSceneTitle);//titleシーンに移行
+		}
+		else
+		{
+			Scene::SetScene(new CSceneGameMain(stageflag));//そのステージに移行
+		}
+		
 	}
 
 	if (Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false &&
-		Input::GetVKey('X') == false && Input::GetVKey('Z') == false && keyflag == false)
+		Input::GetVKey('X') == false && Input::GetVKey('Z') == false && Input::GetVKey('B') == false && keyflag == false )
 	{
 		keyflag = true;
 
@@ -316,85 +345,163 @@ void CObjStageSelect::Draw()
 
 
 	//--------------ここから雫
-	//雫（仮）
-	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 512.0f;
-	src.m_bottom = 512.0f;
 
-	dst.m_top = 560.0f;
-	dst.m_left = 120.0f;
-	dst.m_right = 220.0f;
-	dst.m_bottom = 620.0f;
+	if (Clear_flag == true)
+	{
+		//雫（仮）
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 512.0f;
+		src.m_bottom = 512.0f;
 
-	Draw::Draw(3, &src, &dst, c, 0.0f);
+		dst.m_top = 560.0f;
+		dst.m_left = 120.0f;
+		dst.m_right = 220.0f;
+		dst.m_bottom = 620.0f;
 
-
-	dst.m_top = 560.0f;
-	dst.m_left = 200.0f;
-	dst.m_right = 300.0f;
-	dst.m_bottom = 620.0f;
-
-	Draw::Draw(3, &src, &dst, c, 0.0f);
+		Draw::Draw(3, &src, &dst, c, 0.0f);
 
 
-	dst.m_top = 560.0f;
-	dst.m_left = 280.0f;
-	dst.m_right = 380.0f;
-	dst.m_bottom = 620.0f;
+		dst.m_top = 560.0f;
+		dst.m_left = 200.0f;
+		dst.m_right = 300.0f;
+		dst.m_bottom = 620.0f;
 
-	Draw::Draw(3, &src, &dst, c, 0.0f);
+		Draw::Draw(3, &src, &dst, c, 0.0f);
 
 
-	dst.m_top = 560.0f;
-	dst.m_left = 520.0f;
-	dst.m_right = 620.0f;
-	dst.m_bottom = 620.0f;
+		dst.m_top = 560.0f;
+		dst.m_left = 280.0f;
+		dst.m_right = 380.0f;
+		dst.m_bottom = 620.0f;
 
-	Draw::Draw(3, &src, &dst, c, 0.0f);
+		Draw::Draw(3, &src, &dst, c, 0.0f);
 
-	dst.m_top = 560.0f;
-	dst.m_left = 680.0f;
-	dst.m_right = 780.0f;
-	dst.m_bottom = 620.0f;
 
-	Draw::Draw(3, &src, &dst, c, 0.0f);
+		dst.m_top = 560.0f;
+		dst.m_left = 520.0f;
+		dst.m_right = 620.0f;
+		dst.m_bottom = 620.0f;
 
-	dst.m_top = 560.0f;
-	dst.m_left = 600.0f;
-	dst.m_right = 700.0f;
-	dst.m_bottom = 620.0f;
+		Draw::Draw(3, &src, &dst, c, 0.0f);
 
-	Draw::Draw(3, &src, &dst, c, 0.0f);
+		dst.m_top = 560.0f;
+		dst.m_left = 680.0f;
+		dst.m_right = 780.0f;
+		dst.m_bottom = 620.0f;
 
-	dst.m_top = 560.0f;
-	dst.m_left = 920.0f;
-	dst.m_right = 1020.0f;
-	dst.m_bottom = 620.0f;
+		Draw::Draw(3, &src, &dst, c, 0.0f);
 
-	Draw::Draw(3, &src, &dst, c, 0.0f);
+		dst.m_top = 560.0f;
+		dst.m_left = 600.0f;
+		dst.m_right = 700.0f;
+		dst.m_bottom = 620.0f;
 
-	dst.m_top = 560.0f;
-	dst.m_left = 1000.0f;
-	dst.m_right = 1100.0f;
-	dst.m_bottom = 620.0f;
+		Draw::Draw(3, &src, &dst, c, 0.0f);
 
-	Draw::Draw(3, &src, &dst, c, 0.0f);
+		dst.m_top = 560.0f;
+		dst.m_left = 920.0f;
+		dst.m_right = 1020.0f;
+		dst.m_bottom = 620.0f;
 
-	dst.m_top = 560.0f;
-	dst.m_left = 1080.0f;
-	dst.m_right = 1180.0f;
-	dst.m_bottom = 620.0f;
+		Draw::Draw(3, &src, &dst, c, 0.0f);
 
-	Draw::Draw(3, &src, &dst, c, 0.0f);
+		dst.m_top = 560.0f;
+		dst.m_left = 1000.0f;
+		dst.m_right = 1100.0f;
+		dst.m_bottom = 620.0f;
+
+		Draw::Draw(3, &src, &dst, c, 0.0f);
+
+		dst.m_top = 560.0f;
+		dst.m_left = 1080.0f;
+		dst.m_right = 1180.0f;
+		dst.m_bottom = 620.0f;
+
+		Draw::Draw(3, &src, &dst, c, 0.0f);
+	}
+	if (Clear_flag == false)
+	{
+		//雫（仮）
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 512.0f;
+		src.m_bottom = 512.0f;
+
+		dst.m_top = 560.0f;
+		dst.m_left = 120.0f;
+		dst.m_right = 220.0f;
+		dst.m_bottom = 620.0f;
+
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+
+
+		dst.m_top = 560.0f;
+		dst.m_left = 200.0f;
+		dst.m_right = 300.0f;
+		dst.m_bottom = 620.0f;
+
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+
+
+		dst.m_top = 560.0f;
+		dst.m_left = 280.0f;
+		dst.m_right = 380.0f;
+		dst.m_bottom = 620.0f;
+
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+
+
+		dst.m_top = 560.0f;
+		dst.m_left = 520.0f;
+		dst.m_right = 620.0f;
+		dst.m_bottom = 620.0f;
+
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+
+		dst.m_top = 560.0f;
+		dst.m_left = 680.0f;
+		dst.m_right = 780.0f;
+		dst.m_bottom = 620.0f;
+
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+
+		dst.m_top = 560.0f;
+		dst.m_left = 600.0f;
+		dst.m_right = 700.0f;
+		dst.m_bottom = 620.0f;
+
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+
+		dst.m_top = 560.0f;
+		dst.m_left = 920.0f;
+		dst.m_right = 1020.0f;
+		dst.m_bottom = 620.0f;
+
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+
+		dst.m_top = 560.0f;
+		dst.m_left = 1000.0f;
+		dst.m_right = 1100.0f;
+		dst.m_bottom = 620.0f;
+
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+
+		dst.m_top = 560.0f;
+		dst.m_left = 1080.0f;
+		dst.m_right = 1180.0f;
+		dst.m_bottom = 620.0f;
+
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+	}
 
 	//-------------------ここまで
 
 	//黒画面
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 16.0f;
-	src.m_bottom = 16.0f;
+	src.m_right = 1024.0f;
+	src.m_bottom = 1024.0f;
 
 	dst.m_top = 800.0f + m_y1;
 	dst.m_left = 0.0f;

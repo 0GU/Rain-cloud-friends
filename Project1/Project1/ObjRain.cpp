@@ -39,7 +39,11 @@ void CObjRain::Action()
 		this->SetStatus(false);//自身に削除命令を出す
 		Hits::DeleteHitBox(this);//保有するHitBoxに削除する
 	}
-
+	if (hit->CheckObjNameHit(OBJ_FIRE)!=nullptr|| hit->CheckObjNameHit(OBJ_PLANT) != nullptr)
+	{
+		this->SetStatus(false);//自身に削除命令を出す
+		Hits::DeleteHitBox(this);//保有するHitBoxに削除する
+	}
 	//HitBoxの位置の変更
 	hit->SetPos(m_px, m_py);
 }

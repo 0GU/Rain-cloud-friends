@@ -9,7 +9,9 @@
 
 void CObjHp::Init()
 {
-
+	flag = true;
+	CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
+	cl_MAX_HP = cloud->GetHP();
 }
 
 //アクション
@@ -22,7 +24,6 @@ void CObjHp::Action()
 	//雲から体力の情報を持ってくる
 	CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
 	cl_hp = cloud->GetHP();
-
 	//hpが0以下なら0にする
 	if (he_hp <= 0.0f)
 		he_hp = 0.0f;
@@ -75,12 +76,12 @@ void CObjHp::Draw()
 	src.m_top = 17.0f;
 	src.m_bottom = 27.0f;
 
-	if (cl_hp > 0.5)
+	if ((cl_hp/cl_MAX_HP) > 0.5)
 	{
 		src.m_left = 33.0f;
 		src.m_right = src.m_left + 10.0f;
 	}
-	else if (cl_hp > 0.2)
+	else if ((cl_hp / cl_MAX_HP) > 0.2)
 	{
 		src.m_left = 11.0f;
 		src.m_right = src.m_left + 10.0f;
@@ -94,7 +95,7 @@ void CObjHp::Draw()
 	//表示位置の設定
 	dst.m_top = 73.0f;
 	dst.m_left = 53.0f;
-	dst.m_right = ((174.0f - dst.m_left) * cl_hp) + dst.m_left;
+	dst.m_right = ((174.0f - dst.m_left) * (cl_hp/cl_MAX_HP)) + dst.m_left;
 	dst.m_bottom = dst.m_top + 10.0f;
 
 	//描画

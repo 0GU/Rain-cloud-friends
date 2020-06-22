@@ -6,15 +6,16 @@ using namespace GameL;
 
 
 //オブジェクト：ステージセレクト
-class CObjFire : public CObj
+class CObjGrowPlant : public CObj
 {
 public:
-	CObjFire(float x, float y);
-	~CObjFire() {};
+	CObjGrowPlant(float x, float y, bool flag);
+	~CObjGrowPlant() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
 	void Draw();	//ドロー
 	float m_px, m_py;
+	bool graphic;
 private:
 	int   m_ani_time;   //アニメーションフレーム動作間隔
 	int   m_ani_frame;  //描画フレーム
