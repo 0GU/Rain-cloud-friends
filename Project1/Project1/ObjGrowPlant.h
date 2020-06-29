@@ -9,7 +9,7 @@ using namespace GameL;
 class CObjGrowPlant : public CObj
 {
 public:
-	CObjGrowPlant(float x, float y, bool flag);
+	CObjGrowPlant(float x, float y,int growcnt, bool flag);
 	~CObjGrowPlant() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
@@ -23,4 +23,5 @@ private:
 	float m_ani_max_time; //アニメーション動作間隔最大値
 	bool stay_flag;
 	int HP;
+	int count;
 };

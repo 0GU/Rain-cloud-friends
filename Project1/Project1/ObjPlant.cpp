@@ -52,19 +52,13 @@ void CObjPlant::Action()
 		}
 		if (HP <= 0&&grow_flag==true)
 		{
-			for (int i = 0; i < grow; i++)
-			{
-				if (i+1==grow)
-				{
-					CObjGrowPlant* obj = new CObjGrowPlant(m_px,m_py-i*64,true);
+				
+					CObjGrowPlant* obj = new CObjGrowPlant(m_px,m_py-grow*64,grow,true);
 					Objs::InsertObj(obj, OBJ_PLANT, 10);
-				}
-				else
-				{
-					CObjGrowPlant* objs = new CObjGrowPlant(m_px, m_py - i * 64, false);
+			
+					CObjGrowPlant* objs = new CObjGrowPlant(m_px, m_py - (grow-1) * 64,grow, false);
 					Objs::InsertObj(objs, OBJ_PLANT, 10);
-				}
-			}
+
 			grow_flag = false;
 			this->SetStatus(false);//©g‚Éíœ–½—ß‚ğo‚·
 			Hits::DeleteHitBox(this);//•Û—L‚·‚éHitBox‚Éíœ‚·‚é
