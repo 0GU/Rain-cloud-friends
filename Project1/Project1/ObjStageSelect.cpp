@@ -29,6 +29,7 @@ void CObjStageSelect::Init()
 //アクション
 void CObjStageSelect::Action()
 {
+	Save::Open();
 
 	//黒画面スクロール
 	if (scroll_flag == false)
@@ -80,7 +81,7 @@ void CObjStageSelect::Action()
 		
 		keyflag = false;
 		Audio::Start(2);
-
+		title_flag=true;
 		move_flag = true;
 		
 	
