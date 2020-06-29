@@ -69,7 +69,7 @@ void CObjHero::Action()
 	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	pb->BlockHit(&m_px, &m_py, true,
 		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-		&m_vx, &m_vy, &m_block_type
+		&m_vx, &m_vy, &m_block_type,climb_flag
 	);
 
 	//Ž©g‚ÌHitBox‚ðŽ‚Á‚Ä‚­‚é
@@ -124,7 +124,10 @@ void CObjHero::Action()
 		{
 			m_vy = -1.0f;
 		}
-	
+		else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+		{
+			m_vy = +1.0f;
+		}
 
 		else
 		{
@@ -177,11 +180,11 @@ void CObjHero::Action()
 			int enemynum = 2;
 			EnemyHit(enemynum);
 		}
-		if (hit->CheckElementHit(ELEMENT_IVY) == true&&climb_flag==false)
+		if (hit->CheckElementHit(ELEMENT_IVY) == true&& (Input::GetVKey(VK_UP) == true|| (Input::GetVKey(VK_DOWN)==true)))
 		{
 			climb_flag = true;
 		}
-		else if (hit->CheckElementHit(ELEMENT_IVY) == false && hit->CheckElementHit(ELEMENT_FLOWER) == false && climb_flag == true) 
+		else if ((hit->CheckElementHit(ELEMENT_IVY) == false && hit->CheckElementHit(ELEMENT_FLOWER) == false && climb_flag == true)|| Input::GetVKey(VK_UP) == false)
 		{
 			climb_flag = false;
 		}

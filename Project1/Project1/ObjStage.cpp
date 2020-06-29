@@ -267,6 +267,17 @@ void CObjStage::BlockHit(
 	float* x, float* y, bool scroll_on,
 	bool* up, bool* down, bool* left, bool* right,
 	float* vx, float* vy, int* bt
+) {
+	CObjStage::BlockHit(
+		x, y, scroll_on,
+		up, down, left, right,
+		vx, vy, bt, false
+	);
+}
+void CObjStage::BlockHit(
+	float* x, float* y, bool scroll_on,
+	bool* up, bool* down, bool* left, bool* right,
+	float* vx, float* vy, int* bt,bool climb
 )
 {
 	//衝突状態確認用フラグの初期化
@@ -325,7 +336,7 @@ void CObjStage::BlockHit(
 							*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
-						if (r > 45 && r < 135)
+						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 14))
 						{
 							//上
 							*down = true;//オブジェクトの下の部分が衝突している
@@ -343,7 +354,7 @@ void CObjStage::BlockHit(
 							*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
-						if (r > 225 && r < 315)
+						if (r > 225 && r < 315 && climb == false)
 						{
 							//下
 							*up = true;//オブジェクトの上の部分が衝突している
