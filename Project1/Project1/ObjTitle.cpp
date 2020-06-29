@@ -33,7 +33,7 @@ void CObjTitle::Action()
 		}
 	}
 
-	if (Input::GetVKey('Z') == true && key_flag == true)//Zキーを押すと
+	if (Input::GetVKey('Z') == true && key_flag == true && scroll_flag==true)//Zキーを押すと
 	{
 		key_flag = false;//Keyのフラグを止めて
 
