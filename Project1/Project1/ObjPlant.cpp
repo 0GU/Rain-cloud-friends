@@ -11,7 +11,7 @@ CObjPlant::CObjPlant(float x, float y,int count)
 {
 	m_px = x;			//位置
 	m_py = y;
-	grow = count;
+	grow = count;		//成長させる大きさ
 
 }
 
@@ -46,17 +46,17 @@ void CObjPlant::Action()
 		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 
-		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
+		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)	//雨が当たるとHP減少
 		{
 			HP -= 1;
 		}
-		if (HP <= 0&&grow_flag==true)
+		if (HP <= 0&&grow_flag==true)					//HP0で成長
 		{
 				
-					CObjGrowPlant* obj = new CObjGrowPlant(m_px,m_py-grow*64,grow,true);
+					CObjGrowPlant* obj = new CObjGrowPlant(m_px,m_py-grow*64,grow,true);	//花の部分のオブジェクト作成
 					Objs::InsertObj(obj, OBJ_PLANT, 10);
 			
-					CObjGrowPlant* objs = new CObjGrowPlant(m_px, m_py - (grow-1) * 64,grow, false);
+					CObjGrowPlant* objs = new CObjGrowPlant(m_px, m_py - (grow-1) * 64,grow, false);	//ツタの部分のオブジェクト作成
 					Objs::InsertObj(objs, OBJ_PLANT, 10);
 
 			grow_flag = false;

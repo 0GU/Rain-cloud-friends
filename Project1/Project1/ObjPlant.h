@@ -9,13 +9,13 @@ using namespace GameL;
 class CObjPlant : public CObj
 {
 public:
-	CObjPlant(float x, float y,int count);
+	CObjPlant(float x, float y,int count);	//x,y=位置	count=成長させる大きさの設定
 	~CObjPlant() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
 	void Draw();	//ドロー
 	float m_px, m_py;
-	int grow;
+	int grow;		//成長させる大きさ
 private:
 	int   m_ani_time;   //アニメーションフレーム動作間隔
 	int   m_ani_frame;  //描画フレーム
