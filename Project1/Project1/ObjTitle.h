@@ -21,4 +21,6 @@ private:
 	float m_scroll;
 	bool  move_flag;
 	bool scroll_flag;//ははっ
+	bool key_flag;//キー押し確認用
+
 };

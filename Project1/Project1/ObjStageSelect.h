@@ -23,5 +23,7 @@ private:
 	float m_scroll;
 	bool  move_flag;
 	bool scroll_flag;//ははっ
-	bool Clear_flag;
+	bool Clear_flag;//クリアフラグ仮（本番は配列でクリアの種類を分ける予定）
+	bool title_flag;//タイトル移行用フラグ
+
 };
