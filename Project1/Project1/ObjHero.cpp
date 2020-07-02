@@ -41,6 +41,8 @@ void CObjHero::Init()
 	hit_flag = true;
 	stay_flag = false;
 
+	climb_flag = false;
+
 	m_block_type = 0;		//踏んでいるblockの種類を確認用
 
 	//当たり判定用のHitBoxを作成
@@ -67,8 +69,12 @@ void CObjHero::Action()
 	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	pb->BlockHit(&m_px, &m_py, true,
 		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-		&m_vx, &m_vy, &m_block_type
+		&m_vx, &m_vy, &m_block_type,climb_flag
 	);
+
+	//自身のHitBoxを持ってくる
+	CHitBox* hit = Hits::GetHitBox(this);
+
 	if (stay_flag == false)
 	{
 		//Xキー入力でジャンプ
@@ -110,6 +116,19 @@ void CObjHero::Action()
 			m_posture = 0.0f;
 			m_ani_time += 1;
 		}
+		else if (Input::GetVKey(VK_UP) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
+		{
+			m_vy = 0.0f;
+		}
+		else if (Input::GetVKey(VK_UP) == true&&climb_flag==true&&hit->CheckElementHit(ELEMENT_FLOWER) == false)
+		{
+			m_vy = -1.0f;
+		}
+		else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+		{
+			m_vy = +1.0f;
+		}
+
 		else
 		{
 			m_ani_frame = 1;  //キー入力が無い場合は静止フレームにする
@@ -132,7 +151,12 @@ void CObjHero::Action()
 		m_vx += -(m_vx * 0.098);
 
 		//自由落下速度
-		m_vy += 9.8 / (16.0f);
+		if (climb_flag==false|| Input::GetVKey(VK_UP) == false)
+		{
+			m_vy += 9.8 / (16.0f);
+		}
+		
+
 
 		//高速移動によるBlock判定
 		bool b;
@@ -144,8 +168,7 @@ void CObjHero::Action()
 
 		
 
-		//自身のHitBoxを持ってくる
-		CHitBox* hit = Hits::GetHitBox(this);
+		
 		//敵と当たっているか確認
 		if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
 		{
@@ -156,6 +179,14 @@ void CObjHero::Action()
 		{
 			int enemynum = 2;
 			EnemyHit(enemynum);
+		}
+		if (hit->CheckElementHit(ELEMENT_IVY) == true&& (Input::GetVKey(VK_UP) == true|| (Input::GetVKey(VK_DOWN)==true)))
+		{
+			climb_flag = true;
+		}
+		else if ((hit->CheckElementHit(ELEMENT_IVY) == false && hit->CheckElementHit(ELEMENT_FLOWER) == false && climb_flag == true)|| Input::GetVKey(VK_UP) == false)
+		{
+			climb_flag = false;
 		}
 
 		//落下によるゲームオーバー＆リスタート

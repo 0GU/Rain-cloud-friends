@@ -23,11 +23,13 @@ void CObjStageSelect::Init()
 	move_flag = false;
 	scroll_flag = false;
 	Clear_flag = false;
+	title_flag = false;
 }
 
 //アクション
 void CObjStageSelect::Action()
 {
+	Save::Open();
 
 	//黒画面スクロール
 	if (scroll_flag == false)
@@ -43,7 +45,7 @@ void CObjStageSelect::Action()
 
 
 
-
+	//ここからステージコマンド------------------
 	if (Input::GetVKey(VK_RIGHT) == true && keyflag == true && scroll_flag == true)
 	{
 		keyflag = false;
@@ -76,9 +78,13 @@ void CObjStageSelect::Action()
 
 	if (Input::GetVKey('X') == true && keyflag == true && scroll_flag == true)
 	{
+		
 		keyflag = false;
 		Audio::Start(2);
-		;//titleシーンに移行
+		title_flag=true;
+		move_flag = true;
+		
+	
 	}
 
 
@@ -106,6 +112,7 @@ void CObjStageSelect::Action()
 
 		move_flag = true;
 	}
+	//ここまで------------------------
 	if (Input::GetVKey('C') == true && keyflag == true && scroll_flag == true)//クリア画面test
 	{
 		keyflag = false;
@@ -114,23 +121,36 @@ void CObjStageSelect::Action()
 
 		Scene::SetScene(new CSceneClear());//そのステージに移行
 	}
+
 	if (Input::GetVKey('B') == true && keyflag == true && Clear_flag == true && scroll_flag == true)//クリアフラグ仮
 	{
 		keyflag = false;
 		Clear_flag = false;
 	}
+
 	if (Input::GetVKey('B') == true && keyflag == true && Clear_flag == false && scroll_flag == true)//クリアフラグ仮
 	{
 		keyflag = false;
 		Clear_flag = true;
 	}
+
 	if (move_flag == true)
 	{
 		m_y1 -= 50.0f;
 	}
+
 	if (m_y1 == 0.0f)
 	{
-		Scene::SetScene(new CSceneGameMain(stageflag));//そのステージに移行
+		m_y1 = 0.0f;
+		if (title_flag == true)
+		{
+			Scene::SetScene(new CSceneTitle);//titleシーンに移行
+		}
+		else
+		{
+			Scene::SetScene(new CSceneGameMain(stageflag));//そのステージに移行
+		}
+		
 	}
 
 	if (Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false &&

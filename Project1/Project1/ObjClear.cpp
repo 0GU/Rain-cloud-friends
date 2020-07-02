@@ -91,42 +91,42 @@ void CObjClear::Draw()
 	Draw::Draw(1, &src, &dst, c, 0.0f);
 
 	//Excerent
-	src.m_top = 0.0f;
+	src.m_top = 147.0f;
 	src.m_left = 0.0f;
-	src.m_right = 599.0f;
-	src.m_bottom = 121.0f;
+	src.m_right = 815.0f;
+	src.m_bottom = 300.0f;
 
-	dst.m_top = 400.0f;
-	dst.m_left = 600.0f;
+	dst.m_top = 320.0f;
+	dst.m_left = 650.0f;
 	dst.m_right = 1200.0f;
-	dst.m_bottom = 521.0f;
+	dst.m_bottom = 470.0f;
 
-	Draw::Draw(1, &src, &dst, c, 30.0f);
+	Draw::Draw(5, &src, &dst, c, 30.0f);
 
 	//é¥ÅiâºÅj
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right =	512.0f;
+	src.m_right =512.0f;
 	src.m_bottom = 512.0f;
 
-	dst.m_top = 400.0f;
+	dst.m_top = 300.0f;
 	dst.m_left = 20.0f;
 	dst.m_right = 270.0f;
-	dst.m_bottom = 600.0f;
+	dst.m_bottom = 500.0f;
 
 	Draw::Draw(2, &src, &dst, c, 0.0f);
 
-	dst.m_top = 400.0f;
+
 	dst.m_left = 200.0f;
 	dst.m_right = 450.0f;
-	dst.m_bottom = 600.0f;
+	
 
 	Draw::Draw(2, &src, &dst, c, 0.0f);
 
-	dst.m_top = 400.0f;
+	
 	dst.m_left = 380.0f;
 	dst.m_right = 630.0f;
-	dst.m_bottom = 600.0f;
+	
 
 	Draw::Draw(2, &src, &dst, c, 0.0f);
 

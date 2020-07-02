@@ -40,6 +40,7 @@ void CSceneClear::InitScene()
 	Draw::LoadImageW(L"素材/仮/StageClear.png", 1, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/しずく(水).png", 2, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/Animation.png", 3, TEX_SIZE_64);
+	Draw::LoadImageW(L"素材/画像/文字.png", 5, TEX_SIZE_1024);
 }
 
 //ゲームタイトル実行メソッド

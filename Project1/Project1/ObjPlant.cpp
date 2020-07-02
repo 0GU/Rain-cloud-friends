@@ -11,7 +11,7 @@ CObjPlant::CObjPlant(float x, float y,int count)
 {
 	m_px = x;			//位置
 	m_py = y;
-	grow = count;
+	grow = count;		//成長させる大きさ
 
 }
 
@@ -46,25 +46,19 @@ void CObjPlant::Action()
 		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 
-		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
+		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)	//雨が当たるとHP減少
 		{
 			HP -= 1;
 		}
-		if (HP <= 0&&grow_flag==true)
+		if (HP <= 0&&grow_flag==true)					//HP0で成長
 		{
-			for (int i = 0; i < grow; i++)
-			{
-				if (i+1==grow)
-				{
-					CObjGrowPlant* obj = new CObjGrowPlant(m_px,m_py-i*64,true);
+				
+					CObjGrowPlant* obj = new CObjGrowPlant(m_px,m_py-grow*64,grow,true);	//花の部分のオブジェクト作成
 					Objs::InsertObj(obj, OBJ_PLANT, 10);
-				}
-				else
-				{
-					CObjGrowPlant* objs = new CObjGrowPlant(m_px, m_py - i * 64, false);
+			
+					CObjGrowPlant* objs = new CObjGrowPlant(m_px, m_py - (grow-1) * 64,grow, false);	//ツタの部分のオブジェクト作成
 					Objs::InsertObj(objs, OBJ_PLANT, 10);
-				}
-			}
+
 			grow_flag = false;
 			this->SetStatus(false);//自身に削除命令を出す
 			Hits::DeleteHitBox(this);//保有するHitBoxに削除する
