@@ -20,6 +20,7 @@ enum OBJ_NAME
 	OBJ_RAIN,
 	OBJ_RESTART,
 	OBJ_CHASE_ENEMY,
+	OBJ_SINENEMY,
 };
 //------------------------------------------------
 
@@ -99,6 +100,7 @@ struct UserData
 #include"ObjRain.h"
 #include"ObjRestart.h"
 #include"ObjChaseEnemy.h"
+#include"ObjSinEnemy.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------

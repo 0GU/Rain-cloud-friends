@@ -180,6 +180,11 @@ void CObjHero::Action()
 			int enemynum = 2;
 			EnemyHit(enemynum);
 		}
+		if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
+		{
+			int enemynum = 3;
+			EnemyHit(enemynum);
+		}
 		if (hit->CheckElementHit(ELEMENT_IVY) == true&& (Input::GetVKey(VK_UP) == true|| (Input::GetVKey(VK_DOWN)==true)))
 		{
 			climb_flag = true;
@@ -263,6 +268,8 @@ void CObjHero::EnemyHit(int enemynum)
 			hit_data = hit->SearchObjNameHit(OBJ_ENEMY);
 		else if (enemynum == 2)
 			hit_data = hit->SearchObjNameHit(OBJ_FIRE);
+		else if (enemynum == 3)
+			hit_data = hit->SearchObjNameHit(OBJ_SINENEMY);
 
 
 		hit_flag = false;
