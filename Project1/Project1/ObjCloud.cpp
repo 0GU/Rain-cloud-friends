@@ -59,7 +59,7 @@ void CObjCloud::Action()
 
 	if (Input::GetVKey('C') == true && rain_flag == true && m_hp > 0.0f)
 	{
-		CObjRain* objr = new CObjRain(m_px, m_py+64);
+		CObjRain* objr = new CObjRain(m_px+pbb->GetScroll(), m_py+64+pbb->GetScrollY());
 		Objs::InsertObj(objr, OBJ_RAIN, 10);
 		rain_flag = false;
 		m_hp -= 0.1f;	//hpå∏è≠
