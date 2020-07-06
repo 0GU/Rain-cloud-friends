@@ -15,7 +15,7 @@ public:
 	void Draw();	//ドロー
 
 	float GetHP() { return m_hp; }
-
+	float m_hp;			//体力（仮）
 	
 private:
 	int reset;
@@ -25,7 +25,7 @@ private:
 	float m_vx;
 	float m_vy;
 
-	float m_hp;			//体力（仮）
+
 
 	bool stay_flag;
 	bool rain_flag;
