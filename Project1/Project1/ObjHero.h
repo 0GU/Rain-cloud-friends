@@ -68,4 +68,6 @@ private:
 	int   m_hit_time;	//ダメージ間隔
 
 	bool climb_flag;	//昇降フラグ
+
+	bool test_flag;
 };

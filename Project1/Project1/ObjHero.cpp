@@ -3,6 +3,7 @@
 #include "GameL\WinInputs.h"
 #include "GameL\SceneManager.h"
 #include "GameL\HitBoxManager.h"
+#include "GameL/DrawFont.h"
 
 #include "GameHead.h"
 #include "ObjHero.h"
@@ -43,6 +44,8 @@ void CObjHero::Init()
 
 	climb_flag = false;
 
+	test_flag = false;
+
 	m_block_type = 0;		//踏んでいるblockの種類を確認用
 
 	//当たり判定用のHitBoxを作成
@@ -72,6 +75,11 @@ void CObjHero::Action()
 		&m_vx, &m_vy, &m_block_type,climb_flag
 	);
 
+	if (m_hit_down==true)
+	{
+		test_flag=true;
+	}
+
 	//自身のHitBoxを持ってくる
 	CHitBox* hit = Hits::GetHitBox(this);
 
@@ -82,7 +90,7 @@ void CObjHero::Action()
 		{
 			if (m_hit_down == true)
 			{
-				m_vy = -20;
+				m_vy = -10;
 			}
 		}
 
@@ -116,17 +124,18 @@ void CObjHero::Action()
 			m_posture = 0.0f;
 			m_ani_time += 1;
 		}
+		//昇降処理
 		else if (Input::GetVKey(VK_UP) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
 		{
 			m_vy = 0.0f;
 		}
 		else if (Input::GetVKey(VK_UP) == true&&climb_flag==true&&hit->CheckElementHit(ELEMENT_FLOWER) == false)
 		{
-			m_vy = -1.0f;
+			m_vy = -3.0f;
 		}
 		else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
 		{
-			m_vy = +1.0f;
+			m_vy = +3.0f;
 		}
 
 		else
@@ -180,11 +189,13 @@ void CObjHero::Action()
 			int enemynum = 2;
 			EnemyHit(enemynum);
 		}
-		if (hit->CheckElementHit(ELEMENT_IVY) == true&& (Input::GetVKey(VK_UP) == true|| (Input::GetVKey(VK_DOWN)==true)))
+
+		//昇降処理
+		if (hit->CheckElementHit(ELEMENT_IVY) == true&& (Input::GetVKey(VK_UP) == true|| (Input::GetVKey(VK_DOWN)==true)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
 		{
 			climb_flag = true;
 		}
-		else if ((hit->CheckElementHit(ELEMENT_IVY) == false && hit->CheckElementHit(ELEMENT_FLOWER) == false && climb_flag == true)|| Input::GetVKey(VK_UP) == false)
+		else if ((hit->CheckElementHit(ELEMENT_IVY) == false && hit->CheckElementHit(ELEMENT_FLOWER) == false && climb_flag == true)|| Input::GetVKey(VK_UP) == false)	//昇降フラグをfalseにする処理
 		{
 			climb_flag = false;
 		}
@@ -247,6 +258,15 @@ void CObjHero::Draw()
 	dst.m_right = dst.m_left + 10.0f;
 	dst.m_bottom = dst.m_top + 10.0f;
 	Draw::Draw(0, &src, &dst, cc, 0.0f);
+
+	if (test_flag == true)
+	{
+		wchar_t str1[256];
+		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+		swprintf_s(str1, L"Y=%f", m_py - block->GetScrollY());
+		Font::StrDraw(str1, 20, 20, 20, c);
+	}
+
 
 }
 

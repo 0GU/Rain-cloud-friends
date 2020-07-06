@@ -63,9 +63,9 @@ void CObjStage::Action()
 	}
 
 	//上方スクロールライン
-	if (hy < 64)
+	if (hy < 256)
 	{
-		hero->SetY(64);				//主人公はラインを超えないようにする
+		hero->SetY(256);				//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -155,49 +155,53 @@ void CObjStage::Draw()
 					Objs::InsertObj(objf, OBJ_FIRE, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 6)
+				/*else if (m_map[i][j] == 13)
+				{
+				ObjPlantの床用のため、何もしない
+				}*/
+				else if (m_map[i][j] == 14)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f,4);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 7)
+				else if (m_map[i][j] == 15)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 5);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 8)
+				else if (m_map[i][j] == 16)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 6);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 9)
+				else if (m_map[i][j] == 17)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 7);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 10)
+				else if (m_map[i][j] == 18)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 8);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 11)
+				else if (m_map[i][j] == 19)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 9);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 12)
+				else if (m_map[i][j] == 20)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 10);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 13)
+				else if (m_map[i][j] == 21)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 11);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
