@@ -9,6 +9,7 @@
 #include "GameL\Audio.h"
 #include "GameL\DrawTexture.h"
 #include "GameL/UserData.h"
+#include"GameL/WinInputs.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -39,7 +40,8 @@ void CSceneGameMain::InitScene()
 	p = Save::ExternalDataOpen(L"ギミック確認.csv", &size);//外部データ読み込み
 	else if(stageselect==2)
 	p = Save::ExternalDataOpen(L"ステージデータ.csv", &size);//外部データ読み込み
-
+	else if (stageselect == 3)
+		p = Save::ExternalDataOpen(L"セーブ確認用3.csv", &size);//外部データ読み込み
 	int map[16][100];
 	int count = 1;
 	for (int i = 0; i < 16; i++)
@@ -101,10 +103,14 @@ void CSceneGameMain::InitScene()
 	//体力バーオブジェクト作成
 	CObjHp* objh = new CObjHp();
 	Objs::InsertObj(objh, OBJ_HP, 11);
+
+	//主人公オブジェクト作成
+	CObjSinEnemy* objs = new CObjSinEnemy(400,400);
+	Objs::InsertObj(objs, OBJ_SINENEMY, 10);
 }
 
 //ゲームメイン実行メソッド
 void CSceneGameMain::Scene()
 {
-
+	Input::UpdateXControlerConnected();
 }

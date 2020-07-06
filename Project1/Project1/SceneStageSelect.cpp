@@ -8,6 +8,7 @@
 #include "GameL\DrawFont.h"
 #include "GameL\Audio.h"
 #include "GameL\DrawTexture.h"
+#include"GameL/WinInputs.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -46,11 +47,12 @@ void CSceneStageSelect::InitScene()
 	Draw::LoadImageW(L"素材/仮/Animation.png", 2, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/画像/しずく(水).png", 3, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/しずく(なし).png", 4, TEX_SIZE_1024);
+	
 	Audio::Start(0);
 }
 
 //ゲームタイトル実行メソッド
 void CSceneStageSelect::Scene()
 {
-
+	Input::UpdateXControlerConnected();
 }

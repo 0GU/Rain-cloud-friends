@@ -20,10 +20,27 @@ void CObjClear::Init()
 //アクション
 void CObjClear::Action()
 {
+	//主人公の情報を取得
+	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+	CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
+	//if(CObjStage)
+	if (hero->m_hp <= 75 || cloud->m_hp <= 75)//主人公と雲の体力が一定以上の場合
+	{
+
+	}
+	else if (hero->m_hp <= 75 && cloud->m_hp <= 75)//主人公か雲の体力のどちらかが一定の場合
+	{
+
+	}
+
+	else //どちらも一定以下の場合
+	{
+
+	}
 	//黒画面スクロール
 	if (scroll_flag == false)
 	{
-		m_y1 += 50.0f;
+		m_y1 += 40.0f;
 		if (m_y1 > 800.0f)
 		{
 			m_y1 = 800.0f;
@@ -31,7 +48,7 @@ void CObjClear::Action()
 		}
 	}
 
-	if (Input::GetVKey('Z') == true && key_flag == true)
+	if (Input::GetVKey('Z') == true ||Input::GetConButtons(0, GAMEPAD_A) && key_flag == true)
 	{
 		key_flag = false;
 		scroll_flag = true;
@@ -48,7 +65,7 @@ void CObjClear::Action()
 		Scene::SetScene(new CSceneStageSelect);
 	}
 
-	if (Input::GetVKey('Z') == false && key_flag == false)
+	if (Input::GetVKey('Z') == false && Input::GetConButtons(0, GAMEPAD_A)==false&&key_flag == false)
 	{
 		key_flag = true;
 	}
@@ -91,45 +108,46 @@ void CObjClear::Draw()
 	Draw::Draw(1, &src, &dst, c, 0.0f);
 
 	//Excerent
-	src.m_top = 0.0f;
+	src.m_top = 147.0f;
 	src.m_left = 0.0f;
-	src.m_right = 599.0f;
-	src.m_bottom = 121.0f;
+	src.m_right = 815.0f;
+	src.m_bottom = 300.0f;
 
-	dst.m_top = 400.0f;
-	dst.m_left = 600.0f;
+	dst.m_top = 320.0f;
+	dst.m_left = 650.0f;
 	dst.m_right = 1200.0f;
-	dst.m_bottom = 521.0f;
+	dst.m_bottom = 470.0f;
 
-	Draw::Draw(1, &src, &dst, c, 30.0f);
+	Draw::Draw(5, &src, &dst, c, 30.0f);
 
-	//雫（仮）
+	//雫（仮）ここから----------------------------------------
+	//1
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right =	512.0f;
+	src.m_right =512.0f;
 	src.m_bottom = 512.0f;
 
-	dst.m_top = 400.0f;
+	dst.m_top = 300.0f;
 	dst.m_left = 20.0f;
 	dst.m_right = 270.0f;
-	dst.m_bottom = 600.0f;
+	dst.m_bottom = 500.0f;
 
 	Draw::Draw(2, &src, &dst, c, 0.0f);
 
-	dst.m_top = 400.0f;
+	//2
 	dst.m_left = 200.0f;
 	dst.m_right = 450.0f;
-	dst.m_bottom = 600.0f;
+	
 
 	Draw::Draw(2, &src, &dst, c, 0.0f);
 
-	dst.m_top = 400.0f;
+	//3
 	dst.m_left = 380.0f;
 	dst.m_right = 630.0f;
-	dst.m_bottom = 600.0f;
+	
 
 	Draw::Draw(2, &src, &dst, c, 0.0f);
-
+	//ここまで------------------------------------------------
 	//黒画面
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;

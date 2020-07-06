@@ -7,12 +7,12 @@
 #include"GameHead.h"
 #include"ObjGrowPlant.h"
 
-CObjGrowPlant::CObjGrowPlant(float x, float y, bool flag)
+CObjGrowPlant::CObjGrowPlant(float x, float y,int growcnt, bool flag)
 {
 	m_px = x;			//位置
 	m_py = y;
-	graphic = flag;
-
+	graphic = flag;		//true=花	false=ツタ
+	count = growcnt;	//大きさ
 }
 
 
@@ -25,7 +25,14 @@ void CObjGrowPlant::Init()
 	stay_flag = false;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_PLANT, 1);
+	if (graphic == false)
+	{
+		Hits::SetHitBox(this, m_px, m_py, 64, 64 * count, ELEMENT_IVY, OBJ_PLANT, 1);
+	}
+	else if (graphic == true)
+	{
+		Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_FLOWER, OBJ_PLANT, 1);
+	}
 }
 
 //アクション
@@ -65,7 +72,7 @@ void CObjGrowPlant::Draw()
 		src.m_right = 128.0f;
 		src.m_bottom = src.m_top + 0.0f;
 	}
-	else if (graphic)
+	else if (graphic==true)
 	{
 		src.m_top = 0.0f;
 		src.m_left = 0.0f;
@@ -76,11 +83,20 @@ void CObjGrowPlant::Draw()
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	//表示位置の設定
-	dst.m_top = m_py + block->GetScrollY();						//↓描画に対してスクロールの影響を与える
-	dst.m_left = 64.0f + m_px + block->GetScroll();
-	dst.m_right = 0.0f + m_px + block->GetScroll();
-	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
-
+	if (graphic == false)
+	{
+		dst.m_top = m_py + block->GetScrollY();						
+		dst.m_left = 64.0f + m_px + block->GetScroll();
+		dst.m_right = 0.0f + m_px + block->GetScroll();
+		dst.m_bottom = 64.0f*count + m_py + block->GetScrollY();
+	}
+	else if (graphic==true)
+	{
+		dst.m_top = m_py + block->GetScrollY();						
+		dst.m_left = 64.0f + m_px + block->GetScroll();
+		dst.m_right = 0.0f + m_px + block->GetScroll();
+		dst.m_bottom = 64.0f + m_py + block->GetScrollY();
+	}
 	//描画
 	Draw::Draw(10, &src, &dst, c, 0.0f);
 }

@@ -19,7 +19,9 @@ private:
 	int hoge;//仮
 	bool key_flag;//キー押し確認用
 
-	float m_y1;//黒画面用(仮)
+	float m_y1;//黒画面位置(仮)
 	bool  move_flag;
 	bool scroll_flag;
+
+	bool Clear_flag[3];//1:Excerent
 };

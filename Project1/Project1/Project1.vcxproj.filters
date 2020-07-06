@@ -135,6 +135,9 @@
     <ClInclude Include="ObjRain.h">
       <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
     </ClInclude>
+    <ClInclude Include="ObjSinEnemy.h">
+      <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -238,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="ObjRain.cpp">
       <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjSinEnemy.cpp">
+      <Filter>ソース ファイル\GameMain\敵</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -33,7 +33,7 @@ public:
 	void SetRight(bool b) { m_hit_right = b; }
 
 	void EnemyHit(int enemynume);
-
+	float m_hp;			//体力（仮）
 private:
 	float m_px;			//位置
 	float m_py;
@@ -64,6 +64,10 @@ private:
 	bool hit_flag;
 	bool stay_flag;
 
-	float m_hp;			//体力（仮）
+
 	int   m_hit_time;	//ダメージ間隔
+
+	bool climb_flag;	//昇降フラグ
+
+	bool test_flag;
 };

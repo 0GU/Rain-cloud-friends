@@ -35,7 +35,10 @@ private:
 	bool m_hit_left;
 	bool m_hit_right;
 
-	//移動の向き制御用
-	bool m_move;
+	//追加したやつ
+	float pos_init;	//沸いた時の位置記憶用
+	bool m_move;	//移動の向き制御用
+
+
 	bool stay_flag;
 };

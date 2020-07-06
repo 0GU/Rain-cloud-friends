@@ -3,6 +3,7 @@
 #include "GameL\WinInputs.h"
 #include "GameL\SceneManager.h"
 #include "GameL\HitBoxManager.h"
+#include "GameL/DrawFont.h"
 
 #include "GameHead.h"
 #include "ObjHero.h"
@@ -41,6 +42,10 @@ void CObjHero::Init()
 	hit_flag = true;
 	stay_flag = false;
 
+	climb_flag = false;
+
+	test_flag = false;
+
 	m_block_type = 0;		//踏んでいるblockの種類を確認用
 
 	//当たり判定用のHitBoxを作成
@@ -67,8 +72,17 @@ void CObjHero::Action()
 	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	pb->BlockHit(&m_px, &m_py, true,
 		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-		&m_vx, &m_vy, &m_block_type
+		&m_vx, &m_vy, &m_block_type,climb_flag
 	);
+
+	if (m_hit_down==true)
+	{
+		test_flag=true;
+	}
+
+	//自身のHitBoxを持ってくる
+	CHitBox* hit = Hits::GetHitBox(this);
+
 	if (stay_flag == false)
 	{
 		//Xキー入力でジャンプ
@@ -76,7 +90,7 @@ void CObjHero::Action()
 		{
 			if (m_hit_down == true)
 			{
-				m_vy = -20;
+				m_vy = -10;
 			}
 		}
 
@@ -110,6 +124,20 @@ void CObjHero::Action()
 			m_posture = 0.0f;
 			m_ani_time += 1;
 		}
+		//昇降処理
+		else if (Input::GetVKey(VK_UP) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
+		{
+			m_vy = 0.0f;
+		}
+		else if (Input::GetVKey(VK_UP) == true&&climb_flag==true&&hit->CheckElementHit(ELEMENT_FLOWER) == false)
+		{
+			m_vy = -3.0f;
+		}
+		else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+		{
+			m_vy = +3.0f;
+		}
+
 		else
 		{
 			m_ani_frame = 1;  //キー入力が無い場合は静止フレームにする
@@ -132,7 +160,12 @@ void CObjHero::Action()
 		m_vx += -(m_vx * 0.098);
 
 		//自由落下速度
-		m_vy += 9.8 / (16.0f);
+		if (climb_flag==false|| Input::GetVKey(VK_UP) == false)
+		{
+			m_vy += 9.8 / (16.0f);
+		}
+		
+
 
 		//高速移動によるBlock判定
 		bool b;
@@ -144,8 +177,7 @@ void CObjHero::Action()
 
 		
 
-		//自身のHitBoxを持ってくる
-		CHitBox* hit = Hits::GetHitBox(this);
+		
 		//敵と当たっているか確認
 		if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
 		{
@@ -157,6 +189,20 @@ void CObjHero::Action()
 			int enemynum = 2;
 			EnemyHit(enemynum);
 		}
+		if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
+		{
+			int enemynum = 3;
+			EnemyHit(enemynum);
+		}
+		//昇降処理
+		if (hit->CheckElementHit(ELEMENT_IVY) == true&& (Input::GetVKey(VK_UP) == true|| (Input::GetVKey(VK_DOWN)==true)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
+		{
+			climb_flag = true;
+		}
+		else if ((hit->CheckElementHit(ELEMENT_IVY) == false && hit->CheckElementHit(ELEMENT_FLOWER) == false && climb_flag == true)|| Input::GetVKey(VK_UP) == false)	//昇降フラグをfalseにする処理
+		{
+			climb_flag = false;
+		}
 
 		//落下によるゲームオーバー＆リスタート
 		if (hit->CheckObjNameHit(OBJ_RESTART) != nullptr)
@@ -165,6 +211,11 @@ void CObjHero::Action()
 			Scene::SetScene(new CSceneGameMain(reset));
 		}
 
+		//ゴールブロックに触れると
+		if (GetBT() == 3)
+		{
+			Scene::SetScene(new CSceneClear());
+		}
 		//位置の更新
 		m_px += m_vx;
 		m_py += m_vy;
@@ -217,6 +268,15 @@ void CObjHero::Draw()
 	dst.m_bottom = dst.m_top + 10.0f;
 	Draw::Draw(0, &src, &dst, cc, 0.0f);
 
+	if (test_flag == true)
+	{
+		wchar_t str1[256];
+		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+		swprintf_s(str1, L"Y=%f", m_py - block->GetScrollY());
+		Font::StrDraw(str1, 20, 20, 20, c);
+	}
+
+
 }
 
 void CObjHero::EnemyHit(int enemynum)
@@ -232,6 +292,8 @@ void CObjHero::EnemyHit(int enemynum)
 			hit_data = hit->SearchObjNameHit(OBJ_ENEMY);
 		else if (enemynum == 2)
 			hit_data = hit->SearchObjNameHit(OBJ_FIRE);
+		else if (enemynum == 3)
+			hit_data = hit->SearchObjNameHit(OBJ_SINENEMY);
 
 
 		hit_flag = false;
