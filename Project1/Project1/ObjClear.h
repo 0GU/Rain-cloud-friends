@@ -23,5 +23,5 @@ private:
 	bool  move_flag;
 	bool scroll_flag;
 
-	bool Clear_flag[3]//1:Excerent
+	bool Clear_flag[3];//1:Excerent
 };

@@ -40,7 +40,7 @@ void CObjClear::Action()
 	//•‰æ–ÊƒXƒNƒ[ƒ‹
 	if (scroll_flag == false)
 	{
-		m_y1 += 50.0f;
+		m_y1 += 40.0f;
 		if (m_y1 > 800.0f)
 		{
 			m_y1 = 800.0f;
@@ -48,7 +48,7 @@ void CObjClear::Action()
 		}
 	}
 
-	if (Input::GetVKey('Z') == true && key_flag == true)
+	if (Input::GetVKey('Z') == true ||Input::GetConButtons(0, GAMEPAD_A) && key_flag == true)
 	{
 		key_flag = false;
 		scroll_flag = true;
@@ -65,7 +65,7 @@ void CObjClear::Action()
 		Scene::SetScene(new CSceneStageSelect);
 	}
 
-	if (Input::GetVKey('Z') == false && key_flag == false)
+	if (Input::GetVKey('Z') == false && Input::GetConButtons(0, GAMEPAD_A)==false&&key_flag == false)
 	{
 		key_flag = true;
 	}
