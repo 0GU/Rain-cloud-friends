@@ -9,12 +9,14 @@ using namespace GameL;
 class CObjChaseEnemy : public CObj
 {
 public:
-	CObjChaseEnemy() {};
+	CObjChaseEnemy(float x, float y);
 	~CObjChaseEnemy() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
 	void Draw();	//ドロー
-	float x, y;
+	float x, y;	
+	float GetVx() { return m_vx; }
+
 private:
 	float m_px;			//位置
 	float m_py;
@@ -34,7 +36,11 @@ private:
 	bool m_hit_left;
 	bool m_hit_right;
 
-	//移動の向き制御用
-	bool m_move;
+	bool m_move;//移動の向き制御用
+	
 	bool stay_flag;
+	
+	bool m_chase[2];//追跡モード用　trueで追跡　０：左　１：右
+	float pos_init;	//沸いた時の位置記憶用
+
 };

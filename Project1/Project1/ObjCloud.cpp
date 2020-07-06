@@ -26,6 +26,12 @@ void CObjCloud::Init()
 	stay_flag = false;
 	rain_flag = false;
 
+	//blockとの衝突状態確認用
+	m_hit_up = false;
+	m_hit_down = false;
+	m_hit_left = false;
+	m_hit_right = false;
+
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_CLOUD, 1);
 }
@@ -62,9 +68,20 @@ void CObjCloud::Action()
 	{
 		rain_flag = true;
 	}
-
+	//ブロックタイプ検知用の変数がないためのダミー
+	int d;
+	//ブロックとの当たり判定実行
+	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+	pb->BlockHit(&m_px, &m_py, false,
+		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
+		&m_vx, &m_vy, &d
+	);
+	m_vx = 5.0f;
+	m_vy = 5.0f;
 	//HitBoxの位置の変更
-	hit->SetPos(m_px, m_py);
+	hit->SetPos(m_px + pbb->GetScroll(), m_py + pbb->GetScrollY());
+	
+	
 }
 
 //ドロー
@@ -82,12 +99,13 @@ void CObjCloud::Draw()
 	src.m_right = 64.0f;
 	src.m_bottom = 64.0f;
 
+	CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
 	//表示位置の設定
-	dst.m_top = m_py;
-	dst.m_left = m_px;
-	dst.m_right = m_px + 64.0f;
-	dst.m_bottom = m_py + 64.0f;
+	dst.m_top = m_py + pbb->GetScrollY();
+	dst.m_left = m_px + pbb->GetScroll();
+	dst.m_right = m_px + 64.0f + pbb->GetScroll();
+	dst.m_bottom = m_py + 64.0f + pbb->GetScrollY();
 
 	//描画
 	Draw::Draw(5, &src, &dst, c, 0.0f);

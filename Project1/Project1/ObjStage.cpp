@@ -49,9 +49,9 @@ void CObjStage::Action()
 		float hy = hero->GetY();
 
 	//後方スクロールライン
-	if (hx < 80)
+	if (hx < 60)
 	{
-		hero->SetX(80);				//主人公はラインを超えないようにする
+		hero->SetX(60);				//主人公はラインを超えないようにする
 		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -267,22 +267,18 @@ void CObjStage::BlockDraw(float x, float y, RECT_F* dst, float c[])
 //引数10 int*	bt			:下部分判定時、特殊なブロックのタイプを返す
 //判定を行うobjectとブロック64×64限定で当たり判定と上下左右判定を行う
 //その結果は引数4～10に返す
-void CObjStage::BlockHit(
-	float* x, float* y, bool scroll_on,
+void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 	bool* up, bool* down, bool* left, bool* right,
-	float* vx, float* vy, int* bt
-) {
+	float* vx, float* vy, int* bt) 
+{
 	CObjStage::BlockHit(
 		x, y, scroll_on,
 		up, down, left, right,
-		vx, vy, bt, false
-	);
+		vx, vy, bt, false);
 }
-void CObjStage::BlockHit(
-	float* x, float* y, bool scroll_on,
+void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 	bool* up, bool* down, bool* left, bool* right,
-	float* vx, float* vy, int* bt,bool climb
-)
+	float* vx, float* vy, int* bt,bool climb)
 {
 	//衝突状態確認用フラグの初期化
 	*up = false;
