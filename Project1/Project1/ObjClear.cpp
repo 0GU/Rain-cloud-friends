@@ -23,7 +23,7 @@ void CObjClear::Action()
 	//ŽålŒö‚Ìî•ñ‚ðŽæ“¾
 	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
 	CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
-	if(CObjStage)
+	//if(CObjStage)
 	if (hero->m_hp <= 75 || cloud->m_hp <= 75)//ŽålŒö‚Æ‰_‚Ì‘Ì—Í‚ªˆê’èˆÈã‚Ìê‡
 	{
 
