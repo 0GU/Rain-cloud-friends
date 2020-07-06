@@ -201,6 +201,11 @@ void CObjHero::Action()
 			Scene::SetScene(new CSceneGameMain(reset));
 		}
 
+		//ゴールブロックに触れると
+		if (GetBT() == 3)
+		{
+			Scene::SetScene(new CSceneClear());
+		}
 		//位置の更新
 		m_px += m_vx;
 		m_py += m_vy;

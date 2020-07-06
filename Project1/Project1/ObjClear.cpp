@@ -20,6 +20,23 @@ void CObjClear::Init()
 //アクション
 void CObjClear::Action()
 {
+	//主人公の情報を取得
+	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+	CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
+	//if(CObjStage)
+	if (hero->m_hp <= 75 || cloud->m_hp <= 75)//主人公と雲の体力が一定以上の場合
+	{
+
+	}
+	else if (hero->m_hp <= 75 && cloud->m_hp <= 75)//主人公か雲の体力のどちらかが一定の場合
+	{
+
+	}
+
+	else //どちらも一定以下の場合
+	{
+
+	}
 	//黒画面スクロール
 	if (scroll_flag == false)
 	{
@@ -103,7 +120,8 @@ void CObjClear::Draw()
 
 	Draw::Draw(5, &src, &dst, c, 30.0f);
 
-	//雫（仮）
+	//雫（仮）ここから----------------------------------------
+	//1
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
 	src.m_right =512.0f;
@@ -116,20 +134,20 @@ void CObjClear::Draw()
 
 	Draw::Draw(2, &src, &dst, c, 0.0f);
 
-
+	//2
 	dst.m_left = 200.0f;
 	dst.m_right = 450.0f;
 	
 
 	Draw::Draw(2, &src, &dst, c, 0.0f);
 
-	
+	//3
 	dst.m_left = 380.0f;
 	dst.m_right = 630.0f;
 	
 
 	Draw::Draw(2, &src, &dst, c, 0.0f);
-
+	//ここまで------------------------------------------------
 	//黒画面
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;

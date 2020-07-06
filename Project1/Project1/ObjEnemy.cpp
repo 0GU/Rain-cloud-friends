@@ -14,7 +14,6 @@ CObjEnemy::CObjEnemy(float x, float y)
 {
 	m_px = x;			//位置
 	m_py = y;
-
 }
 
 
@@ -32,6 +31,9 @@ void CObjEnemy::Init()
 	m_ani_max_time = 4;  //アニメーション間隔幅
 
 	m_move = true;		 //true=右 false=左
+
+
+	pos_init = m_px;
 
 	//blockとの衝突状態確認用
 	m_hit_up = false;
@@ -52,35 +54,43 @@ void CObjEnemy::Action()
 	stay_flag = p->GetFlag();
 	if (stay_flag == false)
 	{
+		//通常速度
+		m_speed_power = 0.5f;
+		m_ani_max_time = 4;
+		
+		//ブロック情報を持ってくる
+		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+
 		//落下
 		if (m_py > 1000.0f)
 		{
 			;
 		}
 
-		//通常速度
-		m_speed_power = 0.5f;
-		m_ani_max_time = 4;
+		//一定間隔でジャンプ
+		if (m_hit_down==true)
+		{
+			m_vy -= 10.0f;
+		}
 
 		//ブロック衝突で向き変更
 		if (m_hit_left == true)
 		{
-			m_move = true;
+			m_move = false;
 		}
 		if (m_hit_right == true)
 		{
-			m_move = false;
+			m_move = true;
 		}
 
-
 		//方向
-		if (m_move == false)
+		if (m_move == true)
 		{
 			m_vx += m_speed_power;
 			m_posture = 1.0f;
 			m_ani_time += 1;
 		}
-		else if (m_move == true)
+		else if (m_move == false)
 		{
 			m_vx -= m_speed_power;
 			m_posture = 0.0f;
@@ -108,29 +118,25 @@ void CObjEnemy::Action()
 		//ブロックタイプ検知用の変数がないためのダミー
 		int d;
 		//ブロックとの当たり判定実行
-		CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-		pb->BlockHit(&m_px, &m_py, false,
+		block->BlockHit(&m_px, &m_py, false,
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
 			&m_vx, &m_vy, &d
 		);
 
-		//位置の更新
+		//位置更新
 		m_px += m_vx;
 		m_py += m_vy;
 
-		//ブロック情報を持ってくる
-		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+		//HitBoxの位置の変更
+		CHitBox* hit = Hits::GetHitBox(this);
+		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 
-	//HitBoxの位置の変更
-	CHitBox* hit = Hits::GetHitBox(this);
-	hit->SetPos(m_px + block->GetScroll(), m_py+block->GetScrollY());
-
-	//落下したら消滅
-	if (hit->CheckObjNameHit(OBJ_RESTART)!=nullptr)
-	{
-		this->SetStatus(false);
-		Hits::DeleteHitBox(this);
-	}
+		//落下したら消滅
+		if (hit->CheckObjNameHit(OBJ_RESTART) != nullptr)
+		{
+			this->SetStatus(false);
+			Hits::DeleteHitBox(this);
+		}
 
 	}
 	
