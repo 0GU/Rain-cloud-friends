@@ -40,6 +40,8 @@ enum HIT_ELEMENTS
 	ELEMENT_BLACK,
 	ELEMENT_WHITE,
 	ELEMENT_RESET,
+	ELEMENT_IVY,
+	ELEMENT_FLOWER,
 };
 //------------------------------------------------h
 

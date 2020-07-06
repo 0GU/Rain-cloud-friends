@@ -11,8 +11,8 @@ CObjGrowPlant::CObjGrowPlant(float x, float y,int growcnt, bool flag)
 {
 	m_px = x;			//ˆÊ’u
 	m_py = y;
-	graphic = flag;
-	count = growcnt;
+	graphic = flag;		//true=‰Ô	false=ƒcƒ^
+	count = growcnt;	//‘å‚«‚³
 }
 
 
@@ -27,11 +27,11 @@ void CObjGrowPlant::Init()
 	//“–‚½‚è”»’è—p‚ÌHitBox‚ðì¬
 	if (graphic == false)
 	{
-		Hits::SetHitBox(this, m_px, m_py, 64, 64 * count, ELEMENT_RED, OBJ_PLANT, 1);
+		Hits::SetHitBox(this, m_px, m_py, 64, 64 * count, ELEMENT_IVY, OBJ_PLANT, 1);
 	}
 	else if (graphic == true)
 	{
-		Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_PLANT, 1);
+		Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_FLOWER, OBJ_PLANT, 1);
 	}
 }
 
@@ -85,14 +85,14 @@ void CObjGrowPlant::Draw()
 	//•\Ž¦ˆÊ’u‚ÌÝ’è
 	if (graphic == false)
 	{
-		dst.m_top = m_py + block->GetScrollY();						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ð—^‚¦‚é
+		dst.m_top = m_py + block->GetScrollY();						
 		dst.m_left = 64.0f + m_px + block->GetScroll();
 		dst.m_right = 0.0f + m_px + block->GetScroll();
 		dst.m_bottom = 64.0f*count + m_py + block->GetScrollY();
 	}
 	else if (graphic==true)
 	{
-		dst.m_top = m_py + block->GetScrollY();						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ð—^‚¦‚é
+		dst.m_top = m_py + block->GetScrollY();						
 		dst.m_left = 64.0f + m_px + block->GetScroll();
 		dst.m_right = 0.0f + m_px + block->GetScroll();
 		dst.m_bottom = 64.0f + m_py + block->GetScrollY();
