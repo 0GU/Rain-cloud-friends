@@ -7,6 +7,12 @@
 #include"GameHead.h"
 #include"ObjChaseEnemy.h"
 
+CObjChaseEnemy::CObjChaseEnemy(float x, float y)
+{
+	m_px = x;			//位置
+	m_py = y;
+}
+
 void CObjChaseEnemy::Init()
 {
 	m_vx = 0.0f;			//移動ベクトル
@@ -20,6 +26,11 @@ void CObjChaseEnemy::Init()
 	m_ani_max_time = 4;  //アニメーション間隔幅
 
 	m_move = true;		 //true=右 false=左
+
+	m_chase[0] = false;//通常状態で初期化
+	m_chase[1] = false;
+
+	pos_init = m_px;
 
 	//blockとの衝突状態確認用
 	m_hit_up = false;
@@ -40,34 +51,101 @@ void CObjChaseEnemy::Action()
 	stay_flag = p->GetFlag();
 	if (stay_flag == false)
 	{
+		//通常速度
+		m_speed_power = 0.5f;
+		m_ani_max_time = 4;
+
+		//ブロック情報を持ってくる
+		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+
+		//位置の更新用に主人公の位置を持ってくる
+		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+		float hx = hero->GetX();
+		float hy = hero->GetY();
+
 		//落下
 		if (m_py > 1000.0f)
 		{
 			;
 		}
-		//通常速度
-		m_speed_power = 0.5f;
-		m_ani_max_time = 4;
+		//一定間隔でジャンプ
+		if (m_hit_down == true)
+		{
+			m_vy -= 10.0f;
+		}
+
+
+		//主人公が左に一定距離内にいたら
+		if (m_px + block->GetScroll() - hx <= 400.0f && m_px + block->GetScroll() - hx > 0.0f &&
+			m_move == false && m_py - hy >= 200 && m_py - hy >= -200)
+		{
+			m_chase[0] = true;
+		}
+
+		//主人公が右に一定距離内にいたら
+		if (m_px + block->GetScroll() - hx >= -400.0f && m_px + block->GetScroll() - hx < 0.0f &&
+			m_move == true && m_py - hy >= 200 && m_py - hy >= -200)
+		{
+			m_chase[1] = true;
+		}
+
+
+		//追跡中
+		if (m_chase[0] == true)//左向き追跡
+		{
+			if (m_px + block->GetScroll() - hx >= 400)//距離離れた
+			{
+				m_chase[0] = false;
+			}
+			else if (m_px + block->GetScroll() - hx <= 0)//右に回り込まれた
+			{
+				m_chase[0] = false;
+				m_chase[1] = true;
+				m_move = true;
+			}
+		}
+		else if (m_chase[1] == true)//右向き追跡
+		{
+			if (m_px + block->GetScroll() - hx <= -400)//距離離れた
+			{
+				m_chase[1] = false;
+			}
+			else if (m_px + block->GetScroll() - hx >= 0)//左に回り込まれた
+			{
+				m_chase[0] = true;
+				m_chase[1] = false;
+				m_move = false;
+			}
+		}
+
+		//初期位置から一定距離離れたら方向転換
+		if (m_chase[0] == false && m_chase[1] == false)
+		{
+			if (pos_init - m_px >= 400)
+				m_move = true;//右向きに変更
+
+			if (pos_init - m_px <= -400)
+				m_move = false;//左向きに変更
+		}
 
 		//ブロック衝突で向き変更
-		if (m_hit_left == true)
+		if (m_hit_right == true && m_chase[0] == false)
 		{
 			m_move = true;
 		}
-		if (m_hit_right == true)
+		if (m_hit_left == true && m_chase[1] == false)
 		{
 			m_move = false;
 		}
 
-
 		//方向
-		if (m_move == false)
+		if (m_move == true)
 		{
 			m_vx += m_speed_power;
 			m_posture = 1.0f;
 			m_ani_time += 1;
 		}
-		else if (m_move == true)
+		else if (m_move == false)
 		{
 			m_vx -= m_speed_power;
 			m_posture = 0.0f;
@@ -95,31 +173,25 @@ void CObjChaseEnemy::Action()
 		//ブロックタイプ検知用の変数がないためのダミー
 		int d;
 		//ブロックとの当たり判定実行
-		CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-		pb->BlockHit(&m_px, &m_py, false,
+		block->BlockHit(&m_px, &m_py, false,
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
 			&m_vx, &m_vy, &d
 		);
 
-
-		//位置の更新
-		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
-		float hx = hero->GetX();
-		float hy = hero->GetY();
-
-		if (m_px - hx + pb->GetScroll() <= 400.0f && m_px - hx + pb->GetScroll() >= -400.0f)
-		{
-			m_px += m_vx;
-		}
+		//位置更新
+		m_px += m_vx;
 		m_py += m_vy;
-
-		//ブロック情報を持ってくる
-		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
 		//HitBoxの位置の変更
 		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 
+		//落下したら消滅
+		if (hit->CheckObjNameHit(OBJ_RESTART) != nullptr)
+		{
+			this->SetStatus(false);
+			Hits::DeleteHitBox(this);
+		}
 	}
 
 }
@@ -127,23 +199,32 @@ void CObjChaseEnemy::Action()
 //ドロー
 void CObjChaseEnemy::Draw()
 {
+	int AniData[4] =
+	{
+		1,0,2,0,
+	};
+
 	//描画カラー情報
-	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
+	float c[4] = { 1.0f,1.0f,0.5f,1.0f };
 
-
-	RECT_F src; //描画元切り取り位置の設定
+	RECT_F src; //描画元切り取り位置
 	RECT_F dst; //描画先表示位置
 
-	//hoge1
-	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 0.0f;
-	src.m_bottom = 0.0f;
+	//切り取り位置の設定
+	src.m_top = 64.0f;
+	src.m_left = 0.0f + AniData[m_ani_frame] * 64;
+	src.m_right = 64.0f + AniData[m_ani_frame] * 64;
+	src.m_bottom = src.m_top + 64.0f;
 
-	dst.m_top = 0.0f;
-	dst.m_left = 0.0f;
-	dst.m_right = 0.0f;
-	dst.m_bottom = 0.0f;
+	//ブロック情報を持ってくる
+	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+	//表示位置の設定
+	dst.m_top = 0.0f + m_py + block->GetScrollY();						//↓描画に対してスクロールの影響を与える
+	dst.m_left = (64.0f * m_posture) + m_px + block->GetScroll();
+	dst.m_right = (64 - 64.0f * m_posture) + m_px + block->GetScroll();
+	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
 
+	//描画
+	Draw::Draw(9, &src, &dst, c, 0.0f);
 
 }
