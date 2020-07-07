@@ -231,7 +231,7 @@ void CObjHero::Action()
 		}
 
 		//落下によるゲームオーバー＆リスタート
-		if (hit->CheckObjNameHit(OBJ_RESTART) != nullptr)
+		if (m_py-block->GetScrollY()>1000)
 		{
 			//場外に出たらリスタート
 			Scene::SetScene(new CSceneGameMain(reset));

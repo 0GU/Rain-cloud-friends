@@ -159,6 +159,7 @@ void CObjStage::Draw()
 				{
 				ObjPlantの床用のため、何もしない
 				}*/
+				//ObjPlant(14=4マス　15=5マス …　22=12マス)
 				else if (m_map[i][j] == 14)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f,4);
@@ -207,10 +208,10 @@ void CObjStage::Draw()
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 99)
+				else if (m_map[i][j] == 22)
 				{
-					CObjRestart* objg = new CObjRestart(j * 64.0f, i * 64.0f);
-					Objs::InsertObj(objg, OBJ_RESTART, 10);
+					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 12);
+					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else
