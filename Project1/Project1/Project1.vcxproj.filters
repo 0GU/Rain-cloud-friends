@@ -31,9 +31,6 @@
     <Filter Include="ソース ファイル\GameMain\プレイヤー関係">
       <UniqueIdentifier>{4c0b01ef-7658-4628-8429-a635a2306842}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GameOver%28仮%29">
-      <UniqueIdentifier>{ef5849c3-9b5d-44ea-9383-eba6ae4d308b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameHead.h">
@@ -138,12 +135,6 @@
     <ClInclude Include="ObjRain.h">
       <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
     </ClInclude>
-    <ClInclude Include="ObjOver.h">
-      <Filter>ソース ファイル\GameOver%28仮%29</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneOver.h">
-      <Filter>ソース ファイル\GameOver%28仮%29</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -247,12 +238,6 @@
     </ClCompile>
     <ClCompile Include="ObjRain.cpp">
       <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjOver.cpp">
-      <Filter>ソース ファイル\GameOver%28仮%29</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneOver.cpp">
-      <Filter>ソース ファイル\GameOver%28仮%29</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
