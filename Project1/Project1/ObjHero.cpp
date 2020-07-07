@@ -68,8 +68,8 @@ void CObjHero::Action()
 	//HPが0でリスタート（仮）
 	if (m_hp <= 0.0f)
 	{
-		Scene::SetScene(new CSceneGameMain(reset));
-
+		//Scene::SetScene(new CSceneGameMain(reset));
+		Scene::SetScene(new CSceneOver(reset));
 	}
 
 	//ブロックとの当たり判定実行
@@ -93,7 +93,7 @@ void CObjHero::Action()
 			falldamage_flag = true;
 			if ((m_py-m_py_h - block->GetScrollY())/64>=5 && hit->CheckElementHit(ELEMENT_IVY) == false&&reset_falldamage_cacancel_flag==false)
 			{
-				m_hp -= 0.1*(int)(m_py - m_py_h - block->GetScrollY()) / 64;
+				m_hp -= 0.04*(int)(m_py - m_py_h - block->GetScrollY()) / 64;
 			}
 		}
 		reset_falldamage_cacancel_flag = false;
