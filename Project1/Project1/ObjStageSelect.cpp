@@ -24,6 +24,8 @@ void CObjStageSelect::Init()
 	scroll_flag = false;
 	Clear_flag = false;
 	title_flag = false;
+
+
 }
 
 //アクション
@@ -34,7 +36,7 @@ void CObjStageSelect::Action()
 	//黒画面スクロール
 	if (scroll_flag == false)
 	{
-		m_y1 += 50.0f;
+		m_y1 += 40.0f;
 		if (m_y1 > 800.0f)
 		{
 			m_y1 = 800.0f;
@@ -43,10 +45,91 @@ void CObjStageSelect::Action()
 	}
 
 
+	//ここからステージコマンド------------------(コントローラー用）
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_RIGHT)&& keyflag == true && scroll_flag == true)
+	{
+		keyflag = false;
+		Audio::Start(1);
+		if (stageflag == 3)
+		{
+			;//何もしない
+		}
+		else
+		{
+			stageflag += 1;
+		}
+	}
+
+	if (Input::GetConButtons(0,GAMEPAD_DPAD_LEFT)&& keyflag == true && scroll_flag == true)
+	{
+		keyflag = false;
+		Audio::Start(1);
+		if (stageflag == 1)
+		{
+			;//何もしない
+		}
+		else
+		{
+			stageflag -= 1;
+		}
 
 
-	//ここからステージコマンド------------------
-	if (Input::GetVKey(VK_RIGHT) == true && keyflag == true && scroll_flag == true)
+	}
+
+	if ( Input::GetConButtons(0, GAMEPAD_B) && keyflag == true && scroll_flag == true)
+	{
+
+		keyflag = false;
+		Audio::Start(2);
+		title_flag = true;
+		move_flag = true;
+
+
+	}
+	if (Input::GetConButtons(0, GAMEPAD_A) && stageflag == 1 && keyflag == true && scroll_flag == true)//Stage1
+	{
+		keyflag = false;
+		Audio::Stop(0);
+		if (move_flag == false)//音が多重になるため黒幕が上がる前に一回だけ動かす
+		{
+			Audio::Start(2);
+		}
+
+
+		move_flag = true;
+	}
+	if ( Input::GetConButtons(0, GAMEPAD_A) && stageflag == 2 && keyflag == true && scroll_flag == true)//Stage2
+	{
+		keyflag = false;
+		Audio::Stop(0);
+		if (move_flag == false)
+		{
+			Audio::Start(2);
+		}
+
+		move_flag = true;
+	}
+	if (Input::GetConButtons(0, GAMEPAD_A) && stageflag == 3 && keyflag == true && scroll_flag == true)//Stage3
+	{
+		keyflag = false;
+		Audio::Stop(0);
+
+
+		move_flag = true;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	//キーボード用--------------------------------------------------------------
+	if (Input::GetVKey(VK_RIGHT) && keyflag == true && scroll_flag == true)
 	{
 		keyflag = false;
 		Audio::Start(1);
@@ -88,27 +171,34 @@ void CObjStageSelect::Action()
 	}
 
 
-	if (Input::GetVKey('Z') == true && stageflag == 1 && keyflag == true && scroll_flag == true)//Stage1
+	if (Input::GetVKey('Z') == true  && stageflag == 1 && keyflag == true && scroll_flag == true)//Stage1
 	{
 		keyflag = false;
 		Audio::Stop(0);
-		Audio::Start(2);
+		if (move_flag == false)//音が多重になるため黒幕が上がる前に一回だけ動かす
+		{
+			Audio::Start(2);
+		}
+		
 
 		move_flag = true;
 	}
-	if (Input::GetVKey('Z') == true && stageflag == 2 && keyflag == true && scroll_flag == true)//Stage2
+	if (Input::GetVKey('Z') == true  && stageflag == 2 && keyflag == true && scroll_flag == true)//Stage2
 	{
 		keyflag = false;
 		Audio::Stop(0);
-		Audio::Start(2);
+		if (move_flag == false)
+		{
+			Audio::Start(2);
+		}
 
 		move_flag = true;
 	}
-	if (Input::GetVKey('Z') == true && stageflag == 3 && keyflag == true && scroll_flag == true)//Stage3
+	if (Input::GetVKey('Z') == true  && stageflag == 3 && keyflag == true && scroll_flag == true)//Stage3
 	{
 		keyflag = false;
 		Audio::Stop(0);
-		Audio::Start(2);
+
 
 		move_flag = true;
 	}
@@ -116,8 +206,10 @@ void CObjStageSelect::Action()
 	if (Input::GetVKey('C') == true && keyflag == true && scroll_flag == true)//クリア画面test
 	{
 		keyflag = false;
-		//		Audio::Stop(0);
-		//		Audio::Start(2);
+		if (move_flag == false)
+		{
+			Audio::Start(2);
+		}
 
 		Scene::SetScene(new CSceneClear());//そのステージに移行
 	}
@@ -136,7 +228,7 @@ void CObjStageSelect::Action()
 
 	if (move_flag == true)
 	{
-		m_y1 -= 50.0f;
+		m_y1 -= 40.0f;
 	}
 
 	if (m_y1 == 0.0f)
@@ -154,8 +246,12 @@ void CObjStageSelect::Action()
 	}
 
 	if (Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false &&
-		Input::GetVKey('X') == false && Input::GetVKey('Z') == false && Input::GetVKey('B') == false && keyflag == false )
+		Input::GetVKey('X') == false && Input::GetVKey('Z') == false && Input::GetVKey('B') == false &&
+		Input::GetConButtons(0, GAMEPAD_DPAD_RIGHT)==false && Input::GetConButtons(0, GAMEPAD_DPAD_LEFT) == false&&
+		keyflag == false
+		)
 	{
+
 		keyflag = true;
 
 	}

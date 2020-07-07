@@ -9,6 +9,7 @@
 #include "GameL\Audio.h"
 #include "GameL\DrawTexture.h"
 #include "GameL/UserData.h"
+#include"GameL/WinInputs.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -111,5 +112,5 @@ void CSceneGameMain::InitScene()
 //ゲームメイン実行メソッド
 void CSceneGameMain::Scene()
 {
-
+	Input::UpdateXControlerConnected();
 }
