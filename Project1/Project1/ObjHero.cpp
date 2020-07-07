@@ -20,10 +20,12 @@ CObjHero::CObjHero(int stage)
 void CObjHero::Init()
 {
 	m_px = 70.0f;			//位置
-	m_py = 64.0f;
+	m_py = 900.0f;
 	m_vx = 0.0f;			//移動ベクトル
 	m_vy = 0.0f;
 	m_posture = 1.0f;		//右向き0.0f  左向き1.0f
+
+	m_py_h = 0.0f;
 
 	m_hp = 1.0f;			//体力（仮）
 	m_hit_time = 0;		//ダメージ間隔
@@ -44,7 +46,9 @@ void CObjHero::Init()
 
 	climb_flag = false;
 
-	test_flag = false;
+	falldamage_flag = false;
+
+	reset_falldamage_cacancel_flag = true;
 
 	m_block_type = 0;		//踏んでいるblockの種類を確認用
 
@@ -75,14 +79,36 @@ void CObjHero::Action()
 		&m_vx, &m_vy, &m_block_type,climb_flag
 	);
 
-	if (m_hit_down==true)
-	{
-		test_flag=true;
-	}
-
 	//自身のHitBoxを持ってくる
 	CHitBox* hit = Hits::GetHitBox(this);
 
+
+	//落下ダメージ処理
+	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+
+	if (m_hit_down == true)
+	{
+		if (falldamage_flag == false)
+		{
+			falldamage_flag = true;
+			if ((m_py-m_py_h - block->GetScrollY())/64>=5 && hit->CheckElementHit(ELEMENT_IVY) == false&&reset_falldamage_cacancel_flag==false)
+			{
+				m_hp -= 0.1*(int)(m_py - m_py_h - block->GetScrollY()) / 64;
+			}
+		}
+		reset_falldamage_cacancel_flag = false;
+		m_py_h = m_py - block->GetScrollY();
+	}
+
+	if (m_hit_down == false)
+	{
+		falldamage_flag = false;
+		if (m_py_h>m_py - block->GetScrollY())
+		{
+			m_py_h = m_py - block->GetScrollY();
+		}
+	}
+	
 	if (stay_flag == false)
 	{
 		//Xキー入力でジャンプ
@@ -268,13 +294,12 @@ void CObjHero::Draw()
 	dst.m_bottom = dst.m_top + 10.0f;
 	Draw::Draw(0, &src, &dst, cc, 0.0f);
 
-	if (test_flag == true)
-	{
+	
 		wchar_t str1[256];
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 		swprintf_s(str1, L"Y=%f", m_py - block->GetScrollY());
 		Font::StrDraw(str1, 20, 20, 20, c);
-	}
+	
 
 
 }
