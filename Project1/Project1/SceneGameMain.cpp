@@ -9,6 +9,7 @@
 #include "GameL\Audio.h"
 #include "GameL\DrawTexture.h"
 #include "GameL/UserData.h"
+#include"GameL/WinInputs.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -102,10 +103,14 @@ void CSceneGameMain::InitScene()
 	//体力バーオブジェクト作成
 	CObjHp* objh = new CObjHp();
 	Objs::InsertObj(objh, OBJ_HP, 11);
+
+	//主人公オブジェクト作成
+	CObjSinEnemy* objs = new CObjSinEnemy(400,400);
+	Objs::InsertObj(objs, OBJ_SINENEMY, 10);
 }
 
 //ゲームメイン実行メソッド
 void CSceneGameMain::Scene()
 {
-
+	Input::UpdateXControlerConnected();
 }

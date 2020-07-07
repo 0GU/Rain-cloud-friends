@@ -49,9 +49,9 @@ void CObjStage::Action()
 		float hy = hero->GetY();
 
 	//後方スクロールライン
-	if (hx < 80)
+	if (hx < 60)
 	{
-		hero->SetX(80);				//主人公はラインを超えないようにする
+		hero->SetX(60);				//主人公はラインを超えないようにする
 		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -63,9 +63,9 @@ void CObjStage::Action()
 	}
 
 	//上方スクロールライン
-	if (hy < 64)
+	if (hy < 256)
 	{
-		hero->SetY(64);				//主人公はラインを超えないようにする
+		hero->SetY(256);				//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -155,58 +155,63 @@ void CObjStage::Draw()
 					Objs::InsertObj(objf, OBJ_FIRE, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 6)
+				/*else if (m_map[i][j] == 13)
+				{
+				ObjPlantの床用のため、何もしない
+				}*/
+				//ObjPlant(14=4マス　15=5マス …　22=12マス)
+				else if (m_map[i][j] == 14)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f,4);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 7)
+				else if (m_map[i][j] == 15)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 5);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 8)
+				else if (m_map[i][j] == 16)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 6);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 9)
+				else if (m_map[i][j] == 17)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 7);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 10)
+				else if (m_map[i][j] == 18)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 8);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 11)
+				else if (m_map[i][j] == 19)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 9);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 12)
+				else if (m_map[i][j] == 20)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 10);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 13)
+				else if (m_map[i][j] == 21)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 11);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 99)
+				else if (m_map[i][j] == 22)
 				{
-					CObjRestart* objg = new CObjRestart(j * 64.0f, i * 64.0f);
-					Objs::InsertObj(objg, OBJ_RESTART, 10);
+					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 12);
+					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else
@@ -263,22 +268,18 @@ void CObjStage::BlockDraw(float x, float y, RECT_F* dst, float c[])
 //引数10 int*	bt			:下部分判定時、特殊なブロックのタイプを返す
 //判定を行うobjectとブロック64×64限定で当たり判定と上下左右判定を行う
 //その結果は引数4～10に返す
-void CObjStage::BlockHit(
-	float* x, float* y, bool scroll_on,
+void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 	bool* up, bool* down, bool* left, bool* right,
-	float* vx, float* vy, int* bt
-) {
+	float* vx, float* vy, int* bt) 
+{
 	CObjStage::BlockHit(
 		x, y, scroll_on,
 		up, down, left, right,
-		vx, vy, bt, false
-	);
+		vx, vy, bt, false);
 }
-void CObjStage::BlockHit(
-	float* x, float* y, bool scroll_on,
+void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 	bool* up, bool* down, bool* left, bool* right,
-	float* vx, float* vy, int* bt,bool climb
-)
+	float* vx, float* vy, int* bt,bool climb)
 {
 	//衝突状態確認用フラグの初期化
 	*up = false;

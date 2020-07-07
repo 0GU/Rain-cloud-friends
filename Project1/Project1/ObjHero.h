@@ -68,4 +68,10 @@ private:
 	int   m_hit_time;	//ダメージ間隔
 
 	bool climb_flag;	//昇降フラグ
+
+	bool falldamage_flag;	//落下ダメージフラグ
+
+	bool reset_falldamage_cacancel_flag;//リスポーンリスポーン時の最初の落下ダメージを無効化
+
+	float m_py_h;
 };
