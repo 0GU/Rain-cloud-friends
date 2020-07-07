@@ -61,8 +61,8 @@ void CObjHero::Action()
 	//HPが0でリスタート（仮）
 	if (m_hp <= 0.0f)
 	{
-		Scene::SetScene(new CSceneGameMain(reset));
-
+		//Scene::SetScene(new CSceneGameMain(reset));
+		Scene::SetScene(new CSceneOver(reset));
 	}
 
 	//ブロックとの当たり判定実行
