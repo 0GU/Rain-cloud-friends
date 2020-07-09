@@ -39,7 +39,7 @@ void CSceneOver::InitScene()
 
 	Draw::LoadImageW(L"素材/仮/Animation.png", 3, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/Over(仮、透過).png", 0, TEX_SIZE_1024);
-
+	Draw::LoadImageW(L"素材/画像/ゲームオーバー(仮).png", 1, TEX_SIZE_1024);
 }
 
 //ゲームオーバー実行メソッド
