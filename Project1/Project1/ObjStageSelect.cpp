@@ -203,16 +203,7 @@ void CObjStageSelect::Action()
 		move_flag = true;
 	}
 	//ここまで------------------------
-	if (Input::GetVKey('C') == true && keyflag == true && scroll_flag == true)//クリア画面test
-	{
-		keyflag = false;
-		if (move_flag == false)
-		{
-			Audio::Start(2);
-		}
 
-		Scene::SetScene(new CSceneClear());//そのステージに移行
-	}
 
 	if (Input::GetVKey('B') == true && keyflag == true && Clear_flag == true && scroll_flag == true)//クリアフラグ仮
 	{

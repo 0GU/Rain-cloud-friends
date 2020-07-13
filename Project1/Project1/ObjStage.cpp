@@ -337,7 +337,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 							*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
-						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 14))
+						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 13))
 						{
 							//上
 							*down = true;//オブジェクトの下の部分が衝突している
