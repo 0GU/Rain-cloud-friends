@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CObjMagic.h" />
     <ClInclude Include="ObjGrowPlant.h" />
     <ClInclude Include="ObjChaseEnemy.h" />
     <ClInclude Include="ObjCloud.h" />
@@ -41,6 +40,7 @@
     <ClInclude Include="ObjFire.h" />
     <ClInclude Include="ObjHero.h" />
     <ClInclude Include="ObjHp.h" />
+    <ClInclude Include="ObjMagic.h" />
     <ClInclude Include="ObjOver.h" />
     <ClInclude Include="ObjPlant.h" />
     <ClInclude Include="ObjPose.h" />
@@ -75,7 +75,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CObjMagic.cpp" />
     <ClCompile Include="ObjGrowPlant.cpp" />
     <ClCompile Include="ObjChaseEnemy.cpp" />
     <ClCompile Include="ObjCloud.cpp" />
@@ -97,6 +96,7 @@
     <ClCompile Include="ObjFire.cpp" />
     <ClCompile Include="ObjHero.cpp" />
     <ClCompile Include="ObjHp.cpp" />
+    <ClCompile Include="ObjMagic.cpp" />
     <ClCompile Include="ObjOver.cpp" />
     <ClCompile Include="ObjPlant.cpp" />
     <ClCompile Include="ObjPose.cpp" />

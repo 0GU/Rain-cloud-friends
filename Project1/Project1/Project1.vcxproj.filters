@@ -150,7 +150,7 @@
     <ClInclude Include="ObjStone.h">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClInclude>
-    <ClInclude Include="CObjMagic.h">
+    <ClInclude Include="ObjMagic.h">
       <Filter>ソース ファイル\GameMain\敵</Filter>
     </ClInclude>
   </ItemGroup>
@@ -269,7 +269,7 @@
     <ClCompile Include="ObjStone.cpp">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
-    <ClCompile Include="CObjMagic.cpp">
+    <ClCompile Include="ObjMagic.cpp">
       <Filter>ソース ファイル\GameMain\敵</Filter>
     </ClCompile>
   </ItemGroup>
