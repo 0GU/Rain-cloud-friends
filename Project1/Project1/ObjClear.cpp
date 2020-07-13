@@ -9,33 +9,46 @@
 #include"GameHead.h"
 #include"ObjClear.h"
 
+CObjClear::CObjClear(float m_hp, float cl_hp)
+{
+	hero_hp = m_hp;//主人公のＨＰ取得用
+	cloud_hp = cl_hp;//雲のＨＰ取得用
+}
+
 void CObjClear::Init()
 {
 	key_flag = true;
 	move_flag = false;
 	scroll_flag = false;
 	m_y1 = 0.0f;
+	Clear_flag[0] = false;
+	Clear_flag[1] = false;
+	Clear_flag[2] = false;
 }
 
 //アクション
 void CObjClear::Action()
 {
-	//主人公の情報を取得
+	/*
+	//主人公から体力の情報を持ってくる
 	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+	//雲から体力の情報を持ってくる
 	CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
+	*/
+
 	//if(CObjStage)
-	if (hero->m_hp <= 75 || cloud->m_hp <= 75)//主人公と雲の体力が一定以上の場合
+	if (hero_hp >= 0.75f && cloud_hp >= 0.75f)//主人公と雲の体力が一定以上の場合
 	{
-
+		Clear_flag[0] = true;
 	}
-	else if (hero->m_hp <= 75 && cloud->m_hp <= 75)//主人公か雲の体力のどちらかが一定の場合
+	else if (hero_hp >= 0.75f || cloud_hp >= 0.75f)//主人公か雲の体力のどちらかが一定の場合
 	{
-
+		Clear_flag[1] = true;
 	}
 
 	else //どちらも一定以下の場合
 	{
-
+		Clear_flag[2] = true;
 	}
 	//黒画面スクロール
 	if (scroll_flag == false)
@@ -128,25 +141,32 @@ void CObjClear::Draw()
 	src.m_bottom = 512.0f;
 
 	dst.m_top = 300.0f;
-	dst.m_left = 20.0f;
-	dst.m_right = 270.0f;
 	dst.m_bottom = 500.0f;
+	if (Clear_flag[0] == true)
+	{
+		dst.m_left = 20.0f;
+		dst.m_right = 270.0f;
 
-	Draw::Draw(2, &src, &dst, c, 0.0f);
+		Draw::Draw(2, &src, &dst, c, 0.0f);
+	}
 
-	//2
-	dst.m_left = 200.0f;
-	dst.m_right = 450.0f;
-	
+	if (Clear_flag[1] == true)
+	{
+		//2
+		dst.m_left = 200.0f;
+		dst.m_right = 450.0f;
 
-	Draw::Draw(2, &src, &dst, c, 0.0f);
+		Draw::Draw(2, &src, &dst, c, 0.0f);
+	}
+	if (Clear_flag[2] == true)
+	{
+		//3
+		dst.m_left = 380.0f;
+		dst.m_right = 630.0f;
 
-	//3
-	dst.m_left = 380.0f;
-	dst.m_right = 630.0f;
-	
+		Draw::Draw(2, &src, &dst, c, 0.0f);
+	}
 
-	Draw::Draw(2, &src, &dst, c, 0.0f);
 	//ここまで------------------------------------------------
 	//黒画面
 	src.m_top = 0.0f;

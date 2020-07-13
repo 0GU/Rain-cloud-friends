@@ -240,7 +240,8 @@ void CObjHero::Action()
 		//ゴールブロックに触れると
 		if (GetBT() == 3)
 		{
-			Scene::SetScene(new CSceneClear());
+			CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
+			Scene::SetScene(new CSceneClear(m_hp,cloud->m_hp));
 		}
 		//位置の更新
 		m_px += m_vx;
