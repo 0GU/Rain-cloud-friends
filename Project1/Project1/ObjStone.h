@@ -6,11 +6,11 @@ using namespace GameL;
 
 
 //オブジェクト：ステージセレクト
-class CObjFire : public CObj
+class CObjStone : public CObj
 {
 public:
-	CObjFire(float x, float y);
-	~CObjFire() {};
+	CObjStone(float x, float y);
+	~CObjStone() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
 	void Draw();	//ドロー

@@ -5,9 +5,9 @@
 #include "GameL\HitBoxManager.h"
 
 #include"GameHead.h"
-#include"ObjFire.h"
+#include"ObjStone.h"
 
-CObjFire::CObjFire(float x, float y)
+CObjStone::CObjStone(float x, float y)
 {
 	m_px = x;			//位置
 	m_py = y - 64.0;
@@ -15,7 +15,7 @@ CObjFire::CObjFire(float x, float y)
 }
 
 
-void CObjFire::Init()
+void CObjStone::Init()
 {
 	m_ani_time = 0;
 	m_ani_frame = 0;		//静止フレームを初期にする
@@ -30,7 +30,7 @@ void CObjFire::Init()
 }
 
 //アクション
-void CObjFire::Action()
+void CObjStone::Action()
 {
 	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
 	stay_flag = p->GetFlag();
@@ -68,7 +68,7 @@ void CObjFire::Action()
 }
 
 //ドロー
-void CObjFire::Draw()
+void CObjStone::Draw()
 {
 	int AniData[6] =
 	{
