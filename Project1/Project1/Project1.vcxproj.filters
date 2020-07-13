@@ -147,6 +147,9 @@
     <ClInclude Include="SceneOver.h">
       <Filter>ソース ファイル\GameOver</Filter>
     </ClInclude>
+    <ClInclude Include="ObjStone.h">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -259,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="SceneOver.cpp">
       <Filter>ソース ファイル\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjStone.cpp">
+      <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

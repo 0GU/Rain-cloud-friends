@@ -17,9 +17,10 @@ using namespace GameL;
 #include "GameHead.h"
 
 //コンストラクタ
-CSceneClear::CSceneClear()
+CSceneClear::CSceneClear(float m_hp,float cl_hp)
 {
-
+	hero_hp = m_hp;//主人公のＨＰ取得用
+	cloud_hp = cl_hp;//雲のＨＰ取得用
 }
 
 //デストラクタ
@@ -31,8 +32,8 @@ CSceneClear::~CSceneClear()
 //ゲームタイトル初期化メソッド
 void CSceneClear::InitScene()
 {
-	CObjClear* p = new CObjClear();
-	Objs::InsertObj(p, OBJ_CLEAR, 1);
+	CObjClear* clear = new CObjClear(hero_hp, cloud_hp);
+	Objs::InsertObj(clear, OBJ_CLEAR, 1);
 	//SE情報の登録
 	//Audio::LoadAudio(0, L"素材/BGM/rain1.wav", SOUND_TYPE::BACK_MUSIC);
 
@@ -42,6 +43,8 @@ void CSceneClear::InitScene()
 	Draw::LoadImageW(L"素材/画像/しずく(水).png", 2, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/Animation.png", 3, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/画像/文字.png", 5, TEX_SIZE_1024);
+
+
 }
 
 //ゲームタイトル実行メソッド
