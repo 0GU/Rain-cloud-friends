@@ -48,7 +48,7 @@ void CObjHero::Init()
 
 	falldamage_flag = false;
 
-	reset_falldamage_cacancel_flag = false;
+	reset_falldamage_cacancel_flag = true;
 
 	m_block_type = 0;		//“¥‚ñ‚Å‚¢‚éblock‚ÌŽí—Þ‚ðŠm”F—p
 
