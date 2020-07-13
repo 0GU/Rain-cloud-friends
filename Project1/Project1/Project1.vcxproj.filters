@@ -141,15 +141,6 @@
     <ClInclude Include="ObjSinEnemy.h">
       <Filter>ソース ファイル\GameMain\敵</Filter>
     </ClInclude>
-    <ClInclude Include="ObjOver.h">
-      <Filter>ソース ファイル\GameOver</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneOver.h">
-      <Filter>ソース ファイル\GameOver</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjStone.h">
-      <Filter>ソース ファイル\ギミック</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -256,15 +247,6 @@
     </ClCompile>
     <ClCompile Include="ObjSinEnemy.cpp">
       <Filter>ソース ファイル\GameMain\敵</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjOver.cpp">
-      <Filter>ソース ファイル\GameOver</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneOver.cpp">
-      <Filter>ソース ファイル\GameOver</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjStone.cpp">
-      <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
