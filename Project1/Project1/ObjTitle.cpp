@@ -14,7 +14,7 @@ void CObjTitle::Init()
 	m_scroll = 0.0f;
 	move_flag = false;
 	scroll_flag = false;
-	key_flag = true;
+	key_flag = false;
 	m_y1 = 0.0f;
 }
 
@@ -25,21 +25,28 @@ void CObjTitle::Action()
 	///黒画面スクロール
 	if (scroll_flag == false)
 	{
+		
 		m_y1 += 50.0f;//上から下に降ろす
 		if (m_y1 > 800.0f)//800を超えたら
 		{
 			m_y1 = 800.0f;//800に固定
 			scroll_flag = true;//スクロールを止める
+			key_flag = true;
 		}
 	}
 
-	if (Input::GetVKey('Z') == true || Input::GetConButtons(0,GAMEPAD_A)&& key_flag == true && scroll_flag==true)//Zキーを押すと
+	if (Input::GetConButtons(0,GAMEPAD_A)&& key_flag == true && scroll_flag==true)//Zキーを押すと
 	{
 		key_flag = false;//Keyのフラグを止めて
 
 		move_flag = true;//下から上に動かすフラグ起動
 	}
+	if (Input::GetVKey('Z') == true  && scroll_flag == true)//Zキーを押すと
+	{
+		key_flag = false;//Keyのフラグを止めて
 
+		move_flag = true;//下から上に動かすフラグ起動
+	}
 	if (move_flag == true)//起動していると
 	{
 		m_y1 -= 40.0f;//下から上に動かす
