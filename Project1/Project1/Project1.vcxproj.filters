@@ -138,6 +138,9 @@
     <ClInclude Include="ObjSinEnemy.h">
       <Filter>ソース ファイル\GameMain\敵</Filter>
     </ClInclude>
+    <ClInclude Include="ObjStone.h">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -244,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="ObjSinEnemy.cpp">
       <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjStone.cpp">
+      <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

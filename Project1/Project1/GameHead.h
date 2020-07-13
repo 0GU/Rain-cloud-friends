@@ -12,6 +12,7 @@ enum OBJ_NAME
 	OBJ_ENEMY,
 	OBJ_FIRE,
 	OBJ_PLANT,
+	OBJ_STONE,
 	OBJ_CLEAR,
 	OBJ_POSE,
 	OBJ_TITLE,
@@ -43,6 +44,7 @@ enum HIT_ELEMENTS
 	ELEMENT_RESET,
 	ELEMENT_IVY,
 	ELEMENT_FLOWER,
+	ELEMENT_STONE,
 };
 //------------------------------------------------h
 
@@ -92,6 +94,7 @@ struct UserData
 #include"ObjFire.h"
 #include"ObjPlant.h"
 #include"ObjGrowPlant.h"
+#include"ObjStone.h"
 #include"ObjClear.h"
 #include"ObjPose.h"
 #include"ObjTitle.h"

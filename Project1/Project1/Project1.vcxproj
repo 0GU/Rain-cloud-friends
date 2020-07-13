@@ -46,6 +46,7 @@
     <ClInclude Include="ObjRestart.h" />
     <ClInclude Include="ObjStage.h" />
     <ClInclude Include="ObjStageSelect.h" />
+    <ClInclude Include="ObjStone.h" />
     <ClInclude Include="ObjTitle.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
@@ -96,6 +97,7 @@
     <ClCompile Include="ObjRestart.cpp" />
     <ClCompile Include="ObjStage.cpp" />
     <ClCompile Include="ObjStageSelect.cpp" />
+    <ClCompile Include="ObjStone.cpp" />
     <ClCompile Include="ObjTitle.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
