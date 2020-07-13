@@ -40,6 +40,7 @@
     <ClInclude Include="ObjFire.h" />
     <ClInclude Include="ObjHero.h" />
     <ClInclude Include="ObjHp.h" />
+    <ClInclude Include="ObjOver.h" />
     <ClInclude Include="ObjPlant.h" />
     <ClInclude Include="ObjPose.h" />
     <ClInclude Include="ObjRain.h" />
@@ -52,6 +53,7 @@
     </ClInclude>
     <ClInclude Include="SceneClear.h" />
     <ClInclude Include="SceneGameMain.h" />
+    <ClInclude Include="SceneOver.h" />
     <ClInclude Include="SceneStageSelect.h" />
     <ClInclude Include="SceneTitle.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -91,6 +93,7 @@
     <ClCompile Include="ObjFire.cpp" />
     <ClCompile Include="ObjHero.cpp" />
     <ClCompile Include="ObjHp.cpp" />
+    <ClCompile Include="ObjOver.cpp" />
     <ClCompile Include="ObjPlant.cpp" />
     <ClCompile Include="ObjPose.cpp" />
     <ClCompile Include="ObjRain.cpp" />
@@ -103,6 +106,7 @@
     </ClCompile>
     <ClCompile Include="SceneClear.cpp" />
     <ClCompile Include="SceneGameMain.cpp" />
+    <ClCompile Include="SceneOver.cpp" />
     <ClCompile Include="SceneStageSelect.cpp" />
     <ClCompile Include="SceneTitle.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

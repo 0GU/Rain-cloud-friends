@@ -31,6 +31,9 @@
     <Filter Include="ソース ファイル\GameMain\プレイヤー関係">
       <UniqueIdentifier>{4c0b01ef-7658-4628-8429-a635a2306842}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GameOver">
+      <UniqueIdentifier>{416aeade-1bb5-4839-adfd-8b43b615b24b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameHead.h">
@@ -137,6 +140,12 @@
     </ClInclude>
     <ClInclude Include="ObjSinEnemy.h">
       <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjOver.h">
+      <Filter>ソース ファイル\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneOver.h">
+      <Filter>ソース ファイル\GameOver</Filter>
     </ClInclude>
     <ClInclude Include="ObjStone.h">
       <Filter>ソース ファイル\ギミック</Filter>
@@ -247,6 +256,12 @@
     </ClCompile>
     <ClCompile Include="ObjSinEnemy.cpp">
       <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjOver.cpp">
+      <Filter>ソース ファイル\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneOver.cpp">
+      <Filter>ソース ファイル\GameOver</Filter>
     </ClCompile>
     <ClCompile Include="ObjStone.cpp">
       <Filter>ソース ファイル\ギミック</Filter>
