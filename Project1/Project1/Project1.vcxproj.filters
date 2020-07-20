@@ -150,6 +150,9 @@
     <ClInclude Include="ObjStone.h">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClInclude>
+    <ClInclude Include="ObjMagic.h">
+      <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -265,6 +268,9 @@
     </ClCompile>
     <ClCompile Include="ObjStone.cpp">
       <Filter>ソース ファイル\ギミック</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjMagic.cpp">
+      <Filter>ソース ファイル\GameMain\敵</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
