@@ -76,14 +76,14 @@ void CObjHero::Action()
 	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	pb->BlockHit(&m_px, &m_py, true,
 		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-		&m_vx, &m_vy, &m_block_type,climb_flag
+		&m_vx, &m_vy, &m_block_type, climb_flag
 	);
 
 	//自身のHitBoxを持ってくる
 	CHitBox* hit = Hits::GetHitBox(this);
 
 
-	//落下ダメージ処理
+	//落下ダメージ処理-----------------------------------------------------------------------------------------------------------------------------
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
 	if (m_hit_down == true)
@@ -91,7 +91,7 @@ void CObjHero::Action()
 		if (falldamage_flag == false)
 		{
 			falldamage_flag = true;
-			if ((m_py-m_py_h - block->GetScrollY())/64>=5 && hit->CheckElementHit(ELEMENT_IVY) == false&&reset_falldamage_cacancel_flag==false)
+			if ((m_py - m_py_h - block->GetScrollY()) / 64 >= 5 && hit->CheckElementHit(ELEMENT_IVY) == false && reset_falldamage_cacancel_flag == false)
 			{
 				m_hp -= 0.04*(int)(m_py - m_py_h - block->GetScrollY()) / 64;
 			}
@@ -103,12 +103,13 @@ void CObjHero::Action()
 	if (m_hit_down == false)
 	{
 		falldamage_flag = false;
-		if (m_py_h>m_py - block->GetScrollY())
+		if (m_py_h > m_py - block->GetScrollY())
 		{
 			m_py_h = m_py - block->GetScrollY();
 		}
 	}
-	
+	//----------------------------------------------------------------------------------------------------------------------------------------------
+
 	if (stay_flag == false)
 	{
 		//Xキー入力でジャンプ
@@ -155,7 +156,7 @@ void CObjHero::Action()
 		{
 			m_vy = 0.0f;
 		}
-		else if (Input::GetVKey(VK_UP) == true&&climb_flag==true&&hit->CheckElementHit(ELEMENT_FLOWER) == false)
+		else if (Input::GetVKey(VK_UP) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
 		{
 			m_vy = -3.0f;
 		}
@@ -186,11 +187,11 @@ void CObjHero::Action()
 		m_vx += -(m_vx * 0.098);
 
 		//自由落下速度
-		if (climb_flag==false|| Input::GetVKey(VK_UP) == false)
+		if (climb_flag == false || Input::GetVKey(VK_UP) == false)
 		{
 			m_vy += 9.8 / (16.0f);
 		}
-		
+
 
 
 		//高速移動によるBlock判定
@@ -201,9 +202,9 @@ void CObjHero::Action()
 		if (pbb->GetScroll() > 0)
 			pbb->SetScroll(0);
 
-		
 
-		
+
+
 		//敵と当たっているか確認
 		if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
 		{
@@ -221,17 +222,17 @@ void CObjHero::Action()
 			EnemyHit(enemynum);
 		}
 		//昇降処理
-		if (hit->CheckElementHit(ELEMENT_IVY) == true&& (Input::GetVKey(VK_UP) == true|| (Input::GetVKey(VK_DOWN)==true)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
+		if (hit->CheckElementHit(ELEMENT_IVY) == true && (Input::GetVKey(VK_UP) == true || (Input::GetVKey(VK_DOWN) == true)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
 		{
 			climb_flag = true;
 		}
-		else if ((hit->CheckElementHit(ELEMENT_IVY) == false && hit->CheckElementHit(ELEMENT_FLOWER) == false && climb_flag == true)|| Input::GetVKey(VK_UP) == false)	//昇降フラグをfalseにする処理
+		else if ((hit->CheckElementHit(ELEMENT_IVY) == false && hit->CheckElementHit(ELEMENT_FLOWER) == false && climb_flag == true) || Input::GetVKey(VK_UP) == false)	//昇降フラグをfalseにする処理
 		{
 			climb_flag = false;
 		}
 
 		//落下によるゲームオーバー＆リスタート
-		if (m_py-block->GetScrollY()>1000)
+		if (m_py - block->GetScrollY() > 1000)
 		{
 			//場外に出たらリスタート
 			Scene::SetScene(new CSceneGameMain(reset));
@@ -241,7 +242,7 @@ void CObjHero::Action()
 		if (GetBT() == 3)
 		{
 			CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
-			Scene::SetScene(new CSceneClear(m_hp,cloud->m_hp));
+			Scene::SetScene(new CSceneClear(m_hp, cloud->m_hp));
 		}
 		//位置の更新
 		m_px += m_vx;
@@ -251,7 +252,7 @@ void CObjHero::Action()
 		hit->SetPos(m_px, m_py);
 	}
 
-	
+
 }
 
 //ドロー
@@ -295,12 +296,12 @@ void CObjHero::Draw()
 	dst.m_bottom = dst.m_top + 10.0f;
 	Draw::Draw(0, &src, &dst, cc, 0.0f);
 
-	
-		wchar_t str1[256];
-		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-		swprintf_s(str1, L"Y=%f", m_py - block->GetScrollY());
-		Font::StrDraw(str1, 20, 20, 20, c);
-	
+
+	wchar_t str1[256];
+	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+	swprintf_s(str1, L"Y=%f", m_py - block->GetScrollY());
+	Font::StrDraw(str1, 20, 20, 20, c);
+
 
 
 }
@@ -355,7 +356,7 @@ void CObjHero::EnemyHit(int enemynum)
 					//敵の移動方向を主人公の位置に加算
 					if (enemynum == 1)
 						m_px += ((CObjEnemy*)hit_data[i]->o)->GetVx();
-					
+
 
 					CObjStage* b = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 					//後方スクロールライン
