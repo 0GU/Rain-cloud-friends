@@ -106,7 +106,7 @@ struct UserData
 #include"ObjChaseEnemy.h"
 #include"ObjSinEnemy.h"
 #include"ObjOver.h"
-#include"CObjMagic.h"
+#include"ObjMagic.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
