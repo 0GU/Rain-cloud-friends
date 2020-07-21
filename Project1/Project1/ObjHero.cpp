@@ -52,6 +52,11 @@ void CObjHero::Init()
 
 	m_block_type = 0;		//踏んでいるblockの種類を確認用
 
+	//コントローラー用仮変数
+	m_con_x = 0.0f;
+	m_con_y = 0.0f;
+	m_con_num = 0;
+
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
@@ -111,6 +116,66 @@ void CObjHero::Action()
 	
 	if (stay_flag == false)
 	{
+		//コントローラー操作仮
+		m_con_num = Input::UpdateXControlerConnected();
+		m_con_x = Input::GetConVecStickLX(m_con_num);
+		
+		if (m_con_x == 0.0f)
+		{
+			m_con_flag = false;
+		}
+		if (Input::GetConButtons(m_con_num, GAMEPAD_A) == true)
+		{
+			if (m_hit_down == true)
+			{
+				m_vy = -10;
+			}
+		}
+		if (Input::GetConButtons(m_con_num, GAMEPAD_X) == true)
+		{
+			//ダッシュ時の速度
+			if (m_con_x > 1.1f)
+				m_con_x = 1.1f;
+			if(m_con_x<-1.1f)
+				m_con_x = -1.1f;
+			m_ani_max_time = 2;
+		}
+		else
+		{
+			//通常速度
+			if (m_con_x > 0.5f)
+				m_con_x = 0.5f;
+			if (m_con_x < -0.5f)
+				m_con_x = -0.5f;
+			m_ani_max_time = 4;
+		}
+		if (m_con_x > 0.0f)
+		{
+			m_vx += m_con_x;
+			m_posture = 1.0f;
+			m_ani_time += 1;
+			m_con_flag = true;
+		}
+		if (m_con_x < 0.0f)
+		{
+			m_vx += m_con_x;
+			m_posture = 0.0f;
+			m_ani_time += 1;
+			m_con_flag = true;
+		}
+		//昇降処理
+		if (Input::GetConVecStickLY(m_con_num)>0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
+		{
+			m_vy = 0.0f;
+		}
+		else if (Input::GetConVecStickLY(m_con_num) > 0.0f&& climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+		{
+			m_vy = -3.0f;
+		}
+		else if (Input::GetConVecStickLY(m_con_num) < 0.0f  && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+		{
+			m_vy = +3.0f;
+		}
 		//Xキー入力でジャンプ
 		if (Input::GetVKey('X') == true)
 		{
@@ -164,7 +229,7 @@ void CObjHero::Action()
 			m_vy = +3.0f;
 		}
 
-		else
+		else if(m_con_flag==false)
 		{
 			m_ani_frame = 1;  //キー入力が無い場合は静止フレームにする
 			m_ani_time = 0;
@@ -220,8 +285,8 @@ void CObjHero::Action()
 			int enemynum = 3;
 			EnemyHit(enemynum);
 		}
-		//昇降処理
-		if (hit->CheckElementHit(ELEMENT_IVY) == true&& (Input::GetVKey(VK_UP) == true|| (Input::GetVKey(VK_DOWN)==true)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
+		//昇降処理  一旦Input系の処理はここでは必要ない
+		if (hit->CheckElementHit(ELEMENT_IVY) == true/*&& (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) < 0.0f)*/)	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
 		{
 			climb_flag = true;
 		}
@@ -250,7 +315,11 @@ void CObjHero::Action()
 		//HitBoxの位置の変更
 		hit->SetPos(m_px, m_py);
 	}
-
+	
+			
+	
+	
+	
 	
 }
 

@@ -92,19 +92,21 @@ int CWinInputs::GetPosY()
 	return m_y;
 }
 //コントローラの接続状態の確認
-void CWinInputs::UpdateXControlerConnected()
+int CWinInputs::UpdateXControlerConnected()
 {
 	DWORD dwResult;
-	for (DWORD i = 0; i < MAX_CONTROLERS; i++)
+	for (int i = 0; i < MAX_CONTROLERS; i++)
 	{
 		dwResult = XInputGetState(i, &GAME_PAD[i].m_state);
 		if (dwResult == ERROR_SUCCESS)
+		{
 			GAME_PAD[i].m_bConnected = true;
+			return i;
+		}
 		else
 			GAME_PAD[i].m_bConnected = false;
 	}
-
-
+	return 0;
 }
 
 
