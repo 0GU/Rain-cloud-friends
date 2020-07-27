@@ -6,19 +6,15 @@ using namespace GameL;
 
 
 //オブジェクト：ステージセレクト
-class CObjStone : public CObj
+class CObjMagic : public CObj
 {
 public:
-	CObjStone(float x, float y);
-	~CObjStone() {};
+	CObjMagic(float x, float y);
+	~CObjMagic() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
 	void Draw();	//ドロー
-
-	float SetVX(float vx) { m_vx = vx; };
-
-	float m_px, m_py;
-	float m_vx, m_vy;
+	float x, y;
 private:
-	bool stay_flag;
+	int hoge;//仮
 };

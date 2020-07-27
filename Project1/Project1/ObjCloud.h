@@ -35,4 +35,11 @@ private:
 	bool m_hit_down;
 	bool m_hit_left;
 	bool m_hit_right;
+
+
+	//コントローラー用
+	int m_con_num;
+
+	float m_con_x;
+	float m_con_y;
 };
