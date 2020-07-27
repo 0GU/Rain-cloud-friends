@@ -42,4 +42,10 @@ private:
 
 	float m_con_x;
 	float m_con_y;
+
+	int   m_ani_time;   //アニメーションフレーム動作間隔
+	int   m_ani_frame;  //描画フレーム
+
+	float m_speed_power;  //スピードパワー
+	float m_ani_max_time; //アニメーション動作間隔最大値
 };
