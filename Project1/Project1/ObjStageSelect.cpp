@@ -10,6 +10,7 @@
 #include"ObjStageSelect.h"
 #include<Windows.h>
 
+//イニシャライズ
 void CObjStageSelect::Init()
 {
 	//初期化
@@ -22,10 +23,36 @@ void CObjStageSelect::Init()
 	m_scroll = 0.0f;
 	move_flag = false;
 	scroll_flag = false;
-	Clear_flag = false;
+
 	title_flag = false;
 
+	bool set_Stage[3] = { false, false ,false };
+	//bool set_Stage2[3] = { false, false ,false };
+	//bool set_Stage3[3] = { false, false ,false };
+	Save::Open();
 
+	/*for (int i = 0; i < 3; i++)
+	{*/
+		if (((UserData*)Save::GetData())->Stage_1[0] == true)
+		{
+			set_Stage[0] = true;
+		}
+
+
+		if (((UserData*)Save::GetData())->Stage_2[0] == true)
+		{
+			set_Stage[1] = true;
+		}
+
+		if (((UserData*)Save::GetData())->Stage_3[0] == true)
+		{
+			set_Stage[2] = true;
+		}
+	//}
+	//フラグを初期化
+	memcpy(Clear_flag, set_Stage, sizeof(bool) * (3));
+	memcpy(Clear_flag, set_Stage, sizeof(bool) * (3));
+	memcpy(Clear_flag, set_Stage, sizeof(bool) * (3));
 }
 
 //アクション
@@ -119,15 +146,6 @@ void CObjStageSelect::Action()
 	}
 
 
-
-
-
-
-
-
-
-
-
 	//キーボード用--------------------------------------------------------------
 	if (Input::GetVKey(VK_RIGHT) && keyflag == true && scroll_flag == true)
 	{
@@ -205,17 +223,7 @@ void CObjStageSelect::Action()
 	//ここまで------------------------
 
 
-	if (Input::GetVKey('B') == true && keyflag == true && Clear_flag == true && scroll_flag == true)//クリアフラグ仮
-	{
-		keyflag = false;
-		Clear_flag = false;
-	}
 
-	if (Input::GetVKey('B') == true && keyflag == true && Clear_flag == false && scroll_flag == true)//クリアフラグ仮
-	{
-		keyflag = false;
-		Clear_flag = true;
-	}
 
 	if (move_flag == true)
 	{
@@ -431,16 +439,17 @@ void CObjStageSelect::Draw()
 	dst.m_bottom = 700.0f;
 	Draw::Draw(1, &src, &dst, c, 0.0f);
 
-
 	//--------------ここから雫
+	//雫（仮）
+	src.m_top = 0.0f;
+	src.m_left = 0.0f;
+	src.m_right = 512.0f;
+	src.m_bottom = 512.0f;
 
-	if (Clear_flag == true)
+
+	if (Clear_flag[0] == true)
 	{
-		//雫（仮）
-		src.m_top = 0.0f;
-		src.m_left = 0.0f;
-		src.m_right = 512.0f;
-		src.m_bottom = 512.0f;
+
 
 		dst.m_top = 560.0f;
 		dst.m_left = 120.0f;
@@ -465,6 +474,9 @@ void CObjStageSelect::Draw()
 
 		Draw::Draw(3, &src, &dst, c, 0.0f);
 
+	}
+	if (Clear_flag[1] == true)
+	{
 
 		dst.m_top = 560.0f;
 		dst.m_left = 520.0f;
@@ -486,6 +498,9 @@ void CObjStageSelect::Draw()
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(3, &src, &dst, c, 0.0f);
+	}
+	if(Clear_flag[2] == true)
+	{
 
 		dst.m_top = 560.0f;
 		dst.m_left = 920.0f;
@@ -508,13 +523,14 @@ void CObjStageSelect::Draw()
 
 		Draw::Draw(3, &src, &dst, c, 0.0f);
 	}
-	if (Clear_flag == false)
+	//雫（仮）
+	src.m_top = 0.0f;
+	src.m_left = 0.0f;
+	src.m_right = 512.0f;
+	src.m_bottom = 512.0f;
+	if (Clear_flag[0] == false)
 	{
-		//雫（仮）
-		src.m_top = 0.0f;
-		src.m_left = 0.0f;
-		src.m_right = 512.0f;
-		src.m_bottom = 512.0f;
+
 
 		dst.m_top = 560.0f;
 		dst.m_left = 120.0f;
@@ -538,7 +554,10 @@ void CObjStageSelect::Draw()
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(4, &src, &dst, c, 0.0f);
+	}
 
+	if (Clear_flag[1] == false)
+	{
 
 		dst.m_top = 560.0f;
 		dst.m_left = 520.0f;
@@ -560,6 +579,9 @@ void CObjStageSelect::Draw()
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(4, &src, &dst, c, 0.0f);
+	}
+	if(Clear_flag[2]==false)
+	{
 
 		dst.m_top = 560.0f;
 		dst.m_left = 920.0f;

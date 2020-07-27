@@ -9,10 +9,11 @@
 #include"GameHead.h"
 #include"ObjClear.h"
 
-CObjClear::CObjClear(float m_hp, float cl_hp)
+CObjClear::CObjClear(float m_hp, float cl_hp,int stage)
 {
 	hero_hp = m_hp;//主人公のＨＰ取得用
 	cloud_hp = cl_hp;//雲のＨＰ取得用
+	stageselect = stage;
 }
 
 void CObjClear::Init()
@@ -24,6 +25,8 @@ void CObjClear::Init()
 	Clear_flag[0] = false;
 	Clear_flag[1] = false;
 	Clear_flag[2] = false;
+
+	Save::Open();
 }
 
 //アクション
@@ -37,18 +40,77 @@ void CObjClear::Action()
 	*/
 
 	//if(CObjStage)
+	//クリア状態の管理
+
 	if (hero_hp >= 0.75f && cloud_hp >= 0.75f)//主人公と雲の体力が一定以上の場合
 	{
 		Clear_flag[0] = true;
 	}
-	else if (hero_hp >= 0.75f || cloud_hp >= 0.75f)//主人公か雲の体力のどちらかが一定の場合
+    else if (hero_hp >= 0.75f || cloud_hp >= 0.75f)//主人公か雲の体力のどちらかが一定の場合
 	{
+		
 		Clear_flag[1] = true;
 	}
 
 	else //どちらも一定以下の場合
 	{
 		Clear_flag[2] = true;
+	}
+	
+
+	if (Clear_flag[0] == true)//Perfect
+	{
+		switch(stageselect)
+		{
+		case 1:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_1[0] = true;
+			break;
+		case 2:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_2[0] = true;
+			break;
+		case 3:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_3[0] = true;
+			break;
+		}
+	}
+	if (Clear_flag[1] == true)//Great
+	{
+		switch (stageselect)
+		{
+		case 1:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_1[1] = true;
+			break;
+		case 2:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_2[1] = true;
+			break;
+		case 3:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_3[1] = true;
+			break;
+		}
+	}
+	if (Clear_flag[2] == true)//Good
+	{
+		switch (stageselect)
+		{
+		case 1:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_1[2] = true;
+			break;
+		case 2:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_2[2] = true;
+			break;
+		case 3:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_3[2] = true;
+			break;
+		}
 	}
 	//黒画面スクロール
 	if (scroll_flag == false)

@@ -29,7 +29,7 @@ namespace GameL
 			static int GetPosX();
 			static int GetPosY();
 
-			static void UpdateXControlerConnected();
+			static int UpdateXControlerConnected();
 
 			static void Refresh();
 			static void Init();
