@@ -211,10 +211,10 @@ void CObjChaseEnemy::Draw()
 	RECT_F dst; //描画先表示位置
 
 	//切り取り位置の設定
-	src.m_top = 64.0f;
-	src.m_left = 0.0f + AniData[m_ani_frame] * 64;
-	src.m_right = 64.0f + AniData[m_ani_frame] * 64;
-	src.m_bottom = src.m_top + 64.0f;
+	src.m_top = 0.0f;
+	src.m_left = 0.0f + AniData[m_ani_frame] * 255;
+	src.m_right = 255.0f + AniData[m_ani_frame] * 255;
+	src.m_bottom = src.m_top + 255.0f;
 
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
@@ -225,6 +225,6 @@ void CObjChaseEnemy::Draw()
 	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
 
 	//描画
-	Draw::Draw(11, &src, &dst, c, 0.0f);
+	Draw::Draw(9, &src, &dst, c, 0.0f);
 
 }

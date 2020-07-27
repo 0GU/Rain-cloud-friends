@@ -219,8 +219,8 @@ void CObjSinEnemy::Draw()
 	//切り取り位置の設定
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 64.0f;
-	src.m_bottom = 64.0f;
+	src.m_right = 650.0f;
+	src.m_bottom = 750.0f;
 
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
@@ -232,5 +232,5 @@ void CObjSinEnemy::Draw()
 	dst.m_bottom = 64.0f + m_y +block->GetScrollY();
 
 	//0番目に登録したグラフィックをsrc・dst・cの情報を元に描画
-	Draw::Draw(5, &src, &dst, c, 0.0f);
+	Draw::Draw(12, &src, &dst, c, 0.0f);
 }

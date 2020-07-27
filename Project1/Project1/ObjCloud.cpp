@@ -86,7 +86,7 @@ void CObjCloud::Action()
 	
 	if ((Input::GetVKey('C') == true||Input::GetConButtons(m_con_num,GAMEPAD_B)==true) && rain_flag == true && m_hp > 0.0f)
 	{
-		CObjRain* objr = new CObjRain(m_px+pbb->GetScroll(), m_py+64+pbb->GetScrollY());
+		CObjRain* objr = new CObjRain(m_px, m_py+64);
 		Objs::InsertObj(objr, OBJ_RAIN, 10);
 		rain_flag = false;
 		m_hp -= 0.1f;	//hpå∏è≠
@@ -138,9 +138,9 @@ void CObjCloud::Draw()
 
 	//êÿÇËéÊÇËà íuÇÃê›íË
 	src.m_top = 0.0f;
-	src.m_left = 0.0f + AniData[m_ani_frame] * 437;
-	src.m_right = 437.0f + AniData[m_ani_frame] * 437;
-	src.m_bottom = 267.0f;
+	src.m_left = 0.0f + AniData[m_ani_frame] * 218.5;
+	src.m_right = 218.5f + AniData[m_ani_frame] * 218.5;
+	src.m_bottom = 133.5f;
 
 	CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 

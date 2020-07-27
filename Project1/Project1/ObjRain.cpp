@@ -21,9 +21,9 @@ CObjRain::CObjRain(float x,float y)
 void CObjRain::Init()
 {
 	m_vy = 5.0f;
-
+	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_RAIN, 1);
+	Hits::SetHitBox(this, m_px+pb->GetScroll(), m_py+pb->GetScrollY(), 64, 64, ELEMENT_PLAYER, OBJ_RAIN, 1);
 }
 
 //アクション
@@ -31,6 +31,9 @@ void CObjRain::Action()
 {
 	//自身のHitBoxを持ってくる
 	CHitBox* hit = Hits::GetHitBox(this);
+	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+	//HitBoxの位置の変更
+	hit->SetPos(m_px+pb->GetScroll(), m_py+pb->GetScrollY());
 
 	m_py += m_vy;
 
@@ -44,8 +47,7 @@ void CObjRain::Action()
 		this->SetStatus(false);//自身に削除命令を出す
 		Hits::DeleteHitBox(this);//保有するHitBoxに削除する
 	}
-	//HitBoxの位置の変更
-	hit->SetPos(m_px, m_py);
+	
 }
 
 //ドロー
@@ -63,12 +65,13 @@ void CObjRain::Draw()
 	src.m_right = 64.0f;
 	src.m_bottom = 64.0f;
 
+	CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
 	//表示位置の設定
-	dst.m_top = m_py;
-	dst.m_left = m_px;
-	dst.m_right = m_px + 64.0f;
-	dst.m_bottom = m_py + 64.0f;
+	dst.m_top = m_py+pbb->GetScrollY();
+	dst.m_left = m_px+pbb->GetScroll();
+	dst.m_right = m_px + 64.0f + pbb->GetScroll();
+	dst.m_bottom = m_py + 64.0f+pbb->GetScrollY();
 
 	//描画
 	Draw::Draw(7, &src, &dst, c, 0.0f);
