@@ -9,12 +9,23 @@ using namespace GameL;
 class CObjMagic : public CObj
 {
 public:
-	CObjMagic(float x, float y);
+	CObjMagic(float x, float y,bool posture);
 	~CObjMagic() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
 	void Draw();	//ドロー
 	float x, y;
+
 private:
-	int hoge;//仮
+	float m_px;//ｘ方向の位置
+	float m_py;//ｙ方向の位置
+	float m_vx;//ベクトルX
+	float m_vy;//ベクトルY
+	float m_r;//角度
+
+	int   m_ani_time;   //アニメーションフレーム動作間隔
+	int   m_ani_frame;  //描画フレーム
+	bool m_del;
+	bool m_posture;
+	bool m_check;//位置チェック用
 };

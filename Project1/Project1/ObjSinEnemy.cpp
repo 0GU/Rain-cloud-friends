@@ -62,8 +62,8 @@ void CObjSinEnemy::Action()
 		float hy = hero->GetY();
 
 		//主人公が一定距離内にいたら攻撃行動へ移行
-		if ((m_x + block->GetScroll() - hx <=  400.0f && m_x + block->GetScroll() - hx > 0.0f && m_move == false) ||
-			(m_x + block->GetScroll() - hx >= -400.0f && m_x + block->GetScroll() - hx < 0.0f && m_move == true) && 
+		if (((m_x + block->GetScroll() - hx <=  400.0f && m_x + block->GetScroll() - hx > 0.0f && m_move == false) ||
+			(m_x + block->GetScroll() - hx >= -400.0f && m_x + block->GetScroll() - hx < 0.0f && m_move == true)) && 
 			m_atk_flag==false)
 		{
 			m_atk_flag = true;
@@ -76,7 +76,7 @@ void CObjSinEnemy::Action()
 			m_atk_time++;
 		}
 		//5秒間隔でチャージへ移行
-		if (m_atk_time >= 300)
+		if (m_atk_time >= 30)
 		{
 			m_atk_time = 0;
 			m_charge_flag = true;
@@ -89,9 +89,11 @@ void CObjSinEnemy::Action()
 		//1秒チャージで発射
 		if (m_charge_time >= 60)
 		{
+			//弾発射
+			CObjMagic* objm = new CObjMagic(m_x + 16, m_y + 16, m_move);
+			Objs::InsertObj(objm, OBJ_MAGIC, 11);
 			m_charge_time = 0;
 			m_charge_flag = false;
-			//弾発射
 		}
 
 		//&& 間に障害物ある判定

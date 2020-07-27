@@ -286,6 +286,11 @@ void CObjHero::Action()
 			int enemynum = 3;
 			EnemyHit(enemynum);
 		}
+		if (hit->CheckObjNameHit(OBJ_MAGIC) != nullptr)
+		{
+			int enemynum = 4;
+			EnemyHit(enemynum);
+		}
 		//¸~ˆ—  ˆê’UInputŒn‚Ìˆ—‚Í‚±‚±‚Å‚Í•K—v‚È‚¢
 		if (hit->CheckElementHit(ELEMENT_IVY) == true/*&& (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) < 0.0f)*/)	//– ‚É‚ ‚½‚Á‚Ä‚¢‚ÄªƒL[–”‚Í«ƒL[‚ª‰Ÿ‚³‚ê‚½‚ç¸~ƒtƒ‰ƒO‚ðture
 		{
@@ -307,7 +312,8 @@ void CObjHero::Action()
 		if (GetBT() == 3)
 		{
 			CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
-			Scene::SetScene(new CSceneClear(m_hp, cloud->m_hp));
+			CObjStageSelect* stage = (CObjStageSelect*)Objs::GetObj(OBJ_STAGE_SELECT);
+			Scene::SetScene(new CSceneClear(m_hp,cloud->m_hp,reset));//Hero‚ÌHP‚Æ‰_‚©‚çm_hp(‰_‚Ì‚g‚o)‚ÆStageî•ñ‚ðŽ‚Á‚Ä‚­‚é
 		}
 		//ˆÊ’u‚ÌXV
 		m_px += m_vx;
@@ -386,7 +392,8 @@ void CObjHero::EnemyHit(int enemynum)
 			hit_data = hit->SearchObjNameHit(OBJ_FIRE);
 		else if (enemynum == 3)
 			hit_data = hit->SearchObjNameHit(OBJ_SINENEMY);
-
+		else if (enemynum == 4)
+			hit_data = hit->SearchObjNameHit(OBJ_MAGIC);
 
 		hit_flag = false;
 
@@ -414,6 +421,13 @@ void CObjHero::EnemyHit(int enemynum)
 					{
 						m_hit_time = 60;
 						m_hp -= 0.1f;//ƒ_ƒ[ƒW
+					}
+				}
+				if (r > 45 && r < 135)
+				{
+					if (enemynum == 4)
+					{
+						m_hp -= 0.1;
 					}
 				}
 				if (r >= 225 && r < 315)

@@ -17,10 +17,11 @@ using namespace GameL;
 #include "GameHead.h"
 
 //コンストラクタ
-CSceneClear::CSceneClear(float m_hp,float cl_hp)
+CSceneClear::CSceneClear(float m_hp,float cl_hp,int stage)
 {
 	hero_hp = m_hp;//主人公のＨＰ取得用
 	cloud_hp = cl_hp;//雲のＨＰ取得用
+	stageselect = stage;
 }
 
 //デストラクタ
@@ -32,7 +33,7 @@ CSceneClear::~CSceneClear()
 //ゲームタイトル初期化メソッド
 void CSceneClear::InitScene()
 {
-	CObjClear* clear = new CObjClear(hero_hp, cloud_hp);
+	CObjClear* clear = new CObjClear(hero_hp, cloud_hp,stageselect);
 	Objs::InsertObj(clear, OBJ_CLEAR, 1);
 	//SE情報の登録
 	//Audio::LoadAudio(0, L"素材/BGM/rain1.wav", SOUND_TYPE::BACK_MUSIC);
