@@ -10,12 +10,12 @@
 //使用するネームスペース
 using namespace GameL;
 
-CObjStage::CObjStage(int map[16][100])
+CObjStage::CObjStage(int map[20][100])
 {
 	
 
 	//マップデータをコピー
-	memcpy(m_map, map, sizeof(int) * (16 * 100));
+	memcpy(m_map, map, sizeof(int) * (20 * 100));
 }
 //イニシャライズ
 void CObjStage::Init()
@@ -84,7 +84,7 @@ void CObjStage::Action()
 		int ex = ((int)line) / 64;
 
 	//敵出現ラインの列を検索
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		//列の中から4を探す
 		if (m_map[i][ex] == 4)
@@ -124,7 +124,7 @@ void CObjStage::Draw()
 	Draw::Draw(0, &src, &dst, c, 0.0f);
 
 	//マップチップによるblock設置
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
@@ -159,6 +159,7 @@ void CObjStage::Draw()
 				{
 				ObjPlantの床用のため、何もしない
 				}*/
+				//ObjPlant(14=4マス　15=5マス …　22=12マス)
 				else if (m_map[i][j] == 14)
 				{
 					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f,4);
@@ -207,10 +208,10 @@ void CObjStage::Draw()
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
-				else if (m_map[i][j] == 99)
+				else if (m_map[i][j] == 22)
 				{
-					CObjRestart* objg = new CObjRestart(j * 64.0f, i * 64.0f);
-					Objs::InsertObj(objg, OBJ_RESTART, 10);
+					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 12);
+					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else
@@ -290,7 +291,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 	*bt = 0;
 
 	//m_mapの全要素にアクセス
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
@@ -336,7 +337,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 							*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
-						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 14))
+						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 13))
 						{
 							//上
 							*down = true;//オブジェクトの下の部分が衝突している
@@ -489,7 +490,7 @@ bool CObjStage::HeroBlockCrossPoint(
 	};
 
 	//m_mapの全要素にアクセス
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{

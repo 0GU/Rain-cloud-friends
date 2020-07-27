@@ -9,33 +9,108 @@
 #include"GameHead.h"
 #include"ObjClear.h"
 
+CObjClear::CObjClear(float m_hp, float cl_hp,int stage)
+{
+	hero_hp = m_hp;//éÂêlåˆÇÃÇgÇoéÊìæóp
+	cloud_hp = cl_hp;//â_ÇÃÇgÇoéÊìæóp
+	stageselect = stage;
+}
+
 void CObjClear::Init()
 {
 	key_flag = true;
 	move_flag = false;
 	scroll_flag = false;
 	m_y1 = 0.0f;
+	Clear_flag[0] = false;
+	Clear_flag[1] = false;
+	Clear_flag[2] = false;
+
+	Save::Open();
 }
 
 //ÉAÉNÉVÉáÉì
 void CObjClear::Action()
 {
-	//éÂêlåˆÇÃèÓïÒÇéÊìæ
+	/*
+	//éÂêlåˆÇ©ÇÁëÃóÕÇÃèÓïÒÇéùÇ¡ÇƒÇ≠ÇÈ
 	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+	//â_Ç©ÇÁëÃóÕÇÃèÓïÒÇéùÇ¡ÇƒÇ≠ÇÈ
 	CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
+	*/
+
 	//if(CObjStage)
-	if (hero->m_hp <= 75 || cloud->m_hp <= 75)//éÂêlåˆÇ∆â_ÇÃëÃóÕÇ™àÍíËà»è„ÇÃèÍçá
-	{
+	//ÉNÉäÉAèÛë‘ÇÃä«óù
 
+	if (hero_hp >= 0.75f && cloud_hp >= 0.75f)//éÂêlåˆÇ∆â_ÇÃëÃóÕÇ™àÍíËà»è„ÇÃèÍçá
+	{
+		Clear_flag[0] = true;
 	}
-	else if (hero->m_hp <= 75 && cloud->m_hp <= 75)//éÂêlåˆÇ©â_ÇÃëÃóÕÇÃÇ«ÇøÇÁÇ©Ç™àÍíËÇÃèÍçá
+    else if (hero_hp >= 0.75f || cloud_hp >= 0.75f)//éÂêlåˆÇ©â_ÇÃëÃóÕÇÃÇ«ÇøÇÁÇ©Ç™àÍíËÇÃèÍçá
 	{
-
+		
+		Clear_flag[1] = true;
 	}
 
 	else //Ç«ÇøÇÁÇ‡àÍíËà»â∫ÇÃèÍçá
 	{
+		Clear_flag[2] = true;
+	}
+	
 
+	if (Clear_flag[0] == true)//Perfect
+	{
+		switch(stageselect)
+		{
+		case 1:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_1[0] = true;
+			break;
+		case 2:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_2[0] = true;
+			break;
+		case 3:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_3[0] = true;
+			break;
+		}
+	}
+	if (Clear_flag[1] == true)//Great
+	{
+		switch (stageselect)
+		{
+		case 1:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_1[1] = true;
+			break;
+		case 2:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_2[1] = true;
+			break;
+		case 3:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_3[1] = true;
+			break;
+		}
+	}
+	if (Clear_flag[2] == true)//Good
+	{
+		switch (stageselect)
+		{
+		case 1:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_1[2] = true;
+			break;
+		case 2:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_2[2] = true;
+			break;
+		case 3:
+			Save::Seve();
+			((UserData*)Save::GetData())->Stage_3[2] = true;
+			break;
+		}
 	}
 	//çïâÊñ ÉXÉNÉçÅ[Éã
 	if (scroll_flag == false)
@@ -128,25 +203,32 @@ void CObjClear::Draw()
 	src.m_bottom = 512.0f;
 
 	dst.m_top = 300.0f;
-	dst.m_left = 20.0f;
-	dst.m_right = 270.0f;
 	dst.m_bottom = 500.0f;
+	if (Clear_flag[0] == true)
+	{
+		dst.m_left = 20.0f;
+		dst.m_right = 270.0f;
 
-	Draw::Draw(2, &src, &dst, c, 0.0f);
+		Draw::Draw(2, &src, &dst, c, 0.0f);
+	}
 
-	//2
-	dst.m_left = 200.0f;
-	dst.m_right = 450.0f;
-	
+	if (Clear_flag[1] == true)
+	{
+		//2
+		dst.m_left = 200.0f;
+		dst.m_right = 450.0f;
 
-	Draw::Draw(2, &src, &dst, c, 0.0f);
+		Draw::Draw(2, &src, &dst, c, 0.0f);
+	}
+	if (Clear_flag[2] == true)
+	{
+		//3
+		dst.m_left = 380.0f;
+		dst.m_right = 630.0f;
 
-	//3
-	dst.m_left = 380.0f;
-	dst.m_right = 630.0f;
-	
+		Draw::Draw(2, &src, &dst, c, 0.0f);
+	}
 
-	Draw::Draw(2, &src, &dst, c, 0.0f);
 	//Ç±Ç±Ç‹Ç≈------------------------------------------------
 	//çïâÊñ 
 	src.m_top = 0.0f;

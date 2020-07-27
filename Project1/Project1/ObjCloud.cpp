@@ -22,7 +22,7 @@ void CObjCloud::Init()
 	m_py = 100.0f;
 	m_vx = 5.0f;
 	m_vy = 5.0f;
-	m_hp = 100.0f;
+	m_hp = 10.0f;
 	stay_flag = false;
 	rain_flag = false;
 
@@ -31,6 +31,11 @@ void CObjCloud::Init()
 	m_hit_down = false;
 	m_hit_left = false;
 	m_hit_right = false;
+	
+	//コントローラー用
+	m_con_num = 0;
+	m_con_x = 0.0f;
+	m_con_y = 0.0f;
 
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_CLOUD, 1);
@@ -44,6 +49,11 @@ void CObjCloud::Action()
 	//自身のHitBoxを持ってくる
 	CHitBox* hit = Hits::GetHitBox(this);
 
+	m_con_num = Input::UpdateXControlerConnected();
+	m_con_x = Input::GetConVecStickRX(m_con_num)*10;
+	m_con_y = Input::GetConVecStickRY(m_con_num)*-10;
+
+
 	stay_flag = p->GetFlag();
 	if (stay_flag == false)
 	{
@@ -55,16 +65,27 @@ void CObjCloud::Action()
 			m_py -= m_vy;
 		if (Input::GetVKey('S') == true)
 			m_py += m_vy;
-	}
+		if (m_con_x > 5.0f)
+			m_con_x = 5.0f;
+		if (m_con_x < -5.0f)
+			m_con_x = -5.0f;
+		if (m_con_y > 5.0f)
+			m_con_y = 5.0f;
+		if (m_con_y < -5.0f)
+			m_con_y = -5.0f;
 
-	if (Input::GetVKey('C') == true && rain_flag == true && m_hp > 0.0f)
+		m_px += m_con_x;
+		m_py += m_con_y;
+	}
+	
+	if ((Input::GetVKey('C') == true||Input::GetConButtons(m_con_num,GAMEPAD_B)==true) && rain_flag == true && m_hp > 0.0f)
 	{
 		CObjRain* objr = new CObjRain(m_px+pbb->GetScroll(), m_py+64+pbb->GetScrollY());
 		Objs::InsertObj(objr, OBJ_RAIN, 10);
 		rain_flag = false;
 		m_hp -= 0.1f;	//hp減少
 	}
-	if (Input::GetVKey('C') == false && rain_flag == false)
+	if ((Input::GetVKey('C') == false&& Input::GetConButtons(m_con_num, GAMEPAD_B)==false) && rain_flag == false)
 	{
 		rain_flag = true;
 	}

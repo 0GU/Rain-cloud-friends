@@ -12,6 +12,7 @@ enum OBJ_NAME
 	OBJ_ENEMY,
 	OBJ_FIRE,
 	OBJ_PLANT,
+	OBJ_STONE,
 	OBJ_CLEAR,
 	OBJ_POSE,
 	OBJ_TITLE,
@@ -21,6 +22,7 @@ enum OBJ_NAME
 	OBJ_RESTART,
 	OBJ_CHASE_ENEMY,
 	OBJ_SINENEMY,
+	OBJ_OVER,
 };
 //------------------------------------------------
 
@@ -43,6 +45,7 @@ enum HIT_ELEMENTS
 	ELEMENT_RESET,
 	ELEMENT_IVY,
 	ELEMENT_FLOWER,
+	ELEMENT_STONE,
 };
 //------------------------------------------------h
 
@@ -92,6 +95,7 @@ struct UserData
 #include"ObjFire.h"
 #include"ObjPlant.h"
 #include"ObjGrowPlant.h"
+#include"ObjStone.h"
 #include"ObjClear.h"
 #include"ObjPose.h"
 #include"ObjTitle.h"
@@ -101,6 +105,8 @@ struct UserData
 #include"ObjRestart.h"
 #include"ObjChaseEnemy.h"
 #include"ObjSinEnemy.h"
+#include"ObjOver.h"
+#include"ObjMagic.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
@@ -108,6 +114,7 @@ struct UserData
 #include"SceneGameMain.h"
 #include"SceneClear.h"
 #include"SceneTitle.h"
+#include"SceneOver.h"
 //-----------------------------------------------
 
 //シーンスタートクラス---------------------------
