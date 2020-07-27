@@ -8,7 +8,7 @@ using namespace GameL;
 class CObjStage : public CObj
 {
 public:
-	CObjStage(int map[16][100]);
+	CObjStage(int map[20][100]);
 	~CObjStage() {};
 	void Init();	//イニシャライズ
 	void Action();  //アクション
@@ -38,7 +38,7 @@ public:
 
 private:
 	void BlockDraw(float x, float y, RECT_F* dst, float c[]);
-	int m_map[16][100]; //マップ情報
+	int m_map[20][100]; //マップ情報
 
 	float mx_scroll;		//左右スクロール用
 	float my_scroll;		//上下スクロール用

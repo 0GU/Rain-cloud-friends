@@ -22,7 +22,7 @@ void CObjCloud::Init()
 	m_py = 100.0f;
 	m_vx = 5.0f;
 	m_vy = 5.0f;
-	m_hp = 1.0f;
+	m_hp = 10.0f;
 	stay_flag = false;
 	rain_flag = false;
 
@@ -31,6 +31,17 @@ void CObjCloud::Init()
 	m_hit_down = false;
 	m_hit_left = false;
 	m_hit_right = false;
+	
+	//コントローラー用
+	m_con_num = 0;
+	m_con_x = 0.0f;
+	m_con_y = 0.0f;
+
+	m_ani_time = 0;
+	m_ani_frame = 1;		//静止フレームを初期にする
+
+	m_speed_power = 0.5f;//通常速度
+	m_ani_max_time = 4;  //アニメーション間隔幅
 
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_CLOUD, 1);
@@ -44,6 +55,11 @@ void CObjCloud::Action()
 	//自身のHitBoxを持ってくる
 	CHitBox* hit = Hits::GetHitBox(this);
 
+	m_con_num = Input::UpdateXControlerConnected();
+	m_con_x = Input::GetConVecStickRX(m_con_num)*10;
+	m_con_y = Input::GetConVecStickRY(m_con_num)*-10;
+
+
 	stay_flag = p->GetFlag();
 	if (stay_flag == false)
 	{
@@ -55,18 +71,40 @@ void CObjCloud::Action()
 			m_py -= m_vy;
 		if (Input::GetVKey('S') == true)
 			m_py += m_vy;
-	}
+		if (m_con_x > 5.0f)
+			m_con_x = 5.0f;
+		if (m_con_x < -5.0f)
+			m_con_x = -5.0f;
+		if (m_con_y > 5.0f)
+			m_con_y = 5.0f;
+		if (m_con_y < -5.0f)
+			m_con_y = -5.0f;
 
-	if (Input::GetVKey('C') == true && rain_flag == true && m_hp > 0.0f)
+		m_px += m_con_x;
+		m_py += m_con_y;
+	}
+	
+	if ((Input::GetVKey('C') == true||Input::GetConButtons(m_con_num,GAMEPAD_B)==true) && rain_flag == true && m_hp > 0.0f)
 	{
 		CObjRain* objr = new CObjRain(m_px+pbb->GetScroll(), m_py+64+pbb->GetScrollY());
 		Objs::InsertObj(objr, OBJ_RAIN, 10);
 		rain_flag = false;
 		m_hp -= 0.1f;	//hp減少
 	}
-	if (Input::GetVKey('C') == false && rain_flag == false)
+	if ((Input::GetVKey('C') == false&& Input::GetConButtons(m_con_num, GAMEPAD_B)==false) && rain_flag == false)
 	{
 		rain_flag = true;
+	}
+
+	if (m_ani_time > m_ani_max_time)
+	{
+		m_ani_frame += 1;
+		m_ani_time = 0;
+	}
+
+	if (m_ani_frame == 4)
+	{
+		m_ani_frame = 0;
 	}
 	//ブロックタイプ検知用の変数がないためのダミー
 	int d;
@@ -87,6 +125,11 @@ void CObjCloud::Action()
 //ドロー
 void CObjCloud::Draw()
 {
+	int AniData[3] =
+	{
+		1,0,2
+	};
+
 	//描画カラー情報
 	float c[4] = { 1.0f,1.0f,1.0f,1.0f };
 
@@ -95,9 +138,9 @@ void CObjCloud::Draw()
 
 	//切り取り位置の設定
 	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 64.0f;
-	src.m_bottom = 64.0f;
+	src.m_left = 0.0f + AniData[m_ani_frame] * 437;
+	src.m_right = 437.0f + AniData[m_ani_frame] * 437;
+	src.m_bottom = 267.0f;
 
 	CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
@@ -108,5 +151,5 @@ void CObjCloud::Draw()
 	dst.m_bottom = m_py + 64.0f + pbb->GetScrollY();
 
 	//描画
-	Draw::Draw(5, &src, &dst, c, 0.0f);
+	Draw::Draw(8, &src, &dst, c, 0.0f);
 }

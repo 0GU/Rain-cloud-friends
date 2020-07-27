@@ -42,9 +42,9 @@ void CSceneGameMain::InitScene()
 	p = Save::ExternalDataOpen(L"ステージデータ.csv", &size);//外部データ読み込み
 	else if (stageselect == 3)
 		p = Save::ExternalDataOpen(L"セーブ確認用3.csv", &size);//外部データ読み込み
-	int map[16][100];
+	int map[20][100];
 	int count = 1;
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
@@ -78,10 +78,10 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/仮/蜘蛛.png", 5, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/HP(透過).png", 6, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/仮/ito.png", 7, TEX_SIZE_128);
-	Draw::LoadImageW(L"素材/画像/雲.png", 8, TEX_SIZE_128);
+	Draw::LoadImageW(L"素材/画像/雲のみ.png", 8, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/仮/スライム.png", 9, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/画像/植物ミニ.png", 10, TEX_SIZE_128);
-
+	Draw::LoadImageW(L"素材/画像/追尾敵.png", 11, TEX_SIZE_128);
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成
