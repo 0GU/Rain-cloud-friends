@@ -48,6 +48,36 @@ void CObjStageSelect::Init()
 		{
 			set_Stage[2] = true;
 		}
+		if (((UserData*)Save::GetData())->Stage_1[1] == true)
+		{
+			set_Stage[0] = true;
+		}
+
+
+		if (((UserData*)Save::GetData())->Stage_2[1] == true)
+		{
+			set_Stage[1] = true;
+		}
+
+		if (((UserData*)Save::GetData())->Stage_3[1] == true)
+		{
+			set_Stage[2] = true;
+		}
+		if (((UserData*)Save::GetData())->Stage_1[2] == true)
+		{
+			set_Stage[0] = true;
+		}
+
+
+		if (((UserData*)Save::GetData())->Stage_2[2] == true)
+		{
+			set_Stage[1] = true;
+		}
+
+		if (((UserData*)Save::GetData())->Stage_3[2] == true)
+		{
+			set_Stage[2] = true;
+		}
 	//}
 	//ƒtƒ‰ƒO‚ğ‰Šú‰»
 	memcpy(Clear_flag, set_Stage, sizeof(bool) * (3));
