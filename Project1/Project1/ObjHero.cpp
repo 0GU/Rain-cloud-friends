@@ -220,6 +220,12 @@ void CObjHero::Action()
 			int enemynum = 3;
 			EnemyHit(enemynum);
 		}
+		if (hit->CheckObjNameHit(OBJ_MAGIC) != nullptr)
+		{
+			int enemynum = 4;
+			EnemyHit(enemynum);
+		}
+
 		//昇降処理
 		if (hit->CheckElementHit(ELEMENT_IVY) == true&& (Input::GetVKey(VK_UP) == true|| (Input::GetVKey(VK_DOWN)==true)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
 		{
@@ -320,7 +326,8 @@ void CObjHero::EnemyHit(int enemynum)
 			hit_data = hit->SearchObjNameHit(OBJ_FIRE);
 		else if (enemynum == 3)
 			hit_data = hit->SearchObjNameHit(OBJ_SINENEMY);
-
+		else if (enemynum == 4)
+			hit_data = hit->SearchObjNameHit(OBJ_MAGIC);
 
 		hit_flag = false;
 
@@ -348,6 +355,13 @@ void CObjHero::EnemyHit(int enemynum)
 					{
 						m_hit_time = 60;
 						m_hp -= 0.1f;//ダメージ
+					}
+				}
+				if (r > 45 && r < 135)
+				{
+					if (enemynum == 4)
+					{
+						m_hp -= 0.1;
 					}
 				}
 				if (r >= 225 && r < 315)

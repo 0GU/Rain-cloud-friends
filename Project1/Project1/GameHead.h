@@ -23,6 +23,7 @@ enum OBJ_NAME
 	OBJ_CHASE_ENEMY,
 	OBJ_SINENEMY,
 	OBJ_OVER,
+	OBJ_MAGIC,
 };
 //------------------------------------------------
 
@@ -106,7 +107,7 @@ struct UserData
 #include"ObjChaseEnemy.h"
 #include"ObjSinEnemy.h"
 #include"ObjOver.h"
-#include"CObjMagic.h"
+#include"ObjMagic.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
