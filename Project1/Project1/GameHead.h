@@ -23,6 +23,7 @@ enum OBJ_NAME
 	OBJ_CHASE_ENEMY,
 	OBJ_SINENEMY,
 	OBJ_OVER,
+	OBJ_MAGIC,
 };
 //------------------------------------------------
 

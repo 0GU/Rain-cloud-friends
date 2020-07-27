@@ -286,6 +286,11 @@ void CObjHero::Action()
 			int enemynum = 3;
 			EnemyHit(enemynum);
 		}
+		if (hit->CheckObjNameHit(OBJ_MAGIC) != nullptr)
+		{
+			int enemynum = 4;
+			EnemyHit(enemynum);
+		}
 
 		//Î‚Æ‚Ì“–‚½‚è”»’è
 		CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
@@ -396,7 +401,8 @@ void CObjHero::EnemyHit(int enemynum)
 			hit_data = hit->SearchObjNameHit(OBJ_FIRE);
 		else if (enemynum == 3)
 			hit_data = hit->SearchObjNameHit(OBJ_SINENEMY);
-
+		else if (enemynum == 4)
+			hit_data = hit->SearchObjNameHit(OBJ_MAGIC);
 
 		hit_flag = false;
 
@@ -424,6 +430,13 @@ void CObjHero::EnemyHit(int enemynum)
 					{
 						m_hit_time = 60;
 						m_hp -= 0.1f;//ƒ_ƒ[ƒW
+					}
+				}
+				if (r > 45 && r < 135)
+				{
+					if (enemynum == 4)
+					{
+						m_hp -= 0.1;
 					}
 				}
 				if (r >= 225 && r < 315)

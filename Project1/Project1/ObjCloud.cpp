@@ -37,6 +37,12 @@ void CObjCloud::Init()
 	m_con_x = 0.0f;
 	m_con_y = 0.0f;
 
+	m_ani_time = 0;
+	m_ani_frame = 1;		//静止フレームを初期にする
+
+	m_speed_power = 0.5f;//通常速度
+	m_ani_max_time = 4;  //アニメーション間隔幅
+
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_CLOUD, 1);
 }
@@ -80,7 +86,7 @@ void CObjCloud::Action()
 	
 	if ((Input::GetVKey('C') == true||Input::GetConButtons(m_con_num,GAMEPAD_B)==true) && rain_flag == true && m_hp > 0.0f)
 	{
-		CObjRain* objr = new CObjRain(m_px+pbb->GetScroll(), m_py+64+pbb->GetScrollY());
+		CObjRain* objr = new CObjRain(m_px, m_py+64);
 		Objs::InsertObj(objr, OBJ_RAIN, 10);
 		rain_flag = false;
 		m_hp -= 0.1f;	//hp減少
@@ -88,6 +94,17 @@ void CObjCloud::Action()
 	if ((Input::GetVKey('C') == false&& Input::GetConButtons(m_con_num, GAMEPAD_B)==false) && rain_flag == false)
 	{
 		rain_flag = true;
+	}
+
+	if (m_ani_time > m_ani_max_time)
+	{
+		m_ani_frame += 1;
+		m_ani_time = 0;
+	}
+
+	if (m_ani_frame == 4)
+	{
+		m_ani_frame = 0;
 	}
 	//ブロックタイプ検知用の変数がないためのダミー
 	int d;
@@ -108,6 +125,11 @@ void CObjCloud::Action()
 //ドロー
 void CObjCloud::Draw()
 {
+	int AniData[3] =
+	{
+		1,0,2
+	};
+
 	//描画カラー情報
 	float c[4] = { 1.0f,1.0f,1.0f,1.0f };
 
@@ -116,9 +138,9 @@ void CObjCloud::Draw()
 
 	//切り取り位置の設定
 	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 64.0f;
-	src.m_bottom = 64.0f;
+	src.m_left = 0.0f + AniData[m_ani_frame] * 218.5;
+	src.m_right = 218.5f + AniData[m_ani_frame] * 218.5;
+	src.m_bottom = 133.5f;
 
 	CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
@@ -129,5 +151,5 @@ void CObjCloud::Draw()
 	dst.m_bottom = m_py + 64.0f + pbb->GetScrollY();
 
 	//描画
-	Draw::Draw(5, &src, &dst, c, 0.0f);
+	Draw::Draw(8, &src, &dst, c, 0.0f);
 }
