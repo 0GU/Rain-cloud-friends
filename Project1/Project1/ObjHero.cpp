@@ -241,7 +241,8 @@ void CObjHero::Action()
 		if (GetBT() == 3)
 		{
 			CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
-			Scene::SetScene(new CSceneClear(m_hp,cloud->m_hp));
+			CObjStageSelect* stage = (CObjStageSelect*)Objs::GetObj(OBJ_STAGE_SELECT);
+			Scene::SetScene(new CSceneClear(m_hp,cloud->m_hp,reset));//Hero‚ÌHP‚Æ‰_‚©‚çm_hp(‰_‚Ì‚g‚o)‚ÆStageî•ñ‚ğ‚Á‚Ä‚­‚é
 		}
 		//ˆÊ’u‚ÌXV
 		m_px += m_vx;
