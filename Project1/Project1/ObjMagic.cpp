@@ -26,6 +26,12 @@ void CObjMagic::Init()
 	m_ani_frame = 0;
 	m_ani_time = 0;
 
+	//blockとの衝突状態確認用
+	m_hit_up = false;
+	m_hit_down = false;
+	m_hit_left = false;
+	m_hit_right = false;
+
 	//当たり判定用HitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 32, 32, ELEMENT_ENEMY, OBJ_MAGIC, 1);
 
@@ -70,6 +76,19 @@ void CObjMagic::Action()
 
 	//主人公と接触しているか調べる
 	if (hit->CheckObjNameHit(OBJ_HERO) != nullptr )
+	{
+		this->SetStatus(false);	//自身に削除命令を出す
+		Hits::DeleteHitBox(this);//保有するHitBoxに削除する
+	}
+
+	//ブロックタイプ検知用の変数がないためのダミー
+	int d;
+	//ブロックとの当たり判定実行
+	block->BlockHit(&m_px, &m_py, false,
+		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
+		&m_vx, &m_vy, &d
+	);
+	if (m_hit_up == true || m_hit_down == true || m_hit_left == true || m_hit_right == true)
 	{
 		this->SetStatus(false);	//自身に削除命令を出す
 		Hits::DeleteHitBox(this);//保有するHitBoxに削除する

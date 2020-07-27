@@ -178,117 +178,132 @@ void CObjOver::Draw()
 	dst.m_bottom = 720.0f;
 	Draw::Draw(0, &src, &dst, c, 0.0f);
 
-	//GAMEOVER
-	src.m_top = 64.0f;
-	src.m_left = 704.0f;
-	src.m_right = 831.0f;
-	src.m_bottom = 127.0f;
-
-	dst.m_top = 200.0f;
-	dst.m_left = 550.0f;
-	dst.m_right = 650.0f;
-	dst.m_bottom = 264.0f;
-	Draw::Draw(0, &src, &dst, c, 0.0f);
-
-	//コンティニュー
-	//src.m_top = 0.0f;
-	src.m_left = 256.0f;
-	src.m_right = 383.0f;
-	//src.m_bottom = 0.0f;
-
-	dst.m_top = 300.0f;
-	//dst.m_left = 0.0f;
-	//dst.m_right = 0.0f;
-	dst.m_bottom = 364.0f;
-	Draw::Draw(0, &src, &dst, c, 0.0f);
-
-	//セレクト戻る
-	//src.m_top = 0.0f;
-	src.m_left = 128.0f;
-	src.m_right = 255.0f;
-	//src.m_bottom = 0.0f;
-
-	dst.m_top = 400.0f;
-	//dst.m_left = 0.0f;
-	//dst.m_right = 0.0f;
-	dst.m_bottom = 464.0f;
-	Draw::Draw(0, &src, &dst, c, 0.0f);
-
-	//タイトル戻る
-	//src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 127.0f;
-	//src.m_bottom = 0.0f;
-
-	dst.m_top = 500.0f;
-	//dst.m_left = 0.0f;
-	//dst.m_right = 0.0f;
-	dst.m_bottom = 564.0f;
-	Draw::Draw(0, &src, &dst, c, 0.0f);
-
-	if (check_flag == true)
+	//画像貼り進捗
+	//画面サイズは 1280*720 っつってんだろくそが！！！！(自分)
+	if (check_flag == false)
 	{
-		//確認
-		//src.m_top = 0.0f;
-		src.m_left = 384.0f;
-		src.m_right = 511.0f;
-		//src.m_bottom = 0.0f;
+		//GAMEOVER
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 1007.0f;
+		src.m_bottom = 128.0f;
 
-		dst.m_top = 250.0f;
-		//dst.m_left = 0.0f;
-		//dst.m_right = 0.0f;
-		dst.m_bottom = 314.0f;
-		Draw::Draw(0, &src, &dst, c, 0.0f);
+		dst.m_top = 100.0f;
+		dst.m_left = 136.0f;
+		dst.m_right = 1043.0f;
+		dst.m_bottom = 228.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
 
-		//はい
-		//src.m_top = 0.0f;
-		src.m_left = 576.0f;
-		src.m_right = 639.0f;
-		//src.m_bottom = 0.0f;
+		//コンティニュー
+		src.m_top = 132.0f;
+		src.m_left = 0.0f;
+		src.m_right = 848.0f;
+		src.m_bottom = 259.0f;
 
 		dst.m_top = 350.0f;
-		dst.m_left = 568.0f;
-		dst.m_right = 632.0f;
+		dst.m_left = 428.0f;
+		dst.m_right = 852.0f;
 		dst.m_bottom = 414.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+
+		//セレクト戻る
+		//src.m_top = 261.0f;
+		//src.m_left = 0.0f;
+		//src.m_right = 546.0f;
+		//src.m_bottom = 390.0f;
+
+		//dst.m_top = 450.0f;
+		//dst.m_left = .0f;
+		//dst.m_right = .0f;
+		//dst.m_bottom = 579.0f;
+		//Draw::Draw(1, &src, &dst, c, 0.0f);
+
+		src.m_top = 392.0f;
+		src.m_left = 0.0f;
+		src.m_right = 631.0f;
+		src.m_bottom = 521.0f;
+
+		dst.m_top = 444.0f;
+		dst.m_left = 482.0f;
+		dst.m_right = 797.0f;
+		dst.m_bottom = 509.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+
+
+		//タイトル戻る
+		src.m_top = 523.0f;
+		src.m_left = 0.0f;
+		src.m_right = 1002.0f;
+		src.m_bottom = 657.0f;
+
+		dst.m_top = 539.0f;
+		dst.m_left = 389.0f;
+		dst.m_right = 890.0f;
+		dst.m_bottom = 606.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+
+		//カーソル
+		src.m_top = 64.0f;
+		src.m_left = 512.0f;
+		src.m_right = 575.0f;
+		src.m_bottom = 128.0f;
+
+		dst.m_top = 350.0f + (selectnum - 1) * 90.0f;
+		dst.m_left = 306.0f;
+		dst.m_right = 370.0f;
+		dst.m_bottom = 414.0f + (selectnum - 1) * 90.0f;
 		Draw::Draw(0, &src, &dst, c, 0.0f);
+	}
+	else if (check_flag == true)
+	{
+		//確認
+		src.m_top = 659.0f;
+		src.m_left = 0.0f;
+		src.m_right = 997.0f;
+		src.m_bottom = 766.0f;
+
+		dst.m_top = 150.0f;
+		dst.m_left = 391.0f;
+		dst.m_right = 889.0f;
+		dst.m_bottom = 203.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+
+		//はい
+		src.m_top = 768.0f;
+		src.m_left = 0.0f;
+		src.m_right = 273.0f;
+		src.m_bottom = 898.0f;
+
+		dst.m_top = 300.0f;
+		dst.m_left = 572.0f;
+		dst.m_right = 708.0f;
+		dst.m_bottom = 365.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
 
 		//いいえ
 		//src.m_top = 0.0f;
-		src.m_left = 640.0f;
-		src.m_right = 703.0f;
+		src.m_left = 275.0f;
+		src.m_right = 691.0f;
 		//src.m_bottom = 0.0f;
 
-		dst.m_top = 450.0f;
-		//dst.m_left = 0.0f;
-		//dst.m_right = 0.0f;
-		dst.m_bottom = 514.0f;
-		Draw::Draw(0, &src, &dst, c, 0.0f);
-		
+		dst.m_top = 400.0f;
+		dst.m_left = 534.0f;
+		dst.m_right = 746.0f;
+		dst.m_bottom = 465.0f;
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+
 		//カーソル
-		//src.m_top = 0.0f;
+		src.m_top = 64.0f;
 		src.m_left = 512.0f;
 		src.m_right = 575.0f;
-		//src.m_bottom = 0.0f;
+		src.m_bottom = 128.0f;
 
-		dst.m_top = 350.0f+(selectnum_c-1)*100.0f;
-		dst.m_left = 468.0f;
-		dst.m_right = 532.0f;
-		dst.m_bottom = 414.0f + (selectnum_c - 1) * 100.0f;
+		dst.m_top = 300.0f + (selectnum_c - 1) * 100.0f;
+		dst.m_left = 448.0f;
+		dst.m_right = 512.0f;
+		dst.m_bottom = 364.0f + (selectnum_c - 1) * 100.0f;
 		Draw::Draw(0, &src, &dst, c, 0.0f);
 	}
-
-	//カーソル
-	//src.m_top = 0.0f;
-	src.m_left = 512.0f;
-	src.m_right = 575.0f;
-	//src.m_bottom = 0.0f;
-
-	dst.m_top = 300.0f + (selectnum - 1) * 100.0f;
-	dst.m_left = 468.0f;
-	dst.m_right = 532.0f;
-	dst.m_bottom = 364.0f + (selectnum - 1) * 100.0f;
-	Draw::Draw(0, &src, &dst, c, 0.0f);
-
 	//黒画面
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
