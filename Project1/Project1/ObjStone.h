@@ -15,8 +15,7 @@ public:
 	void Action();	//アクション
 	void Draw();	//ドロー
 
-	float SetVX(float vx) { m_vx = vx; };
-
+	void SetVX(float vx) { m_vx = vx; };
 	float m_px, m_py;
 	float m_vx, m_vy;
 private:

@@ -214,6 +214,12 @@ void CObjStage::Draw()
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
+				else if (m_map[i][j] == 23)
+				{
+					CObjStone* objh = new CObjStone(j * 64.0f, i * 64.0f);
+					Objs::InsertObj(objh, OBJ_STONE, 10);
+					m_map[i][j] = 0;
+				}
 				else
 				{
 					BlockDraw(320.0f + 0.0f, 0.0f, &dst, c);

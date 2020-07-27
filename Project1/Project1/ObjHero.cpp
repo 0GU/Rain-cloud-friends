@@ -286,6 +286,15 @@ void CObjHero::Action()
 			int enemynum = 3;
 			EnemyHit(enemynum);
 		}
+
+		//Î‚Æ‚Ì“–‚½‚è”»’è
+		CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
+		if (hit->CheckObjNameHit(OBJ_STONE) != nullptr)
+		{
+			m_vx /= 2;
+			Stone->SetVX(m_vx);
+		}
+
 		//¸~ˆ—  ˆê’UInputŒn‚Ìˆ—‚Í‚±‚±‚Å‚Í•K—v‚È‚¢
 		if (hit->CheckElementHit(ELEMENT_IVY) == true/*&& (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) < 0.0f)*/)	//– ‚É‚ ‚½‚Á‚Ä‚¢‚ÄªƒL[–”‚Í«ƒL[‚ª‰Ÿ‚³‚ê‚½‚ç¸~ƒtƒ‰ƒO‚ðture
 		{
