@@ -10,12 +10,12 @@
 //使用するネームスペース
 using namespace GameL;
 
-CObjStage::CObjStage(int map[16][100])
+CObjStage::CObjStage(int map[20][100])
 {
 	
 
 	//マップデータをコピー
-	memcpy(m_map, map, sizeof(int) * (16 * 100));
+	memcpy(m_map, map, sizeof(int) * (20 * 100));
 }
 //イニシャライズ
 void CObjStage::Init()
@@ -84,7 +84,7 @@ void CObjStage::Action()
 		int ex = ((int)line) / 64;
 
 	//敵出現ラインの列を検索
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		//列の中から4を探す
 		if (m_map[i][ex] == 4)
@@ -124,7 +124,7 @@ void CObjStage::Draw()
 	Draw::Draw(0, &src, &dst, c, 0.0f);
 
 	//マップチップによるblock設置
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
@@ -291,7 +291,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 	*bt = 0;
 
 	//m_mapの全要素にアクセス
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
@@ -490,7 +490,7 @@ bool CObjStage::HeroBlockCrossPoint(
 	};
 
 	//m_mapの全要素にアクセス
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
