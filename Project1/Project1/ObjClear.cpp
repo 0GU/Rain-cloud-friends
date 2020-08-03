@@ -46,13 +46,13 @@ void CObjClear::Action()
 	{
 		Clear_flag[0] = true;
 	}
-    else if (hero_hp >= 0.75f || cloud_hp >= 0.75f)//ålŒö‚©‰_‚Ì‘Ì—Í‚Ì‚Ç‚¿‚ç‚©‚ªˆê’è‚Ìê‡
+    if (hero_hp >= 0.75f || cloud_hp >= 0.75f)//ålŒö‚©‰_‚Ì‘Ì—Í‚Ì‚Ç‚¿‚ç‚©‚ªˆê’è‚Ìê‡
 	{
 		
 		Clear_flag[1] = true;
 	}
 
-	else //‚Ç‚¿‚ç‚àˆê’èˆÈ‰º‚Ìê‡
+	if(hero_hp <= 0.75f || cloud_hp <= 0.75f) //‚Ç‚¿‚ç‚àˆê’èˆÈ‰º‚Ìê‡
 	{
 		Clear_flag[2] = true;
 	}
