@@ -112,16 +112,16 @@ void CObjStage::Draw()
 	RECT_F dst; //描画先表示位置
 
 	//背景表示
-	src.m_top = 256.0f;
+	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 512.0f;
-	src.m_bottom = 512.0f;
+	src.m_right = 1280.0f;
+	src.m_bottom = 720.0f;
 
 	dst.m_top = ZERO_G;
 	dst.m_left = ZERO_G;
 	dst.m_right = HD_RIGIT;
 	dst.m_bottom = HD_BUTTOM;
-	Draw::Draw(0, &src, &dst, c, 0.0f);
+	Draw::Draw(22, &src, &dst, c, 0.0f);
 
 	//マップチップによるblock設置
 	for (int i = 0; i < 20; i++)

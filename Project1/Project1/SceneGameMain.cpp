@@ -66,8 +66,13 @@ void CSceneGameMain::InitScene()
 
 
 	//SEî•ñ‚Ì“o˜^
-	//Audio::LoadAudio(0, L"", SOUND_TYPE::BACK_MUSIC);
-	//Audio::LoadAudio(1, L"", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(0, L"‘fŞ/BGM/Stage1‰¼.wav", SOUND_TYPE::BACK_MUSIC);
+	Audio::LoadAudio(1, L"‘fŞ/BGM/•—‰¼.wav", SOUND_TYPE::BACK_MUSIC);
+	Audio::LoadAudio(2, L"‘fŞ/SE/ƒWƒƒƒ“ƒv.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(3, L"‘fŞ/SE/’…’n.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(4, L"‘fŞ/SE/ƒ_ƒ[ƒW‰¹.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(5, L"‘fŞ/SE/‰J.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(6, L"‘fŞ/SE/”í’e.wav", SOUND_TYPE::EFFECT);
 
 	//‰æ‘œî•ñ‚ğ“o˜^
 	Draw::LoadImageW(L"‘fŞ/‰¼/image.png", 0, TEX_SIZE_2048);
@@ -83,7 +88,14 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/A•¨ƒ~ƒj.png", 10, TEX_SIZE_128);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/’Ç”ö“G0.png", 11, TEX_SIZE_2048);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/—d¸.png", 12, TEX_SIZE_1024);
-	//Audio::Start(0);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/Šâ.png", 13, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰¼/Game”wŒi‰¼.png", 22, TEX_SIZE_1024);
+	if(stageselect==1)
+	{
+		Audio::Start(0);
+		Audio::Start(1);
+	}
+	
 
 	//ålŒöƒIƒuƒWƒFƒNƒgì¬
 	CObjHero* obj = new CObjHero(stageselect);
