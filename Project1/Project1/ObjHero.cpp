@@ -236,6 +236,10 @@ void CObjHero::Action()
 			m_posture = 0.0f;
 			m_ani_time += 1;
 		}
+
+
+
+
 		//昇降処理
 		else if (Input::GetVKey(VK_UP) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
 		{
@@ -316,13 +320,6 @@ void CObjHero::Action()
 			EnemyHit(enemynum);
 		}
 
-		//石との当たり判定
-		CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
-		if (hit->CheckObjNameHit(OBJ_STONE) != nullptr)
-		{
-			m_vx /= 2;
-			Stone->SetVX(m_vx);
-		}
 
 		//昇降処理  一旦Input系の処理はここでは必要ない
 		if (hit->CheckElementHit(ELEMENT_IVY) == true/*&& (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) < 0.0f)*/)	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
@@ -348,6 +345,31 @@ void CObjHero::Action()
 			CObjStageSelect* stage = (CObjStageSelect*)Objs::GetObj(OBJ_STAGE_SELECT);
 			Scene::SetScene(new CSceneClear(m_hp,cloud->m_hp,reset));//HeroのHPと雲からm_hp(雲のＨＰ)とStage情報を持ってくる
 		}
+
+		//石との当たり判定------------------------------------------------------------------------------------------------------------------------------------------
+		CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
+		if (m_vy < -1.0f)
+		{
+			//ジャンプしてる場合は下記の影響を出ないようにする
+		}
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&Stone->GetPY() <= m_py + 64 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
+		{
+			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
+			//また、地面に当たってる判定にする
+
+			m_vy = 0.0f;
+			m_hit_down = true;
+		}
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
+			((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
+				m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
+		{
+			m_vx /= 2;
+			Stone->SetVX(m_vx);
+		}
+		//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 		//位置の更新
 		m_px += m_vx;
 		m_py += m_vy;
@@ -402,9 +424,13 @@ void CObjHero::Draw()
 
 
 	wchar_t str1[256];
+	wchar_t str2[256];
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-	swprintf_s(str1, L"Y=%f", m_py - block->GetScrollY());
+	CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
+	swprintf_s(str1, L"X=%f", m_px - block->GetScroll());
 	Font::StrDraw(str1, 20, 20, 20, c);
+	swprintf_s(str2, L"X=%f", Stone->GetPX_L());
+	Font::StrDraw(str2, 20, 400, 20, c);
 
 
 
@@ -486,7 +512,7 @@ void CObjHero::EnemyHit(int enemynum)
 					}
 
 					//頭に乗せる処理
-					if (m_vx < -1.0f)
+					if (m_vy < -1.0f)
 					{
 						//ジャンプしてる場合は下記の影響を出ないようにする
 					}

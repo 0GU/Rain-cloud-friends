@@ -251,9 +251,6 @@
     <ClCompile Include="ObjCloud.cpp">
       <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
     </ClCompile>
-    <ClCompile Include="ObjHero.cpp">
-      <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
-    </ClCompile>
     <ClCompile Include="ObjHp.cpp">
       <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
     </ClCompile>
@@ -277,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="ObjRushEnemy.cpp">
       <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjHero.cpp">
+      <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
