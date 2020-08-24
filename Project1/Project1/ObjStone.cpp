@@ -21,7 +21,14 @@ void CObjStone::Init()
 
 	stay_flag = false;
 	m_vx = 0;
-	m_vy = 0;
+	m_vy = 1;
+
+	//blockとの衝突状態確認用
+	m_hit_up = false;
+	m_hit_down = false;
+	m_hit_left = false;
+	m_hit_right = false;
+	stay_flag = false;
 
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 128, 64, ELEMENT_RED, OBJ_STONE, 1);
@@ -40,10 +47,19 @@ void CObjStone::Action()
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
 
+		//ブロックとの当たり判定実行
+		CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+		pb->BlockHit(&m_px, &m_py, false,
+			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
+			&m_vx, &m_vy, &m_block_type
+		);
+	
+		
 		//位置の更新
 		m_px += m_vx;
-		m_py += m_vy;
-
+		m_py += 1;
+		m_vx = 0;
+	
 
 		//HitBoxの位置の変更
 		CHitBox* hit = Hits::GetHitBox(this);
