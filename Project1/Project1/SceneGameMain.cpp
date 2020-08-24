@@ -96,7 +96,7 @@ void CSceneGameMain::InitScene()
 		Audio::Start(1);
 	}
 	
-	Draw::LoadImageW(L"素材/画像/イノシシ.png", 14, TEX_SIZE_512);
+	Draw::LoadImageW(L"素材/画像/runba.png", 14, TEX_SIZE_256);
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成
@@ -123,9 +123,9 @@ void CSceneGameMain::InitScene()
 	CObjSinEnemy* objs = new CObjSinEnemy(400,400);
 	Objs::InsertObj(objs, OBJ_SINENEMY, 10);
 
-	////突進敵オブジェクト作成（仮）
-	//CObjRushEnemy* objr = new CObjRushEnemy(500, 600);
-	//Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
+	//突進敵オブジェクト作成（仮）
+	CObjRushEnemy* objr = new CObjRushEnemy(500, 600);
+	Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
 }
 
 //ゲームメイン実行メソッド
