@@ -83,6 +83,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/植物ミニ.png", 10, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/画像/追尾敵0.png", 11, TEX_SIZE_2048);
 	Draw::LoadImageW(L"素材/画像/妖精.png", 12, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/イノシシ.png", 13, TEX_SIZE_512);
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成
@@ -105,9 +106,13 @@ void CSceneGameMain::InitScene()
 	CObjHp* objh = new CObjHp();
 	Objs::InsertObj(objh, OBJ_HP, 11);
 
-	//主人公オブジェクト作成
+	//遠距離敵オブジェクト作成（仮）
 	CObjSinEnemy* objs = new CObjSinEnemy(400,400);
 	Objs::InsertObj(objs, OBJ_SINENEMY, 10);
+
+	////突進敵オブジェクト作成（仮）
+	//CObjRushEnemy* objr = new CObjRushEnemy(500, 600);
+	//Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
 }
 
 //ゲームメイン実行メソッド

@@ -24,6 +24,7 @@ enum OBJ_NAME
 	OBJ_SINENEMY,
 	OBJ_OVER,
 	OBJ_MAGIC,
+	OBJ_RUSH_ENEMY,
 };
 //------------------------------------------------
 
@@ -108,6 +109,7 @@ struct UserData
 #include"ObjSinEnemy.h"
 #include"ObjOver.h"
 #include"ObjMagic.h"
+#include"ObjRushEnemy.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
