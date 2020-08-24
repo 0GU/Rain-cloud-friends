@@ -73,6 +73,8 @@ private:
 
 	bool reset_falldamage_cacancel_flag;//リスポーンリスポーン時の最初の落下ダメージを無効化
 
+	bool landing_flag;//地面に着地した時用フラグ
+
 	float m_py_h;
 
 	//コントローラー用仮変数

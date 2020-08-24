@@ -473,7 +473,7 @@ void CObjStageSelect::Draw()
 	src.m_right = 512.0f;
 	src.m_bottom = 512.0f;
 
-
+	//”z—ñ‚ª‹t
 	if (Clear_flag[2] == true || Clear_flag[1] == true || Clear_flag[0] == true)
 	{
 		dst.m_top = 560.0f;

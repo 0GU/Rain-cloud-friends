@@ -3,6 +3,7 @@
 #include "GameL\WinInputs.h"
 #include "GameL\SceneManager.h"
 #include "GameL\HitBoxManager.h"
+#include "GameL/Audio.h"
 
 #include "GameHead.h"
 #include "ObjCloud.h"
@@ -89,10 +90,12 @@ void CObjCloud::Action()
 		CObjRain* objr = new CObjRain(m_px, m_py+64);
 		Objs::InsertObj(objr, OBJ_RAIN, 10);
 		rain_flag = false;
+		Audio::Start(5);
 		m_hp -= 0.01f;	//hpå∏è≠
 	}
 	if ((Input::GetVKey('C') == false&& Input::GetConButtons(m_con_num, GAMEPAD_B)==false) && rain_flag == false)
 	{
+		
 		rain_flag = true;
 	}
 
