@@ -29,6 +29,10 @@ public:
 		bool* up, bool* down, bool* left, bool* right,
 		float* vx, float* vy, int* bt
 	);
+	void BlockHit(float* x, float* y, bool scroll_on,
+		bool* up, bool* down, bool* left, bool* right,
+		float* vx, float* vy, int* bt, bool climb, float size_x, float size_y
+	);
 
 	//ålŒö‚Æ•Ç‚ÌŒğ·”»’è
 	bool HeroBlockCrossPoint(
