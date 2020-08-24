@@ -30,7 +30,7 @@ void CObjRushEnemy::Init()
 	m_speed_power = 0.5f;//通常速度
 	m_ani_max_time = 4;  //アニメーション間隔幅
 
-	m_move = true;		 //true=右 false=左
+	m_move = false;		 //true=右 false=左
 
 
 	pos_init = m_px;
@@ -103,6 +103,12 @@ void CObjRushEnemy::Action()
 			m_ani_frame = 0;
 		}
 
+		if (pos_init - m_px >= 400)
+			m_move = true;//右向きに変更
+
+		if (pos_init - m_px <= -400)
+			m_move = false;//左向きに変更
+
 
 		//摩擦
 		m_vx += -(m_vx * 0.098);
@@ -154,8 +160,8 @@ void CObjRushEnemy::Draw()
 //切り取り位置の設定
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 512.0f;
-	src.m_bottom =410.0f;
+	src.m_right = 215.0f;
+	src.m_bottom =235.0f;
 
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
@@ -166,5 +172,5 @@ void CObjRushEnemy::Draw()
 	dst.m_bottom = 60.0f + m_py + block->GetScrollY();
 
 	//描画
-	Draw::Draw(13, &src, &dst, c, 0.0f);
+	Draw::Draw(14, &src, &dst, c, 0.0f);
 }
