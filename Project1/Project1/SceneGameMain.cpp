@@ -66,8 +66,13 @@ void CSceneGameMain::InitScene()
 
 
 	//SE情報の登録
-	//Audio::LoadAudio(0, L"", SOUND_TYPE::BACK_MUSIC);
-	//Audio::LoadAudio(1, L"", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(0, L"素材/BGM/Stage1仮.wav", SOUND_TYPE::BACK_MUSIC);
+	Audio::LoadAudio(1, L"素材/BGM/風仮.wav", SOUND_TYPE::BACK_MUSIC);
+	Audio::LoadAudio(2, L"素材/SE/ジャンプ.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(3, L"素材/SE/着地.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(4, L"素材/SE/ダメージ音.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(5, L"素材/SE/雨.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(6, L"素材/SE/被弾.wav", SOUND_TYPE::EFFECT);
 
 	//画像情報を登録
 	Draw::LoadImageW(L"素材/仮/image.png", 0, TEX_SIZE_2048);
@@ -83,6 +88,15 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/植物ミニ.png", 10, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/画像/追尾敵0.png", 11, TEX_SIZE_2048);
 	Draw::LoadImageW(L"素材/画像/妖精.png", 12, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/岩.png", 13, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/仮/Game背景仮.png", 22, TEX_SIZE_1024);
+	if(stageselect==1)
+	{
+		Audio::Start(0);
+		Audio::Start(1);
+	}
+	
+	Draw::LoadImageW(L"素材/画像/runba.png", 14, TEX_SIZE_256);
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成
@@ -105,9 +119,13 @@ void CSceneGameMain::InitScene()
 	CObjHp* objh = new CObjHp();
 	Objs::InsertObj(objh, OBJ_HP, 11);
 
-	//主人公オブジェクト作成
+	//遠距離敵オブジェクト作成（仮）
 	CObjSinEnemy* objs = new CObjSinEnemy(400,400);
 	Objs::InsertObj(objs, OBJ_SINENEMY, 10);
+
+	//突進敵オブジェクト作成（仮）
+	CObjRushEnemy* objr = new CObjRushEnemy(500, 600);
+	Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
 }
 
 //ゲームメイン実行メソッド

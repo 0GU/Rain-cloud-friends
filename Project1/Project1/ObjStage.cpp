@@ -112,16 +112,16 @@ void CObjStage::Draw()
 	RECT_F dst; //描画先表示位置
 
 	//背景表示
-	src.m_top = 256.0f;
+	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 512.0f;
-	src.m_bottom = 512.0f;
+	src.m_right = 1280.0f;
+	src.m_bottom = 720.0f;
 
 	dst.m_top = ZERO_G;
 	dst.m_left = ZERO_G;
 	dst.m_right = HD_RIGIT;
 	dst.m_bottom = HD_BUTTOM;
-	Draw::Draw(0, &src, &dst, c, 0.0f);
+	Draw::Draw(22, &src, &dst, c, 0.0f);
 
 	//マップチップによるblock設置
 	for (int i = 0; i < 20; i++)
@@ -283,6 +283,108 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 		up, down, left, right,
 		vx, vy, bt, false);
 }
+//実験　判定サイズの変更
+//引数12 float size_x :objectのサイズx
+//引数13 float size_y :objectのサイズy
+void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
+	bool* up, bool* down, bool* left, bool* right,
+	float* vx, float* vy, int* bt, bool climb,float size_x,float size_y)
+{
+	//衝突状態確認用フラグの初期化
+	*up = false;
+	*down = false;
+	*left = false;
+	*right = false;
+
+	//踏んでいるのblockの種類の初期化
+	*bt = 0;
+
+	//m_mapの全要素にアクセス
+	for (int i = 0; i < 20; i++)
+	{
+		for (int j = 0; j < 100; j++)
+		{
+			if (m_map[i][j] > 0 && m_map[i][j] != 4)
+			{
+				//要素番号を座標に変更
+				float bx = j * 64.0f;
+				float by = i * 64.0f;
+
+				//スクロールの影響
+				float scroll = scroll_on ? mx_scroll : 0;
+				float scroll_y = scroll_on ? my_scroll : 0;
+				//オブジェクトとブロックの当たり判定
+				//左と上はブロックのサイズ、右と下はオブジェクトのサイズで判定をとる
+				if ((*x + (-scroll) + size_x > bx) && (*x + (-scroll) < bx + 64.0f) && (*y + (-scroll_y) + size_y > by) && (*y + (-scroll_y) < by + 64.0f))
+				{
+					//上下左右判定
+
+					//vectorの作成
+					float rvx = (*x + (-scroll)) - bx;
+					float rvy = (*y + (-scroll_y)) - by;
+
+					//長さを求める
+					float len = sqrt(rvx * rvx + rvy * rvy);
+
+					//角度を求める
+					float r = atan2(rvy, rvx);
+					r = r * 180.0f / 3.14f;
+
+					if (r <= 0.0f)
+						r = abs(r);
+					else
+						r = 360.0f - abs(r);
+
+					//lenがある一定の長さより短い場合判定に入る
+					if (len < 110.0f)
+					{
+						//角度で上下左右を判定
+						if ((r < 45 && r > 0) || r > 315)
+						{
+							//右
+							*right = true;//オブジェクトの左の部分が衝突している
+							*x = bx + 64.0f + (scroll);//ブロックの位置+オブジェクトの幅
+							*vx = -(*vx) * 0.1f;//-VX*反発係数
+
+						}
+						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 13))
+						{
+							//上
+							*down = true;//オブジェクトの下の部分が衝突している
+							*y = by - size_y + (scroll_y);//ブロックの位置-オブジェクトの幅
+							//種類を渡すのスタートとゴールのみ変更する
+							if (m_map[i][j] >= 2)
+								*bt = m_map[i][j];//ブロックの要素（type）をオブジェクトに渡す
+							*vy = 0.0f;
+						}
+						if (r > 135 && r < 225)
+						{
+							//左
+							*left = true;//オブジェクトの右の部分が衝突している
+							*x = bx - size_x + (scroll);//ブロックの位置-オブジェクトの幅
+							*vx = -(*vx) * 0.1f;//-VX*反発係数
+
+						}
+						if (r > 225 && r < 315 && climb == false)
+						{
+							//下
+							*up = true;//オブジェクトの上の部分が衝突している
+							*y = by + 64.0f + (scroll_y);//ブロックの位置+オブジェクトの幅
+							if (*vy < 0)
+							{
+								*vy = 0.0f;
+							}
+
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+}
+
 void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 	bool* up, bool* down, bool* left, bool* right,
 	float* vx, float* vy, int* bt,bool climb)

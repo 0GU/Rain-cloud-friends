@@ -4,6 +4,7 @@
 #include "GameL\SceneManager.h"
 #include "GameL\HitBoxManager.h"
 #include "GameL/DrawFont.h"
+#include"GameL/Audio.h"
 
 #include "GameHead.h"
 #include "ObjHero.h"
@@ -49,6 +50,8 @@ void CObjHero::Init()
 	falldamage_flag = false;
 
 	reset_falldamage_cacancel_flag = true;
+
+	landing_flag = false;
 
 	m_block_type = 0;		//踏んでいるblockの種類を確認用
 
@@ -108,13 +111,26 @@ void CObjHero::Action()
 	if (m_hit_down == false)
 	{
 		falldamage_flag = false;
+		landing_flag = false;
 		if (m_py_h > m_py - block->GetScrollY())
 		{
 			m_py_h = m_py - block->GetScrollY();
 		}
 	}
 	//----------------------------------------------------------------------------------------------------------------------------------------------
-
+	if (m_hit_down == true)
+	{
+		if (landing_flag == false)
+		{
+			landing_flag = true;//着地しました
+			if (landing_flag == true)
+			{
+				Audio::Start(3);
+			}
+		}
+	
+	}
+	
 	if (stay_flag == false)
 	{
 		//コントローラー操作仮
@@ -129,8 +145,11 @@ void CObjHero::Action()
 		{
 			if (m_hit_down == true)
 			{
+				Audio::Start(2);
+	
 				m_vy = -10;
 			}
+
 		}
 		if (Input::GetConButtons(m_con_num, GAMEPAD_X) == true)
 		{
@@ -182,6 +201,7 @@ void CObjHero::Action()
 		{
 			if (m_hit_down == true)
 			{
+				Audio::Start(2);
 				m_vy = -10;
 			}
 		}
@@ -277,21 +297,25 @@ void CObjHero::Action()
 		//敵と当たっているか確認
 		if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
 		{
+			Audio::Start(4);
 			int enemynum = 1;
 			EnemyHit(enemynum);
 		}
 		if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
 		{
+			Audio::Start(4);
 			int enemynum = 2;
 			EnemyHit(enemynum);
 		}
 		if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
 		{
+			Audio::Start(4);
 			int enemynum = 3;
 			EnemyHit(enemynum);
 		}
 		if (hit->CheckObjNameHit(OBJ_MAGIC) != nullptr)
 		{
+			Audio::Start(4);
 			int enemynum = 4;
 			EnemyHit(enemynum);
 		}

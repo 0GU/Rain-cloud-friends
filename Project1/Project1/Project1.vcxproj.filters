@@ -153,6 +153,9 @@
     <ClInclude Include="ObjMagic.h">
       <Filter>ソース ファイル\GameMain\敵</Filter>
     </ClInclude>
+    <ClInclude Include="ObjRushEnemy.h">
+      <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -267,6 +270,9 @@
       <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
     <ClCompile Include="ObjMagic.cpp">
+      <Filter>ソース ファイル\GameMain\敵</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjRushEnemy.cpp">
       <Filter>ソース ファイル\GameMain\敵</Filter>
     </ClCompile>
     <ClCompile Include="ObjHero.cpp">

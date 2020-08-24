@@ -27,62 +27,59 @@ void CObjStageSelect::Init()
 	title_flag = false;
 
 	bool set_Stage[3] = { false, false ,false };
-	//bool set_Stage2[3] = { false, false ,false };
-	//bool set_Stage3[3] = { false, false ,false };
+	bool set_Stage2[3] = { false, false ,false };
+	bool set_Stage3[3] = { false, false ,false };
 	Save::Open();
 
 	/*for (int i = 0; i < 3; i++)
 	{*/
-		if (((UserData*)Save::GetData())->Stage_1[0] == true)
-		{
-			set_Stage[0] = true;
-		}
+	//perfrct
+	if (((UserData*)Save::GetData())->Stage_1[0] == true)
+	{
+		set_Stage[0] = true;
+	}
+	if (((UserData*)Save::GetData())->Stage_2[0] == true)
+	{
+		set_Stage2[0] = true;
+	}
+	if (((UserData*)Save::GetData())->Stage_3[0] == true)
+	{
+		set_Stage3[0] = true;
+	}
 
+	//great
+	if (((UserData*)Save::GetData())->Stage_1[1] == true)
+	{
+		set_Stage[1] = true;
+	}
+	if (((UserData*)Save::GetData())->Stage_2[1] == true)
+	{
+		set_Stage2[1] = true;
+	}
 
-		if (((UserData*)Save::GetData())->Stage_2[0] == true)
-		{
-			set_Stage[1] = true;
-		}
+	if (((UserData*)Save::GetData())->Stage_3[1] == true)
+	{
+		set_Stage3[1] = true;
+	}
 
-		if (((UserData*)Save::GetData())->Stage_3[0] == true)
-		{
-			set_Stage[2] = true;
-		}
-		if (((UserData*)Save::GetData())->Stage_1[1] == true)
-		{
-			set_Stage[0] = true;
-		}
-
-
-		if (((UserData*)Save::GetData())->Stage_2[1] == true)
-		{
-			set_Stage[1] = true;
-		}
-
-		if (((UserData*)Save::GetData())->Stage_3[1] == true)
-		{
-			set_Stage[2] = true;
-		}
-		if (((UserData*)Save::GetData())->Stage_1[2] == true)
-		{
-			set_Stage[0] = true;
-		}
-
-
-		if (((UserData*)Save::GetData())->Stage_2[2] == true)
-		{
-			set_Stage[1] = true;
-		}
-
-		if (((UserData*)Save::GetData())->Stage_3[2] == true)
-		{
-			set_Stage[2] = true;
-		}
+	//good
+	if (((UserData*)Save::GetData())->Stage_1[2] == true)
+	{
+		set_Stage[2] = true;
+	}
+	if (((UserData*)Save::GetData())->Stage_2[2] == true)
+	{
+		set_Stage2[2] = true;
+	}
+	if (((UserData*)Save::GetData())->Stage_3[2] == true)
+	{
+		set_Stage3[2] = true;
+	}
 	//}
 	//フラグを初期化
 	memcpy(Clear_flag, set_Stage, sizeof(bool) * (3));
-	memcpy(Clear_flag, set_Stage, sizeof(bool) * (3));
-	memcpy(Clear_flag, set_Stage, sizeof(bool) * (3));
+	memcpy(Clear_flag2, set_Stage2, sizeof(bool) * (3));
+	memcpy(Clear_flag3, set_Stage3, sizeof(bool) * (3));
 }
 
 //アクション
@@ -470,33 +467,33 @@ void CObjStageSelect::Draw()
 	Draw::Draw(1, &src, &dst, c, 0.0f);
 
 	//--------------ここから雫
-	//雫（仮）
+	//雫（あり）
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
 	src.m_right = 512.0f;
 	src.m_bottom = 512.0f;
 
-
-	if (Clear_flag[0] == true)
+	//配列が逆
+	if (Clear_flag[2] == true || Clear_flag[1] == true || Clear_flag[0] == true)
 	{
-
-
 		dst.m_top = 560.0f;
 		dst.m_left = 120.0f;
 		dst.m_right = 220.0f;
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(3, &src, &dst, c, 0.0f);
-
-
+	}
+	if (Clear_flag[1] == true || Clear_flag[0] == true)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 200.0f;
 		dst.m_right = 300.0f;
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(3, &src, &dst, c, 0.0f);
-
-
+	}
+	if (Clear_flag[0] == true)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 280.0f;
 		dst.m_right = 380.0f;
@@ -505,7 +502,7 @@ void CObjStageSelect::Draw()
 		Draw::Draw(3, &src, &dst, c, 0.0f);
 
 	}
-	if (Clear_flag[1] == true)
+	if (Clear_flag2[2] == true || Clear_flag2[1] == true || Clear_flag2[0] == true)
 	{
 
 		dst.m_top = 560.0f;
@@ -514,14 +511,18 @@ void CObjStageSelect::Draw()
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(3, &src, &dst, c, 0.0f);
-
+	}
+	if (Clear_flag2[2] == true || Clear_flag2[0] == true)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 680.0f;
 		dst.m_right = 780.0f;
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(3, &src, &dst, c, 0.0f);
-
+	}
+	if (Clear_flag2[0] == true)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 600.0f;
 		dst.m_right = 700.0f;
@@ -529,23 +530,29 @@ void CObjStageSelect::Draw()
 
 		Draw::Draw(3, &src, &dst, c, 0.0f);
 	}
-	if(Clear_flag[2] == true)
-	{
 
+	if (Clear_flag3[2] == true  || Clear_flag3[1] == true || Clear_flag3[0] == true)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 920.0f;
 		dst.m_right = 1020.0f;
 		dst.m_bottom = 620.0f;
 
-		Draw::Draw(3, &src, &dst, c, 0.0f);
 
+		Draw::Draw(3, &src, &dst, c, 0.0f);
+	}
+
+	if (Clear_flag3[1] == true || Clear_flag3[0] == true)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 1000.0f;
 		dst.m_right = 1100.0f;
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(3, &src, &dst, c, 0.0f);
-
+	}
+	if (Clear_flag3[0] == true)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 1080.0f;
 		dst.m_right = 1180.0f;
@@ -553,12 +560,13 @@ void CObjStageSelect::Draw()
 
 		Draw::Draw(3, &src, &dst, c, 0.0f);
 	}
-	//雫（仮）
+	//雫(なし）
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
 	src.m_right = 512.0f;
 	src.m_bottom = 512.0f;
-	if (Clear_flag[0] == false)
+	//stage1
+	if (Clear_flag[2] == false && Clear_flag[1] == false && Clear_flag[0] == false)
 	{
 
 
@@ -569,15 +577,18 @@ void CObjStageSelect::Draw()
 
 		Draw::Draw(4, &src, &dst, c, 0.0f);
 
-
+	}
+	if (Clear_flag[1] == false && Clear_flag[0] == false)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 200.0f;
 		dst.m_right = 300.0f;
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(4, &src, &dst, c, 0.0f);
-
-
+	}
+	if (Clear_flag[0] == false)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 280.0f;
 		dst.m_right = 380.0f;
@@ -586,7 +597,8 @@ void CObjStageSelect::Draw()
 		Draw::Draw(4, &src, &dst, c, 0.0f);
 	}
 
-	if (Clear_flag[1] == false)
+	//stage2
+	if (Clear_flag2[2] == false && Clear_flag2[1] == false && Clear_flag2[0] == false)
 	{
 
 		dst.m_top = 560.0f;
@@ -595,14 +607,18 @@ void CObjStageSelect::Draw()
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(4, &src, &dst, c, 0.0f);
-
+	}
+	if (Clear_flag2[1] == false && Clear_flag2[0] == false)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 680.0f;
 		dst.m_right = 780.0f;
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(4, &src, &dst, c, 0.0f);
-
+	}
+	if (Clear_flag2[0] == false)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 600.0f;
 		dst.m_right = 700.0f;
@@ -610,7 +626,9 @@ void CObjStageSelect::Draw()
 
 		Draw::Draw(4, &src, &dst, c, 0.0f);
 	}
-	if(Clear_flag[2]==false)
+	//stage3
+
+	if (Clear_flag3[2] == false && Clear_flag3[1] == false && Clear_flag3[0] == false)
 	{
 
 		dst.m_top = 560.0f;
@@ -618,15 +636,20 @@ void CObjStageSelect::Draw()
 		dst.m_right = 1020.0f;
 		dst.m_bottom = 620.0f;
 
-		Draw::Draw(4, &src, &dst, c, 0.0f);
 
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+	}
+	if (Clear_flag3[1] == false && Clear_flag3[0] == false)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 1000.0f;
 		dst.m_right = 1100.0f;
 		dst.m_bottom = 620.0f;
 
 		Draw::Draw(4, &src, &dst, c, 0.0f);
-
+	}
+	if (Clear_flag3[0] == false)
+	{
 		dst.m_top = 560.0f;
 		dst.m_left = 1080.0f;
 		dst.m_right = 1180.0f;

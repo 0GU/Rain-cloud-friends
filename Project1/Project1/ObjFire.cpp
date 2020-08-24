@@ -3,6 +3,7 @@
 #include "GameL\WinInputs.h"
 #include "GameL\SceneManager.h"
 #include "GameL\HitBoxManager.h"
+#include"GameL/Audio.h"
 
 #include"GameHead.h"
 #include"ObjFire.h"
@@ -58,6 +59,7 @@ void CObjFire::Action()
 		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
 		{
 			HP -= 1;
+			Audio::Start(6);
 		}
 		if (HP <= 0)
 		{

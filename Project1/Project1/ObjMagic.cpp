@@ -72,7 +72,7 @@ void CObjMagic::Action()
 
 	//HitBoxの位置の変更
 	CHitBox* hit = Hits::GetHitBox(this);
-	hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
+	hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY(),32.0f,32.0f);
 
 	//主人公と接触しているか調べる
 	if (hit->CheckObjNameHit(OBJ_HERO) != nullptr )
@@ -86,7 +86,7 @@ void CObjMagic::Action()
 	//ブロックとの当たり判定実行
 	block->BlockHit(&m_px, &m_py, false,
 		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-		&m_vx, &m_vy, &d
+		&m_vx, &m_vy, &d,false,32.0f,32.0f
 	);
 	if (m_hit_up == true || m_hit_down == true || m_hit_left == true || m_hit_right == true)
 	{

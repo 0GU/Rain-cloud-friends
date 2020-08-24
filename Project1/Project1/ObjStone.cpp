@@ -80,8 +80,8 @@ void CObjStone::Draw()
 	//切り取り位置の設定
 	src.m_top = 0.0f;
 	src.m_left = 0.0f ;
-	src.m_right = 64.0f ;
-	src.m_bottom = src.m_top + 64.0f;
+	src.m_right = 512.0f ;
+	src.m_bottom = src.m_top + 512.0f;
 
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
@@ -92,5 +92,5 @@ void CObjStone::Draw()
 	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
 
 	//描画
-	Draw::Draw(1, &src, &dst, c, 0.0f);
+	Draw::Draw(13, &src, &dst, c, 0.0f);
 }
