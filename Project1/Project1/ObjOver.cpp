@@ -48,7 +48,7 @@ void CObjOver::Action()
 	{
 		keyflag = false;
 		Audio::Start(1);
-
+		
 		//通常時
 		if (check_flag == false)
 		{
@@ -102,17 +102,19 @@ void CObjOver::Action()
 	if (Input::GetVKey('Z') == true && keyflag == true && scroll_flag == true)
 	{
 		keyflag = false;
-		
+		Audio::Start(2);
 		//通常時
 		if (check_flag == false)
 		{
 			//コンティニュー以外は確認を挟む
 			if (selectnum == 1)
 			{
+
 				move_flag = true;
 			}
 			else
 			{
+				//Audio::Start(2);
 				check_flag = true;
 			}
 		}

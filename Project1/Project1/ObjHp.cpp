@@ -2,6 +2,7 @@
 #include"GameL/DrawTexture.h"
 #include"GameL/WinInputs.h"
 #include"GameL/SceneManager.h"
+#include"GameL/Audio.h"
 
 #include"GameHead.h"
 #include"ObjHp.h"
@@ -9,7 +10,8 @@
 
 void CObjHp::Init()
 {
-	flag = true;
+	caution_flag = true;//瀕死
+	danger_flag = true;//重症
 	CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
 	cl_MAX_HP = cloud->GetHP();
 }
@@ -24,6 +26,17 @@ void CObjHp::Action()
 	//雲から体力の情報を持ってくる
 	CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
 	cl_hp = cloud->GetHP();
+	//hpが一定以下の場合効果音を鳴らす
+	if (he_hp < 0.5f &&caution_flag==true)
+	{
+		Audio::Start(9);
+		caution_flag = false;
+	}
+	if (he_hp < 0.2f && danger_flag == true)
+	{
+		Audio::Start(10);
+		danger_flag = false;
+	}
 	//hpが0以下なら0にする
 	if (he_hp <= 0.0f)
 		he_hp = 0.0f;
@@ -50,6 +63,8 @@ void CObjHp::Draw()
 	{
 		src.m_left = 0.0f;
 		src.m_right = src.m_left + 10.0f;
+
+
 	}
 	else if (he_hp > 0.2)
 	{
@@ -122,5 +137,21 @@ void CObjHp::Draw()
 	dst.m_bottom = 86.0f;
 	//描画
 	Draw::Draw(6, &src, &dst, c, 0.0f);
+
+	//切り取り位置の設定
+	src.m_top = 0.0f;
+	src.m_left = 0.0f;
+	src.m_right = 218.5f;
+	src.m_bottom = 133.5f;
+
+
+	//表示位置の設定
+	dst.m_top = 64.0f;;
+	dst.m_left = 16.0f;
+	dst.m_right = 48.0f;
+	dst.m_bottom = 96.0f;
+
+	//描画
+	Draw::Draw(8, &src, &dst, c, 0.0f);
 
 }

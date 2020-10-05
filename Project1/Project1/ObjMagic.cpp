@@ -61,6 +61,7 @@ void CObjMagic::Action()
 		m_vx = cos(3.14/180*m_r);
 		m_vy = sin(3.14 / 180 * m_r);
 
+		Audio::Start(8);
 		m_check = false;
 	}
 

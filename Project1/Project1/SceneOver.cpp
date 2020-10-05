@@ -33,14 +33,14 @@ void CSceneOver::InitScene()
 	Objs::InsertObj(over, OBJ_OVER, 1);
 
 	//SEèÓïÒÇÃìoò^
-	Audio::LoadAudio(0, L"ëfçﬁ/BGM/Select.wav", SOUND_TYPE::BACK_MUSIC);
+	Audio::LoadAudio(0, L"ëfçﬁ/BGM/GameOver.wav", SOUND_TYPE::BACK_MUSIC);
 	Audio::LoadAudio(1, L"ëfçﬁ/SE/button01.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(2, L"ëfçﬁ/SE/button02.wav", SOUND_TYPE::EFFECT);
 
 	Draw::LoadImageW(L"ëfçﬁ/âº/Animation.png", 3, TEX_SIZE_64);
 	Draw::LoadImageW(L"ëfçﬁ/âº/Over(âºÅAìßâﬂ).png", 0, TEX_SIZE_1024);
 	Draw::LoadImageW(L"ëfçﬁ/âÊëú/ÉQÅ[ÉÄÉIÅ[ÉoÅ[(âº).png", 1, TEX_SIZE_1024);
-
+	Audio::Start(0);
 	
 }
 

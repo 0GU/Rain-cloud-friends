@@ -167,7 +167,10 @@ void CObjStageSelect::Action()
 	{
 		keyflag = false;
 		Audio::Stop(0);
-
+		if (move_flag == false)
+		{
+			Audio::Start(2);
+		}
 
 		move_flag = true;
 	}
@@ -243,7 +246,10 @@ void CObjStageSelect::Action()
 	{
 		keyflag = false;
 		Audio::Stop(0);
-
+		if (move_flag == false)
+		{
+			Audio::Start(2);
+		}
 
 		move_flag = true;
 	}
@@ -568,8 +574,6 @@ void CObjStageSelect::Draw()
 	//stage1
 	if (Clear_flag[2] == false && Clear_flag[1] == false && Clear_flag[0] == false)
 	{
-
-
 		dst.m_top = 560.0f;
 		dst.m_left = 120.0f;
 		dst.m_right = 220.0f;

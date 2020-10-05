@@ -41,8 +41,9 @@ void CObjTitle::Action()
 
 		move_flag = true;//下から上に動かすフラグ起動
 	}
-	if (Input::GetVKey('Z') == true  && scroll_flag == true)//Zキーを押すと
+	if (Input::GetVKey('Z') == true  && scroll_flag == true && key_flag == true)//Zキーを押すと
 	{
+		Audio::Start(2);
 		key_flag = false;//Keyのフラグを止めて
 
 		move_flag = true;//下から上に動かすフラグ起動

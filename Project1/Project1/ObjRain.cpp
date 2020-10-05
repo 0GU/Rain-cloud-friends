@@ -75,4 +75,6 @@ void CObjRain::Draw()
 
 	//•`‰æ
 	Draw::Draw(7, &src, &dst, c, 0.0f);
+
+
 }

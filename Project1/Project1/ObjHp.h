@@ -19,5 +19,7 @@ private:
 	float he_hp;	//体力量：主人公
 	float cl_hp;	//体力量：雲
 	float cl_MAX_HP;
-	bool flag;
+	bool caution_flag;//HP効果音警告フラグ
+	bool danger_flag;//hp効果音瀕死フラグ
+
 };

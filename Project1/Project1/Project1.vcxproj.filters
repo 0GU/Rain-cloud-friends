@@ -276,7 +276,7 @@
       <Filter>ソース ファイル\GameMain\敵</Filter>
     </ClCompile>
     <ClCompile Include="ObjHero.cpp">
-      <Filter>ソース ファイル\ギミック</Filter>
+      <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
