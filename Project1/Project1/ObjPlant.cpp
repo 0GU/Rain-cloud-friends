@@ -3,6 +3,7 @@
 #include "GameL\WinInputs.h"
 #include "GameL\SceneManager.h"
 #include "GameL\HitBoxManager.h"
+#include"GameL/Audio.h"
 
 #include"GameHead.h"
 #include"ObjPlant.h"
@@ -50,14 +51,14 @@ void CObjPlant::Action()
 		{
 			HP -= 1;
 		}
-		if (HP <= 0&&grow_flag==true)					//HP0で成長
+		if (HP <= 0 && grow_flag == true)					//HP0で成長
 		{
-				
-					CObjGrowPlant* obj = new CObjGrowPlant(m_px,m_py-grow*64,grow,true);	//花の部分のオブジェクト作成
-					Objs::InsertObj(obj, OBJ_PLANT, 10);
-			
-					CObjGrowPlant* objs = new CObjGrowPlant(m_px, m_py - (grow-1) * 64,grow, false);	//ツタの部分のオブジェクト作成
-					Objs::InsertObj(objs, OBJ_PLANT, 10);
+			Audio::Start(7);
+			CObjGrowPlant* obj = new CObjGrowPlant(m_px, m_py - grow * 64, grow, true);	//花の部分のオブジェクト作成
+			Objs::InsertObj(obj, OBJ_PLANT, 10);
+
+			CObjGrowPlant* objs = new CObjGrowPlant(m_px, m_py - (grow - 1) * 64, grow, false);	//ツタの部分のオブジェクト作成
+			Objs::InsertObj(objs, OBJ_PLANT, 10);
 
 			grow_flag = false;
 			this->SetStatus(false);//自身に削除命令を出す

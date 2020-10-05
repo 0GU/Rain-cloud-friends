@@ -73,6 +73,7 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(4, L"‘fŞ/SE/ƒ_ƒ[ƒW‰¹.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(5, L"‘fŞ/SE/‰J.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(6, L"‘fŞ/SE/”í’e.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(7, L"‘fŞ/SE/¬’·.wav", SOUND_TYPE::EFFECT);
 
 	//‰æ‘œî•ñ‚ğ“o˜^
 	Draw::LoadImageW(L"‘fŞ/‰¼/image.png", 0, TEX_SIZE_2048);
