@@ -15,7 +15,7 @@ public:
 	void Draw();	//ƒhƒ[
 
 	float GetVx() { return m_vx; }
-
+	void ModeChange(float* x, float* y, float* hx, float* hy, float* pos_init, bool* mode, bool* posture);
 private:
 	float m_px;			//ˆÊ’u
 	float m_py;

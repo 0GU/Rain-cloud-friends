@@ -27,8 +27,8 @@ void CObjChaseEnemy::Init()
 
 	m_move = true;		 //true=右 false=左
 
-	m_chase[0] = false;//通常状態で初期化
-	m_chase[1] = false;
+	m_chase = false;//通常状態で初期化
+	//m_chase[1] = false;
 
 	pos_init = m_px;
 
@@ -55,6 +55,9 @@ void CObjChaseEnemy::Action()
 		m_speed_power = 0.5f;
 		m_ani_max_time = 4;
 
+		//
+		CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
+
 		//ブロック情報を持ってくる
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
@@ -71,55 +74,56 @@ void CObjChaseEnemy::Action()
 		//一定間隔でジャンプ
 		if (m_hit_down == true)
 		{
-			m_vy -= 10.0f;
+			//m_vy -= 10.0f;
 		}
 
+		enemy->ModeChange(&m_px, &m_py, &hx, &hy, &pos_init, &m_chase, &m_move);
 
-		//主人公が左に一定距離内にいたら
-		if (m_px + block->GetScroll() - hx <= 400.0f && m_px + block->GetScroll() - hx > 0.0f &&
-			m_move == false && m_py - hy >= 200 && m_py - hy >= -200)
-		{
-			m_chase[0] = true;
-		}
+		////主人公が左に一定距離内にいたら
+		//if (m_px + block->GetScroll() - hx <= 400.0f && m_px + block->GetScroll() - hx > 0.0f &&
+		//	m_move == false && m_py - hy >= 200 && m_py - hy >= -200)
+		//{
+		//	m_chase[0] = true;
+		//}
 
-		//主人公が右に一定距離内にいたら
-		if (m_px + block->GetScroll() - hx >= -400.0f && m_px + block->GetScroll() - hx < 0.0f &&
-			m_move == true && m_py - hy >= 200 && m_py - hy >= -200)
-		{
-			m_chase[1] = true;
-		}
+		////主人公が右に一定距離内にいたら
+		//if (m_px + block->GetScroll() - hx >= -400.0f && m_px + block->GetScroll() - hx < 0.0f &&
+		//	m_move == true && m_py - hy >= 200 && m_py - hy >= -200)
+		//{
+		//	m_chase[1] = true;
+		//}
 
 
-		//追跡中
-		if (m_chase[0] == true)//左向き追跡
-		{
-			if (m_px + block->GetScroll() - hx >= 400)//距離離れた
-			{
-				m_chase[0] = false;
-			}
-			else if (m_px + block->GetScroll() - hx <= 0)//右に回り込まれた
-			{
-				m_chase[0] = false;
-				m_chase[1] = true;
-				m_move = true;
-			}
-		}
-		else if (m_chase[1] == true)//右向き追跡
-		{
-			if (m_px + block->GetScroll() - hx <= -400)//距離離れた
-			{
-				m_chase[1] = false;
-			}
-			else if (m_px + block->GetScroll() - hx >= 0)//左に回り込まれた
-			{
-				m_chase[0] = true;
-				m_chase[1] = false;
-				m_move = false;
-			}
-		}
+		////追跡中
+		//if (m_chase[0] == true)//左向き追跡
+		//{
+		//	if (m_px + block->GetScroll() - hx >= 400)//距離離れた
+		//	{
+		//		m_chase[0] = false;
+		//	}
+		//	else if (m_px + block->GetScroll() - hx <= 0)//右に回り込まれた
+		//	{
+		//		m_chase[0] = false;
+		//		m_chase[1] = true;
+		//		m_move = true;
+		//	}
+		//}
+		//else if (m_chase[1] == true)//右向き追跡
+		//{
+		//	if (m_px + block->GetScroll() - hx <= -400)//距離離れた
+		//	{
+		//		m_chase[1] = false;
+		//	}
+		//	else if (m_px + block->GetScroll() - hx >= 0)//左に回り込まれた
+		//	{
+		//		m_chase[0] = true;
+		//		m_chase[1] = false;
+		//		m_move = false;
+		//	}
+		//}
 
 		//初期位置から一定距離離れたら方向転換
-		if (m_chase[0] == false && m_chase[1] == false)
+		if (m_chase == false)
 		{
 			if (pos_init - m_px >= 400)
 				m_move = true;//右向きに変更
@@ -129,11 +133,11 @@ void CObjChaseEnemy::Action()
 		}
 
 		//ブロック衝突で向き変更
-		if (m_hit_right == true && m_chase[0] == false)
+		if (m_hit_right == true && m_chase == false)
 		{
 			m_move = true;
 		}
-		if (m_hit_left == true && m_chase[1] == false)
+		if (m_hit_left == true && m_chase == false)
 		{
 			m_move = false;
 		}

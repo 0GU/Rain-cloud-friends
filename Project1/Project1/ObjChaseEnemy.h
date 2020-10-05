@@ -40,7 +40,8 @@ private:
 	
 	bool stay_flag;
 	
-	bool m_chase[2];//追跡モード用　trueで追跡　０：左　１：右
+	bool m_chase;//追跡モード用　trueで追跡
+
 	float pos_init;	//沸いた時の位置記憶用
 
 };

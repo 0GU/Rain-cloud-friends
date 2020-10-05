@@ -173,3 +173,52 @@ void CObjEnemy::Draw()
 	//描画
 	Draw::Draw(11, &src, &dst, c, 0.0f);
 }
+
+//ModeChange関数
+//引数1 float* x		:敵objのX位置
+//引数2 float* y		:敵objのY位置
+//引数3 float* hx		:主人公objのX位置
+//引数4 float* hy		:主人公objのY位置
+//引数5 float* pos_init	:敵objの初期位置
+//引数6 bool* mode		:敵のモードの状態を返す(true=特殊状態 false=通常状態)
+//引数7 bool* posture	:敵の向きを返す(true=右 false=左)
+//主人公と敵の位置に応じてモードの切り替えを行う関数
+void CObjEnemy::ModeChange(float* x, float* y, float* hx, float* hy, float* pos_init, bool* mode, bool* posture)
+{
+	//ブロック情報を持ってくる
+	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+
+	//主人公が一定距離内にいたら
+	//1行目:左に一定距離　2行目:右に一定距離　3行目:上下に一定距離
+	if (((*x + block->GetScroll() - *hx <= 400.0f && *x + block->GetScroll() - *hx > 0.0f && *posture == false)||
+		(*x + block->GetScroll() - *hx >= -400.0f && *x + block->GetScroll() - *hx < 0.0f && *posture == true ))
+		&& *y - *hy <= 2000 && *y - *hy >= -2000)
+	{
+		*mode = true;
+	}
+
+	//向き変更と解除
+	if (*mode == true && *posture == false)//左向き追跡
+	{
+		if (*x + block->GetScroll() - *hx >= 400)//距離離れた
+		{
+			*mode = false;
+		}
+		else if (*x + block->GetScroll() - *hx <= 0)//右に回り込まれた
+		{
+			*posture = true;
+		}
+	}
+	else if (*mode == true && *posture == true)//右向き追跡
+	{
+		if (*x + block->GetScroll() - *hx <= -400)//距離離れた
+		{
+			*mode = false;
+		}
+		else if (*x + block->GetScroll() - *hx >= 0)//左に回り込まれた
+		{
+			*posture = false;
+		}
+	}
+
+}
