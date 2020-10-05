@@ -77,7 +77,7 @@ void CObjChaseEnemy::Action()
 			//m_vy -= 10.0f;
 		}
 
-		enemy->ModeChange(&m_px, &m_py, &hx, &hy, &pos_init, &m_chase, &m_move);
+		enemy->ModeChange(&m_px, &m_py, &hx, &hy, &pos_init, &m_chase, &m_move,false);
 
 		////ŽålŒö‚ª¶‚Éˆê’è‹——£“à‚É‚¢‚½‚ç
 		//if (m_px + block->GetScroll() - hx <= 400.0f && m_px + block->GetScroll() - hx > 0.0f &&

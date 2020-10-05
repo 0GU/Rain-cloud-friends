@@ -182,17 +182,23 @@ void CObjEnemy::Draw()
 //引数5 float* pos_init	:敵objの初期位置
 //引数6 bool* mode		:敵のモードの状態を返す(true=特殊状態 false=通常状態)
 //引数7 bool* posture	:敵の向きを返す(true=右 false=左)
+//引数8 bool  searchY	:遠距離敵用　上下の索敵範囲を広げる
 //主人公と敵の位置に応じてモードの切り替えを行う関数
-void CObjEnemy::ModeChange(float* x, float* y, float* hx, float* hy, float* pos_init, bool* mode, bool* posture)
+void CObjEnemy::ModeChange(float* x, float* y, float* hx, float* hy, float* pos_init, bool* mode, bool* posture, bool searchY)
 {
+	int range = 1;
+
+	if (searchY == true)
+		range = 8;
+
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
 	//主人公が一定距離内にいたら
 	//1行目:左に一定距離　2行目:右に一定距離　3行目:上下に一定距離
-	if (((*x + block->GetScroll() - *hx <= 400.0f && *x + block->GetScroll() - *hx > 0.0f && *posture == false)||
-		(*x + block->GetScroll() - *hx >= -400.0f && *x + block->GetScroll() - *hx < 0.0f && *posture == true ))
-		&& *y - *hy <= 2000 && *y - *hy >= -2000)
+	if (((*x + block->GetScroll() - *hx <= 400.0f && *x + block->GetScroll() - *hx > 0.0f && *posture == false) ||
+		(*x + block->GetScroll() - *hx >= -400.0f && *x + block->GetScroll() - *hx < 0.0f && *posture == true))
+		&& *y + block->GetScrollY() - *hy <= 200 * range && *y + block->GetScrollY() - *hy >= -200 * range)
 	{
 		*mode = true;
 	}
@@ -220,5 +226,8 @@ void CObjEnemy::ModeChange(float* x, float* y, float* hx, float* hy, float* pos_
 			*posture = false;
 		}
 	}
-
+	if (*mode == true && (*y + block->GetScrollY() - *hy >= 200 * range || *y + block->GetScrollY() - *hy <= -200 * range))//上下で距離離れた
+	{
+		*mode = false;
+	}
 }
