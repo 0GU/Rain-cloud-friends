@@ -32,6 +32,8 @@ void CObjRushEnemy::Init()
 
 	m_move = false;		 //true=右 false=左
 
+	m_rush = false;//通常状態で初期化
+	m_rush_stay = false;
 
 	pos_init = m_px;
 
@@ -58,15 +60,71 @@ void CObjRushEnemy::Action()
 		m_speed_power = 0.5f;
 		m_ani_max_time = 4;
 
+		CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
+
 		//ブロック情報を持ってくる
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
+		//位置の更新用に主人公の位置を持ってくる
+		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+		float hx = hero->GetX();
+		float hy = hero->GetY();
+		
 		//落下
 		if (m_py > 1000.0f)
 		{
 			;
 		}
 
+		enemy->ModeChange(&m_px, &m_py, &hx, &hy, &pos_init, &m_rush, &m_move);
+
+
+		////主人公が左に一定距離内にいたら
+		//if (m_px + block->GetScroll() - hx <= 400.0f && m_px + block->GetScroll() - hx > 0.0f &&
+		//	m_move == false && m_py - hy >= 200 && m_py - hy >= -200)
+		//{
+		//	m_rush[0] = true;
+		//}
+
+		////主人公が右に一定距離内にいたら
+		//if (m_px + block->GetScroll() - hx >= -400.0f && m_px + block->GetScroll() - hx < 0.0f &&
+		//	m_move == true && m_py - hy >= 200 && m_py - hy >= -200)
+		//{
+		//	m_rush[1] = true;
+		//}
+
+		////進捗
+		////モード切り替えとかそのへん
+
+		////攻撃状態
+		//if (m_rush[0] == true)
+		//{
+		//	if (m_px + block->GetScroll() - hx >= 400)//距離離れた
+		//	{
+		//		m_rush[0] = false;
+		//	}
+		//	else if (m_px + block->GetScroll() - hx <= 0)//右に回り込まれた
+		//	{
+		//		m_rush[0] = false;
+		//		m_rush[1] = true;
+		//		m_move = true;
+		//	}
+
+		//}
+		//else if (m_rush[1] == true)
+		//{
+		//	if (m_px + block->GetScroll() - hx <= -400)//距離離れた
+		//	{
+		//		m_rush[1] = false;
+		//	}
+		//	else if (m_px + block->GetScroll() - hx >= 0)//左に回り込まれた
+		//	{
+		//		m_rush[0] = true;
+		//		m_rush[1] = false;
+		//		m_move = false;
+		//	}
+
+		//}
 
 		//ブロック衝突で向き変更
 		if (m_hit_left == true)
@@ -78,7 +136,7 @@ void CObjRushEnemy::Action()
 			m_move = true;
 		}
 
-		//方向
+		//通常移動
 		if (m_move == true)
 		{
 			m_vx += m_speed_power;
@@ -92,6 +150,17 @@ void CObjRushEnemy::Action()
 			m_ani_time += 1;
 		}
 
+		//突進溜め移行
+		if ((m_rush == true) && m_rush_stay == false)
+		{
+			m_rush_stay = true;
+		}
+
+		if (m_rush_stay == true)
+		{
+			
+		}
+
 		if (m_ani_time > m_ani_max_time)
 		{
 			m_ani_frame += 1;
@@ -103,12 +172,15 @@ void CObjRushEnemy::Action()
 			m_ani_frame = 0;
 		}
 
-		if (pos_init - m_px >= 400)
-			m_move = true;//右向きに変更
+		//初期位置から一定距離離れたら方向転換
+		if (m_rush == false)
+		{
+			if (pos_init - m_px >= 400)
+				m_move = true;//右向きに変更
 
-		if (pos_init - m_px <= -400)
-			m_move = false;//左向きに変更
-
+			if (pos_init - m_px <= -400)
+				m_move = false;//左向きに変更
+		}
 
 		//摩擦
 		m_vx += -(m_vx * 0.098);

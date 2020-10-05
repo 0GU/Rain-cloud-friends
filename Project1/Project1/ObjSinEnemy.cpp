@@ -61,69 +61,80 @@ void CObjSinEnemy::Action()
 		float hx = hero->GetX();
 		float hy = hero->GetY();
 
-		//主人公が一定距離内にいたら攻撃行動へ移行
-		if (((m_x + block->GetScroll() - hx <=  400.0f && m_x + block->GetScroll() - hx > 0.0f && m_move == false) ||
-			(m_x + block->GetScroll() - hx >= -400.0f && m_x + block->GetScroll() - hx < 0.0f && m_move == true)) && 
-			m_atk_flag==false)
-		{
-			m_atk_flag = true;
-			m_atk_time = 300;//初回のみすぐチャージさせる
-		}
+		//
+		CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
+
+		enemy->ModeChange(&m_x, &m_y, &hx, &hy, &pos_init, &m_atk_flag, &m_move);
+
+
+		////主人公が一定距離内にいたら攻撃行動へ移行
+		//if (((m_x + block->GetScroll() - hx <=  400.0f && m_x + block->GetScroll() - hx > 0.0f && m_move == false) ||
+		//	(m_x + block->GetScroll() - hx >= -400.0f && m_x + block->GetScroll() - hx < 0.0f && m_move == true)) && 
+		//	m_atk_flag==false)
+		//{
+		//	m_atk_flag = true;
+		//	m_atk_time = 300;//初回のみすぐチャージさせる
+		//}
 
 		//攻撃間隔進める
-		if (m_atk_flag == true && m_charge_flag == false)
+		if (m_atk_flag == true && m_charge_flag == false&&m_atk_time <= 360)
 		{
 			m_atk_time++;
 		}
 		//5秒間隔でチャージへ移行
-		if (m_atk_time >= 30)
+		if (m_atk_time >= 360)
 		{
 			m_atk_time = 0;
-			m_charge_flag = true;
-		}
-		//チャージ進める
-		if (m_charge_flag == true)
-		{
-			m_charge_time++;
-		}
-		//1秒チャージで発射
-		if (m_charge_time >= 60)
-		{
+			//m_charge_flag = true;
 			//弾発射
 			CObjMagic* objm = new CObjMagic(m_x + 16, m_y + 16, m_move);
 			Objs::InsertObj(objm, OBJ_MAGIC, 11);
-			m_charge_time = 0;
-			m_charge_flag = false;
+
+
 		}
+		////チャージ進める
+		//if (m_charge_flag == true)
+		//{
+		//	m_charge_time++;
+		//}
+		////1秒チャージで発射
+		//if (m_charge_time >= 60)
+		//{
+		//	//弾発射
+		//	CObjMagic* objm = new CObjMagic(m_x + 16, m_y + 16, m_move);
+		//	Objs::InsertObj(objm, OBJ_MAGIC, 11);
+		//	m_charge_time = 0;
+		//	m_charge_flag = false;
+		//}
 
 		//&& 間に障害物ある判定
 
 
-		//攻撃行動時
-		if (m_atk_flag == true && m_move == true)//右向き
-		{
-			if (m_x + block->GetScroll() - hx <= -400)//距離離れた
-			{
-				m_atk_flag = false;
-			}
-			else if (m_x + block->GetScroll() - hx >= 0)//右に回り込まれた
-			{
-				m_atk_flag = false;
-				m_move = false;
-			}
-		}
-		else if (m_atk_flag == true&&m_move==false)//左向き
-		{
-			if (m_x + block->GetScroll() - hx >= 400)//距離離れた
-			{
-				m_atk_flag = false;
-			}
-			else if (m_x + block->GetScroll() - hx <= 0)//右に回り込まれた
-			{
-				m_atk_flag = false;
-				m_move = true;
-			}
-		}
+		////攻撃行動時
+		//if (m_atk_flag == true && m_move == true)//右向き
+		//{
+		//	if (m_x + block->GetScroll() - hx <= -400)//距離離れた
+		//	{
+		//		m_atk_flag = false;
+		//	}
+		//	else if (m_x + block->GetScroll() - hx >= 0)//右に回り込まれた
+		//	{
+		//		m_atk_flag = false;
+		//		m_move = false;
+		//	}
+		//}
+		//else if (m_atk_flag == true&&m_move==false)//左向き
+		//{
+		//	if (m_x + block->GetScroll() - hx >= 400)//距離離れた
+		//	{
+		//		m_atk_flag = false;
+		//	}
+		//	else if (m_x + block->GetScroll() - hx <= 0)//右に回り込まれた
+		//	{
+		//		m_atk_flag = false;
+		//		m_move = true;
+		//	}
+		//}
 		
 
 
@@ -226,10 +237,10 @@ void CObjSinEnemy::Draw()
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
 	//表示位置の設定
-	dst.m_top = 0.0f + m_y + block->GetScrollY();
-	dst.m_left = (64.0f * m_posture) + m_x + block->GetScroll();
-	dst.m_right = (64 - 64.0f * m_posture) + m_x + block->GetScroll();
-	dst.m_bottom = 64.0f + m_y +block->GetScrollY();
+	dst.m_top	= 0.0f						+ m_y + block->GetScrollY();
+	dst.m_left	=(64.0f * m_posture)		+ m_x + block->GetScroll();
+	dst.m_right =(64 - 64.0f * m_posture)	+ m_x + block->GetScroll();
+	dst.m_bottom= 64.0f						+ m_y + block->GetScrollY();
 
 	//0番目に登録したグラフィックをsrc・dst・cの情報を元に描画
 	Draw::Draw(12, &src, &dst, c, 0.0f);
