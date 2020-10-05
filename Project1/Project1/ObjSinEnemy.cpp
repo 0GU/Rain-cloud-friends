@@ -64,7 +64,7 @@ void CObjSinEnemy::Action()
 		//
 		CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
 
-		enemy->ModeChange(&m_x, &m_y, &hx, &hy, &pos_init, &m_atk_flag, &m_move);
+		enemy->ModeChange(&m_x, &m_y, &hx, &hy, &pos_init, &m_atk_flag, &m_move,true);
 
 
 		////ålŒö‚ªˆê’è‹——£“à‚É‚¢‚½‚çUŒ‚s“®‚ÖˆÚs

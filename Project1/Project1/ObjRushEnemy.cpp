@@ -76,7 +76,7 @@ void CObjRushEnemy::Action()
 			;
 		}
 
-		enemy->ModeChange(&m_px, &m_py, &hx, &hy, &pos_init, &m_rush, &m_move);
+		enemy->ModeChange(&m_px, &m_py, &hx, &hy, &pos_init, &m_rush, &m_move,false);
 
 
 		////主人公が左に一定距離内にいたら
@@ -128,13 +128,9 @@ void CObjRushEnemy::Action()
 
 		//ブロック衝突で向き変更
 		if (m_hit_left == true)
-		{
 			m_move = false;
-		}
 		if (m_hit_right == true)
-		{
 			m_move = true;
-		}
 
 		//通常移動
 		if (m_move == true)
@@ -151,7 +147,7 @@ void CObjRushEnemy::Action()
 		}
 
 		//突進溜め移行
-		if ((m_rush == true) && m_rush_stay == false)
+		if (m_rush == true && m_rush_stay == false)
 		{
 			m_rush_stay = true;
 		}

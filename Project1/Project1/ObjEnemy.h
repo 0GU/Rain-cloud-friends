@@ -15,7 +15,7 @@ public:
 	void Draw();	//ÉhÉçÅ[
 
 	float GetVx() { return m_vx; }
-	void ModeChange(float* x, float* y, float* hx, float* hy, float* pos_init, bool* mode, bool* posture);
+	void ModeChange(float* x, float* y, float* hx, float* hy, float* pos_init, bool* mode, bool* posture,bool searchY);
 private:
 	float m_px;			//à íu
 	float m_py;
