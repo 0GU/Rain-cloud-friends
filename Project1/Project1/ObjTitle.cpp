@@ -39,11 +39,41 @@ void CObjTitle::Action()
 	}
 	//コントローラー用------------------------------------------------------------------
 	//ステージに進む
-	if (Input::GetConButtons(0,GAMEPAD_A)&& key_flag == true && description_flag == true && scroll_flag==true)//Aボタンを押すと
+	if (Input::GetConButtons(0,GAMEPAD_A) && scroll_flag == true && select_flag == true && key_flag == true)//Aボタンを押すと
 	{
+		Audio::Start(2);
 		key_flag = false;//Keyのフラグを止めて
 
 		move_flag = true;//下から上に動かすフラグ起動
+	}
+	//操作説明に移行
+	//カーソル移動
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) && select_flag == true && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		select_flag = false;
+	}
+
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_UP) && select_flag == false && description_flag == true && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		select_flag = true;
+	}
+	//操作説明起動
+	if (Input::GetConButtons(0, GAMEPAD_A) && select_flag == false && description_flag == true && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		description_flag = false;
+	}
+	//操作説明終了
+	if (Input::GetConButtons(0, GAMEPAD_A)  && select_flag == false && description_flag == false && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		description_flag = true;
 	}
 	//キーボード用-----------------------------------------------------------------------------
 	//ステージに進む
@@ -69,14 +99,14 @@ void CObjTitle::Action()
 		key_flag = false;
 		select_flag = true;
 	}
-
+	//操作説明起動
 	if (Input::GetVKey('Z') == true && select_flag == false && description_flag == true && key_flag == true && scroll_flag == true)
 	{
 		Audio::Start(2);
 		key_flag = false;
 		description_flag = false;
 	}
-
+	//操作説明終了
 	if (Input::GetVKey('Z') == true && select_flag == false && description_flag == false && key_flag == true && scroll_flag == true)
 	{
 		Audio::Start(2);
@@ -96,7 +126,7 @@ void CObjTitle::Action()
 		Scene::SetScene(new CSceneStageSelect);
 	}
 
-	if (Input::GetVKey('Z') == false && key_flag == false)
+	if (Input::GetVKey('Z') == false && Input::GetConButtons(0, GAMEPAD_A)==false && key_flag == false)
 	{
 
 		key_flag = true;
@@ -142,17 +172,7 @@ void CObjTitle::Draw()
 
 		Draw::Draw(1, &src, &dst, c, 0.0f);
 
-		//黒画面
-		src.m_top = 0.0f;
-		src.m_left = 0.0f;
-		src.m_right = 1024.0f;
-		src.m_bottom = 1024.0f;
-
-		dst.m_top = 800.0f + m_y1;
-		dst.m_left = 0.0f;
-		dst.m_right = 1280.0f;
-		dst.m_bottom = 0.0f + m_y1;
-		Draw::Draw(2, &src, &dst, c, 0.0f);
+		
 
 		//操作説明
 		src.m_top = 1.0f;
@@ -218,5 +238,15 @@ void CObjTitle::Draw()
 		dst.m_bottom = 720.0f;
 		Draw::Draw(5, &src, &dst, c, 0.0f);
 	}
-	
+	//黒画面
+	src.m_top = 0.0f;
+	src.m_left = 0.0f;
+	src.m_right = 1024.0f;
+	src.m_bottom = 1024.0f;
+
+	dst.m_top = 800.0f + m_y1;
+	dst.m_left = 0.0f;
+	dst.m_right = 1280.0f;
+	dst.m_bottom = 0.0f + m_y1;
+	Draw::Draw(2, &src, &dst, c, 0.0f);
 }

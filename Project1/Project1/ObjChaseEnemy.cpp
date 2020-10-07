@@ -52,7 +52,7 @@ void CObjChaseEnemy::Action()
 	if (stay_flag == false)
 	{
 		//í èÌë¨ìx
-		m_speed_power = 0.5f;
+		m_speed_power = 0.2f;
 		m_ani_max_time = 4;
 
 		//

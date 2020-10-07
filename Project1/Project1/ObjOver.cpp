@@ -32,6 +32,9 @@ void CObjOver::Init()
 //アクション
 void CObjOver::Action()
 {
+	//コントローラー操作仮
+	//m_con_num = Input::UpdateXControlerConnected();
+
 	//黒画面スクロール
 	if (scroll_flag == false)
 	{
@@ -44,6 +47,9 @@ void CObjOver::Action()
 	}
 
 	//ここからステージコマンド------------------
+	
+
+	//キーボード用------------------------------
 	if (Input::GetVKey(VK_DOWN) == true && keyflag == true && scroll_flag == true)
 	{
 		keyflag = false;
@@ -127,6 +133,90 @@ void CObjOver::Action()
 				check_flag = false;
 		}
 	}
+	//コントローラー用------------------------
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) == true && keyflag == true && scroll_flag == true)
+	{
+		keyflag = false;
+		Audio::Start(1);
+
+		//通常時
+		if (check_flag == false)
+		{
+			if (selectnum == 3)
+			{
+				;//何もしない
+			}
+			else
+			{
+				selectnum += 1;
+			}
+		}
+		//確認画面
+		else
+		{
+			if (selectnum_c == 1)
+			{
+				selectnum_c++;
+			}
+		}
+	}
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_UP) && keyflag == true && scroll_flag == true)
+	{
+		keyflag = false;
+		Audio::Start(1);
+
+		//通常時
+		if (check_flag == false)
+		{
+			if (selectnum == 1)
+			{
+				;//何もしない
+			}
+			else
+			{
+				selectnum -= 1;
+			}
+		}
+		//確認画面
+		else
+		{
+			if (selectnum_c == 2)
+			{
+				selectnum_c--;
+			}
+		}
+
+	}
+
+	//画面移行
+	if (Input::GetConButtons(0, GAMEPAD_A) && keyflag == true && scroll_flag == true)
+	{
+		keyflag = false;
+		Audio::Start(2);
+		//通常時
+		if (check_flag == false)
+		{
+			//コンティニュー以外は確認を挟む
+			if (selectnum == 1)
+			{
+
+				move_flag = true;
+			}
+			else
+			{
+				//Audio::Start(2);
+				check_flag = true;
+			}
+		}
+		//確認画面
+		else
+		{
+			if (selectnum_c == 1)
+				move_flag = true;
+			else
+				check_flag = false;
+		}
+	}
 
 	//画面移行部分　スクロール終了したら移行
 	if (move_flag == true)
@@ -151,7 +241,8 @@ void CObjOver::Action()
 
 	//キー解放
 	if (Input::GetVKey(VK_DOWN) == false && Input::GetVKey(VK_UP) == false &&
-		Input::GetVKey('Z') == false && keyflag == false)
+		Input::GetVKey('Z') == false && keyflag == false && Input::GetConButtons(0, GAMEPAD_A) == false&&
+		Input::GetConButtons(0, GAMEPAD_DPAD_DOWN)==false && Input::GetConButtons(0, GAMEPAD_DPAD_UP)==false)
 	{
 		keyflag = true;
 	}

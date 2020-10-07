@@ -6,6 +6,7 @@
 #include "GameL\SceneObjManager.h"
 #include "GameL\DrawFont.h"
 #include "GameL\Audio.h"
+#include"GameL/WinInputs.h"
 #include "GameL\DrawTexture.h"
 
 //使用するネームスペース
@@ -47,5 +48,5 @@ void CSceneOver::InitScene()
 //ゲームオーバー実行メソッド
 void CSceneOver::Scene()
 {
-
+	Input::UpdateXControlerConnected();
 }
