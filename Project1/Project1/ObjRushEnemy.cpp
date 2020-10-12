@@ -86,13 +86,13 @@ void CObjRushEnemy::Action()
 			m_move = true;
 
 		//通常移動
-		if (m_move == true)
+		if (m_move == true&&m_rush_time!=60)
 		{
 			m_vx += m_speed_power;
 			m_posture = 1.0f;
 			m_ani_time += 1;
 		}
-		else if (m_move == false)
+		else if (m_move == false && m_rush_time != 60)
 		{
 			m_vx -= m_speed_power;
 			m_posture = 0.0f;
@@ -112,15 +112,11 @@ void CObjRushEnemy::Action()
 		}
 		if (m_rush_time >= 60)
 		{
-			if (m_move == true)
-				m_vx += m_speed_power * 2.0f;
-			if (m_move == false)
-				m_vx += -m_speed_power * 2.0f;
+
 			//主人公の位置を通過したらブレーキかける
 			if ((m_px + sl_x > hx && m_move == true) || (m_px + sl_x < hx && m_move == false))
 			{
-				m_speed_power *= 0.98f;
-				if (m_speed_power < 0.1)//一定速度以下で突進終了
+				if ((m_vx < 0.1&&m_move==true)||(m_vx > -0.1 && m_move == false))//一定速度以下で突進終了
 				{
 					m_rush_time = 0;
 					m_rush = false;
@@ -131,8 +127,14 @@ void CObjRushEnemy::Action()
 						m_move = true;
 				}
 			}
+			else
+			{
+				if (m_move == true)
+					m_vx += m_speed_power * 2.0f;
+				if (m_move == false)
+					m_vx += -m_speed_power * 2.0f;
+			}
 		}
-
 		//アニメーション進める
 		if (m_ani_time > m_ani_max_time)
 		{
