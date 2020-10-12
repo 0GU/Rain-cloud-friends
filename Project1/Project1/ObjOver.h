@@ -25,4 +25,6 @@ private:
 	bool  move_flag;//画面移行中
 	bool scroll_flag;//スクロール用　true:停止　false:実行中
 	bool check_flag;//確認用
+
+	int m_con_num;//仮
 };

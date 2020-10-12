@@ -21,6 +21,7 @@ private:
 	float m_py;
 	bool delete_flag;
 	bool stay_flag;
+	bool keyflag;//
+	int select_num;//ポーズの選択カウント
 
-	bool select_flag;
 };

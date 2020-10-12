@@ -52,7 +52,7 @@ void CObjChaseEnemy::Action()
 	if (stay_flag == false)
 	{
 		//通常速度
-		m_speed_power = 0.5f;
+		m_speed_power = 0.2f;
 		m_ani_max_time = 4;
 
 		//ブロック情報を持ってくる

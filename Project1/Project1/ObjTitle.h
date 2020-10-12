@@ -22,5 +22,7 @@ private:
 	bool  move_flag;
 	bool scroll_flag;//ははっ
 	bool key_flag;//キー押し確認用
+	bool select_flag;//上下判定用
+	bool description_flag;//説明画面表示用
 
 };

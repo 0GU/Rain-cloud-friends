@@ -16,6 +16,9 @@ void CObjTitle::Init()
 	scroll_flag = false;
 	key_flag = false;
 	m_y1 = 0.0f;
+
+	select_flag = true;
+	description_flag = true;
 }
 
 //アクション
@@ -34,20 +37,83 @@ void CObjTitle::Action()
 			key_flag = true;
 		}
 	}
-
-	if (Input::GetConButtons(0,GAMEPAD_A)&& key_flag == true && scroll_flag==true)//Zキーを押すと
-	{
-		key_flag = false;//Keyのフラグを止めて
-
-		move_flag = true;//下から上に動かすフラグ起動
-	}
-	if (Input::GetVKey('Z') == true  && scroll_flag == true && key_flag == true)//Zキーを押すと
+	//コントローラー用------------------------------------------------------------------
+	//ステージに進む
+	if (Input::GetConButtons(0,GAMEPAD_A) && scroll_flag == true && select_flag == true && key_flag == true)//Aボタンを押すと
 	{
 		Audio::Start(2);
 		key_flag = false;//Keyのフラグを止めて
 
 		move_flag = true;//下から上に動かすフラグ起動
 	}
+	//操作説明に移行
+	//カーソル移動
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) && select_flag == true && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		select_flag = false;
+	}
+
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_UP) && select_flag == false && description_flag == true && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		select_flag = true;
+	}
+	//操作説明起動
+	if (Input::GetConButtons(0, GAMEPAD_A) && select_flag == false && description_flag == true && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		description_flag = false;
+	}
+	//操作説明終了
+	if (Input::GetConButtons(0, GAMEPAD_A)  && select_flag == false && description_flag == false && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		description_flag = true;
+	}
+	//キーボード用-----------------------------------------------------------------------------
+	//ステージに進む
+	if (Input::GetVKey('Z') == true  && scroll_flag == true && select_flag ==true && key_flag == true)//Zキーを押すと
+	{
+		Audio::Start(2);
+		key_flag = false;//Keyのフラグを止めて
+
+		move_flag = true;//下から上に動かすフラグ起動
+	}
+	//操作説明に移行
+	//カーソル移動
+	if (Input::GetVKey(VK_DOWN) == true && select_flag == true && description_flag == true && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		select_flag = false;
+	}
+
+	if (Input::GetVKey(VK_UP) == true && select_flag == false && description_flag == true && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		select_flag = true;
+	}
+	//操作説明起動
+	if (Input::GetVKey('Z') == true && select_flag == false && description_flag == true && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		description_flag = false;
+	}
+	//操作説明終了
+	if (Input::GetVKey('Z') == true && select_flag == false && description_flag == false && key_flag == true && scroll_flag == true)
+	{
+		Audio::Start(2);
+		key_flag = false;
+		description_flag = true;
+	}
+
 	if (move_flag == true)//起動していると
 	{
 		m_y1 -= 40.0f;//下から上に動かす
@@ -60,7 +126,7 @@ void CObjTitle::Action()
 		Scene::SetScene(new CSceneStageSelect);
 	}
 
-	if (Input::GetVKey('Z') == false && key_flag == false)
+	if (Input::GetVKey('Z') == false && Input::GetConButtons(0, GAMEPAD_A)==false && key_flag == false)
 	{
 
 		key_flag = true;
@@ -78,32 +144,100 @@ void CObjTitle::Draw()
 	RECT_F src; //描画元切り取り位置の設定
 	RECT_F dst; //描画先表示位置
 
-	//タイトル背景
-	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 1024.0f;
-	src.m_bottom = 1024.0f;
+	if (description_flag == true)
+	{
+		//タイトル背景
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 1024.0f;
+		src.m_bottom = 1024.0f;
 
-	dst.m_top = 0.0f;
-	dst.m_left = 0.0f;
-	dst.m_right = 1280.0f;
-	dst.m_bottom = 720.0f;
+		dst.m_top = 0.0f;
+		dst.m_left = 0.0f;
+		dst.m_right = 1280.0f;
+		dst.m_bottom = 720.0f;
 
-	Draw::Draw(0, &src, &dst, c, 0.0f);
+		Draw::Draw(0, &src, &dst, c, 0.0f);
 
-	//タイトル背景
-	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 1024.0f;
-	src.m_bottom = 256.0f;
+		//タイトル背景
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 1024.0f;
+		src.m_bottom = 256.0f;
 
-	dst.m_top = 100.0f;
-	dst.m_left = 180.0f;
-	dst.m_right =1100.0f;
-	dst.m_bottom = 400.0f;
+		dst.m_top = 100.0f;
+		dst.m_left = 180.0f;
+		dst.m_right = 1100.0f;
+		dst.m_bottom = 400.0f;
 
-	Draw::Draw(1, &src, &dst, c, 0.0f);
+		Draw::Draw(1, &src, &dst, c, 0.0f);
 
+		
+
+		//操作説明
+		src.m_top = 1.0f;
+		src.m_left = 1.0f;
+		src.m_right = 275.0f;
+		src.m_bottom = 70.0f;
+
+		dst.m_top = 500.0f;
+		dst.m_left = 490.0f;
+		dst.m_right = 765.0f;
+		dst.m_bottom = 570.0f;
+		Draw::Draw(3, &src, &dst, c, 0.0f);
+
+		//Game Start
+		src.m_top = 72.0f;
+		src.m_left = 1.0f;
+		src.m_right = 340.0f;
+		src.m_bottom = 125.0f;
+
+		dst.m_top = 401.0f;
+		dst.m_left = 490.0f;
+		dst.m_right = 830.0f;
+		dst.m_bottom = 455.0f;
+		Draw::Draw(3, &src, &dst, c, 0.0f);
+
+		//選択カーソル------------------------------------------
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 64.0f;
+		src.m_bottom = 64.0f;
+
+	}
+	
+	//上判定
+	if (select_flag == true)
+	{
+		dst.m_top = 400.0f;
+		dst.m_left = 420.0f;
+		dst.m_right = 484.0f;
+		dst.m_bottom = 464.0f;
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+	}
+	//下判定
+	if(select_flag==false)
+	{
+		dst.m_top = 500.0f;
+		dst.m_left = 420.0f;
+		dst.m_right = 485.0f;
+		dst.m_bottom = 564.0f;
+		Draw::Draw(4, &src, &dst, c, 0.0f);
+	}
+	//操作説明
+	if (description_flag == false)
+	{
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 1280.0f;
+		src.m_bottom = 720.0f;
+
+		dst.m_top = 0.0f;
+		dst.m_left = 0.0f;
+		dst.m_right = 1280.0f;
+		dst.m_bottom = 720.0f;
+		Draw::Draw(5, &src, &dst, c, 0.0f);
+	}
 	//黒画面
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;

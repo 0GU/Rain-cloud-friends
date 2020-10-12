@@ -82,7 +82,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"ëfçﬁ/âº/image.png", 0, TEX_SIZE_2048);
 	Draw::LoadImageW(L"ëfçﬁ/âº/mapcip.png", 1, TEX_SIZE_1024);
 	Draw::LoadImageW(L"ëfçﬁ/âº/Animation.png", 2, TEX_SIZE_64);
-	Draw::LoadImageW(L"ëfçﬁ/âº/Pose.png", 3, TEX_SIZE_64);
+	Draw::LoadImageW(L"ëfçﬁ/âº/É|Å[ÉY.png", 3, TEX_SIZE_1024);
 	Draw::LoadImageW(L"ëfçﬁ/âº/ëIë.png", 4, TEX_SIZE_64);
 	Draw::LoadImageW(L"ëfçﬁ/âº/íwÂÅ.png", 5, TEX_SIZE_64);
 	Draw::LoadImageW(L"ëfçﬁ/âº/HP(ìßâﬂ).png", 6, TEX_SIZE_128);
