@@ -33,7 +33,7 @@ void CObjRushEnemy::Init()
 	m_move = false;		 //true=右 false=左
 
 	m_rush = false;//通常状態で初期化
-	m_rush_stay = false;
+	m_rush_time = 0;
 
 	pos_init = m_px;
 
@@ -57,13 +57,16 @@ void CObjRushEnemy::Action()
 	if (stay_flag == false)
 	{
 		//通常速度
-		m_speed_power = 0.5f;
-		m_ani_max_time = 4;
-
-		CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
+		if (m_rush == false)
+		{
+			m_speed_power = 0.5f;
+			m_ani_max_time = 4;
+		}
 
 		//ブロック情報を持ってくる
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+		float sl_x = block->GetScroll();
+		float sl_y = block->GetScrollY();
 
 		//位置の更新用に主人公の位置を持ってくる
 		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
@@ -75,56 +78,6 @@ void CObjRushEnemy::Action()
 		{
 			;
 		}
-
-		enemy->ModeChange(&m_px, &m_py, &hx, &hy, &pos_init, &m_rush, &m_move,false);
-
-
-		////主人公が左に一定距離内にいたら
-		//if (m_px + block->GetScroll() - hx <= 400.0f && m_px + block->GetScroll() - hx > 0.0f &&
-		//	m_move == false && m_py - hy >= 200 && m_py - hy >= -200)
-		//{
-		//	m_rush[0] = true;
-		//}
-
-		////主人公が右に一定距離内にいたら
-		//if (m_px + block->GetScroll() - hx >= -400.0f && m_px + block->GetScroll() - hx < 0.0f &&
-		//	m_move == true && m_py - hy >= 200 && m_py - hy >= -200)
-		//{
-		//	m_rush[1] = true;
-		//}
-
-		////進捗
-		////モード切り替えとかそのへん
-
-		////攻撃状態
-		//if (m_rush[0] == true)
-		//{
-		//	if (m_px + block->GetScroll() - hx >= 400)//距離離れた
-		//	{
-		//		m_rush[0] = false;
-		//	}
-		//	else if (m_px + block->GetScroll() - hx <= 0)//右に回り込まれた
-		//	{
-		//		m_rush[0] = false;
-		//		m_rush[1] = true;
-		//		m_move = true;
-		//	}
-
-		//}
-		//else if (m_rush[1] == true)
-		//{
-		//	if (m_px + block->GetScroll() - hx <= -400)//距離離れた
-		//	{
-		//		m_rush[1] = false;
-		//	}
-		//	else if (m_px + block->GetScroll() - hx >= 0)//左に回り込まれた
-		//	{
-		//		m_rush[0] = true;
-		//		m_rush[1] = false;
-		//		m_move = false;
-		//	}
-
-		//}
 
 		//ブロック衝突で向き変更
 		if (m_hit_left == true)
@@ -146,17 +99,41 @@ void CObjRushEnemy::Action()
 			m_ani_time += 1;
 		}
 
-		//突進溜め移行
-		if (m_rush == true && m_rush_stay == false)
+		//突進状態変化
+		CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
+		if (m_rush_time != 60)
+			enemy->ModeChange(&m_px, &m_py, &hx, &hy, &pos_init, &m_rush, &m_move, false);
+
+		//突進状態　1秒溜め行動のあと突進する
+		if (m_rush == true&& m_rush_time < 60)
 		{
-			m_rush_stay = true;
+			m_rush_time++;
+			m_vx = 0.0f;
+		}
+		if (m_rush_time >= 60)
+		{
+			if (m_move == true)
+				m_vx += m_speed_power * 2.0f;
+			if (m_move == false)
+				m_vx += -m_speed_power * 2.0f;
+			//主人公の位置を通過したらブレーキかける
+			if ((m_px + sl_x > hx && m_move == true) || (m_px + sl_x < hx && m_move == false))
+			{
+				m_speed_power *= 0.98f;
+				if (m_speed_power < 0.1)//一定速度以下で突進終了
+				{
+					m_rush_time = 0;
+					m_rush = false;
+					//反転させる
+					if (m_move == true)
+						m_move = false;
+					else
+						m_move = true;
+				}
+			}
 		}
 
-		if (m_rush_stay == true)
-		{
-			
-		}
-
+		//アニメーション進める
 		if (m_ani_time > m_ani_max_time)
 		{
 			m_ani_frame += 1;
@@ -195,6 +172,8 @@ void CObjRushEnemy::Action()
 		//位置更新
 		m_px += m_vx;
 		m_py += m_vy;
+		//if ((m_speed_power <= 5.0f && m_speed_power >= 0.0f && m_move == true) || (m_speed_power >= -5.0f && m_speed_power < 0.0f && m_move == false))
+		//	m_rush_dist += m_speed_power;
 
 		//HitBoxの位置の変更
 		CHitBox* hit = Hits::GetHitBox(this);
