@@ -35,7 +35,7 @@ void CObjHero::Init()
 	m_ani_frame = 1;		//静止フレームを初期にする
 
 	m_speed_power = 0.5f;//通常速度
-	m_ani_max_time = 4;  //アニメーション間隔幅
+	m_ani_max_time = 3;  //アニメーション間隔幅
 
 	//blockとの衝突状態確認用
 	m_hit_up = false;
@@ -61,7 +61,7 @@ void CObjHero::Init()
 	m_con_num = 0;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
+	Hits::SetHitBox(this, m_px+20, m_py, 32, 128, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
 
 //アクション
@@ -84,7 +84,7 @@ void CObjHero::Action()
 	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	pb->BlockHit(&m_px, &m_py, true,
 		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-		&m_vx, &m_vy, &m_block_type, climb_flag
+		&m_vx, &m_vy, &m_block_type, climb_flag,32.0f,128.0f
 	);
 
 	//自身のHitBoxを持ってくる
@@ -375,7 +375,7 @@ void CObjHero::Action()
 		m_py += m_vy;
 
 		//HitBoxの位置の変更
-		hit->SetPos(m_px, m_py);
+		hit->SetPos(m_px+10, m_py);
 	}
 
 	
@@ -397,18 +397,18 @@ void CObjHero::Draw()
 
 	//切り取り位置の設定
 	src.m_top = 0.0f;
-	src.m_left = 0.0f + AniData[m_ani_frame] * 64;
-	src.m_right = 64.0f + AniData[m_ani_frame] * 64;
-	src.m_bottom = 64.0f;
+	src.m_left = 0.0f + AniData[m_ani_frame] * 256;
+	src.m_right = 256.0f + AniData[m_ani_frame] * 256;
+	src.m_bottom = 256.0f;
 
 	//表示位置の設定
 	dst.m_top = 0.0f + m_py;
 	dst.m_left = (64.0f * m_posture) + m_px;
 	dst.m_right = (64 - 64.0f * m_posture) + m_px;
-	dst.m_bottom = 64.0f + m_py;
+	dst.m_bottom = 128.0f + m_py;
 
 	//描画
-	Draw::Draw(0, &src, &dst, c, 0.0f);
+	Draw::Draw(15, &src, &dst, c, 0.0f);
 
 	//交点
 	float cc[4] = { 1.0f,0.0f,0.0f,1.0f };
