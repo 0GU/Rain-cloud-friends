@@ -61,9 +61,8 @@ void CObjSinEnemy::Action()
 		float hx = hero->GetX();
 		float hy = hero->GetY();
 
-		//
+		//UŒ‚ó‘Ô•Ï‰»
 		CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
-
 		enemy->ModeChange(&m_x, &m_y, &hx, &hy, &pos_init, &m_atk_flag, &m_move,true);
 
 
@@ -87,7 +86,7 @@ void CObjSinEnemy::Action()
 			m_atk_time = 0;
 			//m_charge_flag = true;
 			//’e”­ŽË
-			CObjMagic* objm = new CObjMagic(m_x + 16, m_y + 16, m_move);
+			CObjMagic* objm = new CObjMagic(m_x - 16, m_y - 16, m_move);
 			Objs::InsertObj(objm, OBJ_MAGIC, 11);
 
 

@@ -193,12 +193,14 @@ void CObjEnemy::ModeChange(float* x, float* y, float* hx, float* hy, float* pos_
 
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+	float sl_x = block->GetScroll();
+	float sl_y = block->GetScrollY();
 
 	//主人公が一定距離内にいたら
 	//1行目:左に一定距離　2行目:右に一定距離　3行目:上下に一定距離
-	if (((*x + block->GetScroll() - *hx <= 400.0f && *x + block->GetScroll() - *hx > 0.0f && *posture == false) ||
-		(*x + block->GetScroll() - *hx >= -400.0f && *x + block->GetScroll() - *hx < 0.0f && *posture == true))
-		&& *y + block->GetScrollY() - *hy <= 200 * range && *y + block->GetScrollY() - *hy >= -200 * range)
+	if (((*x + sl_x - *hx <= 400.0f && *x + sl_x - *hx > 0.0f && *posture == false) ||
+		(*x + sl_x - *hx >= -400.0f && *x + sl_x - *hx < 0.0f && *posture == true)) &&
+		*y + sl_y - *hy <= 200 * range && *y + sl_y - *hy >= -200 * range)
 	{
 		*mode = true;
 	}
@@ -206,27 +208,27 @@ void CObjEnemy::ModeChange(float* x, float* y, float* hx, float* hy, float* pos_
 	//向き変更と解除
 	if (*mode == true && *posture == false)//左向き追跡
 	{
-		if (*x + block->GetScroll() - *hx >= 400)//距離離れた
+		if (*x + sl_x - *hx >= 400)//距離離れた
 		{
 			*mode = false;
 		}
-		else if (*x + block->GetScroll() - *hx <= 0)//右に回り込まれた
+		else if (*x + sl_x - *hx <= 0)//右に回り込まれた
 		{
 			*posture = true;
 		}
 	}
 	else if (*mode == true && *posture == true)//右向き追跡
 	{
-		if (*x + block->GetScroll() - *hx <= -400)//距離離れた
+		if (*x + sl_x - *hx <= -400)//距離離れた
 		{
 			*mode = false;
 		}
-		else if (*x + block->GetScroll() - *hx >= 0)//左に回り込まれた
+		else if (*x + sl_x - *hx >= 0)//左に回り込まれた
 		{
 			*posture = false;
 		}
 	}
-	if (*mode == true && (*y + block->GetScrollY() - *hy >= 200 * range || *y + block->GetScrollY() - *hy <= -200 * range))//上下で距離離れた
+	if (*mode == true && (*y +sl_y - *hy >= 200 * range || *y + sl_y - *hy <= -200 * range))//上下で距離離れた
 	{
 		*mode = false;
 	}

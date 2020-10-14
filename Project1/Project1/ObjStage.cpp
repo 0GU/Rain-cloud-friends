@@ -336,7 +336,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 						r = 360.0f - abs(r);
 
 					//len‚ª‚ ‚éˆê’è‚Ì’·‚³‚æ‚è’Z‚¢ê‡”»’è‚É“ü‚é
-					if (len < 110.0f)
+					if (len < size_y*1.375)//‚à‚Æ‚à‚Æ‚Ì’l‚Ílen<88.0f
 					{
 						//Šp“x‚Åã‰º¶‰E‚ğ”»’è
 						if ((r < 45 && r > 0) || r > 315)
@@ -638,3 +638,4 @@ bool CObjStage::HeroBlockCrossPoint(
 	*out_len = len;
 	return pb;
 }
+

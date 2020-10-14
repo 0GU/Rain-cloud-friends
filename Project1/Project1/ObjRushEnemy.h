@@ -40,7 +40,7 @@ private:
 	bool m_move;	//移動の向き制御用
 
 	bool m_rush;//突進モード用　trueで突進モード移行
-	bool m_rush_stay;//突進溜め状態用
+	int m_rush_time;//突進待機時間
 
 	bool stay_flag;
 };

@@ -129,8 +129,8 @@ void CSceneGameMain::InitScene()
 	Objs::InsertObj(objs, OBJ_SINENEMY, 10);
 
 	//突進敵オブジェクト作成（仮）
-	CObjChaseEnemy* objr = new CObjChaseEnemy(500, 600);
-	Objs::InsertObj(objr, OBJ_CHASE_ENEMY, 10);
+	CObjRushEnemy* objr = new CObjRushEnemy(1000, 600);
+	Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
 }
 
 //ゲームメイン実行メソッド

@@ -40,6 +40,11 @@ public:
 		float* out_px, float* out_py, float* out_len
 	);
 
+	////オブジェクトが一定距離内にいるかの判定　作るか微妙
+	//bool ObjSearch(
+	//	float x, float y, float obj_x, float obj_y,
+
+	//	);
 private:
 	void BlockDraw(float x, float y, RECT_F* dst, float c[]);
 	int m_map[20][100]; //マップ情報
