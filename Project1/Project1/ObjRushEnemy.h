@@ -16,6 +16,9 @@ public:
 
 	float GetVx() { return m_vx; }
 
+	float GetX() { return m_px; }
+	float GetY() { return m_py; }
+
 private:
 	float m_px;			//位置
 	float m_py;
@@ -47,4 +50,9 @@ private:
 	bool stay_flag;
 
 	bool sleep_flag;//デバッグ用停止フラグ
+
+	float hx;
+	float hy;
+	float sl_x;
+	float sl_y;
 };

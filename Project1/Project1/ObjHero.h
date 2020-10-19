@@ -20,6 +20,7 @@ public:
 	float GetVX() { return m_vx; }
 	int GetBT() { return m_block_type; }
 	float GetHP() { return m_hp; }
+	int GetHitDown();
 
 	void SetX(float x) { m_px = x; }
 	void SetY(float y) { m_py = y; }
@@ -77,6 +78,7 @@ private:
 
 	float m_py_h;
 
+	int m_enemynum;	//接触物の種類判別用
 	//コントローラー用仮変数
 
 	float m_con_x;
