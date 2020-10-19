@@ -20,7 +20,7 @@ CObjCloud::CObjCloud(int stage)
 void CObjCloud::Init()
 {
 	m_px = 100.0f;
-	m_py = 100.0f;
+	m_py = 500.0f;
 	m_vx = 5.0f;
 	m_vy = 5.0f;
 	m_hp = 1.0f;
@@ -53,6 +53,7 @@ void CObjCloud::Action()
 {
 	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
 	CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
 	//自身のHitBoxを持ってくる
 	CHitBox* hit = Hits::GetHitBox(this);
 
@@ -95,10 +96,13 @@ void CObjCloud::Action()
 	}
 	if ((Input::GetVKey('C') == false&& Input::GetConButtons(m_con_num, GAMEPAD_B)==false) && rain_flag == false)
 	{
-		
 		rain_flag = true;
 	}
-
+	if (Input::GetVKey(VK_SPACE) == true)
+	{
+		m_px = hero->GetX() - pbb->GetScroll();
+		m_py = hero->GetY()-pbb->GetScrollY()-100;//主人公の頭上の上に雲を召喚
+	}
 	if (m_ani_time > m_ani_max_time)
 	{
 		m_ani_frame += 1;
@@ -128,9 +132,9 @@ void CObjCloud::Action()
 //ドロー
 void CObjCloud::Draw()
 {
-	int AniData[3] =
+	int AniData[4] =
 	{
-		1,0,2
+		1,0,2,0
 	};
 
 	//描画カラー情報

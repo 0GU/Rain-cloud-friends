@@ -20,8 +20,8 @@ void CObjTitle::Init()
 	select_flag = true;
 	description_flag = true;
 
-	m_ani_time = 0;
-	m_ani_max = 8;
+	m_ani_time = 0.0f;
+	m_ani_max = 8.0f;
 }
 
 //ƒAƒNƒVƒ‡ƒ“

@@ -48,10 +48,44 @@ void CObjStage::Action()
 		float hx = hero->GetX();
 		float hy = hero->GetY();
 
+		//雲の位置を取得
+		CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
+		float m_chx = cloud->GetX();
+		float m_chy = cloud->GetY();
+
+/*		//後方スクロールライン
+		if (m_chx < 75)
+		{
+			cloud->SetX(75);				//主人公はラインを超えないようにする
+			mx_scroll -= cloud->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
+		}
+
+		//前方スクロールライン
+		if (m_chx > 300)
+		{
+			cloud->SetX(300);			//主人公はラインを超えないようにする
+			mx_scroll -= cloud->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
+		}
+
+		//上方スクロールライン
+		if (m_chy < 256)
+		{
+			cloud->SetY(256);				//主人公はラインを超えないようにする
+			my_scroll -= cloud->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
+		}
+
+		//下方スクロールライン
+		if (hy > 536)
+		{
+			cloud->SetY(536);			//主人公はラインを超えないようにする
+			my_scroll -= cloud->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
+		}
+		*/
+		//-------------------------------------------------
 	//後方スクロールライン
-	if (hx < 60)
+	if (hx < 75)
 	{
-		hero->SetX(60);				//主人公はラインを超えないようにする
+		hero->SetX(75);				//主人公はラインを超えないようにする
 		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 

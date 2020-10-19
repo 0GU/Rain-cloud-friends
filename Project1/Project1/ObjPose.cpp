@@ -20,6 +20,9 @@ void CObjPose::Init()
 	stay_flag = false;
 	select_num = 1;
 	keyflag = true;
+
+	m_ani_time = 0.0f;
+	m_ani_max = 8.0f;
 }
 
 //アクション
@@ -111,6 +114,13 @@ void CObjPose::Action()
 	{
 		keyflag = true;
 	}
+
+	m_ani_time += 0.2f;
+	if (m_ani_time >= 8.0f)
+	{
+		m_ani_time = 0.0f;
+	}
+
 }
 
 //ドロー
@@ -155,25 +165,25 @@ void CObjPose::Draw()
 		{
 			//表示位置の設定
 			dst2.m_top = 230.0f;
-			dst2.m_left = 350.0f;
-			dst2.m_right = 414.0f;
+			dst2.m_left = 350.0f + m_ani_time;
+			dst2.m_right = 414.0f + m_ani_time;
 			dst2.m_bottom = 294.0f;
 		}
 		if (select_num == 2)
 		{
 			//表示位置の設定
-			dst2.m_top = 380.0f;
-			dst2.m_left = 350.0f;
-			dst2.m_right = 414.0f;
-			dst2.m_bottom = 446.0f;
+			dst2.m_top = 360.0f;
+			dst2.m_left = 350.0f + m_ani_time;
+			dst2.m_right = 414.0f + m_ani_time;
+			dst2.m_bottom = 426.0f;
 		}
 		
 		if (select_num == 3)
 		{
 			//表示位置の設定
 			dst2.m_top = 480.0f;
-			dst2.m_left = 350.0f;
-			dst2.m_right = 414.0f;
+			dst2.m_left = 350.0f + m_ani_time;
+			dst2.m_right = 414.0f + m_ani_time;
 			dst2.m_bottom = 546.0f;
 		}
 		//描画

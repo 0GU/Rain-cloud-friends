@@ -25,7 +25,7 @@ private:
 	bool select_flag;//上下判定用
 	bool description_flag;//説明画面表示用
 
-	float m_ani_time;
-	int m_ani_max;
+	float m_ani_time;//アニメーション時間
+	float m_ani_max;//アニメーション最大値
 
 };

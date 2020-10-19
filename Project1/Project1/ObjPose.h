@@ -24,4 +24,7 @@ private:
 	bool keyflag;//
 	int select_num;//ポーズの選択カウント
 
+	float m_ani_time;//アニメーション時間
+	float m_ani_max;//アニメーション最大値
+
 };

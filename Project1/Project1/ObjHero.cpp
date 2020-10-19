@@ -61,7 +61,7 @@ void CObjHero::Init()
 	m_con_num = 0;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 128, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
 
 //アクション
@@ -278,7 +278,7 @@ void CObjHero::Action()
 		}
 		pb->BlockHit(&m_px, &m_py, true,
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-			&m_vx, &m_vy, &m_block_type, climb_flag
+			&m_vx, &m_vy, &m_block_type, climb_flag,64.0f,128.0f
 		);
 
 
@@ -357,7 +357,7 @@ void CObjHero::Action()
 		{
 			//ジャンプしてる場合は下記の影響を出ないようにする
 		}
-		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&Stone->GetPY() <= m_py + 64 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&Stone->GetPY() <= m_py + 128 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 128 - block->GetScrollY())
 		{
 			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 			//また、地面に当たってる判定にする
@@ -402,15 +402,15 @@ void CObjHero::Draw()
 
 	//切り取り位置の設定
 	src.m_top = 0.0f;
-	src.m_left = 0.0f + AniData[m_ani_frame] * 256;
-	src.m_right = 256.0f + AniData[m_ani_frame] * 256;
+	src.m_left = 32.0f + AniData[m_ani_frame] * 256;
+	src.m_right = 224.0f + AniData[m_ani_frame] * 256;
 	src.m_bottom = 256.0f;
 
 	//表示位置の設定
 	dst.m_top = 0.0f + m_py;
 	dst.m_left = (64.0f * m_posture) + m_px;
 	dst.m_right = (64 - 64.0f * m_posture) + m_px;
-	dst.m_bottom = 64.0f + m_py;
+	dst.m_bottom = 128.0f + m_py;
 
 	//描画
 	Draw::Draw(15, &src, &dst, c, 0.0f);
