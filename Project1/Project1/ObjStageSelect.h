@@ -27,5 +27,6 @@ private:
 	bool Clear_flag3[3];//クリアフラグ仮（本番は配列でクリアの種類を分ける予定）
 	bool title_flag;//タイトル移行用フラグ
 
-
+	float m_ani_time;
+	float m_ani_max;
 };

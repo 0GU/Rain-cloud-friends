@@ -35,7 +35,7 @@ void CObjHero::Init()
 	m_ani_frame = 1;		//静止フレームを初期にする
 
 	m_speed_power = 0.5f;//通常速度
-	m_ani_max_time = 4;  //アニメーション間隔幅
+	m_ani_max_time = 3;  //アニメーション間隔幅
 
 	m_enemynum = 0;	//接触物の種類判別用
 	//blockとの衝突状態確認用
@@ -428,9 +428,9 @@ void CObjHero::Draw()
 
 	//切り取り位置の設定
 	src.m_top = 0.0f;
-	src.m_left = 0.0f + AniData[m_ani_frame] * 64;
-	src.m_right = 64.0f + AniData[m_ani_frame] * 64;
-	src.m_bottom = 64.0f;
+	src.m_left = 0.0f + AniData[m_ani_frame] * 256;
+	src.m_right = 256.0f + AniData[m_ani_frame] * 256;
+	src.m_bottom = 256.0f;
 
 	//表示位置の設定
 	dst.m_top = 0.0f + m_py;
@@ -439,7 +439,7 @@ void CObjHero::Draw()
 	dst.m_bottom = 64.0f + m_py;
 
 	//描画
-	Draw::Draw(0, &src, &dst, c, 0.0f);
+	Draw::Draw(15, &src, &dst, c, 0.0f);
 
 	//交点
 	float cc[4] = { 1.0f,0.0f,0.0f,1.0f };

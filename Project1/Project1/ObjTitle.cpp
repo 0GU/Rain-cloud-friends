@@ -19,6 +19,9 @@ void CObjTitle::Init()
 
 	select_flag = true;
 	description_flag = true;
+
+	m_ani_time = 0;
+	m_ani_max = 8;
 }
 
 //アクション
@@ -131,6 +134,11 @@ void CObjTitle::Action()
 
 		key_flag = true;
 	}
+	m_ani_time += 0.2f;
+	if (m_ani_time >=8.0f)
+	{
+		m_ani_time = 0.0f;
+	}
 }
 
 //ドロー
@@ -210,8 +218,8 @@ void CObjTitle::Draw()
 	if (select_flag == true)
 	{
 		dst.m_top = 400.0f;
-		dst.m_left = 420.0f;
-		dst.m_right = 484.0f;
+		dst.m_left = 420.0f + m_ani_time;
+		dst.m_right = 484.0f + m_ani_time;
 		dst.m_bottom = 464.0f;
 		Draw::Draw(4, &src, &dst, c, 0.0f);
 	}
@@ -219,8 +227,8 @@ void CObjTitle::Draw()
 	if(select_flag==false)
 	{
 		dst.m_top = 500.0f;
-		dst.m_left = 420.0f;
-		dst.m_right = 485.0f;
+		dst.m_left = 420.0f + m_ani_time;
+		dst.m_right = 485.0f + m_ani_time;
 		dst.m_bottom = 564.0f;
 		Draw::Draw(4, &src, &dst, c, 0.0f);
 	}

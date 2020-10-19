@@ -25,4 +25,7 @@ private:
 	bool select_flag;//ã‰º”»’è—p
 	bool description_flag;//à–¾‰æ–Ê•\¦—p
 
+	float m_ani_time;
+	int m_ani_max;
+
 };
