@@ -37,6 +37,7 @@ void CObjHero::Init()
 	m_speed_power = 0.5f;//’Êí‘¬“x
 	m_ani_max_time = 4;  //ƒAƒjƒ[ƒVƒ‡ƒ“ŠÔŠu•
 
+	m_enemynum = 0;	//ÚG•¨‚ÌŽí—Þ”»•Ê—p
 	//block‚Æ‚ÌÕ“Ëó‘ÔŠm”F—p
 	m_hit_up = false;
 	m_hit_down = false;
@@ -298,32 +299,57 @@ void CObjHero::Action()
 		if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
 		{
 			Audio::Start(4);
-			int enemynum = 1;
-			EnemyHit(enemynum);
+			m_enemynum = 1;
+			EnemyHit(m_enemynum);
 		}
 		if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
 		{
 			Audio::Start(4);
-			int enemynum = 2;
-			EnemyHit(enemynum);
+			m_enemynum = 2;
+			EnemyHit(m_enemynum);
 		}
 		if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
 		{
 			Audio::Start(4);
-			int enemynum = 3;
-			EnemyHit(enemynum);
+			m_enemynum = 3;
+			EnemyHit(m_enemynum);
 		}
 		if (hit->CheckObjNameHit(OBJ_MAGIC) != nullptr)
 		{
 			Audio::Start(4);
-			int enemynum = 4;
-			EnemyHit(enemynum);
+			m_enemynum = 4;
+			EnemyHit(m_enemynum);
 		}
 		if (hit->CheckObjNameHit(OBJ_RUSH_ENEMY) != nullptr)
 		{
 			Audio::Start(4);
-			int enemynum = 5;
-			EnemyHit(enemynum);
+			m_enemynum = 5;
+			
+
+			CObjRushEnemy* Re = (CObjRushEnemy*)Objs::GetObj(OBJ_RUSH_ENEMY);
+			if (Re->GetY()+pb->GetScrollY() < m_py + 50)
+			{
+				if (Re->GetX() + pb->GetScroll() + 75 < m_px + 32)
+				{
+					if (m_hit_time == 0)
+					{
+						m_vx = 20.0f;
+						m_vy -= 10.0f;
+					}
+				}
+				if (Re->GetX() + pb->GetScroll() > m_px + 32)
+				{
+					if (m_hit_time == 0)
+					{
+						m_vx = -20.0f;
+						m_vy -= 10.0f;
+					}
+					
+				}
+			}
+		
+			EnemyHit(m_enemynum);
+			
 		}
 
 		//¸~ˆ—  ˆê’UInputŒn‚Ìˆ—‚Í‚±‚±‚Å‚Í•K—v‚È‚¢
@@ -441,7 +467,7 @@ void CObjHero::Draw()
 
 }
 
-void CObjHero::EnemyHit(int enemynum)
+void CObjHero::EnemyHit(int m_enemynum)
 {
 	CHitBox* hit = Hits::GetHitBox(this);
 	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
@@ -450,15 +476,15 @@ void CObjHero::EnemyHit(int enemynum)
 
 	if (hit_flag == true)
 	{
-		if (enemynum == 1)
+		if (m_enemynum == 1)
 			hit_data = hit->SearchObjNameHit(OBJ_ENEMY);
-		else if (enemynum == 2)
+		else if (m_enemynum == 2)
 			hit_data = hit->SearchObjNameHit(OBJ_FIRE);
-		else if (enemynum == 3)
+		else if (m_enemynum == 3)
 			hit_data = hit->SearchObjNameHit(OBJ_SINENEMY);
-		else if (enemynum == 4)
+		else if (m_enemynum == 4)
 			hit_data = hit->SearchObjNameHit(OBJ_MAGIC);
-		else if(enemynum==5)
+		else if (m_enemynum == 5)
 			hit_data = hit->SearchObjNameHit(OBJ_RUSH_ENEMY);
 
 		hit_flag = false;
@@ -473,7 +499,7 @@ void CObjHero::EnemyHit(int enemynum)
 				float r = hit_data[i]->r;
 				if (r < 45 && r >= 0 || r>315)
 				{
-					m_vx = -5.0f;//¶‚ÉˆÚ“®‚³‚¹‚é
+					m_vx -= 5.0f;//¶‚ÉˆÚ“®‚³‚¹‚é
 					if (m_hit_time == 0)
 					{
 						m_hit_time = 60;
@@ -482,7 +508,7 @@ void CObjHero::EnemyHit(int enemynum)
 				}
 				if (r > 135 && r < 225)
 				{
-					m_vx = +5.0f;//‰E‚ÉˆÚ“®‚³‚¹‚é
+					m_vx += 5.0f;//‰E‚ÉˆÚ“®‚³‚¹‚é
 					if (m_hit_time == 0)
 					{
 						m_hit_time = 60;
@@ -491,7 +517,7 @@ void CObjHero::EnemyHit(int enemynum)
 				}
 				if (r > 45 && r < 135)
 				{
-					if (enemynum == 4)
+					if (m_enemynum == 4)
 					{
 						m_hp -= 0.1;
 					}
@@ -499,7 +525,7 @@ void CObjHero::EnemyHit(int enemynum)
 				if (r >= 225 && r < 315)
 				{
 					//“G‚ÌˆÚ“®•ûŒü‚ðŽålŒö‚ÌˆÊ’u‚É‰ÁŽZ
-					if (enemynum == 1||enemynum==5)
+					if (m_enemynum == 1|| m_enemynum ==5)
 						m_px += ((CObjEnemy*)hit_data[i]->o)->GetVx();
 
 
@@ -548,4 +574,12 @@ void CObjHero::EnemyHit(int enemynum)
 
 	}
 
+}
+
+int CObjHero::GetHitDown()
+{
+	if (m_hit_down == true)
+		return m_enemynum;
+	else
+		return 0;
 }

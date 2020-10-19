@@ -47,7 +47,7 @@ void CObjRushEnemy::Init()
 	stay_flag = false;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 75, 60, ELEMENT_ENEMY, OBJ_ENEMY, 1);
+	Hits::SetHitBox(this, m_px, m_py, 75, 60, ELEMENT_ENEMY, OBJ_RUSH_ENEMY, 1);
 
 }
 
@@ -61,19 +61,22 @@ void CObjRushEnemy::Action()
 		//通常速度
 		if (m_rush == false)
 		{
-			m_speed_power = 0.5f;
+			
 			m_ani_max_time = 4;
 		}
 
 		//ブロック情報を持ってくる
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-		float sl_x = block->GetScroll();
-		float sl_y = block->GetScrollY();
+		sl_x = block->GetScroll();
+		sl_y = block->GetScrollY();
 
 		//位置の更新用に主人公の位置を持ってくる
 		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
-		float hx = hero->GetX();
-		float hy = hero->GetY();
+		
+	
+		
+		//HITBOX情報を持ってくる
+		CHitBox* hit = Hits::GetHitBox(this);
 		
 		//落下
 		if (m_py > 1000.0f)
@@ -119,25 +122,36 @@ void CObjRushEnemy::Action()
 
 			//突進状態変化
 			CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
-			if (m_rush_time != 60)
+			
+
+			if (m_rush_time < 60 && hero->GetHitDown() != 5)
+			{
+				hx = hero->GetX();
+				hy = hero->GetY();
 				enemy->ModeChange(&m_px, &m_py, &hx, &hy, &pos_init, &m_rush, &m_move, false);
+			
+			}
+				
 
 			//突進状態　1秒溜め行動のあと突進する
 			if (m_rush == true && m_rush_time < 60)
 			{
 				m_rush_time++;
 				m_vx = 0.0f;
+				if (m_rush_time == 60)
+					m_rush_time++;
 			}
-			if (m_rush_time >= 60)
+			if (m_rush_time > 60)
 			{
 
 				//主人公の位置を通過したらブレーキかける
-				if ((m_px + sl_x > hx && m_move == true) || (m_px + sl_x < hx && m_move == false))
+				if ((m_px + sl_x +75 > hx && m_move == true) || (m_px + sl_x < hx && m_move == false))
 				{
-					if ((m_vx < 0.1 && m_move == true) || (m_vx > -0.1 && m_move == false))//一定速度以下で突進終了
+					if ((m_vx < 9.0f && m_move == true) || (m_vx > -9.0f && m_move == false))//一定速度以下で突進終了
 					{
 						m_rush_time = 0;
 						m_rush = false;
+						m_vx = 0.0f;
 						//反転させる
 						if (m_move == true)
 							m_move = false;
@@ -145,12 +159,19 @@ void CObjRushEnemy::Action()
 							m_move = true;
 					}
 				}
-				else
+				else if (hero->GetHitDown() != 5)
 				{
 					if (m_move == true)
-						m_vx += m_speed_power * 2.0f;
+						m_vx += m_speed_power * 3.0f;
 					if (m_move == false)
-						m_vx += -m_speed_power * 2.0f;
+						m_vx += -m_speed_power * 3.0f;//
+				}
+				if (m_rush == true)
+				{
+					if (m_vx > 9.0f)
+						m_vx = 9.0f;
+					if (m_vx < -9.0f)
+						m_vx = -9.0f;
 				}
 			}
 		}
@@ -190,14 +211,15 @@ void CObjRushEnemy::Action()
 			&m_vx, &m_vy, &d,false,75.0f,60.0f
 		);
 
+
 		//位置更新
 		m_px += m_vx;
 		m_py += m_vy;
+
 		//if ((m_speed_power <= 5.0f && m_speed_power >= 0.0f && m_move == true) || (m_speed_power >= -5.0f && m_speed_power < 0.0f && m_move == false))
 		//	m_rush_dist += m_speed_power;
 
 		//HitBoxの位置の変更
-		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 
 		//落下したら消滅
