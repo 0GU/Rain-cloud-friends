@@ -42,5 +42,9 @@ private:
 	bool m_rush;//突進モード用　trueで突進モード移行
 	int m_rush_time;//突進待機時間
 
+	bool m_flag;
+
 	bool stay_flag;
+
+	bool sleep_flag;//デバッグ用停止フラグ
 };

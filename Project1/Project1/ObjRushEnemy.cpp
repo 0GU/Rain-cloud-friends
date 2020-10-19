@@ -35,6 +35,8 @@ void CObjRushEnemy::Init()
 	m_rush = false;//通常状態で初期化
 	m_rush_time = 0;
 
+	sleep_flag=false;//デバッグ用停止フラグ
+
 	pos_init = m_px;
 
 	//blockとの衝突状態確認用
@@ -85,54 +87,71 @@ void CObjRushEnemy::Action()
 		if (m_hit_right == true)
 			m_move = true;
 
-		//通常移動
-		if (m_move == true&&m_rush_time!=60)
+		//デバッグ用停止フラグ
+		if (Input::GetVKey('P') == true)
 		{
-			m_vx += m_speed_power;
-			m_posture = 1.0f;
-			m_ani_time += 1;
+			if (sleep_flag == false)
+				sleep_flag = true;
 		}
-		else if (m_move == false && m_rush_time != 60)
+		else if (Input::GetVKey('O') == true)
 		{
-			m_vx -= m_speed_power;
-			m_posture = 0.0f;
-			m_ani_time += 1;
+			if (sleep_flag == true)
+				sleep_flag = false;
 		}
 
-		//突進状態変化
-		CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
-		if (m_rush_time != 60)
-			enemy->ModeChange(&m_px, &m_py, &hx, &hy, &pos_init, &m_rush, &m_move, false);
-
-		//突進状態　1秒溜め行動のあと突進する
-		if (m_rush == true&& m_rush_time < 60)
-		{
-			m_rush_time++;
-			m_vx = 0.0f;
-		}
-		if (m_rush_time >= 60)
+		if (sleep_flag == false)
 		{
 
-			//主人公の位置を通過したらブレーキかける
-			if ((m_px + sl_x > hx && m_move == true) || (m_px + sl_x < hx && m_move == false))
+
+			//通常移動
+			if (m_move == true && m_rush_time != 60)
 			{
-				if ((m_vx < 0.1&&m_move==true)||(m_vx > -0.1 && m_move == false))//一定速度以下で突進終了
-				{
-					m_rush_time = 0;
-					m_rush = false;
-					//反転させる
-					if (m_move == true)
-						m_move = false;
-					else
-						m_move = true;
-				}
+				m_vx += m_speed_power;
+				m_posture = 1.0f;
+				m_ani_time += 1;
 			}
-			else
+			else if (m_move == false && m_rush_time != 60)
 			{
-				if (m_move == true)
-					m_vx += m_speed_power * 2.0f;
-				if (m_move == false)
-					m_vx += -m_speed_power * 2.0f;
+				m_vx -= m_speed_power;
+				m_posture = 0.0f;
+				m_ani_time += 1;
+			}
+
+			//突進状態変化
+			CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
+			if (m_rush_time != 60)
+				enemy->ModeChange(&m_px, &m_py, &hx, &hy, &pos_init, &m_rush, &m_move, false);
+
+			//突進状態　1秒溜め行動のあと突進する
+			if (m_rush == true && m_rush_time < 60)
+			{
+				m_rush_time++;
+				m_vx = 0.0f;
+			}
+			if (m_rush_time >= 60)
+			{
+
+				//主人公の位置を通過したらブレーキかける
+				if ((m_px + sl_x > hx && m_move == true) || (m_px + sl_x < hx && m_move == false))
+				{
+					if ((m_vx < 0.1 && m_move == true) || (m_vx > -0.1 && m_move == false))//一定速度以下で突進終了
+					{
+						m_rush_time = 0;
+						m_rush = false;
+						//反転させる
+						if (m_move == true)
+							m_move = false;
+						else
+							m_move = true;
+					}
+				}
+				else
+				{
+					if (m_move == true)
+						m_vx += m_speed_power * 2.0f;
+					if (m_move == false)
+						m_vx += -m_speed_power * 2.0f;
+				}
 			}
 		}
 		//アニメーション進める

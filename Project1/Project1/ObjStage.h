@@ -33,7 +33,12 @@ public:
 		bool* up, bool* down, bool* left, bool* right,
 		float* vx, float* vy, int* bt, bool climb, float size_x, float size_y
 	);
-
+	void BlockHit(float* x, float* y, bool scroll_on,
+		bool* up, bool* down, bool* left, bool* right,
+		float* vx, float* vy, int* bt, bool climb, float size_x, float size_y,float size_bx, float size_by
+	);
+	//実験　要素番号に応じて変更する座標の値を出力する
+	void PosTrans(float* bx, float* by, int i, int j, int map_num);
 	//主人公と壁の交差判定
 	bool HeroBlockCrossPoint(
 		float x, float y, float vx, float vy,
