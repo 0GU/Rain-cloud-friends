@@ -41,7 +41,7 @@ void CObjStone::Action()
 	stay_flag = p->GetFlag();
 	if (stay_flag == false)
 	{
-		
+
 
 		//ƒuƒƒbƒNî•ñ‚ðŽ‚Á‚Ä‚­‚é
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
@@ -51,7 +51,7 @@ void CObjStone::Action()
 		CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 		pb->BlockHit(&m_px, &m_py, false,
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-			&m_vx, &m_vy, &m_block_type
+			&m_vx, &m_vy, &m_block_type, false, 128.0f, 64.0f
 		);
 	
 		

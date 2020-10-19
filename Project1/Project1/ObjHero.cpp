@@ -61,7 +61,7 @@ void CObjHero::Init()
 	m_con_num = 0;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px+20, m_py, 32, 128, ELEMENT_PLAYER, OBJ_HERO, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
 
 //アクション
@@ -84,7 +84,7 @@ void CObjHero::Action()
 	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	pb->BlockHit(&m_px, &m_py, true,
 		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-		&m_vx, &m_vy, &m_block_type, climb_flag,32.0f,128.0f
+		&m_vx, &m_vy, &m_block_type, climb_flag,64.0f,64.0f
 	);
 
 	//自身のHitBoxを持ってくる
@@ -375,7 +375,7 @@ void CObjHero::Action()
 		m_py += m_vy;
 
 		//HitBoxの位置の変更
-		hit->SetPos(m_px+10, m_py);
+		hit->SetPos(m_px, m_py);
 	}
 
 	
@@ -405,7 +405,7 @@ void CObjHero::Draw()
 	dst.m_top = 0.0f + m_py;
 	dst.m_left = (64.0f * m_posture) + m_px;
 	dst.m_right = (64 - 64.0f * m_posture) + m_px;
-	dst.m_bottom = 128.0f + m_py;
+	dst.m_bottom = 64.0f + m_py;
 
 	//描画
 	Draw::Draw(15, &src, &dst, c, 0.0f);

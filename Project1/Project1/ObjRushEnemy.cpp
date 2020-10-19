@@ -45,7 +45,7 @@ void CObjRushEnemy::Init()
 	stay_flag = false;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 75, 60, ELEMENT_ENEMY, OBJ_ENEMY, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_ENEMY, OBJ_ENEMY, 1);
 
 }
 
@@ -168,7 +168,7 @@ void CObjRushEnemy::Action()
 		//ブロックとの当たり判定実行
 		block->BlockHit(&m_px, &m_py, false,
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-			&m_vx, &m_vy, &d,false,75.0f,60.0f
+			&m_vx, &m_vy, &d
 		);
 
 		//位置更新
@@ -216,9 +216,9 @@ void CObjRushEnemy::Draw()
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	//表示位置の設定
 	dst.m_top = 0.0f + m_py + block->GetScrollY();						//↓描画に対してスクロールの影響を与える
-	dst.m_left = (75.0f * m_posture) + m_px + block->GetScroll();
-	dst.m_right = (75 - 75.0f * m_posture) + m_px + block->GetScroll();
-	dst.m_bottom = 60.0f + m_py + block->GetScrollY();
+	dst.m_left = (64.0f * m_posture) + m_px + block->GetScroll();
+	dst.m_right = (64 - 64.0f * m_posture) + m_px + block->GetScroll();
+	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
 
 	//描画
 	Draw::Draw(14, &src, &dst, c, 0.0f);
