@@ -82,10 +82,6 @@ void CObjHero::Action()
 
 	//ブロックとの当たり判定実行
 	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-	pb->BlockHit(&m_px, &m_py, true,
-		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-		&m_vx, &m_vy, &m_block_type, climb_flag
-	);
 
 	//自身のHitBoxを持ってくる
 	CHitBox* hit = Hits::GetHitBox(this);
@@ -280,6 +276,10 @@ void CObjHero::Action()
 		{
 			m_vy += 9.8 / (16.0f);
 		}
+		pb->BlockHit(&m_px, &m_py, true,
+			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
+			&m_vx, &m_vy, &m_block_type, climb_flag
+		);
 
 
 
@@ -319,7 +319,12 @@ void CObjHero::Action()
 			int enemynum = 4;
 			EnemyHit(enemynum);
 		}
-
+		if (hit->CheckObjNameHit(OBJ_RUSH_ENEMY) != nullptr)
+		{
+			Audio::Start(4);
+			int enemynum = 5;
+			EnemyHit(enemynum);
+		}
 
 		//昇降処理  一旦Input系の処理はここでは必要ない
 		if (hit->CheckElementHit(ELEMENT_IVY) == true/*&& (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) < 0.0f)*/)	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
@@ -453,6 +458,8 @@ void CObjHero::EnemyHit(int enemynum)
 			hit_data = hit->SearchObjNameHit(OBJ_SINENEMY);
 		else if (enemynum == 4)
 			hit_data = hit->SearchObjNameHit(OBJ_MAGIC);
+		else if(enemynum==5)
+			hit_data = hit->SearchObjNameHit(OBJ_RUSH_ENEMY);
 
 		hit_flag = false;
 
@@ -492,7 +499,7 @@ void CObjHero::EnemyHit(int enemynum)
 				if (r >= 225 && r < 315)
 				{
 					//敵の移動方向を主人公の位置に加算
-					if (enemynum == 1)
+					if (enemynum == 1||enemynum==5)
 						m_px += ((CObjEnemy*)hit_data[i]->o)->GetVx();
 
 

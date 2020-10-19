@@ -42,4 +42,6 @@ private:
 	bool m_atk_flag;//攻撃モード用
 	bool m_charge_flag;//チャージ用
 
+	bool sleep_flag;//デバッグ用停止フラグ
+
 };

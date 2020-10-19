@@ -1,4 +1,5 @@
 #include"GameL\DrawTexture.h"
+#include "GameL\WinInputs.h"
 #include"GameL\HitBoxManager.h"
 #include"GameHead.h"
 #include"ObjSinEnemy.h"
@@ -41,6 +42,7 @@ void CObjSinEnemy::Init()
 	m_atk_flag = false;
 	m_charge_flag = false;
 
+	sleep_flag = false;//デバッグ用停止フラグ
 
 	pos_init = m_x;
 
@@ -61,81 +63,96 @@ void CObjSinEnemy::Action()
 		float hx = hero->GetX();
 		float hy = hero->GetY();
 
-		//攻撃状態変化
-		CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
-		enemy->ModeChange(&m_x, &m_y, &hx, &hy, &pos_init, &m_atk_flag, &m_move,true);
-
-
-		////主人公が一定距離内にいたら攻撃行動へ移行
-		//if (((m_x + block->GetScroll() - hx <=  400.0f && m_x + block->GetScroll() - hx > 0.0f && m_move == false) ||
-		//	(m_x + block->GetScroll() - hx >= -400.0f && m_x + block->GetScroll() - hx < 0.0f && m_move == true)) && 
-		//	m_atk_flag==false)
-		//{
-		//	m_atk_flag = true;
-		//	m_atk_time = 300;//初回のみすぐチャージさせる
-		//}
-
-		//攻撃間隔進める
-		if (m_atk_flag == true && m_charge_flag == false&&m_atk_time <= 360)
+		//デバッグ用停止フラグ
+		if (Input::GetVKey('P') == true)
 		{
-			m_atk_time++;
+			if (sleep_flag == false)
+				sleep_flag = true;
 		}
-		//5秒間隔でチャージへ移行
-		if (m_atk_time >= 360)
+		else if (Input::GetVKey('O') == true)
 		{
-			m_atk_time = 0;
-			//m_charge_flag = true;
-			//弾発射
-			CObjMagic* objm = new CObjMagic(m_x - 16, m_y - 16, m_move);
-			Objs::InsertObj(objm, OBJ_MAGIC, 11);
+			if (sleep_flag == true)
+				sleep_flag = false;
+		}
 
+
+		if (sleep_flag == false)
+		{
+			//攻撃状態変化
+			CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
+			enemy->ModeChange(&m_x, &m_y, &hx, &hy, &pos_init, &m_atk_flag, &m_move, true);
+
+
+			////主人公が一定距離内にいたら攻撃行動へ移行
+			//if (((m_x + block->GetScroll() - hx <=  400.0f && m_x + block->GetScroll() - hx > 0.0f && m_move == false) ||
+			//	(m_x + block->GetScroll() - hx >= -400.0f && m_x + block->GetScroll() - hx < 0.0f && m_move == true)) && 
+			//	m_atk_flag==false)
+			//{
+			//	m_atk_flag = true;
+			//	m_atk_time = 300;//初回のみすぐチャージさせる
+			//}
+
+			//攻撃間隔進める
+			if (m_atk_flag == true && m_charge_flag == false && m_atk_time <= 360)
+			{
+				m_atk_time++;
+			}
+			//5秒間隔でチャージへ移行
+			if (m_atk_time >= 360)
+			{
+				m_atk_time = 0;
+				//m_charge_flag = true;
+				//弾発射
+				CObjMagic* objm = new CObjMagic(m_x - 16, m_y - 16, m_move);
+				Objs::InsertObj(objm, OBJ_MAGIC, 11);
+
+
+			}
+			////チャージ進める
+			//if (m_charge_flag == true)
+			//{
+			//	m_charge_time++;
+			//}
+			////1秒チャージで発射
+			//if (m_charge_time >= 60)
+			//{
+			//	//弾発射
+			//	CObjMagic* objm = new CObjMagic(m_x + 16, m_y + 16, m_move);
+			//	Objs::InsertObj(objm, OBJ_MAGIC, 11);
+			//	m_charge_time = 0;
+			//	m_charge_flag = false;
+			//}
+
+			//&& 間に障害物ある判定
+
+
+			////攻撃行動時
+			//if (m_atk_flag == true && m_move == true)//右向き
+			//{
+			//	if (m_x + block->GetScroll() - hx <= -400)//距離離れた
+			//	{
+			//		m_atk_flag = false;
+			//	}
+			//	else if (m_x + block->GetScroll() - hx >= 0)//右に回り込まれた
+			//	{
+			//		m_atk_flag = false;
+			//		m_move = false;
+			//	}
+			//}
+			//else if (m_atk_flag == true&&m_move==false)//左向き
+			//{
+			//	if (m_x + block->GetScroll() - hx >= 400)//距離離れた
+			//	{
+			//		m_atk_flag = false;
+			//	}
+			//	else if (m_x + block->GetScroll() - hx <= 0)//右に回り込まれた
+			//	{
+			//		m_atk_flag = false;
+			//		m_move = true;
+			//	}
+			//}
 
 		}
-		////チャージ進める
-		//if (m_charge_flag == true)
-		//{
-		//	m_charge_time++;
-		//}
-		////1秒チャージで発射
-		//if (m_charge_time >= 60)
-		//{
-		//	//弾発射
-		//	CObjMagic* objm = new CObjMagic(m_x + 16, m_y + 16, m_move);
-		//	Objs::InsertObj(objm, OBJ_MAGIC, 11);
-		//	m_charge_time = 0;
-		//	m_charge_flag = false;
-		//}
-
-		//&& 間に障害物ある判定
-
-
-		////攻撃行動時
-		//if (m_atk_flag == true && m_move == true)//右向き
-		//{
-		//	if (m_x + block->GetScroll() - hx <= -400)//距離離れた
-		//	{
-		//		m_atk_flag = false;
-		//	}
-		//	else if (m_x + block->GetScroll() - hx >= 0)//右に回り込まれた
-		//	{
-		//		m_atk_flag = false;
-		//		m_move = false;
-		//	}
-		//}
-		//else if (m_atk_flag == true&&m_move==false)//左向き
-		//{
-		//	if (m_x + block->GetScroll() - hx >= 400)//距離離れた
-		//	{
-		//		m_atk_flag = false;
-		//	}
-		//	else if (m_x + block->GetScroll() - hx <= 0)//右に回り込まれた
-		//	{
-		//		m_atk_flag = false;
-		//		m_move = true;
-		//	}
-		//}
-		
-
 
 		//初期位置から一定距離離れたら方向転換
 		if (m_atk_flag == false)
