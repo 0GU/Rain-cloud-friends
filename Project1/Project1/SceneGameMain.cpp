@@ -39,7 +39,7 @@ void CSceneGameMain::InitScene()
 	if(stageselect==1)
 	p = Save::ExternalDataOpen(L"ギミック確認.csv", &size);//外部データ読み込み
 	else if(stageselect==2)
-	p = Save::ExternalDataOpen(L"ステージデータ.csv", &size);//外部データ読み込み
+	p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
 	else if (stageselect == 3)
 		p = Save::ExternalDataOpen(L"セーブ確認用3.csv", &size);//外部データ読み込み
 	int map[20][100];
@@ -124,13 +124,6 @@ void CSceneGameMain::InitScene()
 	CObjHp* objh = new CObjHp();
 	Objs::InsertObj(objh, OBJ_HP, 11);
 
-	//遠距離敵オブジェクト作成（仮）
-	CObjSinEnemy* objs = new CObjSinEnemy(400,400);
-	Objs::InsertObj(objs, OBJ_SINENEMY, 10);
-
-	//突進敵オブジェクト作成（仮）
-	CObjRushEnemy* objr = new CObjRushEnemy(1000, 600);
-	Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
 }
 
 //ゲームメイン実行メソッド

@@ -62,7 +62,7 @@ void CObjHero::Init()
 	m_con_num = 0;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 128, ELEMENT_PLAYER, OBJ_HERO, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
 
 //アクション
@@ -144,7 +144,7 @@ void CObjHero::Action()
 			{
 				Audio::Start(2);
 	
-				m_vy = -10;
+				m_vy = -1;
 			}
 
 		}
@@ -199,7 +199,7 @@ void CObjHero::Action()
 			if (m_hit_down == true)
 			{
 				Audio::Start(2);
-				m_vy = -10;
+				m_vy = -8;
 			}
 		}
 
@@ -270,16 +270,26 @@ void CObjHero::Action()
 
 
 		//摩擦
-		m_vx += -(m_vx * 0.098);
+		m_vx += -(m_vx * 0.128);
 
-		//自由落下速度
+		//自由落下調整　オブジェクトの揺れを防ぎつつ
 		if (climb_flag == false || Input::GetVKey(VK_UP) == false)
 		{
-			m_vy += 9.8 / (16.0f);
+			if (m_vy < 0.45)
+			{
+				m_vy += 0.4;
+			}
+			else
+			{
+				//落下する際は自由落下運動を使用する
+				m_vy += 9.8 / (16.0f);
+			}
 		}
+
+
 		pb->BlockHit(&m_px, &m_py, true,
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-			&m_vx, &m_vy, &m_block_type, climb_flag,64.0f,128.0f
+			&m_vx, &m_vy, &m_block_type, climb_flag,64.0f,64.0f
 		);
 
 
@@ -383,7 +393,7 @@ void CObjHero::Action()
 		{
 			//ジャンプしてる場合は下記の影響を出ないようにする
 		}
-		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&Stone->GetPY() <= m_py + 128 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 128 - block->GetScrollY())
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&Stone->GetPY() <= m_py + 64 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
 		{
 			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 			//また、地面に当たってる判定にする
@@ -399,6 +409,7 @@ void CObjHero::Action()
 			Stone->SetVX(m_vx);
 		}
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 		//位置の更新
@@ -421,7 +432,7 @@ void CObjHero::Draw()
 	};
 
 	//描画カラー情報
-	float c[4] = { 1.0f,0.5f,1.0f,1.0f };
+	float c[4] = { 1.0f,1.0f,1.0f,1.0f };
 
 	RECT_F src; //描画元切り取り位置
 	RECT_F dst; //描画先表示位置
@@ -436,7 +447,7 @@ void CObjHero::Draw()
 	dst.m_top = 0.0f + m_py;
 	dst.m_left = (64.0f * m_posture) + m_px;
 	dst.m_right = (64 - 64.0f * m_posture) + m_px;
-	dst.m_bottom = 128.0f + m_py;
+	dst.m_bottom = 64.0f + m_py;
 
 	//描画
 	Draw::Draw(15, &src, &dst, c, 0.0f);
