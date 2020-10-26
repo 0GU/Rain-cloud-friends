@@ -397,7 +397,7 @@ void CObjHero::Action()
 		{
 			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 			//また、地面に当たってる判定にする
-
+			m_py = Stone->GetPY() + pb->GetScrollY() - 63;
 			m_vy = 0.0f;
 			m_hit_down = true;
 		}
