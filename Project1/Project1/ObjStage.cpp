@@ -83,9 +83,9 @@ void CObjStage::Action()
 		*/
 		//-------------------------------------------------
 	//後方スクロールライン
-	if (hx < 75)
+	if (hx < 64)
 	{
-		hero->SetX(75);				//主人公はラインを超えないようにする
+		hero->SetX(64);				//主人公はラインを超えないようにする
 		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -395,7 +395,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 					if (len < size_y*1.375)//もともとの値はlen<88.0f
 					{
 						//角度で上下左右を判定
-						if ((r < 45 && r > 0) || r > 315)
+						if ((r < 46 && r >= 0) || r > 315)
 						{
 							//右
 							*right = true;//オブジェクトの左の部分が衝突している

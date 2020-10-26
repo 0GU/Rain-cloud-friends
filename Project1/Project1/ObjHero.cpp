@@ -62,7 +62,7 @@ void CObjHero::Init()
 	m_con_num = 0;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 44, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
 
 //アクション
@@ -151,10 +151,10 @@ void CObjHero::Action()
 		if (Input::GetConButtons(m_con_num, GAMEPAD_X) == true)
 		{
 			//ダッシュ時の速度
-			if (m_con_x > 1.1f)
-				m_con_x = 1.1f;
-			if(m_con_x<-1.1f)
-				m_con_x = -1.1f;
+			if (m_con_x > 1.0f)
+				m_con_x = 1.0f;
+			if(m_con_x<-1.0f)
+				m_con_x = -1.0f;
 			m_ani_max_time = 2;
 		}
 		else
@@ -207,7 +207,7 @@ void CObjHero::Action()
 		if (Input::GetVKey('Z') == true)
 		{
 			//ダッシュ時の速度
-			m_speed_power = 1.1f;
+			m_speed_power = 1.0f;
 			m_ani_max_time = 2;
 		}
 		else
@@ -405,8 +405,16 @@ void CObjHero::Action()
 			((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
 				m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
 		{
-			m_vx /= 2;
-			Stone->SetVX(m_vx);
+			if (Stone->Gethr()==false)
+			{
+				m_vx /= 2;
+				Stone->SetVX(m_vx);
+			}
+			else if (Stone->Gethr() ==true)
+			{
+				m_vx = 0;
+			}
+
 		}
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -417,7 +425,7 @@ void CObjHero::Action()
 		m_py += m_vy;
 
 		//HitBoxの位置の変更
-		hit->SetPos(m_px+10.0f, m_py);
+		hit->SetPos(m_px, m_py);
 	}
 
 	
