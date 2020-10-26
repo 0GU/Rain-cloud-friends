@@ -21,7 +21,7 @@ void CObjStone::Init()
 
 	stay_flag = false;
 	m_vx = 0;
-	m_vy = 1;
+	m_vy = 10;
 
 	//blockとの衝突状態確認用
 	m_hit_up = false;
@@ -42,6 +42,18 @@ void CObjStone::Action()
 	if (stay_flag == false)
 	{
 
+		//自由落下調整　オブジェクトの揺れを防ぎつつ
+		if (m_vy<0.45)
+		{
+			m_vy += 0.15;
+		}
+		//落下する際は自由落下運動を使用する
+		else
+		{
+			m_vy += 9.8 / (16.0f);
+		}
+			
+		
 
 		//ブロック情報を持ってくる
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
@@ -51,19 +63,22 @@ void CObjStone::Action()
 		CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 		pb->BlockHit(&m_px, &m_py, false,
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-			&m_vx, &m_vy, &m_block_type, false, 128.0f, 64.0f
+			&m_vx, &m_vy, &m_block_type, false,128.0f,64.0f
 		);
 	
 		
-		//位置の更新
-		m_px += m_vx;
-		m_py += 1;
-		m_vx = 0;
-	
+
 
 		//HitBoxの位置の変更
 		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
+
+
+		//位置の更新
+		m_px += m_vx;
+		m_py += m_vy;
+		m_vx = 0;
+
 	}
 }
 

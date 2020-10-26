@@ -45,7 +45,7 @@ void CObjCloud::Init()
 	m_ani_max_time = 4;  //アニメーション間隔幅
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_CLOUD, 1);
+	Hits::SetHitBox(this, m_px, m_py, 96, 96, ELEMENT_PLAYER, OBJ_CLOUD, 1);
 }
 
 //アクション
@@ -119,7 +119,7 @@ void CObjCloud::Action()
 	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	pb->BlockHit(&m_px, &m_py, false,
 		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-		&m_vx, &m_vy, &d
+		&m_vx, &m_vy, &d,false,96.0f,96.0f
 	);
 	m_vx = 5.0f;
 	m_vy = 5.0f;
@@ -154,8 +154,8 @@ void CObjCloud::Draw()
 	//表示位置の設定
 	dst.m_top = m_py + pbb->GetScrollY();
 	dst.m_left = m_px + pbb->GetScroll();
-	dst.m_right = m_px + 64.0f + pbb->GetScroll();
-	dst.m_bottom = m_py + 64.0f + pbb->GetScrollY();
+	dst.m_right = m_px + 96.0f + pbb->GetScroll();
+	dst.m_bottom = m_py + 96.0f + pbb->GetScrollY();
 
 	//描画
 	Draw::Draw(8, &src, &dst, c, 0.0f);

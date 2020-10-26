@@ -790,3 +790,5 @@ void CObjStage::PosTrans(float* bx, float* by, int i, int j, int map_num)
 		* by = i * 64.0f;
 	}
 }
+
+
