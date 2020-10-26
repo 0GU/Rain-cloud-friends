@@ -95,6 +95,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/Šâ.png", 13, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰¼/test—‚Ìq.png", 15, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰¼/Game”wŒi‰¼.png", 22, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/“yƒuƒƒbƒN.png", 23, TEX_SIZE_1024);
 	if(stageselect==1)
 	{
 		Audio::Start(0);

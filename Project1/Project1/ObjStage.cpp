@@ -270,6 +270,7 @@ void CObjStage::Draw()
 				}
 				else
 				{
+
 					BlockDraw(320.0f + 0.0f, 0.0f, &dst, c);
 				}
 			}
