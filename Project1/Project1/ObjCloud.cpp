@@ -98,7 +98,7 @@ void CObjCloud::Action()
 	{
 		rain_flag = true;
 	}
-	if (Input::GetVKey(VK_SPACE) == true)
+	if (Input::GetVKey(VK_SPACE) == true|| Input::GetConButtons(m_con_num, GAMEPAD_Y) == true)
 	{
 		m_px = hero->GetX() - pbb->GetScroll();
 		m_py = hero->GetY()-pbb->GetScrollY()-100;//ŽålŒö‚Ì“ªã‚Ìã‚É‰_‚ð¢Š«
