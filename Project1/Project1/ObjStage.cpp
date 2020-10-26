@@ -371,7 +371,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 				float scroll_y = scroll_on ? my_scroll : 0;
 				//オブジェクトとブロックの当たり判定
 				//左と上はブロックのサイズ、右と下はオブジェクトのサイズで判定をとる
-				if ((*x + (-scroll) + size_x > bx) && (*x + (-scroll) < bx + 64.0f) && (*y + (-scroll_y) + size_y > by) && (*y + (-scroll_y) < by + 64.0f))
+				if ((*x + (-scroll) + size_x > bx) && (*x + (-scroll) < bx + 64.0f) && (*y + (-scroll_y) + size_y >= by) && (*y + (-scroll_y) <= by + 64.0f))
 				{
 					//上下左右判定
 
@@ -411,7 +411,10 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 							//種類を渡すのスタートとゴールのみ変更する
 							if (m_map[i][j] >= 2)
 								*bt = m_map[i][j];//ブロックの要素（type）をオブジェクトに渡す
-							*vy = 0.0f;
+							if (*vy >= 0)
+							{
+								*vy = 0.0f;
+							}
 						}
 						if (r > 135 && r < 225)
 						{
