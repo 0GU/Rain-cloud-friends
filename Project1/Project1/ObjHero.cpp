@@ -143,8 +143,7 @@ void CObjHero::Action()
 			if (m_hit_down == true)
 			{
 				Audio::Start(2);
-	
-				m_vy = -1;
+				m_vy = -8;
 			}
 
 		}
@@ -397,7 +396,7 @@ void CObjHero::Action()
 		{
 			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 			//また、地面に当たってる判定にする
-
+			m_py = Stone->GetPY() + pb->GetScrollY() - 63;
 			m_vy = 0.0f;
 			m_hit_down = true;
 		}
@@ -467,12 +466,17 @@ void CObjHero::Draw()
 
 	wchar_t str1[256];
 	wchar_t str2[256];
+	wchar_t str3[256];
+
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
+	CObjCloud* Cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
 	swprintf_s(str1, L"X=%f", m_px - block->GetScroll());
 	Font::StrDraw(str1, 20, 20, 20, c);
 	swprintf_s(str2, L"X=%f", Stone->GetPX_L());
 	Font::StrDraw(str2, 20, 400, 20, c);
+	swprintf_s(str3, L"X=%f", Cloud->GetX());
+	Font::StrDraw(str3, 20, 300, 20, c);
 
 
 
