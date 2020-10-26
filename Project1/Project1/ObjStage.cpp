@@ -189,6 +189,20 @@ void CObjStage::Draw()
 					Objs::InsertObj(objf, OBJ_FIRE, 10);
 					m_map[i][j] = 0;
 				}
+				else if (m_map[i][j] == 6)
+				{
+					//遠距離敵オブジェクト
+					CObjSinEnemy* objs = new CObjSinEnemy(j * 64.0f, i * 64.0f);
+					Objs::InsertObj(objs, OBJ_SINENEMY, 10);
+					m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 7)
+				{
+					//突進敵オブジェクト作成（仮）
+					CObjRushEnemy* objr = new CObjRushEnemy(j * 64.0f, i * 64.0f);
+					Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
+					m_map[i][j] = 0;
+				}
 				/*else if (m_map[i][j] == 13)
 				{
 				ObjPlantの床用のため、何もしない
@@ -788,5 +802,73 @@ void CObjStage::PosTrans(float* bx, float* by, int i, int j, int map_num)
 	{
 		* bx = j * 64.0f;
 		* by = i * 64.0f;
+	}
+}
+
+//実験　当たり判定
+//進捗：うごきません、わかりません
+//引数1,2	float*	cx,cy				:判定を行うobjectの位置
+//引数3,4	float	size_x,size_y		:判定を行うobjectのサイズ
+//引数5		bool	scroll_on			:判定を行うobjectはスクロールの影響を与えるかどうか(true=与える false=与えない)
+//引数6～9	bool*	up,down,left,right	:上下左右それぞれが当たっているかどうかを返す
+//引数10,11 float*	vx,vy				:左右判定時の反発、上下判定時の自由落下速度の移動方向・力の値を変えて返す
+//引数12	int*	bt					:下部分判定時、特殊なブロックのタイプを返す
+//引数13	bool	climb				:登っている状態の判別用　trueでは上下判定を行わない
+void CObjStage::HitCheak(float* cx, float* cy, float size_x, float size_y, 
+	bool scroll_on,	bool* up, bool* down, bool* left, bool* right,
+	float* vx, float* vy, int* bt, bool climb
+)
+{
+	//衝突状態確認用フラグの初期化
+	*up = false;
+	*down = false;
+	*left = false;
+	*right = false;
+
+	//踏んでいるのblockの種類の初期化
+	*bt = 0;
+
+	//m_mapの全要素にアクセス
+	for (int i = 0; i < 20; i++)
+	{
+		for (int j = 0; j < 100; j++)
+		{
+			//要素番号を座標に変更
+			float bx = j * 64.0f;
+			float by = i * 64.0f;
+
+			//スクロールの影響
+			float scroll = scroll_on ? mx_scroll : 0;
+			float scroll_y = scroll_on ? my_scroll : 0;
+
+			//上に乗ってる判定
+			if ((*vy > 0.0f && abs(bx - *cx + (-scroll)) < size_x) &&
+				(bx - *cy + (-scroll_y) > size_y && by - *cy + (-scroll_y) <= size_y + 32))
+			{
+				*cy = by - size_y;//めり込まないようにする
+				//種類を渡すのスタートとゴールのみ変更する
+				if (m_map[i][j] >= 2)
+					*bt = m_map[i][j];//ブロックの要素（type）をオブジェクトに渡す
+				*vy = 0.0f;
+				break;
+			}
+			//下に当たった判定
+			if (*vy < 0.0f && abs(bx - *cx + (-scroll)) < size_x &&
+				*cy <= by + 64 && by <= *cy + 64
+				)
+			{
+				*vy = 0.0f;
+				break;
+			}
+			//左右判定
+			if (*cx < bx  + 48 &&
+				bx  < *cx + 48 &&
+				*cy < by  + 54 &&
+				by  < *cy + 64)
+			{
+				*cx -= *vx;
+				break;
+			}
+		}
 	}
 }

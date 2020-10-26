@@ -62,7 +62,7 @@ void CObjHero::Init()
 	m_con_num = 0;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 128, ELEMENT_PLAYER, OBJ_HERO, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
 
 //アクション
@@ -279,7 +279,7 @@ void CObjHero::Action()
 		}
 		pb->BlockHit(&m_px, &m_py, true,
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-			&m_vx, &m_vy, &m_block_type, climb_flag,64.0f,128.0f
+			&m_vx, &m_vy, &m_block_type, climb_flag,64.0f,64.0f
 		);
 
 

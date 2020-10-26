@@ -124,13 +124,6 @@ void CSceneGameMain::InitScene()
 	CObjHp* objh = new CObjHp();
 	Objs::InsertObj(objh, OBJ_HP, 11);
 
-	//遠距離敵オブジェクト作成（仮）
-	CObjSinEnemy* objs = new CObjSinEnemy(400,400);
-	Objs::InsertObj(objs, OBJ_SINENEMY, 10);
-
-	//突進敵オブジェクト作成（仮）
-	CObjRushEnemy* objr = new CObjRushEnemy(1000, 600);
-	Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
 }
 
 //ゲームメイン実行メソッド
