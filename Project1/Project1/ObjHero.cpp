@@ -62,7 +62,7 @@ void CObjHero::Init()
 	m_con_num = 0;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
+	Hits::SetHitBox(this, m_px, m_py, 44, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
 
 //アクション
@@ -417,7 +417,7 @@ void CObjHero::Action()
 		m_py += m_vy;
 
 		//HitBoxの位置の変更
-		hit->SetPos(m_px, m_py);
+		hit->SetPos(m_px+10.0f, m_py);
 	}
 
 	

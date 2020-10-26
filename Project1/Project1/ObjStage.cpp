@@ -172,12 +172,12 @@ void CObjStage::Draw()
 				if (m_map[i][j] == 2)
 				{
 					//スタートブロック
-					BlockDraw(320.0f + 64.0f, 0.0f, &dst, c);
+					BlockDraw(0.0f, 0.0f, &dst, c);
 				}
 				else if (m_map[i][j] == 3)
 				{
 					//ゴールブロック
-					BlockDraw(320.0f + 64.0f, 64.0f, &dst, c);
+					BlockDraw(64.0f, 64.0f, &dst, c);
 				}
 				else if (m_map[i][j] == 4)
 				{
@@ -268,10 +268,16 @@ void CObjStage::Draw()
 					Objs::InsertObj(objh, OBJ_STONE, 10);
 					m_map[i][j] = 0;
 				}
+				else if (m_map[i][j] == 99)
+				{
+
+				//土ブロック
+				BlockDraw(64.0f, 64.0f, &dst, c);
+				}
 				else
 				{
 
-					BlockDraw(320.0f + 0.0f, 0.0f, &dst, c);
+					BlockDraw(64.0f, 0.0f, &dst, c);
 				}
 			}
 		}
