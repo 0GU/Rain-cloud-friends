@@ -139,134 +139,146 @@ void CObjHero::Action()
 			//コントローラー操作仮
 			m_con_num = Input::UpdateXControlerConnected();
 			m_con_x = Input::GetConVecStickLX(m_con_num);
-
-			if (m_con_x == 0.0f)
+			if (m_con_num != 5)
 			{
-				m_con_flag = false;
-			}
-			if (Input::GetConButtons(m_con_num, GAMEPAD_A) == true)
-			{
-				if (m_hit_down == true)
+				if (m_con_x == 0.0f)
 				{
-					Audio::Start(2);
-					m_vy = -8;
+					m_con_flag = false;
+				}
+				if (Input::GetConButtons(m_con_num, GAMEPAD_A) == true)
+				{
+					if (m_hit_down == true)
+					{
+						Audio::Start(2);
+						m_vy = -8;
+					}
+
+				}
+				if (Input::GetConButtons(m_con_num, GAMEPAD_X) == true)
+				{
+					//ダッシュ時の速度
+					if (m_con_x > 1.0f)
+						m_con_x = 1.0f;
+					if (m_con_x < -1.0f)
+						m_con_x = -1.0f;
+					m_ani_max_time = 2;
+				}
+				else
+				{
+					//通常速度
+					if (m_con_x > 0.5f)
+						m_con_x = 0.5f;
+					if (m_con_x < -0.5f)
+						m_con_x = -0.5f;
+					m_ani_max_time = 4;
+				}
+				if (m_con_x > 0.0f)
+				{
+					m_vx += m_con_x;
+					m_posture = 1.0f;
+					m_ani_time += 1;
+					m_con_flag = true;
+				}
+				if (m_con_x < 0.0f)
+				{
+					m_vx += m_con_x;
+					m_posture = 0.0f;
+					m_ani_time += 1;
+					m_con_flag = true;
+				}
+				//昇降処理
+				if (Input::GetConVecStickLY(m_con_num) > 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
+				{
+					m_vy = 0.0f;
+				}
+				else if (Input::GetConVecStickLY(m_con_num) > 0.0f && Input::GetConVecStickLY(m_con_num) < 0.0f
+					&& climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+				{
+					//操作なしの場合はその場所に留まる
+					m_vy = 0.0f;
+				}
+				else if (Input::GetConVecStickLY(m_con_num) > 0.1f && climb_flag == true/* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
+					m_vy = -3.0f;
+					m_ani_time += 1;
+				}
+				else if (Input::GetConVecStickLY(m_con_num) < -0.1f && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
+					m_vy = +3.0f;
+					m_ani_time += 1;
+				}
+			}
+			else
+			{
+				//Xキー入力でジャンプ
+				if (Input::GetVKey('X') == true)
+				{
+					if (m_hit_down == true)
+					{
+						Audio::Start(2);
+						m_vy = -8;
+					}
 				}
 
-		}
-		if (Input::GetConButtons(m_con_num, GAMEPAD_X) == true)
-		{
-			//ダッシュ時の速度
-			if (m_con_x > 1.0f)
-				m_con_x = 1.0f;
-			if(m_con_x<-1.0f)
-				m_con_x = -1.0f;
-			m_ani_max_time = 2;
-		}
-		else
-		{
-			//通常速度
-			if (m_con_x > 0.5f)
-				m_con_x = 0.5f;
-			if (m_con_x < -0.5f)
-				m_con_x = -0.5f;
-			m_ani_max_time = 4;
-		}
-		if (m_con_x > 0.0f)
-		{
-			m_vx += m_con_x;
-			m_posture = 1.0f;
-			m_ani_time += 1;
-			m_con_flag = true;
-		}
-		if (m_con_x < 0.0f)
-		{
-			m_vx += m_con_x;
-			m_posture = 0.0f;
-			m_ani_time += 1;
-			m_con_flag = true;
-		}
-		//昇降処理
-		if (Input::GetConVecStickLY(m_con_num)>0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
-		{
-			m_vy = 0.0f;
-		}
-		else if (Input::GetConVecStickLY(m_con_num) > 0.0f&& climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-		{
-			m_vy = -3.0f;
-		}
-		else if (Input::GetConVecStickLY(m_con_num) < 0.0f  && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-		{
-			m_vy = +3.0f;
-		}
-		//Xキー入力でジャンプ
-		if (Input::GetVKey('X') == true)
-		{
-			if (m_hit_down == true)
-			{
-				Audio::Start(2);
-				m_vy = -8;
+				//Zキー入力で速度アップ
+				if (Input::GetVKey('Z') == true)
+				{
+					//ダッシュ時の速度
+					m_speed_power = 1.0f;
+					m_ani_max_time = 2;
+				}
+				else
+				{
+					//通常速度
+					m_speed_power = 0.5f;
+					m_ani_max_time = 4;
+				}
+
+
+
+				//キーの入力方向
+				if (Input::GetVKey(VK_RIGHT) == true)
+				{
+					m_vx += m_speed_power;
+					m_posture = 1.0f;
+					m_ani_time += 1;
+				}
+
+				else if (Input::GetVKey(VK_LEFT) == true)
+				{
+					m_vx -= m_speed_power;
+					m_posture = 0.0f;
+					m_ani_time += 1;
+				}
+
+
+
+
+				//昇降処理
+				if (Input::GetVKey(VK_UP) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
+				{
+					//植物の一番上に当たっている場合は上に移動不可
+					m_vy = 0.0f;
+				}
+				else if (Input::GetVKey(VK_UP) == false && Input::GetVKey(VK_DOWN) == false && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+				{
+					//操作なしの場合はその場所に留まる
+					m_vy = 0.0f;
+				}
+				else if (Input::GetVKey(VK_UP) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
+					m_vy = -3.0f;
+					m_ani_time += 1;
+
+				}
+				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
+					m_vy = +3.0f;
+					m_ani_time += 1;
+
+				}
 			}
-		}
-
-		//Zキー入力で速度アップ
-		if (Input::GetVKey('Z') == true)
-		{
-			//ダッシュ時の速度
-			m_speed_power = 1.0f;
-			m_ani_max_time = 2;
-		}
-		else
-		{
-			//通常速度
-			m_speed_power = 0.5f;
-			m_ani_max_time = 4;
-		}
-
-
-
-			//キーの入力方向
-			if (Input::GetVKey(VK_RIGHT) == true)
-			{
-				m_vx += m_speed_power;
-				m_posture = 1.0f;
-				m_ani_time += 1;
-			}
-
-			else if (Input::GetVKey(VK_LEFT) == true)
-			{
-				m_vx -= m_speed_power;
-				m_posture = 0.0f;
-				m_ani_time += 1;
-			}
-
-
-
-
-			//昇降処理
-			if (Input::GetVKey(VK_UP) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
-			{
-				//植物の一番上に当たっている場合は上に移動不可
-				m_vy = 0.0f;
-			}
-			else if (Input::GetVKey(VK_UP) == false && Input::GetVKey(VK_DOWN) == false && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-			{
-				//操作なしの場合はその場所に留まる
-				m_vy = 0.0f;
-			}
-			else if (Input::GetVKey(VK_UP) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
-			{
-				m_vy = -3.0f;
-				m_ani_time += 1;
-
-			}
-			else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
-			{
-				m_vy = +3.0f;
-				m_ani_time += 1;
-
-			}
-
-			else if (m_con_flag == false&& Input::GetVKey(VK_RIGHT) == false&& Input::GetVKey(VK_LEFT) == false)
+			 if (m_con_flag == false&& Input::GetVKey(VK_RIGHT) == false&& Input::GetVKey(VK_LEFT) == false)
 			{
 				m_ani_frame = 1;  //キー入力が無い場合は静止フレームにする
 				m_ani_time = 0;
@@ -377,7 +389,7 @@ void CObjHero::Action()
 			}
 
 			//昇降処理  一旦Input系の処理はここでは必要ない
-			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) < 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
+			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) < 0.0f|| Input::GetConVecStickLY(m_con_num) > 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
 			{
 				climb_flag = true;
 			}
