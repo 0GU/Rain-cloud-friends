@@ -177,7 +177,7 @@ void CObjStage::Draw()
 				else if (m_map[i][j] == 3)
 				{
 					//ゴールブロック
-					BlockDraw(64.0f, 64.0f, &dst, c);
+					BlockDraw(0.0f, 64.0f, &dst, c);
 				}
 				else if (m_map[i][j] == 4)
 				{
@@ -407,7 +407,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 							//右
 							*right = true;//オブジェクトの左の部分が衝突している
 							*x = bx + 64.0f + (scroll);//ブロックの位置+オブジェクトの幅
-							*vx = -(*vx) * 0.1f;//-VX*反発係数
+							//*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
 						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 13))
@@ -428,7 +428,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 							//左
 							*left = true;//オブジェクトの右の部分が衝突している
 							*x = bx - size_x + (scroll);//ブロックの位置-オブジェクトの幅
-							*vx = -(*vx) * 0.1f;//-VX*反発係数
+							//*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
 						if (r > 225 && r < 315 && climb == false)
