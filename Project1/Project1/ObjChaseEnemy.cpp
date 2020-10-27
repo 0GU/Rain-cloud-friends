@@ -52,7 +52,7 @@ void CObjChaseEnemy::Action()
 	if (stay_flag == false)
 	{
 		//通常速度
-		m_speed_power = 0.2f;
+		m_speed_power = 0.5f;
 		m_ani_max_time = 4;
 
 		//ブロック情報を持ってくる
@@ -187,6 +187,6 @@ void CObjChaseEnemy::Draw()
 	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
 
 	//描画
-	Draw::Draw(9, &src, &dst, c, 0.0f);
+	Draw::Draw(11, &src, &dst, c, 0.0f);
 
 }
