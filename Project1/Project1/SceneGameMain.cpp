@@ -94,6 +94,9 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/—d¸.png", 12, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/Šâ.png", 13, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰¼/test—‚Ìq.png", 15, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/ƒWƒƒƒ“ƒv.png", 16, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/€–S.png", 17, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/A•¨.png", 18, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰¼/Game”wŒi‰¼.png", 22, TEX_SIZE_1024);
 	if(stageselect==1)
 	{
