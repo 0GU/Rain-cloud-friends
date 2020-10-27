@@ -152,75 +152,75 @@ void CObjHero::Action()
 					m_vy = -8;
 				}
 
-			}
-			if (Input::GetConButtons(m_con_num, GAMEPAD_X) == true)
+		}
+		if (Input::GetConButtons(m_con_num, GAMEPAD_X) == true)
+		{
+			//ダッシュ時の速度
+			if (m_con_x > 1.0f)
+				m_con_x = 1.0f;
+			if(m_con_x<-1.0f)
+				m_con_x = -1.0f;
+			m_ani_max_time = 2;
+		}
+		else
+		{
+			//通常速度
+			if (m_con_x > 0.5f)
+				m_con_x = 0.5f;
+			if (m_con_x < -0.5f)
+				m_con_x = -0.5f;
+			m_ani_max_time = 4;
+		}
+		if (m_con_x > 0.0f)
+		{
+			m_vx += m_con_x;
+			m_posture = 1.0f;
+			m_ani_time += 1;
+			m_con_flag = true;
+		}
+		if (m_con_x < 0.0f)
+		{
+			m_vx += m_con_x;
+			m_posture = 0.0f;
+			m_ani_time += 1;
+			m_con_flag = true;
+		}
+		//昇降処理
+		if (Input::GetConVecStickLY(m_con_num)>0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
+		{
+			m_vy = 0.0f;
+		}
+		else if (Input::GetConVecStickLY(m_con_num) > 0.0f&& climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+		{
+			m_vy = -3.0f;
+		}
+		else if (Input::GetConVecStickLY(m_con_num) < 0.0f  && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+		{
+			m_vy = +3.0f;
+		}
+		//Xキー入力でジャンプ
+		if (Input::GetVKey('X') == true)
+		{
+			if (m_hit_down == true)
 			{
-				//ダッシュ時の速度
-				if (m_con_x > 1.1f)
-					m_con_x = 1.1f;
-				if (m_con_x < -1.1f)
-					m_con_x = -1.1f;
-				m_ani_max_time = 2;
+				Audio::Start(2);
+				m_vy = -8;
 			}
-			else
-			{
-				//通常速度
-				if (m_con_x > 0.5f)
-					m_con_x = 0.5f;
-				if (m_con_x < -0.5f)
-					m_con_x = -0.5f;
-				m_ani_max_time = 4;
-			}
-			if (m_con_x > 0.0f)
-			{
-				m_vx += m_con_x;
-				m_posture = 1.0f;
-				m_ani_time += 1;
-				m_con_flag = true;
-			}
-			if (m_con_x < 0.0f)
-			{
-				m_vx += m_con_x;
-				m_posture = 0.0f;
-				m_ani_time += 1;
-				m_con_flag = true;
-			}
-			//昇降処理
-			if (Input::GetConVecStickLY(m_con_num) > 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-			{
-				m_vy = 0.0f;
-			}
-			else if (Input::GetConVecStickLY(m_con_num) > 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-			{
-				m_vy = -3.0f;
-			}
-			else if (Input::GetConVecStickLY(m_con_num) < 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-			{
-				m_vy = +3.0f;
-			}
-			//Xキー入力でジャンプ
-			if (Input::GetVKey('X') == true)
-			{
-				if (m_hit_down == true)
-				{
-					Audio::Start(2);
-					m_vy = -8;
-				}
-			}
+		}
 
-			//Zキー入力で速度アップ
-			if (Input::GetVKey('Z') == true)
-			{
-				//ダッシュ時の速度
-				m_speed_power = 1.1f;
-				m_ani_max_time = 2;
-			}
-			else
-			{
-				//通常速度
-				m_speed_power = 0.5f;
-				m_ani_max_time = 4;
-			}
+		//Zキー入力で速度アップ
+		if (Input::GetVKey('Z') == true)
+		{
+			//ダッシュ時の速度
+			m_speed_power = 1.0f;
+			m_ani_max_time = 2;
+		}
+		else
+		{
+			//通常速度
+			m_speed_power = 0.5f;
+			m_ani_max_time = 4;
+		}
 
 
 
@@ -401,28 +401,36 @@ void CObjHero::Action()
 				Scene::SetScene(new CSceneClear(m_hp, cloud->m_hp, reset));//HeroのHPと雲からm_hp(雲のＨＰ)とStage情報を持ってくる
 			}
 
-			//石との当たり判定------------------------------------------------------------------------------------------------------------------------------------------
-			CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
-			if (m_vy < -1.0f)
-			{
-				//ジャンプしてる場合は下記の影響を出ないようにする
-			}
-			else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && Stone->GetPY() <= m_py + 64 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
-			{
-				//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
-				//また、地面に当たってる判定にする
-				m_py = Stone->GetPY() + pb->GetScrollY() - 63;
-				m_vy = 0.0f;
-				m_hit_down = true;
-			}
-			else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
-				((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
-					m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
+		//石との当たり判定------------------------------------------------------------------------------------------------------------------------------------------
+		CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
+		if (m_vy < -1.0f)
+		{
+			//ジャンプしてる場合は下記の影響を出ないようにする
+		}
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&Stone->GetPY() <= m_py + 64 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
+		{
+			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
+			//また、地面に当たってる判定にする
+			m_py = Stone->GetPY() + pb->GetScrollY() - 63;
+			m_vy = 0.0f;
+			m_hit_down = true;
+		}
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
+			((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
+				m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
+		{
+			if (Stone->Gethr()==false)
 			{
 				m_vx /= 2;
 				Stone->SetVX(m_vx);
 			}
-			//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+			else if (Stone->Gethr() ==true)
+			{
+				m_vx = 0;
+			}
+
+		}
+		//-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 

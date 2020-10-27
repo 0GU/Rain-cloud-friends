@@ -83,9 +83,9 @@ void CObjStage::Action()
 		*/
 		//-------------------------------------------------
 	//後方スクロールライン
-	if (hx < 75)
+	if (hx < 64)
 	{
-		hero->SetX(75);				//主人公はラインを超えないようにする
+		hero->SetX(64);				//主人公はラインを超えないようにする
 		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -172,12 +172,12 @@ void CObjStage::Draw()
 				if (m_map[i][j] == 2)
 				{
 					//スタートブロック
-					BlockDraw(320.0f + 64.0f, 0.0f, &dst, c);
+					BlockDraw(0.0f, 0.0f, &dst, c);
 				}
 				else if (m_map[i][j] == 3)
 				{
 					//ゴールブロック
-					BlockDraw(320.0f + 64.0f, 64.0f, &dst, c);
+					BlockDraw(64.0f, 64.0f, &dst, c);
 				}
 				else if (m_map[i][j] == 4)
 				{
@@ -268,9 +268,16 @@ void CObjStage::Draw()
 					Objs::InsertObj(objh, OBJ_STONE, 10);
 					m_map[i][j] = 0;
 				}
+				else if (m_map[i][j] == 99)
+				{
+
+				//土ブロック
+				BlockDraw(64.0f, 64.0f, &dst, c);
+				}
 				else
 				{
-					BlockDraw(320.0f + 0.0f, 0.0f, &dst, c);
+
+					BlockDraw(64.0f, 0.0f, &dst, c);
 				}
 			}
 		}
@@ -388,7 +395,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 					if (len < size_y*1.375)//もともとの値はlen<88.0f
 					{
 						//角度で上下左右を判定
-						if ((r < 45 && r > 0) || r > 315)
+						if ((r < 46 && r >= 0) || r > 315)
 						{
 							//右
 							*right = true;//オブジェクトの左の部分が衝突している

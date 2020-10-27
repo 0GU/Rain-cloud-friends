@@ -20,7 +20,7 @@ CObjRain::CObjRain(float x,float y)
 //イニシャライズ
 void CObjRain::Init()
 {
-	m_vy = 5.0f;
+	m_vy = 10.0f;
 	CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px+pb->GetScroll(), m_py+pb->GetScrollY(), 64, 64, ELEMENT_PLAYER, OBJ_RAIN, 1);

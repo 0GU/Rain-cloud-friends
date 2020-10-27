@@ -19,7 +19,7 @@ public:
 	float GetPX_L() { return m_px; };
 	float GetPX_R() { return m_px+128; };
 	float GetPY() { return m_py; };
-
+	bool Gethr() { return m_hit_right; };
 	//block‚Æ‚ÌÕ“Ëó‘ÔŠm”F—p
 	bool m_hit_up;
 	bool m_hit_down;

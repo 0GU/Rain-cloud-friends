@@ -79,7 +79,7 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(10, L"‘fŞ/SE/•m€.wav", SOUND_TYPE::EFFECT);
 
 	//‰æ‘œî•ñ‚ğ“o˜^
-	Draw::LoadImageW(L"‘fŞ/‰¼/image.png", 0, TEX_SIZE_2048);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/testtt.png", 0, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰¼/mapcip.png", 1, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰¼/Animation.png", 2, TEX_SIZE_64);
 	Draw::LoadImageW(L"‘fŞ/‰¼/ƒ|[ƒY.png", 3, TEX_SIZE_1024);
@@ -98,6 +98,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/€–S.png", 17, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/A•¨.png", 18, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰¼/Game”wŒi‰¼.png", 22, TEX_SIZE_1024);
+
 	if(stageselect==1)
 	{
 		Audio::Start(0);
