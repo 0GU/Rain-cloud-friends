@@ -399,7 +399,7 @@ void CObjHero::Action()
 			}
 
 			//落下によるゲームオーバー＆リスタート
-			if (m_py - block->GetScrollY() > 1000)
+			if (m_py - block->GetScrollY() > 1300)
 			{
 				//場外に出たらリスタート
 				Scene::SetScene(new CSceneGameMain(reset));
@@ -490,7 +490,7 @@ void CObjHero::Draw()
 	dst.m_right = (64 - 64.0f * m_posture) + m_px;
 	dst.m_bottom = 64.0f + m_py;
 	//切り取り位置の設定
-	if (over_flag == false&&(climb_flag==false)||m_hit_down==true)
+	if (over_flag == false&&(climb_flag==false||m_hit_down==true))
 	{
 		src.m_top = 0.0f;
 		src.m_left = 32.0f + AniData[m_ani_frame] * 256;

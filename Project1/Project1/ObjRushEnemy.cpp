@@ -250,8 +250,8 @@ void CObjRushEnemy::Draw()
 //切り取り位置の設定
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 256.0f;
-	src.m_bottom =256.0f;
+	src.m_right = 512.0f;
+	src.m_bottom =420.0f;
 
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);

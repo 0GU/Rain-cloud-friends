@@ -83,16 +83,16 @@ void CObjStage::Action()
 		*/
 		//-------------------------------------------------
 	//後方スクロールライン
-	if (hx < 64)
+	if (hx < 200)
 	{
-		hero->SetX(64);				//主人公はラインを超えないようにする
+		hero->SetX(200);				//主人公はラインを超えないようにする
 		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
 	//前方スクロールライン
-	if (hx > 300)
+	if (hx > 400)
 	{
-		hero->SetX(300);			//主人公はラインを超えないようにする
+		hero->SetX(400);			//主人公はラインを超えないようにする
 		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -104,9 +104,9 @@ void CObjStage::Action()
 	}
 
 	//下方スクロールライン
-	if (hy > 536)
+	if (hy > 336)
 	{
-		hero->SetY(536);			//主人公はラインを超えないようにする
+		hero->SetY(336);			//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -201,6 +201,13 @@ void CObjStage::Draw()
 					//突進敵オブジェクト作成（仮）
 					CObjRushEnemy* objr = new CObjRushEnemy(j * 64.0f, i * 64.0f);
 					Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
+					m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 8)
+				{
+					//追尾敵オブジェクト作成（仮）
+					CObjChaseEnemy* objc = new CObjChaseEnemy(j * 64.0f, i * 64.0f);
+					Objs::InsertObj(objc, OBJ_CHASE_ENEMY, 10);
 					m_map[i][j] = 0;
 				}
 				/*else if (m_map[i][j] == 13)

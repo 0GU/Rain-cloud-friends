@@ -105,7 +105,7 @@ void CSceneGameMain::InitScene()
 		Audio::Start(1);
 	}
 	
-	Draw::LoadImageW(L"素材/画像/runba.png", 14, TEX_SIZE_256);
+	Draw::LoadImageW(L"素材/画像/イノシシ.png", 14, TEX_SIZE_256);
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成
