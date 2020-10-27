@@ -62,6 +62,7 @@ void CObjHero::Init()
 	m_con_x = 0.0f;
 	m_con_y = 0.0f;
 	m_con_num = 0;
+	m_con_flag = false;
 
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
@@ -191,8 +192,7 @@ void CObjHero::Action()
 				{
 					m_vy = 0.0f;
 				}
-				else if (Input::GetConVecStickLY(m_con_num) > 0.0f && Input::GetConVecStickLY(m_con_num) < 0.0f
-					&& climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+				else if (Input::GetConVecStickLY(m_con_num) == 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
 				{
 					//操作なしの場合はその場所に留まる
 					m_vy = 0.0f;
@@ -278,7 +278,12 @@ void CObjHero::Action()
 
 				}
 			}
-			 if (m_con_flag == false&& Input::GetVKey(VK_RIGHT) == false&& Input::GetVKey(VK_LEFT) == false)
+			//1.
+			//2.
+			//3.
+			if ((m_con_num != 5 && m_con_flag == false && Input::GetConVecStickLY(m_con_num) == 0.0f) ||
+				(m_con_num == 5 && climb_flag == false && Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false) ||
+				(m_con_num == 5 && climb_flag == true  && Input::GetVKey(VK_UP)    == false && Input::GetVKey(VK_DOWN) == false))
 			{
 				m_ani_frame = 1;  //キー入力が無い場合は静止フレームにする
 				m_ani_time = 0;
@@ -389,7 +394,7 @@ void CObjHero::Action()
 			}
 
 			//昇降処理  一旦Input系の処理はここでは必要ない
-			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) < 0.0f|| Input::GetConVecStickLY(m_con_num) > 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
+			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) != 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
 			{
 				climb_flag = true;
 			}
