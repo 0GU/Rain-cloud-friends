@@ -83,16 +83,16 @@ void CObjStage::Action()
 		*/
 		//-------------------------------------------------
 	//後方スクロールライン
-	if (hx < 75)
+	if (hx < 200)
 	{
-		hero->SetX(75);				//主人公はラインを超えないようにする
+		hero->SetX(200);				//主人公はラインを超えないようにする
 		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
 	//前方スクロールライン
-	if (hx > 300)
+	if (hx > 400)
 	{
-		hero->SetX(300);			//主人公はラインを超えないようにする
+		hero->SetX(400);			//主人公はラインを超えないようにする
 		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -104,9 +104,9 @@ void CObjStage::Action()
 	}
 
 	//下方スクロールライン
-	if (hy > 536)
+	if (hy > 336)
 	{
-		hero->SetY(536);			//主人公はラインを超えないようにする
+		hero->SetY(336);			//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -172,12 +172,12 @@ void CObjStage::Draw()
 				if (m_map[i][j] == 2)
 				{
 					//スタートブロック
-					BlockDraw(320.0f + 64.0f, 0.0f, &dst, c);
+					BlockDraw(0.0f, 0.0f, &dst, c);
 				}
 				else if (m_map[i][j] == 3)
 				{
 					//ゴールブロック
-					BlockDraw(320.0f + 64.0f, 64.0f, &dst, c);
+					BlockDraw(0.0f, 64.0f, &dst, c);
 				}
 				else if (m_map[i][j] == 4)
 				{
@@ -201,6 +201,13 @@ void CObjStage::Draw()
 					//突進敵オブジェクト作成（仮）
 					CObjRushEnemy* objr = new CObjRushEnemy(j * 64.0f, i * 64.0f);
 					Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
+					m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 8)
+				{
+					//追尾敵オブジェクト作成（仮）
+					CObjChaseEnemy* objc = new CObjChaseEnemy(j * 64.0f, i * 64.0f);
+					Objs::InsertObj(objc, OBJ_CHASE_ENEMY, 10);
 					m_map[i][j] = 0;
 				}
 				/*else if (m_map[i][j] == 13)
@@ -268,9 +275,16 @@ void CObjStage::Draw()
 					Objs::InsertObj(objh, OBJ_STONE, 10);
 					m_map[i][j] = 0;
 				}
+				else if (m_map[i][j] == 99)
+				{
+
+				//土ブロック
+				BlockDraw(64.0f, 64.0f, &dst, c);
+				}
 				else
 				{
-					BlockDraw(320.0f + 0.0f, 0.0f, &dst, c);
+
+					BlockDraw(64.0f, 0.0f, &dst, c);
 				}
 			}
 		}
@@ -388,12 +402,12 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 					if (len < size_y*1.375)//もともとの値はlen<88.0f
 					{
 						//角度で上下左右を判定
-						if ((r < 45 && r > 0) || r > 315)
+						if ((r < 46 && r >= 0) || r > 315)
 						{
 							//右
 							*right = true;//オブジェクトの左の部分が衝突している
 							*x = bx + 64.0f + (scroll);//ブロックの位置+オブジェクトの幅
-							*vx = -(*vx) * 0.1f;//-VX*反発係数
+							//*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
 						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 13))
@@ -414,7 +428,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 							//左
 							*left = true;//オブジェクトの右の部分が衝突している
 							*x = bx - size_x + (scroll);//ブロックの位置-オブジェクトの幅
-							*vx = -(*vx) * 0.1f;//-VX*反発係数
+							//*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
 						if (r > 225 && r < 315 && climb == false)

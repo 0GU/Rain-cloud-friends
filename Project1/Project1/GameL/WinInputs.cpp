@@ -106,7 +106,7 @@ int CWinInputs::UpdateXControlerConnected()
 		else
 			GAME_PAD[i].m_bConnected = false;
 	}
-	return 0;
+	return 5;
 }
 
 

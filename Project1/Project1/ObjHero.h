@@ -76,6 +76,8 @@ private:
 
 	bool landing_flag;//地面に着地した時用フラグ
 
+	bool over_flag;//死亡フラグ
+
 	float m_py_h;
 
 	int m_enemynum;	//接触物の種類判別用

@@ -54,12 +54,15 @@ void CObjHero::Init()
 
 	landing_flag = false;
 
+	over_flag = false;
+
 	m_block_type = 0;		//踏んでいるblockの種類を確認用
 
 	//コントローラー用仮変数
 	m_con_x = 0.0f;
 	m_con_y = 0.0f;
 	m_con_num = 0;
+	m_con_flag = false;
 
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
@@ -75,10 +78,12 @@ void CObjHero::Action()
 	stay_flag = p->GetFlag();
 
 	//HPが0でリスタート（仮）
-	if (m_hp <= 0.0f)
+	if (m_hp <= 0.0f&&over_flag==false)
 	{
+		over_flag = true;
+		m_ani_frame = 0;
+		m_ani_time = 0;
 		//Scene::SetScene(new CSceneGameMain(reset));
-		Scene::SetScene(new CSceneOver(reset));
 	}
 
 	//ブロックとの当たり判定実行
@@ -91,300 +96,327 @@ void CObjHero::Action()
 	//落下ダメージ処理-----------------------------------------------------------------------------------------------------------------------------
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
-	if (m_hit_down == true)
+	if (over_flag == false)
 	{
-		if (falldamage_flag == false)
+		if (m_hit_down == true)
 		{
-			falldamage_flag = true;
-			if ((m_py - m_py_h - block->GetScrollY()) / 64 >= 5 && hit->CheckElementHit(ELEMENT_IVY) == false && reset_falldamage_cacancel_flag == false)
+			if (falldamage_flag == false)
 			{
-				m_hp -= 0.04*(int)(m_py - m_py_h - block->GetScrollY()) / 64;
+				falldamage_flag = true;
+				if ((m_py - m_py_h - block->GetScrollY()) / 64 >= 5 && hit->CheckElementHit(ELEMENT_IVY) == false && reset_falldamage_cacancel_flag == false)
+				{
+					m_hp -= 0.04 * (int)(m_py - m_py_h - block->GetScrollY()) / 64;
+				}
 			}
-		}
-		reset_falldamage_cacancel_flag = false;
-		m_py_h = m_py - block->GetScrollY();
-	}
-
-	if (m_hit_down == false)
-	{
-		falldamage_flag = false;
-		landing_flag = false;
-		if (m_py_h > m_py - block->GetScrollY())
-		{
+			reset_falldamage_cacancel_flag = false;
 			m_py_h = m_py - block->GetScrollY();
 		}
-	}
-	//----------------------------------------------------------------------------------------------------------------------------------------------
-	if (m_hit_down == true)
-	{
-		if (landing_flag == false)
+
+		if (m_hit_down == false)
 		{
-			landing_flag = true;//着地しました
-			if (landing_flag == true)
+			falldamage_flag = false;
+			landing_flag = false;
+			if (m_py_h > m_py - block->GetScrollY())
 			{
-				Audio::Start(3);
+				m_py_h = m_py - block->GetScrollY();
 			}
 		}
-	
-	}
-	
-	if (stay_flag == false)
-	{
-		//コントローラー操作仮
-		m_con_num = Input::UpdateXControlerConnected();
-		m_con_x = Input::GetConVecStickLX(m_con_num);
-		
-		if (m_con_x == 0.0f)
+		//----------------------------------------------------------------------------------------------------------------------------------------------
+		if (m_hit_down == true)
 		{
-			m_con_flag = false;
-		}
-		if (Input::GetConButtons(m_con_num, GAMEPAD_A) == true)
-		{
-			if (m_hit_down == true)
+			if (landing_flag == false)
 			{
-				Audio::Start(2);
-				m_vy = -8;
+				landing_flag = true;//着地しました
+				if (landing_flag == true)
+				{
+					Audio::Start(3);
+				}
 			}
 
 		}
-		if (Input::GetConButtons(m_con_num, GAMEPAD_X) == true)
+
+		if (stay_flag == false)
 		{
-			//ダッシュ時の速度
-			if (m_con_x > 1.1f)
-				m_con_x = 1.1f;
-			if(m_con_x<-1.1f)
-				m_con_x = -1.1f;
-			m_ani_max_time = 2;
-		}
-		else
-		{
-			//通常速度
-			if (m_con_x > 0.5f)
-				m_con_x = 0.5f;
-			if (m_con_x < -0.5f)
-				m_con_x = -0.5f;
-			m_ani_max_time = 4;
-		}
-		if (m_con_x > 0.0f)
-		{
-			m_vx += m_con_x;
-			m_posture = 1.0f;
-			m_ani_time += 1;
-			m_con_flag = true;
-		}
-		if (m_con_x < 0.0f)
-		{
-			m_vx += m_con_x;
-			m_posture = 0.0f;
-			m_ani_time += 1;
-			m_con_flag = true;
-		}
-		//昇降処理
-		if (Input::GetConVecStickLY(m_con_num)>0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
-		{
-			m_vy = 0.0f;
-		}
-		else if (Input::GetConVecStickLY(m_con_num) > 0.0f&& climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-		{
-			m_vy = -3.0f;
-		}
-		else if (Input::GetConVecStickLY(m_con_num) < 0.0f  && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-		{
-			m_vy = +3.0f;
-		}
-		//Xキー入力でジャンプ
-		if (Input::GetVKey('X') == true)
-		{
-			if (m_hit_down == true)
+			//コントローラー操作仮
+			m_con_num = Input::UpdateXControlerConnected();
+			m_con_x = Input::GetConVecStickLX(m_con_num);
+			if (m_con_num != 5)
 			{
-				Audio::Start(2);
-				m_vy = -8;
-			}
-		}
+				if (m_con_x == 0.0f)
+				{
+					m_con_flag = false;
+				}
+				if (Input::GetConButtons(m_con_num, GAMEPAD_A) == true)
+				{
+					if (m_hit_down == true)
+					{
+						Audio::Start(2);
+						m_vy = -8;
+					}
 
-		//Zキー入力で速度アップ
-		if (Input::GetVKey('Z') == true)
-		{
-			//ダッシュ時の速度
-			m_speed_power = 1.1f;
-			m_ani_max_time = 2;
-		}
-		else
-		{
-			//通常速度
-			m_speed_power = 0.5f;
-			m_ani_max_time = 4;
-		}
-
-
-
-		//キーの入力方向
-		if (Input::GetVKey(VK_RIGHT) == true)
-		{
-			m_vx += m_speed_power;
-			m_posture = 1.0f;
-			m_ani_time += 1;
-		}
-
-		else if (Input::GetVKey(VK_LEFT) == true)
-		{
-			m_vx -= m_speed_power;
-			m_posture = 0.0f;
-			m_ani_time += 1;
-		}
-
-
-
-
-		//昇降処理
-		else if (Input::GetVKey(VK_UP) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
-		{
-			m_vy = 0.0f;
-		}
-		else if (Input::GetVKey(VK_UP) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-		{
-			m_vy = -3.0f;
-		}
-		else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-		{
-			m_vy = +3.0f;
-		}
-
-		else if(m_con_flag==false)
-		{
-			m_ani_frame = 1;  //キー入力が無い場合は静止フレームにする
-			m_ani_time = 0;
-		}
-
-		if (m_ani_time > m_ani_max_time)
-		{
-			m_ani_frame += 1;
-			m_ani_time = 0;
-		}
-
-		if (m_ani_frame == 4)
-		{
-			m_ani_frame = 0;
-		}
-
-
-		//摩擦
-		m_vx += -(m_vx * 0.128);
-
-		//自由落下調整　オブジェクトの揺れを防ぎつつ
-		if (climb_flag == false || Input::GetVKey(VK_UP) == false)
-		{
-			if (m_vy < 0.45)
-			{
-				m_vy += 0.4;
+				}
+				if (Input::GetConButtons(m_con_num, GAMEPAD_X) == true)
+				{
+					//ダッシュ時の速度
+					if (m_con_x > 1.0f)
+						m_con_x = 1.0f;
+					if (m_con_x < -1.0f)
+						m_con_x = -1.0f;
+					m_ani_max_time = 2;
+				}
+				else
+				{
+					//通常速度
+					if (m_con_x > 0.5f)
+						m_con_x = 0.5f;
+					if (m_con_x < -0.5f)
+						m_con_x = -0.5f;
+					m_ani_max_time = 4;
+				}
+				if (m_con_x > 0.0f)
+				{
+					m_vx += m_con_x;
+					m_posture = 1.0f;
+					m_ani_time += 1;
+					m_con_flag = true;
+				}
+				if (m_con_x < 0.0f)
+				{
+					m_vx += m_con_x;
+					m_posture = 0.0f;
+					m_ani_time += 1;
+					m_con_flag = true;
+				}
+				//昇降処理
+				if (Input::GetConVecStickLY(m_con_num) > 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
+				{
+					m_vy = 0.0f;
+				}
+				else if (Input::GetConVecStickLY(m_con_num) == 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+				{
+					//操作なしの場合はその場所に留まる
+					m_vy = 0.0f;
+				}
+				else if (Input::GetConVecStickLY(m_con_num) > 0.1f && climb_flag == true/* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
+					m_vy = -3.0f;
+					m_ani_time += 1;
+				}
+				else if (Input::GetConVecStickLY(m_con_num) < -0.1f && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
+					m_vy = +3.0f;
+					m_ani_time += 1;
+				}
 			}
 			else
 			{
-				//落下する際は自由落下運動を使用する
-				m_vy += 9.8 / (16.0f);
+				//Xキー入力でジャンプ
+				if (Input::GetVKey('X') == true)
+				{
+					if (m_hit_down == true)
+					{
+						Audio::Start(2);
+						m_vy = -8;
+					}
+				}
+
+				//Zキー入力で速度アップ
+				if (Input::GetVKey('Z') == true)
+				{
+					//ダッシュ時の速度
+					m_speed_power = 1.0f;
+					m_ani_max_time = 2;
+				}
+				else
+				{
+					//通常速度
+					m_speed_power = 0.5f;
+					m_ani_max_time = 4;
+				}
+
+
+
+				//キーの入力方向
+				if (Input::GetVKey(VK_RIGHT) == true)
+				{
+					m_vx += m_speed_power;
+					m_posture = 1.0f;
+					m_ani_time += 1;
+				}
+
+				else if (Input::GetVKey(VK_LEFT) == true)
+				{
+					m_vx -= m_speed_power;
+					m_posture = 0.0f;
+					m_ani_time += 1;
+				}
+
+
+
+
+				//昇降処理
+				if (Input::GetVKey(VK_UP) == true && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
+				{
+					//植物の一番上に当たっている場合は上に移動不可
+					m_vy = 0.0f;
+				}
+				else if (Input::GetVKey(VK_UP) == false && Input::GetVKey(VK_DOWN) == false && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+				{
+					//操作なしの場合はその場所に留まる
+					m_vy = 0.0f;
+				}
+				else if (Input::GetVKey(VK_UP) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
+					m_vy = -3.0f;
+					m_ani_time += 1;
+
+				}
+				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
+					m_vy = +3.0f;
+					m_ani_time += 1;
+
+				}
 			}
-		}
-
-
-		pb->BlockHit(&m_px, &m_py, true,
-			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-			&m_vx, &m_vy, &m_block_type, climb_flag,64.0f,64.0f
-		);
-
-
-
-		//高速移動によるBlock判定
-		bool b;
-		float pxx, pyy, r;
-		CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-
-		if (pbb->GetScroll() > 0)
-			pbb->SetScroll(0);
-
-
-
-
-		//敵と当たっているか確認
-		if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
-		{
-			Audio::Start(4);
-			m_enemynum = 1;
-			EnemyHit(m_enemynum);
-		}
-		if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
-		{
-			Audio::Start(4);
-			m_enemynum = 2;
-			EnemyHit(m_enemynum);
-		}
-		if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
-		{
-			Audio::Start(4);
-			m_enemynum = 3;
-			EnemyHit(m_enemynum);
-		}
-		if (hit->CheckObjNameHit(OBJ_MAGIC) != nullptr)
-		{
-			Audio::Start(4);
-			m_enemynum = 4;
-			EnemyHit(m_enemynum);
-		}
-		if (hit->CheckObjNameHit(OBJ_RUSH_ENEMY) != nullptr)
-		{
-			Audio::Start(4);
-			m_enemynum = 5;
-			
-
-			CObjRushEnemy* Re = (CObjRushEnemy*)Objs::GetObj(OBJ_RUSH_ENEMY);
-			if (Re->GetY()+pb->GetScrollY() < m_py + 50)
+			//1.
+			//2.
+			//3.
+			if ((m_con_num != 5 && m_con_flag == false && Input::GetConVecStickLY(m_con_num) == 0.0f) ||
+				(m_con_num == 5 && climb_flag == false && Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false) ||
+				(m_con_num == 5 && climb_flag == true  && Input::GetVKey(VK_UP)    == false && Input::GetVKey(VK_DOWN) == false))
 			{
-				if (Re->GetX() + pb->GetScroll() + 75 < m_px + 32)
+				m_ani_frame = 1;  //キー入力が無い場合は静止フレームにする
+				m_ani_time = 0;
+			}
+
+			if (m_ani_time > m_ani_max_time)
+			{
+				m_ani_frame += 1;
+				m_ani_time = 0;
+			}
+
+			if (m_ani_frame == 4)
+			{
+				m_ani_frame = 0;
+			}
+
+
+			//摩擦
+			m_vx += -(m_vx * 0.128);
+
+			//自由落下調整　オブジェクトの揺れを防ぎつつ
+			if (climb_flag == false /*|| Input::GetVKey(VK_UP) == false*/)
+			{
+				if (m_vy < 0.45)
 				{
-					if (m_hit_time == 0)
-					{
-						m_vx = 20.0f;
-						m_vy -= 10.0f;
-					}
+					m_vy += 0.4;
 				}
-				if (Re->GetX() + pb->GetScroll() > m_px + 32)
+				else
 				{
-					if (m_hit_time == 0)
-					{
-						m_vx = -20.0f;
-						m_vy -= 10.0f;
-					}
-					
+					//落下する際は自由落下運動を使用する
+					m_vy += 9.8 / (16.0f);
 				}
 			}
-		
-			EnemyHit(m_enemynum);
-			
-		}
 
-		//昇降処理  一旦Input系の処理はここでは必要ない
-		if (hit->CheckElementHit(ELEMENT_IVY) == true/*&& (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) < 0.0f)*/)	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
-		{
-			climb_flag = true;
-		}
-		else if ((hit->CheckElementHit(ELEMENT_IVY) == false && hit->CheckElementHit(ELEMENT_FLOWER) == false && climb_flag == true) || Input::GetVKey(VK_UP) == false)	//昇降フラグをfalseにする処理
-		{
-			climb_flag = false;
-		}
 
-		//落下によるゲームオーバー＆リスタート
-		if (m_py - block->GetScrollY() > 1000)
-		{
-			//場外に出たらリスタート
-			Scene::SetScene(new CSceneGameMain(reset));
-		}
+			pb->BlockHit(&m_px, &m_py, true,
+				&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
+				&m_vx, &m_vy, &m_block_type, climb_flag, 64.0f, 64.0f
+			);
 
-		//ゴールブロックに触れると
-		if (GetBT() == 3)
-		{
-			CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
-			CObjStageSelect* stage = (CObjStageSelect*)Objs::GetObj(OBJ_STAGE_SELECT);
-			Scene::SetScene(new CSceneClear(m_hp,cloud->m_hp,reset));//HeroのHPと雲からm_hp(雲のＨＰ)とStage情報を持ってくる
-		}
+
+
+			//高速移動によるBlock判定
+			bool b;
+			float pxx, pyy, r;
+
+			if (pb->GetScroll() > 0)
+				pb->SetScroll(0);
+
+
+
+
+			//敵と当たっているか確認
+			if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
+			{
+				Audio::Start(4);
+				m_enemynum = 1;
+				EnemyHit(m_enemynum);
+			}
+			if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
+			{
+				Audio::Start(4);
+				m_enemynum = 2;
+				EnemyHit(m_enemynum);
+			}
+			if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
+			{
+				Audio::Start(4);
+				m_enemynum = 3;
+				EnemyHit(m_enemynum);
+			}
+			if (hit->CheckObjNameHit(OBJ_MAGIC) != nullptr)
+			{
+				Audio::Start(4);
+				m_enemynum = 4;
+				EnemyHit(m_enemynum);
+			}
+			if (hit->CheckObjNameHit(OBJ_RUSH_ENEMY) != nullptr)
+			{
+				Audio::Start(4);
+				m_enemynum = 5;
+
+
+				CObjRushEnemy* Re = (CObjRushEnemy*)Objs::GetObj(OBJ_RUSH_ENEMY);
+				if (Re->GetY() + pb->GetScrollY() < m_py + 50)
+				{
+					if (Re->GetX() + pb->GetScroll() + 75 < m_px + 32)
+					{
+						if (m_hit_time == 0)
+						{
+							m_vx = 20.0f;
+							m_vy -= 10.0f;
+						}
+					}
+					if (Re->GetX() + pb->GetScroll() > m_px + 32)
+					{
+						if (m_hit_time == 0)
+						{
+							m_vx = -20.0f;
+							m_vy -= 10.0f;
+						}
+
+					}
+				}
+
+				EnemyHit(m_enemynum);
+
+			}
+
+			//昇降処理  一旦Input系の処理はここでは必要ない
+			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) != 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
+			{
+				climb_flag = true;
+			}
+			else if (hit->CheckElementHit(ELEMENT_IVY) == false && hit->CheckElementHit(ELEMENT_FLOWER) == false && climb_flag == true)/* || Input::GetVKey(VK_UP) == false)*/	//昇降フラグをfalseにする処理
+			{
+				climb_flag = false;
+			}
+
+			//落下によるゲームオーバー＆リスタート
+			if (m_py - block->GetScrollY() > 1300)
+			{
+				//場外に出たらリスタート
+				Scene::SetScene(new CSceneGameMain(reset));
+			}
+
+			//ゴールブロックに触れると
+			if (GetBT() == 3)
+			{
+				CObjCloud* cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
+				CObjStageSelect* stage = (CObjStageSelect*)Objs::GetObj(OBJ_STAGE_SELECT);
+				Scene::SetScene(new CSceneClear(m_hp, cloud->m_hp, reset));//HeroのHPと雲からm_hp(雲のＨＰ)とStage情報を持ってくる
+			}
 
 		//石との当たり判定------------------------------------------------------------------------------------------------------------------------------------------
 		CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
@@ -404,22 +436,43 @@ void CObjHero::Action()
 			((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
 				m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
 		{
-			m_vx /= 2;
-			Stone->SetVX(m_vx);
+			if (Stone->Gethr()==false)
+			{
+				m_vx /= 2;
+				Stone->SetVX(m_vx);
+			}
+			else if (Stone->Gethr() ==true)
+			{
+				m_vx = 0;
+			}
+
 		}
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
-		//位置の更新
-		m_px += m_vx;
-		m_py += m_vy;
+			//位置の更新
+			m_px += m_vx;
+			m_py += m_vy;
 
-		//HitBoxの位置の変更
-		hit->SetPos(m_px, m_py);
+			//HitBoxの位置の変更
+			hit->SetPos(m_px, m_py);
+		}
 	}
+	else if (over_flag == true)//実験　死亡時のアニメーション
+	{
+		m_ani_time++;
 
-	
+		if (m_ani_time > m_ani_max_time * 5)
+		{
+			m_ani_frame += 1;
+			m_ani_time = 0;
+		}
+		if (m_ani_frame == 3 && m_ani_time >= m_ani_max_time * 5)
+		{
+			Scene::SetScene(new CSceneOver(reset));
+		}
+	}
 }
 
 //ドロー
@@ -436,20 +489,51 @@ void CObjHero::Draw()
 	RECT_F src; //描画元切り取り位置
 	RECT_F dst; //描画先表示位置
 
-	//切り取り位置の設定
-	src.m_top = 0.0f;
-	src.m_left = 32.0f + AniData[m_ani_frame] * 256;
-	src.m_right = 224.0f + AniData[m_ani_frame] * 256;
-	src.m_bottom = 256.0f;
-
 	//表示位置の設定
 	dst.m_top = 0.0f + m_py;
 	dst.m_left = (64.0f * m_posture) + m_px;
 	dst.m_right = (64 - 64.0f * m_posture) + m_px;
 	dst.m_bottom = 64.0f + m_py;
+	//切り取り位置の設定
+	if (over_flag == false&&(climb_flag==false||m_hit_down==true))
+	{
+		src.m_top = 0.0f;
+		src.m_left = 32.0f + AniData[m_ani_frame] * 256;
+		src.m_right = 224.0f + AniData[m_ani_frame] * 256;
+		src.m_bottom = 256.0f;
+		//描画
+		Draw::Draw(15, &src, &dst, c, 0.0f);
 
-	//描画
-	Draw::Draw(15, &src, &dst, c, 0.0f);
+	}
+	else if (over_flag == true)//実験　死亡時のアニメーション描画
+	{
+		src.m_top = 0.0f;
+		src.m_left = 1.0f + m_ani_frame * 247;
+		src.m_right = 244.0f + m_ani_frame * 247;
+		src.m_bottom = 245.0f;
+		//描画
+		Draw::Draw(17, &src, &dst, c, 0.0f);
+	}
+	else if (climb_flag == true)
+	{
+		src.m_top = 0.0f;
+		src.m_left = 5.0f + m_ani_frame * 253;
+		src.m_right = 257.0f + m_ani_frame * 253;
+		src.m_bottom = 431.0f;
+		if (m_posture == 0)
+		{
+			dst.m_left = m_px + 10.0f;
+			dst.m_right = dst.m_left + 44.0f;
+		}
+		else
+		{
+			dst.m_left = m_px + 44.0f + 10.0f;
+			dst.m_right = m_px + 10.0f;
+		}
+		//描画
+		Draw::Draw(18, &src, &dst, c, 0.0f);
+
+	}
 
 	//交点
 	float cc[4] = { 1.0f,0.0f,0.0f,1.0f };
