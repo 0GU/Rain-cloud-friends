@@ -97,14 +97,18 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/ƒWƒƒƒ“ƒv.png", 16, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/€–S.png", 17, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/A•¨.png", 18, TEX_SIZE_1024);
-	Draw::LoadImageW(L"‘fŞ/‰¼/Game”wŒi‰¼.png", 22, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/”wŒi.png", 22, TEX_SIZE_1024);
 
 	if(stageselect==1)
 	{
 		Audio::Start(0);
 		Audio::Start(1);
 	}
-	
+	if (stageselect == 2)
+	{
+		Audio::Start(0);
+		Audio::Start(1);
+	}
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/ƒCƒmƒVƒV.png", 14, TEX_SIZE_256);
 	//Audio::Start(0);
 
