@@ -30,7 +30,7 @@ void CObjEnemy::Init()
 	m_speed_power = 0.5f;//通常速度
 	m_ani_max_time = 4;  //アニメーション間隔幅
 	m_transparent = 0.0;//描画の透明度
-
+	m_hp = 2;
 	m_move = true;		 //true=右 false=左
 	m_damege_flag = false;//被弾フラグ
 	m_escaoe_flag = false;//逃走フラグ
@@ -141,7 +141,10 @@ void CObjEnemy::Action()
 		//実験　雨に当たると動作停止
 		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
 		{
-			m_damege_flag = true;
+			m_hp -= 1;
+			if(m_hp<=0)
+				m_damege_flag = true;
+
 			if (m_move == true)
 				m_move = false;
 			else
@@ -159,7 +162,6 @@ void CObjEnemy::Action()
 		{
 			this->SetStatus(false);
 			Hits::DeleteHitBox(this);
-
 		}
 
 	}
