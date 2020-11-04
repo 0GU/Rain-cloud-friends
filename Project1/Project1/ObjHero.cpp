@@ -534,6 +534,17 @@ void CObjHero::Draw()
 		Draw::Draw(18, &src, &dst, c, 0.0f);
 
 	}
+	//実験　岩を押しているときのアニメーション描画
+	//src.m_top	= 1.0f;
+	//src.m_left	= 1.0f + AniData[m_ani_frame] * 260;
+	//src.m_right = 254.0f + AniData[m_ani_frame] * 255;
+	//src.m_bottom= 438.0f;
+	//dst.m_top	= 0.0f + m_py;
+	//dst.m_left	= (64.0f * m_posture) + m_px;
+	//dst.m_right = (64 - 64.0f * m_posture) + m_px;
+	//dst.m_bottom= 64.0f + m_py;
+	//Draw::Draw(19, &src, &dst, c, 0.0f);
+
 
 	//交点
 	float cc[4] = { 1.0f,0.0f,0.0f,1.0f };
