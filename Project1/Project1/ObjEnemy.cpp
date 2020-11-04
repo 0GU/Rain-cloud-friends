@@ -29,9 +29,11 @@ void CObjEnemy::Init()
 
 	m_speed_power = 0.5f;//通常速度
 	m_ani_max_time = 4;  //アニメーション間隔幅
+	m_transparent = 0.0;//描画の透明度
 
 	m_move = true;		 //true=右 false=左
-
+	m_damege_flag = false;//被弾フラグ
+	m_escaoe_flag = false;//逃走フラグ
 
 	pos_init = m_px;
 
@@ -66,23 +68,29 @@ void CObjEnemy::Action()
 		{
 			;
 		}
-
-		//一定間隔でジャンプ
-		if (m_hit_down==true)
+		
+		if (m_damege_flag == false)//実験　雨に当たるとその場で停止
 		{
-			m_vy -= 10.0f;
-		}
+			//一定間隔でジャンプ
+			if (m_hit_down == true)
+			{
+				m_vy -= 10.0f;
+			}
 
-		//ブロック衝突で向き変更
-		if (m_hit_left == true)
-		{
-			m_move = false;
+			//ブロック衝突で向き変更
+			if (m_hit_left == true)
+			{
+				m_move = false;
+			}
+			if (m_hit_right == true)
+			{
+				m_move = true;
+			}
 		}
-		if (m_hit_right == true)
+		if (m_damege_flag == true)
 		{
-			m_move = true;
+			m_transparent += 0.01;
 		}
-
 		//方向
 		if (m_move == true)
 		{
@@ -108,7 +116,6 @@ void CObjEnemy::Action()
 			m_ani_frame = 0;
 		}
 
-
 		//摩擦
 		m_vx += -(m_vx * 0.098);
 
@@ -131,11 +138,28 @@ void CObjEnemy::Action()
 		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 
+		//実験　雨に当たると動作停止
+		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
+		{
+			m_damege_flag = true;
+			if (m_move == true)
+				m_move = false;
+			else
+				m_move = true;
+		}
+
 		//落下したら消滅
 		if (hit->CheckObjNameHit(OBJ_RESTART) != nullptr)
 		{
 			this->SetStatus(false);
 			Hits::DeleteHitBox(this);
+		}
+		//逃走終了したら消滅
+		if (m_escaoe_flag == true)
+		{
+			this->SetStatus(false);
+			Hits::DeleteHitBox(this);
+
 		}
 
 	}
@@ -151,7 +175,10 @@ void CObjEnemy::Draw()
 	};
 
 	//描画カラー情報
-	float c[4] = { 1.0f,1.0f,0.5f,1.0f };
+	float c[4] = { 1.0f,1.0f,0.5f,1.0f-m_transparent };
+	if (c[3] <= 0.0f)
+		m_escaoe_flag = true;
+
 
 	RECT_F src; //描画元切り取り位置
 	RECT_F dst; //描画先表示位置

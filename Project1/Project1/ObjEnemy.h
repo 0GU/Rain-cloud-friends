@@ -38,7 +38,10 @@ private:
 	//追加したやつ
 	float pos_init;	//沸いた時の位置記憶用
 	bool m_move;	//移動の向き制御用
-
-
 	bool stay_flag;
+
+	//被弾関係
+	bool m_damege_flag;//被弾フラグ　実験時はtrueで停止
+	float m_transparent;//逃走時徐々に透明に変化させる変数
+	bool m_escaoe_flag;//逃走終了フラグ　trueでオブジェクト破棄
 };
