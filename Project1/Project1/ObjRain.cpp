@@ -37,12 +37,13 @@ void CObjRain::Action()
 
 	m_py += m_vy;
 
-	if (m_py > 1000.0f)
+	if (m_py > 1000.0f)//一定ライン以下まで落下すると削除
 	{
 		this->SetStatus(false);//自身に削除命令を出す
 		Hits::DeleteHitBox(this);//保有するHitBoxに削除する
 	}
-	if (hit->CheckObjNameHit(OBJ_FIRE)!=nullptr|| hit->CheckObjNameHit(OBJ_PLANT) != nullptr)
+	if (hit->CheckObjNameHit(OBJ_FIRE)!=nullptr|| hit->CheckObjNameHit(OBJ_PLANT) != nullptr||
+		hit->CheckElementHit(ELEMENT_ENEMY) != false)//該当オブジェクトに当たると削除
 	{
 		this->SetStatus(false);//自身に削除命令を出す
 		Hits::DeleteHitBox(this);//保有するHitBoxに削除する

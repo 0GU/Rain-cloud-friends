@@ -37,6 +37,12 @@ void CObjRushEnemy::Init()
 
 	sleep_flag=false;//デバッグ用停止フラグ
 
+	m_transparent = 0.0;//描画の透明度
+	m_hp = 2;
+	m_damege_flag = false;//被弾フラグ
+	m_escaoe_flag = false;//逃走フラグ
+
+
 	pos_init = m_px;
 
 	//blockとの衝突状態確認用
@@ -73,7 +79,8 @@ void CObjRushEnemy::Action()
 		//位置の更新用に主人公の位置を持ってくる
 		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
 		
-	
+		//突進状態変化
+		CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
 		
 		//HITBOX情報を持ってくる
 		CHitBox* hit = Hits::GetHitBox(this);
@@ -105,6 +112,11 @@ void CObjRushEnemy::Action()
 		if (sleep_flag == false)
 		{
 
+			//逃走　徐々に透明化
+			if (m_damege_flag == true)
+			{
+				m_transparent += 0.01;
+			}
 
 			//通常移動
 			if (m_move == true && m_rush_time != 60)
@@ -120,8 +132,6 @@ void CObjRushEnemy::Action()
 				m_ani_time += 1;
 			}
 
-			//突進状態変化
-			CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
 			
 
 			if (m_rush_time < 60 && hero->GetHitDown() != 5)
@@ -145,9 +155,9 @@ void CObjRushEnemy::Action()
 			{
 
 				//主人公の位置を通過したらブレーキかける
-				if ((m_px + sl_x +75 > hx && m_move == true) || (m_px + sl_x < hx && m_move == false))
+				if ((m_px + sl_x +75 > hx+64 && m_move == true) || (m_px + sl_x < hx && m_move == false))
 				{
-					if ((m_vx < 9.0f && m_move == true) || (m_vx > -9.0f && m_move == false))//一定速度以下で突進終了
+					if ((m_vx < 7.0f && m_move == true) || (m_vx > -7.0f && m_move == false))//一定速度以下で突進終了
 					{
 						m_rush_time = 0;
 						m_rush = false;
@@ -166,7 +176,7 @@ void CObjRushEnemy::Action()
 					if (m_move == false)
 						m_vx += -m_speed_power * 3.0f;//
 				}
-				if (m_rush == true)
+				else if (m_rush == true)
 				{
 					if (m_vx > 9.0f)
 						m_vx = 9.0f;
@@ -222,8 +232,21 @@ void CObjRushEnemy::Action()
 		//HitBoxの位置の変更
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 
+		//実験　雨に当たると動作停止
+		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
+		{
+			enemy->RainHit(&m_hp, &m_move, &m_damege_flag);
+			m_rush = false;
+		}
+
 		//落下したら消滅
 		if (hit->CheckObjNameHit(OBJ_RESTART) != nullptr)
+		{
+			this->SetStatus(false);
+			Hits::DeleteHitBox(this);
+		}
+		//逃走終了したら消滅
+		if (m_escaoe_flag == true)
 		{
 			this->SetStatus(false);
 			Hits::DeleteHitBox(this);
@@ -242,7 +265,9 @@ void CObjRushEnemy::Draw()
 	};
 
 	//描画カラー情報
-	float c[4] = { 1.0f,1.0f,0.5f,1.0f };
+	float c[4] = { 1.0f,1.0f,1.0f,1.0f - m_transparent };
+	if (c[3] <= 0.0f)
+		m_escaoe_flag = true;
 
 	RECT_F src; //描画元切り取り位置
 	RECT_F dst; //描画先表示位置
