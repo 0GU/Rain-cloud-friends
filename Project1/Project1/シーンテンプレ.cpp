@@ -30,7 +30,7 @@ CSceneTemp::~CSceneTemp()
 //ゲームタイトル初期化メソッド
 void CSceneTemp::InitScene()
 {
-
+	
 	
 }
 

@@ -34,6 +34,9 @@
     <Filter Include="ソース ファイル\GameOver">
       <UniqueIdentifier>{416aeade-1bb5-4839-adfd-8b43b615b24b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Ending">
+      <UniqueIdentifier>{f1abe822-cef4-485f-b416-fd7f7d4afa6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameHead.h">
@@ -156,6 +159,12 @@
     <ClInclude Include="ObjRushEnemy.h">
       <Filter>ソース ファイル\GameMain\敵</Filter>
     </ClInclude>
+    <ClInclude Include="SceneEnding.h">
+      <Filter>ソース ファイル\Ending</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjEnding.h">
+      <Filter>ソース ファイル\Ending</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -277,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="ObjHero.cpp">
       <Filter>ソース ファイル\GameMain\プレイヤー関係</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneEnding.cpp">
+      <Filter>ソース ファイル\Ending</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjEnding.cpp">
+      <Filter>ソース ファイル\Ending</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

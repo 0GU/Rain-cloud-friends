@@ -93,6 +93,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/追尾敵0.png", 11, TEX_SIZE_2048);
 	Draw::LoadImageW(L"素材/画像/妖精.png", 12, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/岩.png", 13, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/イノシシ.png", 14, TEX_SIZE_256);
 	Draw::LoadImageW(L"素材/仮/test女の子.png", 15, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 16, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/死亡.png", 17, TEX_SIZE_1024);
@@ -109,7 +110,7 @@ void CSceneGameMain::InitScene()
 		Audio::Start(0);
 		Audio::Start(1);
 	}
-	Draw::LoadImageW(L"素材/画像/イノシシ.png", 14, TEX_SIZE_256);
+
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成

@@ -113,6 +113,7 @@ class Enemy
 #include"ObjOver.h"
 #include"ObjMagic.h"
 #include"ObjRushEnemy.h"
+#include"ObjEnding.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
@@ -121,6 +122,7 @@ class Enemy
 #include"SceneClear.h"
 #include"SceneTitle.h"
 #include"SceneOver.h"
+#include"SceneEnding.h"
 //-----------------------------------------------
 
 //シーンスタートクラス---------------------------

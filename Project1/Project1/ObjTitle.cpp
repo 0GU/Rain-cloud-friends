@@ -31,14 +31,14 @@ void CObjTitle::Action()
 	///黒画面スクロール
 	if (scroll_flag == false)
 	{
-		
-		m_y1 += 50.0f;//上から下に降ろす
-		if (m_y1 > 800.0f)//800を超えたら
+		m_y1 += 0.03f;
+		if (m_y1 >= 1.0f)
 		{
-			m_y1 = 800.0f;//800に固定
+			m_y1 == 1.0f;
 			scroll_flag = true;//スクロールを止める
 			key_flag = true;
 		}
+		
 	}
 	//コントローラー用------------------------------------------------------------------
 	//ステージに進む
@@ -119,10 +119,10 @@ void CObjTitle::Action()
 
 	if (move_flag == true)//起動していると
 	{
-		m_y1 -= 40.0f;//下から上に動かす
+		m_y1 -=0.03f;//下から上に動かす
 	}
 
-	if (m_y1 == 0.0f)//下から上に
+	if (m_y1 <= 0.0f)//下から上に
 	{
 		m_y1 = 0.0f;//0に固定
 		scroll_flag = false;
@@ -146,7 +146,7 @@ void CObjTitle::Draw()
 {
 
 	//描画カラー情報
-	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
+	float	c[4] = { 1.0f,1.0f,1.0f,m_y1 };//
 
 
 	RECT_F src; //描画元切り取り位置の設定
@@ -247,7 +247,7 @@ void CObjTitle::Draw()
 		Draw::Draw(5, &src, &dst, c, 0.0f);
 	}
 	//黒画面
-	src.m_top = 0.0f;
+/*	src.m_top = 0.0f;
 	src.m_left = 0.0f;
 	src.m_right = 1024.0f;
 	src.m_bottom = 1024.0f;
@@ -256,5 +256,5 @@ void CObjTitle::Draw()
 	dst.m_left = 0.0f;
 	dst.m_right = 1280.0f;
 	dst.m_bottom = 0.0f + m_y1;
-	Draw::Draw(2, &src, &dst, c, 0.0f);
+	Draw::Draw(2, &src, &dst, c, 0.0f);*/
 }
