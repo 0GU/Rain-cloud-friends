@@ -16,6 +16,7 @@ public:
 
 	float GetVx() { return m_vx; }
 	void ModeChange(float* x, float* y, float* hx, float* hy, float* pos_init, bool* mode, bool* posture,bool searchY);
+	void RainHit(int* hp, bool* move, bool* damege);
 private:
 	float m_px;			//ˆÊ’u
 	float m_py;

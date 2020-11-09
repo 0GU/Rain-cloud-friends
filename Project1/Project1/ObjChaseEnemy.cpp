@@ -27,8 +27,12 @@ void CObjChaseEnemy::Init()
 
 	m_move = true;		 //true=右 false=左
 
+	m_transparent = 0.0;//描画の透明度
+	m_hp = 2;
+	m_damege_flag = false;//被弾フラグ
+	m_escaoe_flag = false;//逃走フラグ
+
 	m_chase = false;//通常状態で初期化
-	//m_chase[1] = false;
 
 	pos_init = m_px;
 
@@ -99,6 +103,11 @@ void CObjChaseEnemy::Action()
 		{
 			m_move = false;
 		}
+		//逃走　徐々に透明化
+		if (m_damege_flag == true)
+		{
+			m_transparent += 0.01;
+		}
 
 		//方向
 		if (m_move == true)
@@ -148,8 +157,21 @@ void CObjChaseEnemy::Action()
 		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 
+		//実験　雨に当たると動作停止
+		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
+		{
+			enemy->RainHit(&m_hp, &m_move, &m_damege_flag);
+			m_chase = false;
+		}
+
 		//落下したら消滅
 		if (hit->CheckObjNameHit(OBJ_RESTART) != nullptr)
+		{
+			this->SetStatus(false);
+			Hits::DeleteHitBox(this);
+		}
+		//逃走終了したら消滅
+		if (m_escaoe_flag == true)
 		{
 			this->SetStatus(false);
 			Hits::DeleteHitBox(this);
@@ -167,7 +189,9 @@ void CObjChaseEnemy::Draw()
 	};
 
 	//描画カラー情報
-	float c[4] = { 1.0f,1.0f,0.5f,1.0f };
+	float c[4] = { 1.0f,1.0f,1.0f,1.0f - m_transparent };
+	if (c[3] <= 0.0f)
+		m_escaoe_flag = true;
 
 	RECT_F src; //描画元切り取り位置
 	RECT_F dst; //描画先表示位置

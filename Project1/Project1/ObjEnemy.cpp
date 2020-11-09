@@ -87,6 +87,7 @@ void CObjEnemy::Action()
 				m_move = true;
 			}
 		}
+		//“¦‘–@™X‚É“§–¾‰»
 		if (m_damege_flag == true)
 		{
 			m_transparent += 0.01;
@@ -141,14 +142,7 @@ void CObjEnemy::Action()
 		//ŽÀŒ±@‰J‚É“–‚½‚é‚Æ“®ì’âŽ~
 		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
 		{
-			m_hp -= 1;
-			if(m_hp<=0)
-				m_damege_flag = true;
-
-			if (m_move == true)
-				m_move = false;
-			else
-				m_move = true;
+			RainHit(&m_hp, &m_move, &m_damege_flag);
 		}
 
 		//—Ž‰º‚µ‚½‚çÁ–Å
@@ -261,4 +255,17 @@ void CObjEnemy::ModeChange(float* x, float* y, float* hx, float* hy, float* pos_
 	{
 		*mode = false;
 	}
+}
+
+//ŽÀŒ±@‰J‚É“–‚½‚é‚Æ“®ì’âŽ~
+void CObjEnemy::RainHit(int* hp, bool* move, bool *damege)
+{
+	*hp -= 1;
+	if (*hp <= 0)
+		*damege = true;
+
+	if (*move == true)
+		*move = false;
+	else
+		*move = true;
 }

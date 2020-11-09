@@ -30,6 +30,12 @@ void CObjSinEnemy::Init()
 
 	m_ani_max_time = 4;  //アニメーション間隔幅
 
+	m_transparent = 0.0;//描画の透明度
+	m_hp = 2;
+	m_damege_flag = false;//被弾フラグ
+	m_escaoe_flag = false;//逃走フラグ
+
+
 	//blockとの衝突状態確認用
 	m_hit_up = false;
 	m_hit_down = false;
@@ -58,6 +64,7 @@ void CObjSinEnemy::Action()
 	if (stay_flag == false)
 	{
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+		CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
 		//弾発射角度用に主人公の位置を持ってくる
 		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
 		float hx = hero->GetX();
@@ -79,25 +86,14 @@ void CObjSinEnemy::Action()
 		if (sleep_flag == false)
 		{
 			//攻撃状態変化
-			CObjEnemy* enemy = (CObjEnemy*)Objs::GetObj(OBJ_ENEMY);
 			enemy->ModeChange(&m_x, &m_y, &hx, &hy, &pos_init, &m_atk_flag, &m_move, true);
-
-
-			////主人公が一定距離内にいたら攻撃行動へ移行
-			//if (((m_x + block->GetScroll() - hx <=  400.0f && m_x + block->GetScroll() - hx > 0.0f && m_move == false) ||
-			//	(m_x + block->GetScroll() - hx >= -400.0f && m_x + block->GetScroll() - hx < 0.0f && m_move == true)) && 
-			//	m_atk_flag==false)
-			//{
-			//	m_atk_flag = true;
-			//	m_atk_time = 300;//初回のみすぐチャージさせる
-			//}
 
 			//攻撃間隔進める
 			if (m_atk_flag == true && m_charge_flag == false && m_atk_time <= 360)
 			{
 				m_atk_time++;
 			}
-			//5秒間隔でチャージへ移行
+			//5秒間隔で発射
 			if (m_atk_time >= 360)
 			{
 				m_atk_time = 0;
@@ -108,50 +104,8 @@ void CObjSinEnemy::Action()
 
 
 			}
-			////チャージ進める
-			//if (m_charge_flag == true)
-			//{
-			//	m_charge_time++;
-			//}
-			////1秒チャージで発射
-			//if (m_charge_time >= 60)
-			//{
-			//	//弾発射
-			//	CObjMagic* objm = new CObjMagic(m_x + 16, m_y + 16, m_move);
-			//	Objs::InsertObj(objm, OBJ_MAGIC, 11);
-			//	m_charge_time = 0;
-			//	m_charge_flag = false;
-			//}
 
 			//&& 間に障害物ある判定
-
-
-			////攻撃行動時
-			//if (m_atk_flag == true && m_move == true)//右向き
-			//{
-			//	if (m_x + block->GetScroll() - hx <= -400)//距離離れた
-			//	{
-			//		m_atk_flag = false;
-			//	}
-			//	else if (m_x + block->GetScroll() - hx >= 0)//右に回り込まれた
-			//	{
-			//		m_atk_flag = false;
-			//		m_move = false;
-			//	}
-			//}
-			//else if (m_atk_flag == true&&m_move==false)//左向き
-			//{
-			//	if (m_x + block->GetScroll() - hx >= 400)//距離離れた
-			//	{
-			//		m_atk_flag = false;
-			//	}
-			//	else if (m_x + block->GetScroll() - hx <= 0)//右に回り込まれた
-			//	{
-			//		m_atk_flag = false;
-			//		m_move = true;
-			//	}
-			//}
-
 		}
 
 		//初期位置から一定距離離れたら方向転換
@@ -172,6 +126,11 @@ void CObjSinEnemy::Action()
 		if (m_hit_left == true && m_atk_flag == false)
 		{
 			m_move = false;
+		}
+		//逃走　徐々に透明化
+		if (m_damege_flag == true)
+		{
+			m_transparent += 0.01;
 		}
 
 		//方向
@@ -225,8 +184,21 @@ void CObjSinEnemy::Action()
 		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_x + block->GetScroll(), m_y + block->GetScrollY());
 
+		//実験　雨に当たると動作停止
+		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
+		{
+			enemy->RainHit(&m_hp, &m_move, &m_damege_flag);
+			m_atk_flag = false;
+		}
+
 		//落下したら消滅
 		if (hit->CheckObjNameHit(OBJ_RESTART) != nullptr)
+		{
+			this->SetStatus(false);
+			Hits::DeleteHitBox(this);
+		}
+		//逃走終了したら消滅
+		if (m_escaoe_flag == true)
 		{
 			this->SetStatus(false);
 			Hits::DeleteHitBox(this);
@@ -238,7 +210,9 @@ void CObjSinEnemy::Action()
 void CObjSinEnemy::Draw()
 {
 	//描画カラー情報　R=RED G=Green　B=Blue A=alpha(透過情報)
-	float c[4] = { 1.0f,1.0f,1.0f,1.0f };
+	float c[4] = { 1.0f,1.0f,1.0f,1.0f - m_transparent };
+	if (c[3] <= 0.0f)
+		m_escaoe_flag = true;
 
 	RECT_F src;//描画元切り取り位置
 	RECT_F dst;//描画先表示位置

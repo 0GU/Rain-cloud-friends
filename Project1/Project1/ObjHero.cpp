@@ -334,7 +334,7 @@ void CObjHero::Action()
 				pb->SetScroll(0);
 
 
-
+			m_enemynum = 0;//Žæ“¾‚µ‘±‚¯‚é‚Ì‚ð–h‚®
 
 			//“G‚Æ“–‚½‚Á‚Ä‚¢‚é‚©Šm”F
 			if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
