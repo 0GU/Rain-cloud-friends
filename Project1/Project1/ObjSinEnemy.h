@@ -43,5 +43,10 @@ private:
 	bool m_charge_flag;//チャージ用
 
 	bool sleep_flag;//デバッグ用停止フラグ
+		//被弾関係
+	bool m_damege_flag;//被弾フラグ　実験時はtrueで停止
+	float m_transparent;//逃走時徐々に透明に変化させる変数
+	bool m_escaoe_flag;//逃走終了フラグ　trueでオブジェクト破棄
+	int m_hp;
 
 };

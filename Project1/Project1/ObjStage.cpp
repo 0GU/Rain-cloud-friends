@@ -283,7 +283,6 @@ void CObjStage::Draw()
 				}
 				else
 				{
-
 					BlockDraw(64.0f, 0.0f, &dst, c);
 				}
 			}

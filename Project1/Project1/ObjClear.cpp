@@ -20,8 +20,9 @@ void CObjClear::Init()
 {
 	key_flag = true;
 	move_flag = false;
-	scroll_flag = false;
-	m_y1 = 0.0f;
+	m_fade_flag = false;
+	m_fade = 0.01f;
+	m_fade_time = 0.03f;
 	Clear_flag[0] = false;
 	Clear_flag[1] = false;
 	Clear_flag[2] = false;
@@ -112,30 +113,33 @@ void CObjClear::Action()
 			break;
 		}
 	}
-	//黒画面スクロール
-	if (scroll_flag == false)
+	//フェードイン
+	if (m_fade_flag == false)
 	{
-		m_y1 += 40.0f;
-		if (m_y1 > 800.0f)
+		key_flag = false;
+
+		m_fade += m_fade_time;
+		if (m_fade >= 1.0f)
 		{
-			m_y1 = 800.0f;
-			scroll_flag = true;
+			m_fade = 1.0f;
+			m_fade_flag = true;
+			key_flag = true;
 		}
 	}
 
 	if (Input::GetVKey('Z') == true ||Input::GetConButtons(0, GAMEPAD_A) && key_flag == true)
 	{
 		key_flag = false;
-		scroll_flag = true;
+		m_fade_flag = true;
 		move_flag = true;
 	}
 
 	if (move_flag == true)
 	{
-		m_y1 -= 50.0f;
+		m_fade -= m_fade_time;
 	}
 
-	if (m_y1 == 0.0f)
+	if (m_fade <= -0.0f)
 	{
 		Scene::SetScene(new CSceneStageSelect);
 	}
@@ -150,7 +154,7 @@ void CObjClear::Action()
 void CObjClear::Draw()
 {
 	//描画カラー情報
-	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
+	float	c[4] = { 1.0f,1.0f,1.0f,m_fade };//
 
 
 	RECT_F src; //描画元切り取り位置の設定
@@ -231,14 +235,14 @@ void CObjClear::Draw()
 
 	//ここまで------------------------------------------------
 	//黒画面
-	src.m_top = 0.0f;
+/*	src.m_top = 0.0f;
 	src.m_left = 0.0f;
 	src.m_right = 1024.0f;
 	src.m_bottom = 1024.0f;
 
-	dst.m_top = 800.0f + m_y1;
+	dst.m_top = 800.0f + m_fade;
 	dst.m_left = 0.0f;
 	dst.m_right = 1280.0f;
-	dst.m_bottom = 0.0f + m_y1;
-	Draw::Draw(3, &src, &dst, c, 0.0f);
+	dst.m_bottom = 0.0f + m_fade;
+	Draw::Draw(3, &src, &dst, c, 0.0f);*/
 }

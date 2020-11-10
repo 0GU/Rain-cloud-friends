@@ -21,9 +21,10 @@ private:
 	int hoge;//仮
 
 	bool key_flag;//キー押し確認用
-	float m_y1;//黒画面位置(仮)
+	float m_fade;//フェードインアウト用
+	float m_fade_time;//フェード時間設定用
 	bool  move_flag;
-	bool scroll_flag;
+	bool m_fade_flag;
 	bool Clear_flag[3];//1:Excerent 2:Great 3:Good
 	int stageselect;
 };
