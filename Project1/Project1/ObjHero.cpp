@@ -71,6 +71,7 @@ void CObjHero::Init()
 //アクション
 void CObjHero::Action()
 {
+	
 	if (m_hit_time > 0)
 		m_hit_time--;
 
@@ -138,9 +139,8 @@ void CObjHero::Action()
 		if (stay_flag == false)
 		{
 			//コントローラー操作仮
-			m_con_num = Input::UpdateXControlerConnected();
 			m_con_x = Input::GetConVecStickLX(m_con_num);
-			if (m_con_num != 5)
+			if (m_con_num==0)
 			{
 				if (m_con_x == 0.0f)
 				{
@@ -152,6 +152,7 @@ void CObjHero::Action()
 					{
 						Audio::Start(2);
 						m_vy = -8;
+						m_hit_down == false;
 					}
 
 				}
@@ -208,7 +209,7 @@ void CObjHero::Action()
 					m_ani_time += 1;
 				}
 			}
-			else
+			if(m_con_num==5)
 			{
 				//Xキー入力でジャンプ
 				if (Input::GetVKey('X') == true)

@@ -22,12 +22,14 @@ void CObjTitle::Init()
 
 	m_ani_time = 0.0f;
 	m_ani_max = 8.0f;
+
+	m_con_num = 0;
 }
 
 //アクション
 void CObjTitle::Action()
 {
-
+	m_con_num = Input::UpdateXControlerConnected();
 	///黒画面スクロール
 	if (scroll_flag == false)
 	{
@@ -79,43 +81,48 @@ void CObjTitle::Action()
 		description_flag = true;
 	}
 	//キーボード用-----------------------------------------------------------------------------
-	//ステージに進む
-	if (Input::GetVKey('Z') == true  && scroll_flag == true && select_flag ==true && key_flag == true)//Zキーを押すと
+	if (m_con_num !=0 && m_con_num !=1)
 	{
-		Audio::Start(2);
-		key_flag = false;//Keyのフラグを止めて
+		if (Input::GetVKey('Z') == true && scroll_flag == true && select_flag == true && key_flag == true)//Zキーを押すと
+		{
+			Audio::Start(2);
+			key_flag = false;//Keyのフラグを止めて
 
-		move_flag = true;//下から上に動かすフラグ起動
-	}
-	//操作説明に移行
-	//カーソル移動
-	if (Input::GetVKey(VK_DOWN) == true && select_flag == true && description_flag == true && key_flag == true && scroll_flag == true)
-	{
-		Audio::Start(2);
-		key_flag = false;
-		select_flag = false;
-	}
+			move_flag = true;//下から上に動かすフラグ起動
+		}
+		//操作説明に移行
+		//カーソル移動
+		if (Input::GetVKey(VK_DOWN) == true && select_flag == true && description_flag == true && key_flag == true && scroll_flag == true)
+		{
+			Audio::Start(2);
+			key_flag = false;
+			select_flag = false;
+		}
 
-	if (Input::GetVKey(VK_UP) == true && select_flag == false && description_flag == true && key_flag == true && scroll_flag == true)
-	{
-		Audio::Start(2);
-		key_flag = false;
-		select_flag = true;
-	}
+		if (Input::GetVKey(VK_UP) == true && select_flag == false && description_flag == true && key_flag == true && scroll_flag == true)
+		{
+			Audio::Start(2);
+			key_flag = false;
+			select_flag = true;
+		}
+		//ステージに進む
+
 	//操作説明起動
-	if (Input::GetVKey('Z') == true && select_flag == false && description_flag == true && key_flag == true && scroll_flag == true)
-	{
-		Audio::Start(2);
-		key_flag = false;
-		description_flag = false;
+		if (Input::GetVKey('Z') == true && select_flag == false && description_flag == true && key_flag == true && scroll_flag == true)
+		{
+			Audio::Start(2);
+			key_flag = false;
+			description_flag = false;
+		}
+		//操作説明終了
+		if (Input::GetVKey('Z') == true && select_flag == false && description_flag == false && key_flag == true && scroll_flag == true)
+		{
+			Audio::Start(2);
+			key_flag = false;
+			description_flag = true;
+		}
 	}
-	//操作説明終了
-	if (Input::GetVKey('Z') == true && select_flag == false && description_flag == false && key_flag == true && scroll_flag == true)
-	{
-		Audio::Start(2);
-		key_flag = false;
-		description_flag = true;
-	}
+	
 
 	if (move_flag == true)//起動していると
 	{
