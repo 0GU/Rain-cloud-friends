@@ -61,7 +61,7 @@ void CObjHero::Init()
 	//コントローラー用仮変数
 	m_con_x = 0.0f;
 	m_con_y = 0.0f;
-	m_con_num = 0;
+
 	m_con_flag = false;
 
 	//当たり判定用のHitBoxを作成
@@ -71,7 +71,7 @@ void CObjHero::Init()
 //アクション
 void CObjHero::Action()
 {
-	
+	m_con_num = Input::UpdateXControlerConnected();
 	if (m_hit_time > 0)
 		m_hit_time--;
 

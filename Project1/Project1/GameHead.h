@@ -57,7 +57,7 @@ struct UserData
 {
 	int mSeveData;	//サンプルセーブデータ
 
-	bool Stage_1[5];//1:0,2:1,3:2,4:3
+	bool Stage_1[5];//[0]:Perfect Clear [1]:Great Clear [2]:Good Clear
 	bool Stage_2[5];
 	bool Stage_3[5];
 	
@@ -85,7 +85,7 @@ struct UserData
 //ゲーム内で使用するクラスヘッダ------------------
 class Enemy
 {
-
+	
 };
 
 
