@@ -45,7 +45,10 @@ void CSceneClear::InitScene()
 	Draw::LoadImageW(L"素材/仮/Animation.png", 3, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/画像/文字.png", 5, TEX_SIZE_1024);
 
+	//BGM情報登録
+	Audio::LoadAudio(0, L"素材/BGM/GameClear.wav", SOUND_TYPE::BACK_MUSIC);
 
+	Audio::Start(0);
 }
 
 //ゲームタイトル実行メソッド

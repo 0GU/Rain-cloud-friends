@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /Project1/Project1/Project1.sln
+/Project1/Project1/user_data
