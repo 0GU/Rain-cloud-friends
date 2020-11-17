@@ -100,7 +100,8 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/植物.png", 18, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/押す.png", 19, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/背景.png", 22, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/土ブロック.png", 23, TEX_SIZE_1024);//実験　ぬかるみ床用
+	Draw::LoadImageW(L"素材/画像/夕方背景.png", 23, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/土ブロック.png", 30, TEX_SIZE_1024);//実験　ぬかるみ床用
 
 	if(stageselect==1)
 	{
@@ -120,7 +121,7 @@ void CSceneGameMain::InitScene()
 	Objs::InsertObj(obj, OBJ_HERO, 10);
 
 	//stageオブジェクト作成
-	CObjStage* objb = new CObjStage(map);
+	CObjStage* objb = new CObjStage(map,stageselect);
 	Objs::InsertObj(objb, OBJ_STAGE, 9);
 
 	//Poseオブジェクト作成

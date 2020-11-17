@@ -87,7 +87,7 @@ void CObjTurtle::Action()
 		{
 			m_transparent += 0.01;
 		}
-		//方向
+		//方向　デバッグのため移動停止中
 		//if (m_move == true)
 		//{
 		//	m_vx += m_speed_power;
@@ -187,14 +187,18 @@ void CObjTurtle::Draw()
 	Draw::Draw(9, &src, &dst, c, 0.0f);
 }
 
-//
+//HitCheck関数
+//引数1 float* x	 : 沼のx座標
+//引数2 float* y	 : 沼のy座標
+//引数3 bool*  swanp : ぬかるんだ状態かを判別するフラグ
+//沼の状態に応じて位置を変更する関数
 void CObjTurtle::HitCheck(float* x, float* y, bool* swanp)
 {
+	//ぬかるんだ沼の上にいない場合、沼ブロックの上に移動させる
 	if (*y - m_py < 64 && abs(m_px - *x) < 64 && *swanp == false)
 	{
 		m_py = *y - 63;
 		m_vy = 0.0f;
 		m_hit_down = true;
 	}
-
 }

@@ -84,26 +84,22 @@ void CObjSwanp::Draw()
 
 	//•`‰æ
 	if (m_swanp_flag == true)
-		Draw::Draw(23, &src, &dst, sc, 0.0f);
+		Draw::Draw(30, &src, &dst, sc, 0.0f);
 	else
-		Draw::Draw(23, &src, &dst, c, 0.0f);
+		Draw::Draw(30, &src, &dst, c, 0.0f);
 
 }
 
-void CObjSwanp::HitSwanp(float* x, float* y, float *vx, float* vy,float posture, bool* hit_down)
-{
-	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-	//Stone->GetPY()		<= m_py + 64 - block->GetScrollY() &&
-	//Stone->GetPY() + 32	>= m_py + 64 - block->GetScrollY()
-	//m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
-	//m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll())
-	if (m_py <= *y + 64 - block->GetScrollY() && m_py + 32 >= *y + 64 - block->GetScrollY() &&
-		(posture == 1 && m_px < *x + 64 - block->GetScroll() && m_px + 64 > *x + 64 - block->GetScroll() ||
-		 posture == 0 && m_px + 64 > *x - block->GetScroll() && m_px < *x - block->GetScroll()) &&
-		m_swanp_flag == false)
-	{
-		*y = m_py + block->GetScrollY() - 63;
-		*vy = 0.0f;
-		*hit_down = true;
-	}
-}
+//void CObjSwanp::HitSwanp(float* x, float* y, float *vx, float* vy,float posture, bool* hit_down)
+//{
+//	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+//	if (m_py <= *y + 64 - block->GetScrollY() && m_py + 32 >= *y + 64 - block->GetScrollY() &&
+//		(posture == 1 && m_px < *x + 64 - block->GetScroll() && m_px + 64 > *x + 64 - block->GetScroll() ||
+//		 posture == 0 && m_px + 64 > *x - block->GetScroll() && m_px < *x - block->GetScroll()) &&
+//		m_swanp_flag == false)
+//	{
+//		*y = m_py + block->GetScrollY() - 63;
+//		*vy = 0.0f;
+//		*hit_down = true;
+//	}
+//}

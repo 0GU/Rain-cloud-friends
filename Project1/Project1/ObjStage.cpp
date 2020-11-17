@@ -10,9 +10,9 @@
 //使用するネームスペース
 using namespace GameL;
 
-CObjStage::CObjStage(int map[20][100])
+CObjStage::CObjStage(int map[20][100],int stage)
 {
-	
+	stage_num = stage;
 
 	//マップデータをコピー
 	memcpy(m_map, map, sizeof(int) * (20 * 100));
@@ -156,7 +156,10 @@ void CObjStage::Draw()
 	dst.m_left = ZERO_G;
 	dst.m_right = HD_RIGIT;
 	dst.m_bottom = HD_BUTTOM;
-	Draw::Draw(22, &src, &dst, c, 0.0f);
+	if (stage_num != 2)
+		Draw::Draw(22, &src, &dst, c, 0.0f);
+	else
+		Draw::Draw(23, &src, &dst, c, 0.0f);
 
 	//マップチップによるblock設置
 	for (int i = 0; i < 20; i++)

@@ -8,7 +8,7 @@ using namespace GameL;
 class CObjStage : public CObj
 {
 public:
-	CObjStage(int map[20][100]);
+	CObjStage(int map[20][100],int stage);
 	~CObjStage() {};
 	void Init();	//イニシャライズ
 	void Action();  //アクション
@@ -76,4 +76,5 @@ private:
 	float m_y1;
 	bool black_scroll;
 	bool stay_flag;
+	int stage_num;
 };
