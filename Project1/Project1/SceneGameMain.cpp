@@ -100,6 +100,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/植物.png", 18, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/押す.png", 19, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/背景.png", 22, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/土ブロック.png", 23, TEX_SIZE_1024);//実験　ぬかるみ床用
 
 	if(stageselect==1)
 	{
@@ -134,6 +135,9 @@ void CSceneGameMain::InitScene()
 	CObjHp* objh = new CObjHp();
 	Objs::InsertObj(objh, OBJ_HP, 11);
 
+	//実験　亀
+	CObjTurtle* objt = new CObjTurtle(400,600);
+	Objs::InsertObj(objt, OBJ_TURTLE, 12);
 }
 
 //ゲームメイン実行メソッド

@@ -165,6 +165,12 @@
     <ClInclude Include="ObjEnding.h">
       <Filter>ソース ファイル\Ending</Filter>
     </ClInclude>
+    <ClInclude Include="ObjTurtle.h">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjSwanp.h">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -292,6 +298,12 @@
     </ClCompile>
     <ClCompile Include="ObjEnding.cpp">
       <Filter>ソース ファイル\Ending</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjTurtle.cpp">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjSwanp.cpp">
+      <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

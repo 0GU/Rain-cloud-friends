@@ -53,9 +53,11 @@
     <ClInclude Include="ObjStone.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="ObjSwanp.h" />
     <ClInclude Include="ObjTitle.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="ObjTurtle.h" />
     <ClInclude Include="SceneClear.h" />
     <ClInclude Include="SceneEnding.h" />
     <ClInclude Include="SceneGameMain.h" />
@@ -112,9 +114,11 @@
     <ClCompile Include="ObjStone.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="ObjSwanp.cpp" />
     <ClCompile Include="ObjTitle.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="ObjTurtle.cpp" />
     <ClCompile Include="SceneClear.cpp" />
     <ClCompile Include="SceneEnding.cpp" />
     <ClCompile Include="SceneGameMain.cpp" />

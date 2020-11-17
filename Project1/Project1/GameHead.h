@@ -25,6 +25,8 @@ enum OBJ_NAME
 	OBJ_OVER,
 	OBJ_MAGIC,
 	OBJ_RUSH_ENEMY,
+	OBJ_TURTLE,
+	OBJ_SWANP,
 };
 //------------------------------------------------
 
@@ -114,6 +116,8 @@ class Enemy
 #include"ObjMagic.h"
 #include"ObjRushEnemy.h"
 #include"ObjEnding.h"
+#include"ObjTurtle.h"
+#include"ObjSwanp.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
