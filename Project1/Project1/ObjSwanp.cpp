@@ -21,7 +21,7 @@ void CObjSwanp::Init()
 	m_hp = 3;
 	m_swanp_flag = false;
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_SWANP, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_GREEN, OBJ_SWANP, 1);
 }
 
 //アクション
@@ -40,22 +40,22 @@ void CObjSwanp::Action()
 		{
 			m_swanp_flag = true;
 			m_swanp_time = 300;
+			//HitBoxの属性を変更
+			Hits::DeleteHitBox(this);//保有するHitBoxに削除する
+			Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_SWANP, 1);
 		}
 		if (m_swanp_flag == true)
 		{
 			if (m_swanp_time == 0)
 			{
 				m_swanp_flag = false;
+				//HitBoxの属性を変更
+				Hits::DeleteHitBox(this);//保有するHitBoxに削除する
+				Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_GREEN, OBJ_SWANP, 1);
 			}
 			m_swanp_time--;
 		}
-		else
-		{
-			CObjTurtle* turtle = (CObjTurtle*)Objs::GetObj(OBJ_TURTLE);
-			turtle->HitCheck(&m_px, &m_py, &m_swanp_flag);
-		}
 		//HitBoxの位置の変更
-		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 	}
 }
@@ -89,17 +89,3 @@ void CObjSwanp::Draw()
 		Draw::Draw(30, &src, &dst, c, 0.0f);
 
 }
-
-//void CObjSwanp::HitSwanp(float* x, float* y, float *vx, float* vy,float posture, bool* hit_down)
-//{
-//	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-//	if (m_py <= *y + 64 - block->GetScrollY() && m_py + 32 >= *y + 64 - block->GetScrollY() &&
-//		(posture == 1 && m_px < *x + 64 - block->GetScroll() && m_px + 64 > *x + 64 - block->GetScroll() ||
-//		 posture == 0 && m_px + 64 > *x - block->GetScroll() && m_px < *x - block->GetScroll()) &&
-//		m_swanp_flag == false)
-//	{
-//		*y = m_py + block->GetScrollY() - 63;
-//		*vy = 0.0f;
-//		*hit_down = true;
-//	}
-//}

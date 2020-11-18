@@ -17,7 +17,6 @@ public:
 	void SetFlag(bool b) { m_swanp_flag = b; m_swanp_time = 300; }//実験　沼ブロック
 	bool GetFlag() { return m_swanp_flag; }
 
-	void HitSwanp(float* x, float* y, float *vx, float* vy, float posture, bool *hit_down);
 private:
 	float m_px;			//位置
 	float m_py;

@@ -16,8 +16,7 @@ public:
 
 	float GetVx() { return m_vx; };
 	float GetPY() { return m_py; };
-	//‹T‚ªÀ‚Ìã‚É‹‚é‚©‚Ì”»’è@À‘¤‚ÅŒÄ‚Ño‚·
-	void HitCheck(float* x, float* y, bool* swanp);
+
 private:
 	float m_px;			//ˆÊ’u
 	float m_py;
