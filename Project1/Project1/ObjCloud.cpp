@@ -34,7 +34,7 @@ void CObjCloud::Init()
 	m_hit_right = false;
 	
 	//コントローラー用
-	m_con_num = 0;
+	
 	m_con_x = 0.0f;
 	m_con_y = 0.0f;
 
@@ -57,62 +57,125 @@ void CObjCloud::Action()
 	//自身のHitBoxを持ってくる
 	CHitBox* hit = Hits::GetHitBox(this);
 
+	
 	m_con_num = Input::UpdateXControlerConnected();
-	m_con_x = Input::GetConVecStickRX(m_con_num)*10;
-	m_con_y = Input::GetConVecStickRY(m_con_num)*-10;
-
 
 	stay_flag = p->GetFlag();
 	if (stay_flag == false)
 	{
-		if (Input::GetVKey('A') == true)
-			m_px -= m_vx;
-		if (Input::GetVKey('D') == true)
-			m_px += m_vx;
-		if (Input::GetVKey('W') == true)
-			m_py -= m_vy;
-		if (Input::GetVKey('S') == true)
-			m_py += m_vy;
-		if (m_con_x > 5.0f)
-			m_con_x = 5.0f;
-		if (m_con_x < -5.0f)
-			m_con_x = -5.0f;
-		if (m_con_y > 5.0f)
-			m_con_y = 5.0f;
-		if (m_con_y < -5.0f)
-			m_con_y = -5.0f;
+		if (m_con_num == 0)//1Pプレイ時
+		{
+			m_con_x = Input::GetConVecStickRX(m_con_num) * 10;
+			m_con_y = Input::GetConVecStickRY(m_con_num) * -10;
+			if (m_con_x > 5.0f)
+				m_con_x = 5.0f;
+			if (m_con_x < -5.0f)
+				m_con_x = -5.0f;
+			if (m_con_y > 5.0f)
+				m_con_y = 5.0f;
+			if (m_con_y < -5.0f)
+				m_con_y = -5.0f;
 
-		m_px += m_con_x;
-		m_py += m_con_y;
+			if ((Input::GetConButtons(m_con_num, GAMEPAD_B) == true) && rain_flag == true && m_hp > 0.0f)
+			{
+				CObjRain* objr = new CObjRain(m_px, m_py + 64);
+				Objs::InsertObj(objr, OBJ_RAIN, 10);
+				rain_flag = false;
+				Audio::Start(5);
+				m_hp -= 0.01f;	//hp減少
+			}
+			if ((Input::GetConButtons(m_con_num, GAMEPAD_B) == false) && rain_flag == false)
+			{
+				rain_flag = true;
+			}
+			if (Input::GetConButtons(m_con_num, GAMEPAD_Y) == true)
+			{
+				m_px = hero->GetX() - pbb->GetScroll();
+				m_py = hero->GetY() - pbb->GetScrollY() - 100;//主人公の頭上の上に雲を召喚
+			}
+			m_px += m_con_x;
+			m_py += m_con_y;
+		}
+		else if (m_con_num == 1)//2Pプレイ時
+		{
+			m_con_x = Input::GetConVecStickLX(1) * 10;
+			m_con_y = Input::GetConVecStickLY(1) * -10;
+			if (m_con_x > 5.0f)
+				m_con_x = 5.0f;
+			if (m_con_x < -5.0f)
+				m_con_x = -5.0f;
+			if (m_con_y > 5.0f)
+				m_con_y = 5.0f;
+			if (m_con_y < -5.0f)
+				m_con_y = -5.0f;
+
+			if (( Input::GetConButtons(m_con_num, GAMEPAD_B) == true) && rain_flag == true && m_hp > 0.0f)
+			{
+				CObjRain* objr = new CObjRain(m_px, m_py + 64);
+				Objs::InsertObj(objr, OBJ_RAIN, 10);
+				rain_flag = false;
+				Audio::Start(5);
+				m_hp -= 0.01f;	//hp減少
+			}
+			if ((Input::GetConButtons(m_con_num, GAMEPAD_B) == false) && rain_flag == false)
+			{
+				rain_flag = true;
+			}
+			if (Input::GetConButtons(m_con_num, GAMEPAD_Y) == true)
+			{
+				m_px = hero->GetX() - pbb->GetScroll();
+				m_py = hero->GetY() - pbb->GetScrollY() - 100;//主人公の頭上の上に雲を召喚
+			}
+			m_px += m_con_x;
+			m_py += m_con_y;
+		}
+		else
+		{
+			if (Input::GetVKey('C') == true  && rain_flag == true && m_hp > 0.0f)
+			{
+				CObjRain* objr = new CObjRain(m_px, m_py + 64);
+				Objs::InsertObj(objr, OBJ_RAIN, 10);
+				rain_flag = false;
+				Audio::Start(5);
+				m_hp -= 0.01f;	//hp減少
+			}
+			if (Input::GetVKey('C') == false   && rain_flag == false)
+			{
+				rain_flag = true;
+			}
+			if (Input::GetVKey(VK_SPACE) == true )
+			{
+				m_px = hero->GetX() - pbb->GetScroll();
+				m_py = hero->GetY() - pbb->GetScrollY() - 100;//主人公の頭上の上に雲を召喚
+			}
+			if (Input::GetVKey('A') == true)
+				m_px -= m_vx;
+			if (Input::GetVKey('D') == true)
+				m_px += m_vx;
+			if (Input::GetVKey('W') == true)
+				m_py -= m_vy;
+			if (Input::GetVKey('S') == true)
+				m_py += m_vy;
+		}
+		
+		
+
+		
+
+		
+		if (m_ani_time > m_ani_max_time)
+		{
+			m_ani_frame += 1;
+			m_ani_time = 0;
+		}
+
+		if (m_ani_frame == 4)
+		{
+			m_ani_frame = 0;
+		}
 	}
 	
-	if ((Input::GetVKey('C') == true||Input::GetConButtons(m_con_num,GAMEPAD_B)==true) && rain_flag == true && m_hp > 0.0f)
-	{
-		CObjRain* objr = new CObjRain(m_px, m_py+64);
-		Objs::InsertObj(objr, OBJ_RAIN, 10);
-		rain_flag = false;
-		Audio::Start(5);
-		m_hp -= 0.01f;	//hp減少
-	}
-	if ((Input::GetVKey('C') == false&& Input::GetConButtons(m_con_num, GAMEPAD_B)==false) && rain_flag == false)
-	{
-		rain_flag = true;
-	}
-	if (Input::GetVKey(VK_SPACE) == true|| Input::GetConButtons(m_con_num, GAMEPAD_Y) == true)
-	{
-		m_px = hero->GetX() - pbb->GetScroll();
-		m_py = hero->GetY()-pbb->GetScrollY()-100;//主人公の頭上の上に雲を召喚
-	}
-	if (m_ani_time > m_ani_max_time)
-	{
-		m_ani_frame += 1;
-		m_ani_time = 0;
-	}
-
-	if (m_ani_frame == 4)
-	{
-		m_ani_frame = 0;
-	}
+	
 	//ブロックタイプ検知用の変数がないためのダミー
 	int d;
 	//ブロックとの当たり判定実行

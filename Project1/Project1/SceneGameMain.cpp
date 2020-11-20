@@ -41,7 +41,7 @@ void CSceneGameMain::InitScene()
 	else if(stageselect==2)
 	p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
 	else if (stageselect == 3)
-		p = Save::ExternalDataOpen(L"セーブ確認用3.csv", &size);//外部データ読み込み
+		p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
 	int map[20][100];
 	int count = 1;
 	for (int i = 0; i < 20; i++)
@@ -100,6 +100,8 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/植物.png", 18, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/押す.png", 19, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/背景.png", 22, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/夕方背景.png", 23, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/土ブロック.png", 30, TEX_SIZE_1024);//実験　ぬかるみ床用
 
 	if(stageselect==1)
 	{
@@ -119,7 +121,7 @@ void CSceneGameMain::InitScene()
 	Objs::InsertObj(obj, OBJ_HERO, 10);
 
 	//stageオブジェクト作成
-	CObjStage* objb = new CObjStage(map);
+	CObjStage* objb = new CObjStage(map,stageselect);
 	Objs::InsertObj(objb, OBJ_STAGE, 9);
 
 	//Poseオブジェクト作成
@@ -133,6 +135,14 @@ void CSceneGameMain::InitScene()
 	//体力バーオブジェクト作成
 	CObjHp* objh = new CObjHp();
 	Objs::InsertObj(objh, OBJ_HP, 11);
+
+	//実験　亀
+	CObjTurtle* objt = new CObjTurtle(400,600);
+	Objs::InsertObj(objt, OBJ_TURTLE, 12);
+
+	//実験　亀
+	CObjTurtle* objt2 = new CObjTurtle(480, 600);
+	Objs::InsertObj(objt2, OBJ_TURTLE, 12);
 
 }
 

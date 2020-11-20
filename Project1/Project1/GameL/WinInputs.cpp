@@ -101,12 +101,22 @@ int CWinInputs::UpdateXControlerConnected()
 		if (dwResult == ERROR_SUCCESS)
 		{
 			GAME_PAD[i].m_bConnected = true;
-			return i;
+			if (i == 1)
+			{
+				return 1;
+			}
 		}
 		else
+		{
 			GAME_PAD[i].m_bConnected = false;
+			
+		}
+		if (GAME_PAD[0].m_bConnected == false)
+		{
+			return 5;
+		}
 	}
-	return 5;
+	return 0;
 }
 
 

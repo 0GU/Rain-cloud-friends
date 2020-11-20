@@ -30,8 +30,7 @@ CSceneEnding::~CSceneEnding()
 void CSceneEnding::InitScene()
 {
 	//BGMÉZÉbÉg
-	Audio::LoadAudio(0, L"ëfçﬁ/BGM/GameClear.wav", SOUND_TYPE::BACK_MUSIC);
-
+	Audio::LoadAudio(0, L"ëfçﬁ/BGM/Ending.wav", SOUND_TYPE::BACK_MUSIC);
 	Audio::Start(0);
 }
 

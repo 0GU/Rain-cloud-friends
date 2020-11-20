@@ -61,7 +61,7 @@ void CObjHero::Init()
 	//コントローラー用仮変数
 	m_con_x = 0.0f;
 	m_con_y = 0.0f;
-	m_con_num = 0;
+
 	m_con_flag = false;
 
 	//当たり判定用のHitBoxを作成
@@ -71,6 +71,7 @@ void CObjHero::Init()
 //アクション
 void CObjHero::Action()
 {
+	m_con_num = Input::UpdateXControlerConnected();
 	if (m_hit_time > 0)
 		m_hit_time--;
 
@@ -138,9 +139,8 @@ void CObjHero::Action()
 		if (stay_flag == false)
 		{
 			//コントローラー操作仮
-			m_con_num = Input::UpdateXControlerConnected();
 			m_con_x = Input::GetConVecStickLX(m_con_num);
-			if (m_con_num != 5)
+			if (m_con_num==0)
 			{
 				if (m_con_x == 0.0f)
 				{
@@ -152,6 +152,7 @@ void CObjHero::Action()
 					{
 						Audio::Start(2);
 						m_vy = -8;
+						m_hit_down == false;
 					}
 
 				}
@@ -208,7 +209,7 @@ void CObjHero::Action()
 					m_ani_time += 1;
 				}
 			}
-			else
+			if(m_con_num==5)
 			{
 				//Xキー入力でジャンプ
 				if (Input::GetVKey('X') == true)
@@ -392,6 +393,12 @@ void CObjHero::Action()
 				EnemyHit(m_enemynum);
 
 			}
+			if (hit->CheckObjNameHit(OBJ_SWANP) != nullptr)
+			{
+				m_enemynum = 6;
+				EnemyHit(m_enemynum);
+			}
+
 
 			//昇降処理  一旦Input系の処理はここでは必要ない
 			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) != 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
@@ -449,6 +456,20 @@ void CObjHero::Action()
 		}
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+		CObjTurtle* Turtle = (CObjTurtle*)Objs::GetObj(OBJ_TURTLE);
+		if (m_vy < -1.0f)
+		{
+			//ジャンプしてる場合は下記の影響を出ないようにする
+		}
+		else if (hit->CheckObjNameHit(OBJ_TURTLE) != nullptr && Turtle->GetPY() <= m_py + 64 - block->GetScrollY() && Turtle->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
+		{
+			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
+			//また、地面に当たってる判定にする
+			m_px += Turtle->GetVx();
+			m_py = Turtle->GetPY() + pb->GetScrollY() - 63;
+			m_vy = 0.0f;
+			m_hit_down = true;
+		}
 
 
 			//位置の更新
@@ -458,6 +479,8 @@ void CObjHero::Action()
 			//HitBoxの位置の変更
 			hit->SetPos(m_px, m_py);
 		}
+
+
 	}
 	else if (over_flag == true)//実験　死亡時のアニメーション
 	{
@@ -596,6 +619,8 @@ void CObjHero::EnemyHit(int m_enemynum)
 			hit_data = hit->SearchObjNameHit(OBJ_MAGIC);
 		else if (m_enemynum == 5)
 			hit_data = hit->SearchObjNameHit(OBJ_RUSH_ENEMY);
+		else if (m_enemynum == 6)
+			hit_data = hit->SearchObjNameHit(OBJ_SWANP);
 
 		hit_flag = false;
 
@@ -607,7 +632,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 			{
 				//敵の左右に当たったら
 				float r = hit_data[i]->r;
-				if (r < 45 && r >= 0 || r>315)
+				if (r < 45 &&( r >= 0 || r>315)&&m_enemynum!=6)
 				{
 					m_vx -= 5.0f;//左に移動させる
 					if (m_hit_time == 0)
@@ -616,7 +641,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 						m_hp -= 0.1f;//ダメージ
 					}
 				}
-				if (r > 135 && r < 225)
+				if (r > 135 && r < 225 && m_enemynum != 6)
 				{
 					m_vx += 5.0f;//右に移動させる
 					if (m_hit_time == 0)
@@ -625,7 +650,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 						m_hp -= 0.1f;//ダメージ
 					}
 				}
-				if (r > 45 && r < 135)
+				if (r > 45 && r < 135 && m_enemynum != 6)
 				{
 					if (m_enemynum == 4)
 					{
@@ -635,9 +660,10 @@ void CObjHero::EnemyHit(int m_enemynum)
 				if (r >= 225 && r < 315)
 				{
 					//敵の移動方向を主人公の位置に加算
-					if (m_enemynum == 1|| m_enemynum ==5)
+					if (m_enemynum == 1)
 						m_px += ((CObjEnemy*)hit_data[i]->o)->GetVx();
-
+					else if (m_enemynum == 5)
+						m_px += ((CObjRushEnemy*)hit_data[i]->o)->GetVx();
 
 					CObjStage* b = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 					//後方スクロールライン
@@ -648,9 +674,9 @@ void CObjHero::EnemyHit(int m_enemynum)
 					}
 
 					//前方スクロールライン
-					if (m_px > 300)
+					if (m_px > 400)
 					{
-						m_px = 300;
+						m_px = 400;
 						b->SetScroll(b->GetScroll() - 5.0);
 					}
 
@@ -675,12 +701,12 @@ void CObjHero::EnemyHit(int m_enemynum)
 			hit_flag = true;
 		}
 
-		//位置の更新
-		m_px += m_vx;
-		m_py += m_vy;
+		////位置の更新
+		//m_px += m_vx;
+		//m_py += m_vy;
 
-		//HitBoxの位置の変更
-		hit->SetPos(m_px, m_py);
+		////HitBoxの位置の変更
+		//hit->SetPos(m_px, m_py);
 
 	}
 

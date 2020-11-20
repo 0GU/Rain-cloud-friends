@@ -10,9 +10,9 @@
 //使用するネームスペース
 using namespace GameL;
 
-CObjStage::CObjStage(int map[20][100])
+CObjStage::CObjStage(int map[20][100],int stage)
 {
-	
+	stage_num = stage;
 
 	//マップデータをコピー
 	memcpy(m_map, map, sizeof(int) * (20 * 100));
@@ -92,8 +92,9 @@ void CObjStage::Action()
 	//前方スクロールライン
 	if (hx > 400)
 	{
+		mx_scroll -= hx-400;	//実験　乗った状態で動けるようにするため
 		hero->SetX(400);			//主人公はラインを超えないようにする
-		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
+		//mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
 	//上方スクロールライン
@@ -155,7 +156,10 @@ void CObjStage::Draw()
 	dst.m_left = ZERO_G;
 	dst.m_right = HD_RIGIT;
 	dst.m_bottom = HD_BUTTOM;
-	Draw::Draw(22, &src, &dst, c, 0.0f);
+	if (stage_num != 2)
+		Draw::Draw(22, &src, &dst, c, 0.0f);
+	else
+		Draw::Draw(23, &src, &dst, c, 0.0f);
 
 	//マップチップによるblock設置
 	for (int i = 0; i < 20; i++)
@@ -273,6 +277,12 @@ void CObjStage::Draw()
 				{
 					CObjStone* objh = new CObjStone(j * 64.0f, i * 64.0f);
 					Objs::InsertObj(objh, OBJ_STONE, 10);
+					m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 90)//実験用　ぬかるむ床
+				{
+					CObjSwanp* objsw = new CObjSwanp(j * 64.0f, i * 64.0f);
+					Objs::InsertObj(objsw, OBJ_SWANP, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 99)
