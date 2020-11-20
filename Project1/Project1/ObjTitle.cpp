@@ -62,14 +62,14 @@ void CObjTitle::Action()
 
 	//カーソル移動
 	//カーソルを下に動かす場合
-	if (Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) && select_flag == true && key_flag == true && m_fade_f == true)
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) && select_flag == true && key_flag == true && m_fade_f == true && move_flag==false)
 	{
 		Audio::Start(2);//効果音作動
 		key_flag = false;//キー操作不能にする
 		select_flag = false;//カーソルが下に
 	}
 	//カーソルを上に動かす場合
-	if (Input::GetConButtons(0, GAMEPAD_DPAD_UP) && select_flag == false && description_flag == false && key_flag == true && m_fade_f == true)
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_UP) && select_flag == false && description_flag == false && key_flag == true && m_fade_f == true && move_flag == false)
 	{
 		Audio::Start(2);//効果音作動
 		key_flag = false;//キー操作不能にする
@@ -84,7 +84,7 @@ void CObjTitle::Action()
 		description_flag = true;//操作説明画面を表示する
 	}
 	//操作説明終了
-	if (Input::GetConButtons(0, GAMEPAD_A)  && select_flag == false && description_flag == false && key_flag == true && m_fade_f == true)
+	if (Input::GetConButtons(0, GAMEPAD_A)  && select_flag == false && description_flag == true && key_flag == true && m_fade_f == true)
 	{
 		Audio::Start(2);//効果音作動
 		key_flag = false;//キー操作不能にする
@@ -177,8 +177,8 @@ void CObjTitle::Draw()
 		//タイトル背景
 		src.m_top = 0.0f;
 		src.m_left = 0.0f;
-		src.m_right = 1024.0f;
-		src.m_bottom = 1024.0f;
+		src.m_right = 1280.0f;
+		src.m_bottom = 720.0f;
 
 		dst.m_top = 0.0f;
 		dst.m_left = 0.0f;

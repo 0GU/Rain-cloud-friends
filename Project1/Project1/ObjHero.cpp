@@ -139,14 +139,14 @@ void CObjHero::Action()
 		if (stay_flag == false)
 		{
 			//コントローラー操作仮
-			m_con_x = Input::GetConVecStickLX(m_con_num);
-			if (m_con_num==0)
+			m_con_x = Input::GetConVecStickLX(0);
+			if (m_con_num==0 || m_con_num==1)
 			{
 				if (m_con_x == 0.0f)
 				{
 					m_con_flag = false;
 				}
-				if (Input::GetConButtons(m_con_num, GAMEPAD_A) == true)
+				if (Input::GetConButtons(0, GAMEPAD_A) == true)
 				{
 					if (m_hit_down == true)
 					{
@@ -156,7 +156,7 @@ void CObjHero::Action()
 					}
 
 				}
-				if (Input::GetConButtons(m_con_num, GAMEPAD_X) == true)
+				if (Input::GetConButtons(0, GAMEPAD_X) == true)
 				{
 					//ダッシュ時の速度
 					if (m_con_x > 1.0f)
@@ -189,21 +189,21 @@ void CObjHero::Action()
 					m_con_flag = true;
 				}
 				//昇降処理
-				if (Input::GetConVecStickLY(m_con_num) > 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
+				if (Input::GetConVecStickLY(0) > 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
 				{
 					m_vy = 0.0f;
 				}
-				else if (Input::GetConVecStickLY(m_con_num) == 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+				else if (Input::GetConVecStickLY(0) == 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
 				{
 					//操作なしの場合はその場所に留まる
 					m_vy = 0.0f;
 				}
-				else if (Input::GetConVecStickLY(m_con_num) > 0.1f && climb_flag == true/* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				else if (Input::GetConVecStickLY(0) > 0.1f && climb_flag == true/* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
 					m_vy = -3.0f;
 					m_ani_time += 1;
 				}
-				else if (Input::GetConVecStickLY(m_con_num) < -0.1f && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				else if (Input::GetConVecStickLY(0) < -0.1f && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
 					m_vy = +3.0f;
 					m_ani_time += 1;
@@ -401,7 +401,7 @@ void CObjHero::Action()
 
 
 			//昇降処理  一旦Input系の処理はここでは必要ない
-			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) != 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
+			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(0) != 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
 			{
 				climb_flag = true;
 			}

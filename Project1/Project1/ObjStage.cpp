@@ -156,11 +156,12 @@ void CObjStage::Draw()
 	dst.m_left = ZERO_G;
 	dst.m_right = HD_RIGIT;
 	dst.m_bottom = HD_BUTTOM;
-	if (stage_num != 2)
+	if (stage_num == 1)
 		Draw::Draw(22, &src, &dst, c, 0.0f);
-	else
+	if(stage_num==2)
 		Draw::Draw(23, &src, &dst, c, 0.0f);
-
+	if (stage_num == 3)
+		Draw::Draw(24, &src, &dst, c, 0.0f);
 	//マップチップによるblock設置
 	for (int i = 0; i < 20; i++)
 	{

@@ -32,6 +32,7 @@ void CObjMagic::Init()
 	m_hit_left = false;
 	m_hit_right = false;
 
+	stay_flag = false;
 	//当たり判定用HitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 32, 32, ELEMENT_ENEMY, OBJ_MAGIC, 1);
 
@@ -43,7 +44,7 @@ void CObjMagic::Action()
 {
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-
+	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
 	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
 	float x = hero->GetX()-(m_px+block->GetScroll());	//主人公機のｘ座標
 	float y = hero->GetY()-(m_py+block->GetScrollY());	//主人公機のｙ座標
@@ -54,47 +55,51 @@ void CObjMagic::Action()
 		m_r = 360 - abs(m_r);
 	}
 
-
-	//発射したときだけ主人公との座標の差を調べる
-	if (m_check == true)
+	stay_flag = p->GetFlag();
+	if (stay_flag == false)
 	{
-		m_vx = cos(3.14/180*m_r);
-		m_vy = sin(3.14 / 180 * m_r);
+		//発射したときだけ主人公との座標の差を調べる
+		if (m_check == true)
+		{
+			m_vx = cos(3.14 / 180 * m_r);
+			m_vy = sin(3.14 / 180 * m_r);
 
-		Audio::Start(8);
-		m_check = false;
+			Audio::Start(8);
+			m_check = false;
+		}
+
+
+
+		//速度
+		m_px += m_vx * 2.0f;
+		m_py -= m_vy * 2.0f;
+
+		//HitBoxの位置の変更
+		CHitBox* hit = Hits::GetHitBox(this);
+		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY(), 32.0f, 32.0f);
+
+		//主人公と接触しているか調べる
+		if (hit->CheckObjNameHit(OBJ_HERO) != nullptr)
+		{
+			this->SetStatus(false);	//自身に削除命令を出す
+			Hits::DeleteHitBox(this);//保有するHitBoxに削除する
+		}
+
+		//ブロックタイプ検知用の変数がないためのダミー
+		int d;
+		//ブロックとの当たり判定実行
+		block->BlockHit(&m_px, &m_py, false,
+			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
+			&m_vx, &m_vy, &d, false, 32.0f, 32.0f
+		);
+		if (m_hit_up == true || m_hit_down == true || m_hit_left == true || m_hit_right == true)
+		{
+			this->SetStatus(false);	//自身に削除命令を出す
+			Hits::DeleteHitBox(this);//保有するHitBoxに削除する
+		}
+
 	}
-
-
-
-	//速度
-	m_px += m_vx * 2.0f;
-	m_py -= m_vy * 2.0f;
-
-	//HitBoxの位置の変更
-	CHitBox* hit = Hits::GetHitBox(this);
-	hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY(),32.0f,32.0f);
-
-	//主人公と接触しているか調べる
-	if (hit->CheckObjNameHit(OBJ_HERO) != nullptr )
-	{
-		this->SetStatus(false);	//自身に削除命令を出す
-		Hits::DeleteHitBox(this);//保有するHitBoxに削除する
-	}
-
-	//ブロックタイプ検知用の変数がないためのダミー
-	int d;
-	//ブロックとの当たり判定実行
-	block->BlockHit(&m_px, &m_py, false,
-		&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-		&m_vx, &m_vy, &d,false,32.0f,32.0f
-	);
-	if (m_hit_up == true || m_hit_down == true || m_hit_left == true || m_hit_right == true)
-	{
-		this->SetStatus(false);	//自身に削除命令を出す
-		Hits::DeleteHitBox(this);//保有するHitBoxに削除する
-	}
-
+	
 	////領域外に出た弾丸を破棄する
 	//bool check = CheckWindow(m_px, m_py, -32.0f, -32.0f, 800.0f, 600.0f);
 	//if (check == false)

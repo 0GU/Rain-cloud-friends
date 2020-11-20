@@ -79,7 +79,7 @@ void CObjStageSelect::Action()
 	*/
 	//ここからステージコマンド------------------(コントローラー用）
 	//右に動かす場合
-	if (Input::GetConButtons(0, GAMEPAD_DPAD_RIGHT) && m_key_f == true && m_fade_f == true)
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_RIGHT) && m_key_f == true && m_fade_f == true && move_flag == false)
 	{
 		m_key_f = false;//キー操作不能にする
 		Audio::Start(1);
@@ -103,7 +103,7 @@ void CObjStageSelect::Action()
 		}
 	}
 	//左に動かす場合
-	if (Input::GetConButtons(0,GAMEPAD_DPAD_LEFT)&& m_key_f == true && m_fade_f == true)
+	if (Input::GetConButtons(0,GAMEPAD_DPAD_LEFT)&& m_key_f == true && m_fade_f == true && move_flag == false)
 	{
 		m_key_f = false;//キー操作不能にする
 		Audio::Start(1);//効果音作動
@@ -127,7 +127,7 @@ void CObjStageSelect::Action()
 		}
 	}
 	//Bボタンが押されている場合
-	if ( Input::GetConButtons(0, GAMEPAD_B) && m_key_f == true && m_fade_f == true)
+	if ( Input::GetConButtons(0, GAMEPAD_B) && m_key_f == true && m_fade_f == true && move_flag == false)
 	{
 
 		m_key_f = false;//キー操作不能にする
@@ -135,7 +135,7 @@ void CObjStageSelect::Action()
 		title_flag = true;//タイトル以移行用フラグを起動し
 		move_flag = true;//二回目のフェードを起動
 	}
-	if (Input::GetConButtons(0, GAMEPAD_A) && m_key_f == true && m_fade_f == true)
+	if (Input::GetConButtons(0, GAMEPAD_A) && m_key_f == true && m_fade_f == true && move_flag == false)
 	{
 		m_key_f = false;//キー操作不能にする
 		Audio::Stop(0);//メインBGM停止
@@ -147,7 +147,7 @@ void CObjStageSelect::Action()
 	}
 
 	//ここからキーボード用--------------------------------------------------------------
-	if (Input::GetVKey(VK_RIGHT) && m_key_f == true && m_fade_f == true)
+	if (Input::GetVKey(VK_RIGHT) && m_key_f == true && m_fade_f == true && move_flag == false)
 	{
 		m_key_f = false;//キー操作不能にする
 		Audio::Start(1);
@@ -170,7 +170,7 @@ void CObjStageSelect::Action()
 			}
 		}
 	}
-	if (Input::GetVKey(VK_LEFT) == true && m_key_f == true && m_fade_f == true)
+	if (Input::GetVKey(VK_LEFT) == true && m_key_f == true && m_fade_f == true && move_flag == false)
 	{
 		m_key_f = false;//キー操作不能にする
 		Audio::Start(1);//効果音作動
@@ -194,7 +194,7 @@ void CObjStageSelect::Action()
 		}
 	}
 
-	if (Input::GetVKey('X') == true && m_key_f == true && m_fade_f == true)
+	if (Input::GetVKey('X') == true && m_key_f == true && m_fade_f == true && move_flag == false)
 	{
 		m_key_f = false;//キー操作不能にする
 		Audio::Start(2);//効果音作動
@@ -202,7 +202,7 @@ void CObjStageSelect::Action()
 		move_flag = true;//二回目のフェードを起動
 	}
 
-	if (Input::GetVKey('Z') == true  &&  m_key_f == true && m_fade_f == true)//Stage1
+	if (Input::GetVKey('Z') == true  &&  m_key_f == true && m_fade_f == true && move_flag == false)//Stage1
 	{
 		m_key_f = false;//キー操作不能にする
 		Audio::Stop(0);
@@ -255,7 +255,7 @@ void CObjStageSelect::Draw()
 	RECT_F src; //描画元切り取り位置の設定
 	RECT_F dst; //描画先表示位置
 
-	//hoge背景1
+	//背景
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
 	src.m_right = HD_RIGIT;

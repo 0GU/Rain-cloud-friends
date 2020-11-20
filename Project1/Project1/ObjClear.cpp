@@ -169,8 +169,8 @@ void CObjClear::Draw()
 	//îíîwåi(âº)
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 16.0f;
-	src.m_bottom = 16.0f;
+	src.m_right = 1280.0f;
+	src.m_bottom = 720.0f;
 
 	dst.m_top = 0.0f;
 	dst.m_left = 0.0f;
@@ -180,9 +180,9 @@ void CObjClear::Draw()
 	Draw::Draw(0, &src, &dst, c, 0.0f);
 
 	//StageClear
-	src.m_top = 369.0f;
-	src.m_left = 0.0f;
-	src.m_right = 900.0f;
+	src.m_top = 370.0f;
+	src.m_left = 1.0f;
+	src.m_right = 899.0f;
 	src.m_bottom = 529.0f;
 
 	dst.m_top = 50.0f;
@@ -193,17 +193,43 @@ void CObjClear::Draw()
 	Draw::Draw(1, &src, &dst, c, 0.0f);
 
 	//Excerent
-	src.m_top = 147.0f;
+	src.m_top = 150.0f;
 	src.m_left = 0.0f;
 	src.m_right = 815.0f;
-	src.m_bottom = 300.0f;
+	src.m_bottom = 292.0f;
 
-	dst.m_top = 320.0f;
+	dst.m_top = 420.0f;
 	dst.m_left = 650.0f;
 	dst.m_right = 1200.0f;
-	dst.m_bottom = 470.0f;
+	dst.m_bottom = 570.0f;
 
-	Draw::Draw(5, &src, &dst, c, 30.0f);
+	Draw::Draw(5, &src, &dst, c, 0.0f);
+
+	//Great
+	src.m_top = 150.0f;
+	src.m_left = 0.0f;
+	src.m_right = 815.0f;
+	src.m_bottom = 292.0f;
+
+	dst.m_top = 420.0f;
+	dst.m_left = 650.0f;
+	dst.m_right = 1200.0f;
+	dst.m_bottom = 570.0f;
+
+	Draw::Draw(5, &src, &dst, c, 0.0f);
+
+	//Good
+	src.m_top = 150.0f;
+	src.m_left = 0.0f;
+	src.m_right = 815.0f;
+	src.m_bottom = 292.0f;
+
+	dst.m_top = 420.0f;
+	dst.m_left = 650.0f;
+	dst.m_right = 1200.0f;
+	dst.m_bottom = 570.0f;
+
+	Draw::Draw(5, &src, &dst, c, 0.0f);
 
 	//é¥ÅiâºÅjÇ±Ç±Ç©ÇÁ----------------------------------------
 	//1
@@ -212,9 +238,9 @@ void CObjClear::Draw()
 	src.m_right =512.0f;
 	src.m_bottom = 512.0f;
 
-	dst.m_top = 300.0f;
-	dst.m_bottom = 500.0f;
-	if (Clear_flag[0] == true)
+	dst.m_top = 400.0f;
+	dst.m_bottom = 600.0f;
+	if (Clear_flag[2] == true)
 	{
 		dst.m_left = 20.0f;
 		dst.m_right = 270.0f;
@@ -230,7 +256,7 @@ void CObjClear::Draw()
 
 		Draw::Draw(2, &src, &dst, c, 0.0f);
 	}
-	if (Clear_flag[2] == true)
+	if (Clear_flag[0] == true)
 	{
 		//3
 		dst.m_left = 380.0f;
