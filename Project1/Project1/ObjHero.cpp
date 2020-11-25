@@ -64,6 +64,9 @@ void CObjHero::Init()
 
 	m_con_flag = false;
 
+	Audio_time = 0.0f;
+	Audio_time_max = 1.0f;
+	Audio_f = true;
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
@@ -101,11 +104,14 @@ void CObjHero::Action()
 	{
 		if (m_hit_down == true)
 		{
+			
 			if (falldamage_flag == false)
 			{
 				falldamage_flag = true;
 				if ((m_py - m_py_h - block->GetScrollY()) / 64 >= 5 && hit->CheckElementHit(ELEMENT_IVY) == false && reset_falldamage_cacancel_flag == false)
 				{
+					Audio::Stop(3);
+					Audio::Start(4);
 					m_hp -= 0.04 * (int)(m_py - m_py_h - block->GetScrollY()) / 64;
 				}
 			}
@@ -240,6 +246,7 @@ void CObjHero::Action()
 				//キーの入力方向
 				if (Input::GetVKey(VK_RIGHT) == true)
 				{
+					//Audio::Start(3);
 					m_vx += m_speed_power;
 					m_posture = 1.0f;
 					m_ani_time += 1;
@@ -264,20 +271,32 @@ void CObjHero::Action()
 				else if (Input::GetVKey(VK_UP) == false && Input::GetVKey(VK_DOWN) == false && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
 				{
 					//操作なしの場合はその場所に留まる
+					Audio::Stop(2);
 					m_vy = 0.0f;
 				}
 				else if (Input::GetVKey(VK_UP) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
+					if (Audio_time == 0.00f)
+					{
+						Audio::Start(12);
+					}
+					Audio_time += 0.04f;
 					m_vy = -3.0f;
 					m_ani_time += 1;
 
 				}
 				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
+					if (Audio_time == 0.00f)
+					{
+						Audio::Start(12);
+					}
+					Audio_time += 0.04f;
 					m_vy = +3.0f;
 					m_ani_time += 1;
-
+					Audio::Stop(2);
 				}
+
 			}
 			//1.
 			//2.
@@ -344,12 +363,18 @@ void CObjHero::Action()
 				m_enemynum = 1;
 				EnemyHit(m_enemynum);
 			}
+			
 			if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
 			{
-				Audio::Start(4);
+				if (Audio_time == 0.00f)
+				{
+					Audio::Start(4);
+				}
+				Audio_time += 0.05f;
 				m_enemynum = 2;
 				EnemyHit(m_enemynum);
 			}
+
 			if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
 			{
 				Audio::Start(4);
@@ -414,7 +439,7 @@ void CObjHero::Action()
 			if (m_py - block->GetScrollY() > 1300)
 			{
 				//場外に出たらリスタート
-				Scene::SetScene(new CSceneGameMain(reset));
+				Scene::SetScene(new CSceneOver(reset));
 			}
 
 			//ゴールブロックに触れると
@@ -495,6 +520,10 @@ void CObjHero::Action()
 		{
 			Scene::SetScene(new CSceneOver(reset));
 		}
+	}
+	if (Audio_time >= Audio_time_max)
+	{
+		Audio_time = 0.00f;
 	}
 }
 

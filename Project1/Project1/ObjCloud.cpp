@@ -46,6 +46,9 @@ void CObjCloud::Init()
 
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 96, 96, ELEMENT_PLAYER, OBJ_CLOUD, 1);
+
+	key_flag = false;
+
 }
 
 //アクション
@@ -143,8 +146,10 @@ void CObjCloud::Action()
 			{
 				rain_flag = true;
 			}
-			if (Input::GetVKey(VK_SPACE) == true )
+			if (Input::GetVKey(VK_SPACE) == true &&key_flag==false)
 			{
+				Audio::Start(11);
+				key_flag = true;
 				m_px = hero->GetX() - pbb->GetScroll();
 				m_py = hero->GetY() - pbb->GetScrollY() - 100;//主人公の頭上の上に雲を召喚
 			}
@@ -159,6 +164,10 @@ void CObjCloud::Action()
 		}
 		
 		
+		if (Input::GetVKey(VK_SPACE) == false && key_flag == true)
+		{
+			key_flag = false;
+		}
 
 		
 

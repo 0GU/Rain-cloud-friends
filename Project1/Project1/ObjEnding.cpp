@@ -10,12 +10,17 @@
 
 void CObjEnding::Init()
 {
-
+	key_flag = true;
 }
 
 //アクション
 void CObjEnding::Action()
 {
+	if (Input::GetVKey('Z') == true)
+	{
+		Scene::SetScene(new CSceneStageSelect);//ステージセレクト画面に転移する
+	}
+
 
 }
 
@@ -32,13 +37,13 @@ void CObjEnding::Draw()
 	//hoge1
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 0.0f;
-	src.m_bottom = 0.0f;
+	src.m_right = 1280.0f;
+	src.m_bottom = 720.0f;
 
 	dst.m_top = 0.0f;
 	dst.m_left = 0.0f;
-	dst.m_right = 0.0f;
-	dst.m_bottom = 0.0f;
+	dst.m_right = 1280.0f;
+	dst.m_bottom = 720.0f;
 
-
+	Draw::Draw(0, &src, &dst, c, 0.0f);
 }

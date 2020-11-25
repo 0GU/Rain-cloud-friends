@@ -81,6 +81,8 @@ private:
 	float m_py_h;
 
 	int m_enemynum;	//接触物の種類判別用
+
+	bool key_flag;//キー押し離し判別用
 	//コントローラー用仮変数
 
 	float m_con_x;
@@ -88,5 +90,7 @@ private:
 	int m_con_num;
 	bool m_con_flag;
 
-
+	float Audio_time;
+	float Audio_time_max;
+	bool Audio_f;
 };

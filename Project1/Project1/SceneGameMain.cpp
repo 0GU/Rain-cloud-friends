@@ -77,7 +77,13 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(8, L"ëfçﬁ/SE/î≠éÀâπ.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(9, L"ëfçﬁ/SE/åxçê.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(10, L"ëfçﬁ/SE/ïméÄ.wav", SOUND_TYPE::EFFECT);
-
+	Audio::LoadAudio(11, L"ëfçﬁ/SE/èuä‘à⁄ìÆ.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(12, L"ëfçﬁ/SE/è„ÇÈ.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(20, L"ëfçﬁ/SE/É|Å[ÉY.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(21, L"ëfçﬁ/SE/button01.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(22, L"ëfçﬁ/SE/button02.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(23, L"ëfçﬁ/BGM/ó[ï˚.wav", SOUND_TYPE::BACK_MUSIC);
+	Audio::LoadAudio(24, L"ëfçﬁ/BGM/ñÈ.wav", SOUND_TYPE::BACK_MUSIC);
 	//âÊëúèÓïÒÇìoò^
 	Draw::LoadImageW(L"ëfçﬁ/âÊëú/testtt.png", 0, TEX_SIZE_1024);
 	Draw::LoadImageW(L"ëfçﬁ/âº/mapcip.png", 1, TEX_SIZE_1024);
@@ -111,10 +117,14 @@ void CSceneGameMain::InitScene()
 	}
 	if (stageselect == 2)
 	{
-		Audio::Start(0);
+		Audio::Start(23);
 		Audio::Start(1);
 	}
-
+	if (stageselect == 3)
+	{
+		Audio::Start(24);
+		Audio::Start(1);
+	}
 	//Audio::Start(0);
 
 	//éÂêlåˆÉIÉuÉWÉFÉNÉgçÏê¨
