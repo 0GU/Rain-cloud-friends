@@ -165,11 +165,11 @@ void CObjHero::Action()
 				if (Input::GetConButtons(0, GAMEPAD_X) == true)
 				{
 					//ダッシュ時の速度
-					if (m_con_x > 1.0f)
-						m_con_x = 1.0f;
-					if (m_con_x < -1.0f)
-						m_con_x = -1.0f;
-					m_ani_max_time = 2;
+					if (m_con_x > 0.8f)
+						m_con_x = 0.8f;
+					if (m_con_x < -0.8f)
+						m_con_x = -0.8f;
+					m_ani_max_time = 1.5f;
 				}
 				else
 				{
@@ -223,7 +223,7 @@ void CObjHero::Action()
 					if (m_hit_down == true)
 					{
 						Audio::Start(2);
-						m_vy = -8;
+						m_vy = -9;
 					}
 				}
 
@@ -231,8 +231,8 @@ void CObjHero::Action()
 				if (Input::GetVKey('Z') == true)
 				{
 					//ダッシュ時の速度
-					m_speed_power = 1.0f;
-					m_ani_max_time = 2;
+					m_speed_power = 0.8f;
+					m_ani_max_time = 4;
 				}
 				else
 				{
@@ -334,7 +334,7 @@ void CObjHero::Action()
 				else
 				{
 					//落下する際は自由落下運動を使用する
-					m_vy += 9.8 / (16.0f);
+					m_vy += 6.8 / (16.0f);
 				}
 			}
 
@@ -696,17 +696,17 @@ void CObjHero::EnemyHit(int m_enemynum)
 
 					CObjStage* b = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 					//後方スクロールライン
-					if (m_px < 80)
+					if (m_px < 200)
 					{
-						m_px = 80;
-						b->SetScroll(b->GetScroll() + 5.0);
+						m_px = 200;
+						b->SetScroll(b->GetScroll() + 2.0);
 					}
 
 					//前方スクロールライン
 					if (m_px > 400)
 					{
 						m_px = 400;
-						b->SetScroll(b->GetScroll() - 5.0);
+						b->SetScroll(b->GetScroll() - 2.0);
 					}
 
 					//頭に乗せる処理
@@ -731,11 +731,11 @@ void CObjHero::EnemyHit(int m_enemynum)
 		}
 
 		////位置の更新
-		//m_px += m_vx;
-		//m_py += m_vy;
+//		m_px += m_vx;
+//		m_py += m_vy;
 
 		////HitBoxの位置の変更
-		//hit->SetPos(m_px, m_py);
+//		hit->SetPos(m_px, m_py);
 
 	}
 

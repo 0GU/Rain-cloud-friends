@@ -22,7 +22,7 @@ void CObjChaseEnemy::Init()
 	m_ani_time = 0;
 	m_ani_frame = 1;		//静止フレームを初期にする
 
-	m_speed_power = 0.5f;//通常速度
+	m_speed_power = 0.2f;//通常速度
 	m_ani_max_time = 4;  //アニメーション間隔幅
 
 	m_move = true;		 //true=右 false=左
@@ -56,7 +56,7 @@ void CObjChaseEnemy::Action()
 	if (stay_flag == false)
 	{
 		//通常速度
-		m_speed_power = 0.5f;
+		m_speed_power = 0.4f;
 		m_ani_max_time = 4;
 
 		//ブロック情報を持ってくる
@@ -68,7 +68,7 @@ void CObjChaseEnemy::Action()
 		float hy = hero->GetY();
 
 		//落下
-		if (m_py > 1000.0f)
+		if (m_py > 1200.0f)
 		{
 			;
 		}

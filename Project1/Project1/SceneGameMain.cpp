@@ -37,7 +37,7 @@ void CSceneGameMain::InitScene()
 	unique_ptr<wchar_t> p;  //ステージ情報ポインター
 	int size;				//ステージ情報の大きさ
 	if(stageselect==1)
-	p = Save::ExternalDataOpen(L"ギミック確認.csv", &size);//外部データ読み込み
+	p = Save::ExternalDataOpen(L"Stage1.csv", &size);//外部データ読み込み
 	else if(stageselect==2)
 	p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
 	else if (stageselect == 3)
