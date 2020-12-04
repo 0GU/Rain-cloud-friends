@@ -27,6 +27,7 @@ enum OBJ_NAME
 	OBJ_RUSH_ENEMY,
 	OBJ_TURTLE,
 	OBJ_SWANP,
+	OBJ_ENDING,
 };
 //------------------------------------------------
 

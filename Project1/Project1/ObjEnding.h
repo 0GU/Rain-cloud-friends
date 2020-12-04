@@ -17,4 +17,5 @@ public:
 	float x, y;
 private:
 	int hoge;//‰¼
+	bool key_flag;
 };

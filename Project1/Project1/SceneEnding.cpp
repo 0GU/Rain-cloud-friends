@@ -29,6 +29,11 @@ CSceneEnding::~CSceneEnding()
 //ゲームタイトル初期化メソッド
 void CSceneEnding::InitScene()
 {
+	CObjEnding* e = new CObjEnding;
+	Objs::InsertObj(e, OBJ_ENDING, 1);
+	//画像情報の登録
+	Draw::LoadImageW(L"素材/画像/エンディング.png", 0, TEX_SIZE_1024);
+
 	//BGMセット
 	Audio::LoadAudio(0, L"素材/BGM/Ending.wav", SOUND_TYPE::BACK_MUSIC);
 	Audio::Start(0);

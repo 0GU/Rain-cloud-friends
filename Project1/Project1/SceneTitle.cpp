@@ -35,7 +35,7 @@ void CSceneTitle::InitScene()
 	Objs::InsertObj(p, OBJ_TITLE, 1);
 
 	//画像情報を登録
-	Draw::LoadImageW(L"素材/仮/タイトル.png", 0, TEX_SIZE_2048);
+	Draw::LoadImageW(L"素材/画像/タイトル.png", 0, TEX_SIZE_2048);
 	Draw::LoadImageW(L"素材/画像/title.png", 1, TEX_SIZE_2048);
 	Draw::LoadImageW(L"素材/仮/Animation.png", 2, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/タイトルTest.png", 3, TEX_SIZE_1024);

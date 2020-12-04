@@ -64,6 +64,9 @@ void CObjHero::Init()
 
 	m_con_flag = false;
 
+	Audio_time = 0.0f;
+	Audio_time_max = 1.0f;
+	Audio_f = true;
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
@@ -101,11 +104,14 @@ void CObjHero::Action()
 	{
 		if (m_hit_down == true)
 		{
+			
 			if (falldamage_flag == false)
 			{
 				falldamage_flag = true;
 				if ((m_py - m_py_h - block->GetScrollY()) / 64 >= 5 && hit->CheckElementHit(ELEMENT_IVY) == false && reset_falldamage_cacancel_flag == false)
 				{
+					Audio::Stop(3);
+					Audio::Start(4);
 					m_hp -= 0.04 * (int)(m_py - m_py_h - block->GetScrollY()) / 64;
 				}
 			}
@@ -139,14 +145,14 @@ void CObjHero::Action()
 		if (stay_flag == false)
 		{
 			//コントローラー操作仮
-			m_con_x = Input::GetConVecStickLX(m_con_num);
-			if (m_con_num==0)
+			m_con_x = Input::GetConVecStickLX(0);
+			if (m_con_num==0 || m_con_num==1)
 			{
 				if (m_con_x == 0.0f)
 				{
 					m_con_flag = false;
 				}
-				if (Input::GetConButtons(m_con_num, GAMEPAD_A) == true)
+				if (Input::GetConButtons(0, GAMEPAD_A) == true)
 				{
 					if (m_hit_down == true)
 					{
@@ -156,14 +162,14 @@ void CObjHero::Action()
 					}
 
 				}
-				if (Input::GetConButtons(m_con_num, GAMEPAD_X) == true)
+				if (Input::GetConButtons(0, GAMEPAD_X) == true)
 				{
 					//ダッシュ時の速度
-					if (m_con_x > 1.0f)
-						m_con_x = 1.0f;
-					if (m_con_x < -1.0f)
-						m_con_x = -1.0f;
-					m_ani_max_time = 2;
+					if (m_con_x > 0.8f)
+						m_con_x = 0.8f;
+					if (m_con_x < -0.8f)
+						m_con_x = -0.8f;
+					m_ani_max_time = 1.5f;
 				}
 				else
 				{
@@ -189,21 +195,21 @@ void CObjHero::Action()
 					m_con_flag = true;
 				}
 				//昇降処理
-				if (Input::GetConVecStickLY(m_con_num) > 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
+				if (Input::GetConVecStickLY(0) > 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
 				{
 					m_vy = 0.0f;
 				}
-				else if (Input::GetConVecStickLY(m_con_num) == 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
+				else if (Input::GetConVecStickLY(0) == 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
 				{
 					//操作なしの場合はその場所に留まる
 					m_vy = 0.0f;
 				}
-				else if (Input::GetConVecStickLY(m_con_num) > 0.1f && climb_flag == true/* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				else if (Input::GetConVecStickLY(0) > 0.1f && climb_flag == true/* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
 					m_vy = -3.0f;
 					m_ani_time += 1;
 				}
-				else if (Input::GetConVecStickLY(m_con_num) < -0.1f && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				else if (Input::GetConVecStickLY(0) < -0.1f && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
 					m_vy = +3.0f;
 					m_ani_time += 1;
@@ -217,7 +223,7 @@ void CObjHero::Action()
 					if (m_hit_down == true)
 					{
 						Audio::Start(2);
-						m_vy = -8;
+						m_vy = -9;
 					}
 				}
 
@@ -225,8 +231,8 @@ void CObjHero::Action()
 				if (Input::GetVKey('Z') == true)
 				{
 					//ダッシュ時の速度
-					m_speed_power = 1.0f;
-					m_ani_max_time = 2;
+					m_speed_power = 0.8f;
+					m_ani_max_time = 4;
 				}
 				else
 				{
@@ -240,6 +246,7 @@ void CObjHero::Action()
 				//キーの入力方向
 				if (Input::GetVKey(VK_RIGHT) == true)
 				{
+					//Audio::Start(3);
 					m_vx += m_speed_power;
 					m_posture = 1.0f;
 					m_ani_time += 1;
@@ -264,20 +271,32 @@ void CObjHero::Action()
 				else if (Input::GetVKey(VK_UP) == false && Input::GetVKey(VK_DOWN) == false && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
 				{
 					//操作なしの場合はその場所に留まる
+					Audio::Stop(2);
 					m_vy = 0.0f;
 				}
 				else if (Input::GetVKey(VK_UP) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
+					if (Audio_time == 0.00f)
+					{
+						Audio::Start(12);
+					}
+					Audio_time += 0.04f;
 					m_vy = -3.0f;
 					m_ani_time += 1;
 
 				}
 				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
+					if (Audio_time == 0.00f)
+					{
+						Audio::Start(12);
+					}
+					Audio_time += 0.04f;
 					m_vy = +3.0f;
 					m_ani_time += 1;
-
+					Audio::Stop(2);
 				}
+
 			}
 			//1.
 			//2.
@@ -315,7 +334,7 @@ void CObjHero::Action()
 				else
 				{
 					//落下する際は自由落下運動を使用する
-					m_vy += 9.8 / (16.0f);
+					m_vy += 6.8 / (16.0f);
 				}
 			}
 
@@ -344,12 +363,18 @@ void CObjHero::Action()
 				m_enemynum = 1;
 				EnemyHit(m_enemynum);
 			}
+			
 			if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
 			{
-				Audio::Start(4);
+				if (Audio_time == 0.00f)
+				{
+					Audio::Start(4);
+				}
+				Audio_time += 0.05f;
 				m_enemynum = 2;
 				EnemyHit(m_enemynum);
 			}
+
 			if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
 			{
 				Audio::Start(4);
@@ -401,7 +426,7 @@ void CObjHero::Action()
 
 
 			//昇降処理  一旦Input系の処理はここでは必要ない
-			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(m_con_num) != 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
+			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(0) != 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
 			{
 				climb_flag = true;
 			}
@@ -414,7 +439,7 @@ void CObjHero::Action()
 			if (m_py - block->GetScrollY() > 1300)
 			{
 				//場外に出たらリスタート
-				Scene::SetScene(new CSceneGameMain(reset));
+				Scene::SetScene(new CSceneOver(reset));
 			}
 
 			//ゴールブロックに触れると
@@ -495,6 +520,10 @@ void CObjHero::Action()
 		{
 			Scene::SetScene(new CSceneOver(reset));
 		}
+	}
+	if (Audio_time >= Audio_time_max)
+	{
+		Audio_time = 0.00f;
 	}
 }
 
@@ -667,17 +696,17 @@ void CObjHero::EnemyHit(int m_enemynum)
 
 					CObjStage* b = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 					//後方スクロールライン
-					if (m_px < 80)
+					if (m_px < 200)
 					{
-						m_px = 80;
-						b->SetScroll(b->GetScroll() + 5.0);
+						m_px = 200;
+						b->SetScroll(b->GetScroll() + 2.0);
 					}
 
 					//前方スクロールライン
 					if (m_px > 400)
 					{
 						m_px = 400;
-						b->SetScroll(b->GetScroll() - 5.0);
+						b->SetScroll(b->GetScroll() - 2.0);
 					}
 
 					//頭に乗せる処理
@@ -702,11 +731,11 @@ void CObjHero::EnemyHit(int m_enemynum)
 		}
 
 		////位置の更新
-		//m_px += m_vx;
-		//m_py += m_vy;
+//		m_px += m_vx;
+//		m_py += m_vy;
 
 		////HitBoxの位置の変更
-		//hit->SetPos(m_px, m_py);
+//		hit->SetPos(m_px, m_py);
 
 	}
 

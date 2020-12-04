@@ -37,7 +37,7 @@ void CSceneGameMain::InitScene()
 	unique_ptr<wchar_t> p;  //ステージ情報ポインター
 	int size;				//ステージ情報の大きさ
 	if(stageselect==1)
-	p = Save::ExternalDataOpen(L"ギミック確認.csv", &size);//外部データ読み込み
+	p = Save::ExternalDataOpen(L"Stage1.csv", &size);//外部データ読み込み
 	else if(stageselect==2)
 	p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
 	else if (stageselect == 3)
@@ -77,7 +77,13 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(8, L"素材/SE/発射音.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(9, L"素材/SE/警告.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(10, L"素材/SE/瀕死.wav", SOUND_TYPE::EFFECT);
-
+	Audio::LoadAudio(11, L"素材/SE/瞬間移動.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(12, L"素材/SE/上る.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(20, L"素材/SE/ポーズ.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(21, L"素材/SE/button01.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(22, L"素材/SE/button02.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(23, L"素材/BGM/夕方.wav", SOUND_TYPE::BACK_MUSIC);
+	Audio::LoadAudio(24, L"素材/BGM/夜.wav", SOUND_TYPE::BACK_MUSIC);
 	//画像情報を登録
 	Draw::LoadImageW(L"素材/画像/testtt.png", 0, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/mapcip.png", 1, TEX_SIZE_1024);
@@ -101,6 +107,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/押す.png", 19, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/背景.png", 22, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/夕方背景.png", 23, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/夜背景.png", 24, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/土ブロック.png", 30, TEX_SIZE_1024);//実験　ぬかるみ床用
 
 	if(stageselect==1)
@@ -110,10 +117,14 @@ void CSceneGameMain::InitScene()
 	}
 	if (stageselect == 2)
 	{
-		Audio::Start(0);
+		Audio::Start(23);
 		Audio::Start(1);
 	}
-
+	if (stageselect == 3)
+	{
+		Audio::Start(24);
+		Audio::Start(1);
+	}
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成

@@ -36,6 +36,8 @@ private:
 	bool stay_flag;
 	bool rain_flag;
 
+	bool key_flag;
+
 	//block‚Æ‚ÌÕ“Ëó‘ÔŠm”F—p
 	bool m_hit_up;
 	bool m_hit_down;
