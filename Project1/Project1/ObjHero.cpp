@@ -574,15 +574,15 @@ void CObjHero::Draw()
 		src.m_left = 5.0f + m_ani_frame * 253;
 		src.m_right = 257.0f + m_ani_frame * 253;
 		src.m_bottom = 431.0f;
-		if (m_posture == 0)
+		if (m_posture == 1)
 		{
-			dst.m_left = m_px + 10.0f;
-			dst.m_right = dst.m_left + 44.0f;
+			dst.m_left = m_px + 20.0f;
+			dst.m_right = dst.m_left + 54.0f;
 		}
 		else
 		{
-			dst.m_left = m_px + 44.0f + 10.0f;
-			dst.m_right = m_px + 10.0f;
+			dst.m_left = m_px + 54.0f + 20.0f;
+			dst.m_right = m_px + 20.0f;
 		}
 		//•`‰æ
 		Draw::Draw(18, &src, &dst, c, 0.0f);
@@ -665,7 +665,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 				float r = hit_data[i]->r;
 				if (r < 45 &&( r >= 0 || r>315)&&m_enemynum!=6)
 				{
-					m_vx -= 10.0f;//¶‚ÉˆÚ“®‚³‚¹‚é
+					m_vx -= 5.0f;//¶‚ÉˆÚ“®‚³‚¹‚é
 
 					if (m_hit_time == 0)
 					{
@@ -675,7 +675,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 				}
 				if (r > 135 && r < 225 && m_enemynum != 6)
 				{
-					m_vx += 10.0f;//‰E‚ÉˆÚ“®‚³‚¹‚é
+					m_vx += 5.0f;//‰E‚ÉˆÚ“®‚³‚¹‚é
 					if (m_hit_time == 0)
 					{
 						m_hit_time = 60;

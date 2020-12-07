@@ -218,7 +218,7 @@ void CObjCloud::Draw()
 	//Ø‚èæ‚èˆÊ’u‚Ìİ’è
 	src.m_top = 0.0f;
 	src.m_left = 0.0f + AniData[m_ani_frame] * 218.5;
-	src.m_right = 218.5f + AniData[m_ani_frame] * 218.5;
+	src.m_right = 217.5f + AniData[m_ani_frame] * 217.5;
 	src.m_bottom = 132.5f;
 
 	CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);

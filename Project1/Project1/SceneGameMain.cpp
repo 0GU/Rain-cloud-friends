@@ -92,7 +92,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰¼/‘I‘ğ.png", 4, TEX_SIZE_64);
 	Draw::LoadImageW(L"‘fŞ/‰¼/’wå.png", 5, TEX_SIZE_64);
 	Draw::LoadImageW(L"‘fŞ/‰¼/HP(“§‰ß).png", 6, TEX_SIZE_128);
-	Draw::LoadImageW(L"‘fŞ/‰¼/ito.png", 7, TEX_SIZE_128);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/´.png", 7, TEX_SIZE_128);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/‰_‚Ì‚İ.png", 8, TEX_SIZE_2048);
 	Draw::LoadImageW(L"‘fŞ/‰¼/ƒXƒ‰ƒCƒ€.png", 9, TEX_SIZE_128);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/A•¨ƒ~ƒj.png", 10, TEX_SIZE_128);
@@ -103,7 +103,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰¼/test—‚Ìq.png", 15, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/ƒWƒƒƒ“ƒv.png", 16, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/€–S.png", 17, TEX_SIZE_1024);
-	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/A•¨.png", 18, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/A•¨2.png", 18, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/‰Ÿ‚·.png", 19, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/”wŒi.png", 22, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/—[•û”wŒi.png", 23, TEX_SIZE_1024);
