@@ -68,7 +68,7 @@ void CObjHero::Init()
 	Audio_time_max = 1.0f;
 	Audio_f = true;
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
+	Hits::SetHitBox(this, m_px, m_py, 40, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
 
 //アクション
@@ -525,6 +525,8 @@ void CObjHero::Action()
 	{
 		Audio_time = 0.00f;
 	}
+	//HitBoxの位置の変更
+	hit->SetPos(m_px+24, m_py);
 }
 
 //ドロー
@@ -542,9 +544,9 @@ void CObjHero::Draw()
 	RECT_F dst; //描画先表示位置
 
 	//表示位置の設定
-	dst.m_top = 0.0f + m_py;
-	dst.m_left = (64.0f * m_posture) + m_px;
-	dst.m_right = (64 - 64.0f * m_posture) + m_px;
+	dst.m_top = -16.0f + m_py;
+	dst.m_left = (84.0f * m_posture) + m_px;
+	dst.m_right = (84 - 84.0f * m_posture) + m_px;
 	dst.m_bottom = 64.0f + m_py;
 	//切り取り位置の設定
 	if (over_flag == false&&(climb_flag==false||m_hit_down==true))
@@ -663,7 +665,8 @@ void CObjHero::EnemyHit(int m_enemynum)
 				float r = hit_data[i]->r;
 				if (r < 45 &&( r >= 0 || r>315)&&m_enemynum!=6)
 				{
-					m_vx -= 5.0f;//左に移動させる
+					m_vx -= 10.0f;//左に移動させる
+
 					if (m_hit_time == 0)
 					{
 						m_hit_time = 60;
@@ -672,7 +675,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 				}
 				if (r > 135 && r < 225 && m_enemynum != 6)
 				{
-					m_vx += 5.0f;//右に移動させる
+					m_vx += 10.0f;//右に移動させる
 					if (m_hit_time == 0)
 					{
 						m_hit_time = 60;
