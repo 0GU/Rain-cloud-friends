@@ -20,6 +20,7 @@ public:
 	float GetPX_R() { return m_px+128; };
 	float GetPY() { return m_py; };
 	bool Gethr() { return m_hit_right; };
+	bool Getflag() { return hit_flag; };
 	//block‚Æ‚ÌÕ“Ëó‘ÔŠm”F—p
 	bool m_hit_up;
 	bool m_hit_down;
@@ -33,4 +34,5 @@ public:
 	float m_vx, m_vy;
 private:
 	bool stay_flag;
+	bool hit_flag;
 };

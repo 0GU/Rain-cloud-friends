@@ -29,7 +29,7 @@ void CObjStone::Init()
 	m_hit_left = false;
 	m_hit_right = false;
 	stay_flag = false;
-
+	hit_flag = false;
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 128, 64, ELEMENT_RED, OBJ_STONE, 1);
 }
@@ -37,6 +37,14 @@ void CObjStone::Init()
 //アクション
 void CObjStone::Action()
 {
+	//自身のHitBoxを持ってくる
+	CHitBox* hit = Hits::GetHitBox(this);
+
+		//ブロック情報を持ってくる
+		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+
+	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+
 	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
 	stay_flag = p->GetFlag();
 	if (stay_flag == false)
@@ -53,15 +61,19 @@ void CObjStone::Action()
 			m_vy += 9.8 / (16.0f);
 		}
 			
-		
 
-		//ブロック情報を持ってくる
-		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+		//主人公と当たっている
+		if (hit->CheckObjNameHit(OBJ_HERO) != nullptr && hero->GetX()-block->GetScroll() + 64 > m_px && 
+			hero->GetX() - block->GetScroll() < m_px + 124 && hero->GetY()-block->GetScrollY() == m_py)
+		{
+			hero->SetSthit(true);
+			m_vx = hero->GetVX() ;
+			
+		}
 
 
 		//ブロックとの当たり判定実行
-		CObjStage* pb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-		pb->BlockHit(&m_px, &m_py, false,
+		block->BlockHit(&m_px, &m_py, false,
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
 			&m_vx, &m_vy, &m_block_type, false,128.0f,64.0f
 		);
@@ -70,7 +82,6 @@ void CObjStone::Action()
 
 
 		//HitBoxの位置の変更
-		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 
 
