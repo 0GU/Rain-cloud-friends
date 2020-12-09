@@ -48,6 +48,8 @@ void CObjHero::Init()
 
 	climb_flag = false;
 
+	damageSE_flag = false;
+
 	falldamage_flag = false;
 
 	reset_falldamage_cacancel_flag = true;
@@ -57,6 +59,10 @@ void CObjHero::Init()
 	over_flag = false;
 
 	m_block_type = 0;		//踏んでいるblockの種類を確認用
+
+
+	stone_hit = false;//岩に当たっている状態を返す
+	stone_wall_hit = false;//当たっている岩が壁にぶつかっているかを返す
 
 	//コントローラー用仮変数
 	m_con_x = 0.0f;
@@ -359,9 +365,14 @@ void CObjHero::Action()
 			//敵と当たっているか確認
 			if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
 			{
-				Audio::Start(4);
+				if (damageSE_flag == false)//SE鳴り続けるのを防ぐ用
+				{
+					Audio::Start(4);
+					damageSE_flag = true;
+				}
 				m_enemynum = 1;
 				EnemyHit(m_enemynum);
+				
 			}
 			
 			if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
@@ -377,19 +388,31 @@ void CObjHero::Action()
 
 			if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
 			{
-				Audio::Start(4);
+				if (damageSE_flag == false)
+				{
+					Audio::Start(4);
+					damageSE_flag = true;
+				}
 				m_enemynum = 3;
 				EnemyHit(m_enemynum);
 			}
 			if (hit->CheckObjNameHit(OBJ_MAGIC) != nullptr)
 			{
-				Audio::Start(4);
+				if (damageSE_flag == false)
+				{
+					Audio::Start(4);
+					damageSE_flag = true;
+				}
 				m_enemynum = 4;
 				EnemyHit(m_enemynum);
 			}
 			if (hit->CheckObjNameHit(OBJ_RUSH_ENEMY) != nullptr)
 			{
-				Audio::Start(4);
+				if (damageSE_flag == false)
+				{
+					Audio::Start(4);
+					damageSE_flag = true;
+				}
 				m_enemynum = 5;
 
 
@@ -401,7 +424,7 @@ void CObjHero::Action()
 						if (m_hit_time == 0)
 						{
 							m_vx = 20.0f;
-							m_vy -= 10.0f;
+							m_vy = -5.0f;
 						}
 					}
 					if (Re->GetX() + pb->GetScroll() > m_px + 32)
@@ -409,7 +432,7 @@ void CObjHero::Action()
 						if (m_hit_time == 0)
 						{
 							m_vx = -20.0f;
-							m_vy -= 10.0f;
+							m_vy = -5.0f;
 						}
 
 					}
@@ -423,7 +446,10 @@ void CObjHero::Action()
 				m_enemynum = 6;
 				EnemyHit(m_enemynum);
 			}
-
+			if(m_enemynum==0||m_enemynum==6)//敵に当たっていなかったら再度SEなるようにする
+			{
+				damageSE_flag = false;
+			}
 
 			//昇降処理  一旦Input系の処理はここでは必要ない
 			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(0) != 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
@@ -456,29 +482,45 @@ void CObjHero::Action()
 		{
 			//ジャンプしてる場合は下記の影響を出ないようにする
 		}
-		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&Stone->GetPY() <= m_py + 64 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
+		//else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&Stone->GetPY() <= m_py + 64 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
+		//{
+		//	//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
+		//	//また、地面に当たってる判定にする
+		//	m_py = Stone->GetPY() + pb->GetScrollY() - 63;
+		//	m_vy = 0.0f;
+		//	m_hit_down = true;
+		//}
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&m_hit_down==false)
 		{
 			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 			//また、地面に当たってる判定にする
-			m_py = Stone->GetPY() + pb->GetScrollY() - 63;
+			int py = (int)((m_py - pb->GetScrollY()) / 64) * 64;
+			if (py == m_py)
+				m_py = py + pb->GetScrollY() - 64;
+			else
+				m_py = py + pb->GetScrollY();
 			m_vy = 0.0f;
 			m_hit_down = true;
 		}
-		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
-			((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
-				m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true)
 		{
-			if (Stone->Gethr()==false)
-			{
-				m_vx /= 2;
-				Stone->SetVX(m_vx);
-			}
-			else if (Stone->Gethr() ==true)
-			{
-				m_vx = 0;
-			}
-
+			m_vx /= 2;
 		}
+			//else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
+		//	((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
+		//		m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
+		//{
+		//
+		//	if (Stone->Gethr()==false)
+		//	{
+		//		m_vx /= 2;
+		//	}
+		//	else if (Stone->Gethr() ==true)
+		//	{
+		//		m_vx = 0;
+		//	}
+
+		//}
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		CObjTurtle* Turtle = (CObjTurtle*)Objs::GetObj(OBJ_TURTLE);
@@ -618,7 +660,7 @@ void CObjHero::Draw()
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
 	CObjCloud* Cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
-	swprintf_s(str1, L"X=%f", m_px - block->GetScroll());
+	swprintf_s(str1, L"X=%f,Y=%f", m_px - block->GetScroll(),m_py-block->GetScrollY());
 	Font::StrDraw(str1, 20, 20, 20, c);
 	swprintf_s(str2, L"X=%f", Stone->GetPX_L());
 	Font::StrDraw(str2, 20, 400, 20, c);
