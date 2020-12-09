@@ -76,7 +76,10 @@ void CObjHero::Action()
 {
 	m_con_num = Input::UpdateXControlerConnected();
 	if (m_hit_time > 0)
+	{
 		m_hit_time--;
+	}
+		
 
 	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
 	stay_flag = p->GetFlag();
@@ -359,17 +362,13 @@ void CObjHero::Action()
 			//敵と当たっているか確認
 			if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
 			{
-				Audio::Start(4);
 				m_enemynum = 1;
 				EnemyHit(m_enemynum);
 			}
 			
 			if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
 			{
-				if (Audio_time == 0.00f)
-				{
-					Audio::Start(4);
-				}
+
 				Audio_time += 0.05f;
 				m_enemynum = 2;
 				EnemyHit(m_enemynum);
@@ -377,26 +376,25 @@ void CObjHero::Action()
 
 			if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
 			{
-				Audio::Start(4);
+		
 				m_enemynum = 3;
 				EnemyHit(m_enemynum);
 			}
 			if (hit->CheckObjNameHit(OBJ_MAGIC) != nullptr)
 			{
-				Audio::Start(4);
 				m_enemynum = 4;
 				EnemyHit(m_enemynum);
 			}
 			if (hit->CheckObjNameHit(OBJ_RUSH_ENEMY) != nullptr)
 			{
-				Audio::Start(4);
 				m_enemynum = 5;
 
 
 				CObjRushEnemy* Re = (CObjRushEnemy*)Objs::GetObj(OBJ_RUSH_ENEMY);
 				if (Re->GetY() + pb->GetScrollY() < m_py + 50)
 				{
-					if (Re->GetX() + pb->GetScroll() + 75 < m_px + 32)
+					//主人公の左側に当たった場合
+					if (Re->GetX() + pb->GetScroll() + 40 < m_px + 32)
 					{
 						if (m_hit_time == 0)
 						{
@@ -404,6 +402,7 @@ void CObjHero::Action()
 							m_vy -= 10.0f;
 						}
 					}
+					//主人公の右側に当たった場合
 					if (Re->GetX() + pb->GetScroll() > m_px + 32)
 					{
 						if (m_hit_time == 0)
@@ -616,7 +615,7 @@ void CObjHero::Draw()
 	wchar_t str1[256];
 	wchar_t str2[256];
 	wchar_t str3[256];
-
+	/*
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
 	CObjCloud* Cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
@@ -626,7 +625,7 @@ void CObjHero::Draw()
 	Font::StrDraw(str2, 20, 400, 20, c);
 	swprintf_s(str3, L"X=%f", Cloud->GetX());
 	Font::StrDraw(str3, 20, 300, 20, c);
-
+	*/
 
 
 }
@@ -665,21 +664,25 @@ void CObjHero::EnemyHit(int m_enemynum)
 				float r = hit_data[i]->r;
 				if (r < 45 &&( r >= 0 || r>315)&&m_enemynum!=6)
 				{
-					m_vx -= 5.0f;//左に移動させる
-
 					if (m_hit_time == 0)
 					{
+						Audio::Start(4);
+						m_vx -= 5.0f;//左に移動させる
 						m_hit_time = 60;
 						m_hp -= 0.1f;//ダメージ
+						hit_flag = false;
 					}
 				}
 				if (r > 135 && r < 225 && m_enemynum != 6)
 				{
-					m_vx += 5.0f;//右に移動させる
+				
 					if (m_hit_time == 0)
 					{
+						Audio::Start(4);
+						m_vx += 5.0f;//右に移動させる
 						m_hit_time = 60;
 						m_hp -= 0.1f;//ダメージ
+						hit_flag = false;
 					}
 				}
 				if (r > 45 && r < 135 && m_enemynum != 6)
@@ -702,14 +705,14 @@ void CObjHero::EnemyHit(int m_enemynum)
 					if (m_px < 200)
 					{
 						m_px = 200;
-						b->SetScroll(b->GetScroll() + 2.0);
+						b->SetScroll(b->GetScroll() + 2.5);
 					}
 
 					//前方スクロールライン
 					if (m_px > 400)
 					{
 						m_px = 400;
-						b->SetScroll(b->GetScroll() - 2.0);
+						b->SetScroll(b->GetScroll() - 2.5);
 					}
 
 					//頭に乗せる処理

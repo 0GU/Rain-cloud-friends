@@ -388,7 +388,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 				float scroll_y = scroll_on ? my_scroll : 0;
 				//オブジェクトとブロックの当たり判定
 				//左と上はブロックのサイズ、右と下はオブジェクトのサイズで判定をとる
-				if ((*x + (-scroll) + size_x > bx) && (*x + (-scroll) < bx + 64.0f) && (*y + (-scroll_y) + size_y >= by) && (*y + (-scroll_y) <= by + 64.0f))
+				if ((*x + (-scroll) + size_x > bx) && (*x + (-scroll) < bx + 40.0f) && (*y + (-scroll_y) + size_y >= by) && (*y + (-scroll_y) <= by + 64.0f))
 				{
 					//上下左右判定
 
@@ -416,8 +416,8 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 						{
 							//右
 							*right = true;//オブジェクトから見て右の部分が衝突している
-							*x = bx + 64.0f + (scroll);//ブロックの位置+オブジェクトの幅
-							//*vx = -(*vx) * 0.1f;//-VX*反発係数
+							*x = bx + 40.0f + (scroll);//ブロックの位置+オブジェクトの幅
+							*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
 						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 13))
@@ -438,7 +438,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 							//左
 							*left = true;//オブジェクトから見て右の部分が衝突している
 							*x = bx - size_x + (scroll);//ブロックの位置-オブジェクトの幅
-							//*vx = -(*vx) * 0.1f;//-VX*反発係数
+							*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
 						if (r > 225 && r < 315 && climb == false)
