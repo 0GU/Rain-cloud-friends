@@ -74,7 +74,7 @@ void CObjHero::Init()
 	Audio_time_max = 1.0f;
 	Audio_f = true;
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
+	Hits::SetHitBox(this, m_px, m_py, 40, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
 
 //アクション
@@ -171,11 +171,11 @@ void CObjHero::Action()
 				if (Input::GetConButtons(0, GAMEPAD_X) == true)
 				{
 					//ダッシュ時の速度
-					if (m_con_x > 1.0f)
-						m_con_x = 1.0f;
-					if (m_con_x < -1.0f)
-						m_con_x = -1.0f;
-					m_ani_max_time = 2;
+					if (m_con_x > 0.8f)
+						m_con_x = 0.8f;
+					if (m_con_x < -0.8f)
+						m_con_x = -0.8f;
+					m_ani_max_time = 1.5f;
 				}
 				else
 				{
@@ -229,7 +229,7 @@ void CObjHero::Action()
 					if (m_hit_down == true)
 					{
 						Audio::Start(2);
-						m_vy = -8;
+						m_vy = -9;
 					}
 				}
 
@@ -237,8 +237,8 @@ void CObjHero::Action()
 				if (Input::GetVKey('Z') == true)
 				{
 					//ダッシュ時の速度
-					m_speed_power = 1.0f;
-					m_ani_max_time = 2;
+					m_speed_power = 0.8f;
+					m_ani_max_time = 4;
 				}
 				else
 				{
@@ -340,7 +340,7 @@ void CObjHero::Action()
 				else
 				{
 					//落下する際は自由落下運動を使用する
-					m_vy += 9.8 / (16.0f);
+					m_vy += 6.8 / (16.0f);
 				}
 			}
 
@@ -567,6 +567,8 @@ void CObjHero::Action()
 	{
 		Audio_time = 0.00f;
 	}
+	//HitBoxの位置の変更
+	hit->SetPos(m_px+24, m_py);
 }
 
 //ドロー
@@ -584,9 +586,9 @@ void CObjHero::Draw()
 	RECT_F dst; //描画先表示位置
 
 	//表示位置の設定
-	dst.m_top = 0.0f + m_py;
-	dst.m_left = (64.0f * m_posture) + m_px;
-	dst.m_right = (64 - 64.0f * m_posture) + m_px;
+	dst.m_top = -16.0f + m_py;
+	dst.m_left = (84.0f * m_posture) + m_px;
+	dst.m_right = (84 - 84.0f * m_posture) + m_px;
 	dst.m_bottom = 64.0f + m_py;
 	//切り取り位置の設定
 	if (over_flag == false&&(climb_flag==false||m_hit_down==true))
@@ -614,15 +616,15 @@ void CObjHero::Draw()
 		src.m_left = 5.0f + m_ani_frame * 253;
 		src.m_right = 257.0f + m_ani_frame * 253;
 		src.m_bottom = 431.0f;
-		if (m_posture == 0)
+		if (m_posture == 1)
 		{
-			dst.m_left = m_px + 10.0f;
-			dst.m_right = dst.m_left + 44.0f;
+			dst.m_left = m_px + 20.0f;
+			dst.m_right = dst.m_left + 54.0f;
 		}
 		else
 		{
-			dst.m_left = m_px + 44.0f + 10.0f;
-			dst.m_right = m_px + 10.0f;
+			dst.m_left = m_px + 54.0f + 20.0f;
+			dst.m_right = m_px + 20.0f;
 		}
 		//描画
 		Draw::Draw(18, &src, &dst, c, 0.0f);
@@ -706,6 +708,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 				if (r < 45 &&( r >= 0 || r>315)&&m_enemynum!=6)
 				{
 					m_vx -= 5.0f;//左に移動させる
+
 					if (m_hit_time == 0)
 					{
 						m_hit_time = 60;
@@ -738,17 +741,17 @@ void CObjHero::EnemyHit(int m_enemynum)
 
 					CObjStage* b = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 					//後方スクロールライン
-					if (m_px < 80)
+					if (m_px < 200)
 					{
-						m_px = 80;
-						b->SetScroll(b->GetScroll() + 5.0);
+						m_px = 200;
+						b->SetScroll(b->GetScroll() + 2.0);
 					}
 
 					//前方スクロールライン
 					if (m_px > 400)
 					{
 						m_px = 400;
-						b->SetScroll(b->GetScroll() - 5.0);
+						b->SetScroll(b->GetScroll() - 2.0);
 					}
 
 					//頭に乗せる処理
@@ -773,11 +776,11 @@ void CObjHero::EnemyHit(int m_enemynum)
 		}
 
 		////位置の更新
-		//m_px += m_vx;
-		//m_py += m_vy;
+//		m_px += m_vx;
+//		m_py += m_vy;
 
 		////HitBoxの位置の変更
-		//hit->SetPos(m_px, m_py);
+//		hit->SetPos(m_px, m_py);
 
 	}
 

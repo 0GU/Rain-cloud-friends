@@ -412,10 +412,10 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 					if (len < size_y*1.375)//もともとの値はlen<88.0f
 					{
 						//角度で上下左右を判定
-						if ((r < 46 && r >= 0) || r > 315)
+						if ((r < 45 && r >= 0) || r > 315)
 						{
 							//右
-							*right = true;//オブジェクトの左の部分が衝突している
+							*right = true;//オブジェクトから見て右の部分が衝突している
 							*x = bx + 64.0f + (scroll);//ブロックの位置+オブジェクトの幅
 							//*vx = -(*vx) * 0.1f;//-VX*反発係数
 
@@ -423,7 +423,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 13))
 						{
 							//上
-							*down = true;//オブジェクトの下の部分が衝突している
+							*down = true;//オブジェクトから見て下の部分が衝突している
 							*y = by - size_y + (scroll_y);//ブロックの位置-オブジェクトの幅
 							//種類を渡すのスタートとゴールのみ変更する
 							if (m_map[i][j] >= 2)
@@ -436,7 +436,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 						if (r > 135 && r < 225)
 						{
 							//左
-							*left = true;//オブジェクトの右の部分が衝突している
+							*left = true;//オブジェクトから見て右の部分が衝突している
 							*x = bx - size_x + (scroll);//ブロックの位置-オブジェクトの幅
 							//*vx = -(*vx) * 0.1f;//-VX*反発係数
 
@@ -444,7 +444,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 						if (r > 225 && r < 315 && climb == false)
 						{
 							//下
-							*up = true;//オブジェクトの上の部分が衝突している
+							*up = true;//オブジェクトから見て上の部分が衝突している
 							*y = by + 64.0f + (scroll_y);//ブロックの位置+オブジェクトの幅
 							if (*vy < 0)
 							{
@@ -620,7 +620,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 							//右
 							*right = true;//オブジェクトの左の部分が衝突している
 							*x = bx + 64.0f + (scroll);//ブロックの位置+オブジェクトの幅
-							*vx = -(*vx) * 0.1f;//-VX*反発係数
+						//	*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
 						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 13))
@@ -638,7 +638,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 							//左
 							*left = true;//オブジェクトの右の部分が衝突している
 							*x = bx - 64.0f + (scroll);//ブロックの位置-オブジェクトの幅
-							*vx = -(*vx) * 0.1f;//-VX*反発係数
+						//	*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
 						if (r > 225 && r < 315 && climb == false)

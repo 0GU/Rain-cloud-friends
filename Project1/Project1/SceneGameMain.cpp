@@ -37,7 +37,7 @@ void CSceneGameMain::InitScene()
 	unique_ptr<wchar_t> p;  //ステージ情報ポインター
 	int size;				//ステージ情報の大きさ
 	if(stageselect==1)
-	p = Save::ExternalDataOpen(L"ギミック確認.csv", &size);//外部データ読み込み
+	p = Save::ExternalDataOpen(L"Stage1.csv", &size);//外部データ読み込み
 	else if(stageselect==2)
 	p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
 	else if (stageselect == 3)
@@ -92,7 +92,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/仮/選択.png", 4, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/蜘蛛.png", 5, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/HP(透過).png", 6, TEX_SIZE_128);
-	Draw::LoadImageW(L"素材/仮/ito.png", 7, TEX_SIZE_128);
+	Draw::LoadImageW(L"素材/画像/雫.png", 7, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/画像/雲のみ.png", 8, TEX_SIZE_2048);
 	Draw::LoadImageW(L"素材/仮/スライム.png", 9, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/画像/植物ミニ.png", 10, TEX_SIZE_128);
@@ -103,7 +103,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/仮/test女の子.png", 15, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 16, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/死亡.png", 17, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/植物.png", 18, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/植物2.png", 18, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/押す.png", 19, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/背景.png", 22, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/夕方背景.png", 23, TEX_SIZE_1024);

@@ -31,7 +31,7 @@ void CObjEnemy::Init()
 	m_ani_max_time = 4;  //アニメーション間隔幅
 	m_transparent = 0.0;//描画の透明度
 	m_hp = 2;
-	m_move = true;		 //true=右 false=左
+	m_move = false;		 //true=右 false=左
 	m_damege_flag = false;//被弾フラグ
 	m_escaoe_flag = false;//逃走フラグ
 
@@ -57,7 +57,7 @@ void CObjEnemy::Action()
 	if (stay_flag == false)
 	{
 		//通常速度
-		m_speed_power = 0.5f;
+		m_speed_power = 0.3f;
 		m_ani_max_time = 4;
 		
 		//ブロック情報を持ってくる
@@ -72,11 +72,11 @@ void CObjEnemy::Action()
 		if (m_damege_flag == false)//実験　雨に当たるとその場で停止
 		{
 			//一定間隔でジャンプ
-			if (m_hit_down == true)
+		/*	if (m_hit_down == true)
 			{
 				m_vy -= 10.0f;
 			}
-
+			*/
 			//ブロック衝突で向き変更
 			if (m_hit_left == true)
 			{
