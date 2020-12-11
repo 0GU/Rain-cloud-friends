@@ -72,7 +72,8 @@ void CObjHero::Init()
 
 	Audio_time = 0.0f;
 	Audio_time_max = 1.0f;
-	Audio_f = true;
+
+	Audio_f = false;
 	//“–‚½‚è”»’è—p‚ÌHitBox‚ðì¬
 	Hits::SetHitBox(this, m_px, m_py, 40, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
 }
@@ -146,6 +147,11 @@ void CObjHero::Action()
 				if (landing_flag == true)
 				{
 					Audio::Start(3);
+				}
+				if (Audio_f == true)
+				{
+					Audio::Stop(3);
+					Audio_f = false;
 				}
 			}
 
@@ -479,11 +485,19 @@ void CObjHero::Action()
 			//‚Ü‚½A’n–Ê‚É“–‚½‚Á‚Ä‚é”»’è‚É‚·‚é
 			int py = (int)((m_py - pb->GetScrollY()) / 64) * 64;
 			if (py == m_py)
+			{
 				m_py = py + pb->GetScrollY() - 64;
+			}
 			else
+			{
 				m_py = py + pb->GetScrollY();
+				Audio_f = true;
+			}
+
+				
 			m_vy = 0.0f;
 			m_hit_down = true;
+
 		}
 		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true)
 		{
