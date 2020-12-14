@@ -91,10 +91,12 @@ void CObjCloud::Action()
 			{
 				rain_flag = true;
 			}
-			if (Input::GetConButtons(m_con_num, GAMEPAD_Y) == true)
+			if (Input::GetConButtons(m_con_num, GAMEPAD_Y) == true &&key_flag==true)
 			{
-				m_px = hero->GetX() - pbb->GetScroll();
-				m_py = hero->GetY() - pbb->GetScrollY() - 100;//主人公の頭上の上に雲を召喚
+				key_flag = false;
+				Audio::Start(11);
+				m_px = hero->GetX() - pbb->GetScroll()+10;
+				m_py = hero->GetY() - pbb->GetScrollY() - 150;//主人公の頭上の上に雲を召喚
 			}
 			m_px += m_con_x;
 			m_py += m_con_y;
@@ -146,10 +148,10 @@ void CObjCloud::Action()
 			{
 				rain_flag = true;
 			}
-			if (Input::GetVKey(VK_SPACE) == true &&key_flag==false)
+			if (Input::GetVKey(VK_SPACE) == true &&key_flag==true)
 			{
 				Audio::Start(11);
-				key_flag = true;
+				key_flag = false;
 				m_px = hero->GetX() - pbb->GetScroll();
 				m_py = hero->GetY() - pbb->GetScrollY() - 100;//主人公の頭上の上に雲を召喚
 			}
@@ -164,14 +166,14 @@ void CObjCloud::Action()
 		}
 		
 		
-		if (Input::GetVKey(VK_SPACE) == false && key_flag == true)
+		if (Input::GetVKey(VK_SPACE) == false && Input::GetConButtons(m_con_num, GAMEPAD_Y)==false &&key_flag == false)
 		{
-			key_flag = false;
+			key_flag = true;
 		}
 
 		
 
-		
+		m_ani_time += 0.1;
 		if (m_ani_time > m_ani_max_time)
 		{
 			m_ani_frame += 1;
@@ -217,8 +219,8 @@ void CObjCloud::Draw()
 
 	//切り取り位置の設定
 	src.m_top = 0.0f;
-	src.m_left = 0.0f + AniData[m_ani_frame] * 218.5;
-	src.m_right = 217.5f + AniData[m_ani_frame] * 217.5;
+	src.m_left = 0.0f + AniData[m_ani_frame] * 218.0;
+	src.m_right = 218.0f + AniData[m_ani_frame] * 218.0;
 	src.m_bottom = 132.5f;
 
 	CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);

@@ -161,12 +161,14 @@ void CObjHero::Action()
 		{
 			//コントローラー操作仮
 			m_con_x = Input::GetConVecStickLX(0);
+			m_con_y = Input::GetConVecStickLY(0);
 			if (m_con_num==0 || m_con_num==1)
 			{
-				if (m_con_x == 0.0f)
+				if (m_con_x == 0.0f )
 				{
 					m_con_flag = false;
 				}
+
 				if (Input::GetConButtons(0, GAMEPAD_A) == true)
 				{
 					if (m_hit_down == true)
@@ -184,7 +186,7 @@ void CObjHero::Action()
 						m_con_x = 0.8f;
 					if (m_con_x < -0.8f)
 						m_con_x = -0.8f;
-					m_ani_max_time = 1.5f;
+					m_ani_max_time = 4.0f;
 				}
 				else
 				{
@@ -209,25 +211,39 @@ void CObjHero::Action()
 					m_ani_time += 1;
 					m_con_flag = true;
 				}
+
 				//昇降処理
 				if (Input::GetConVecStickLY(0) > 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
 				{
 					m_vy = 0.0f;
 				}
 				else if (Input::GetConVecStickLY(0) == 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-				{
-					//操作なしの場合はその場所に留まる
+				{//操作なしの場合はその場所に留まる
+					Audio::Stop(2);
 					m_vy = 0.0f;
 				}
 				else if (Input::GetConVecStickLY(0) > 0.1f && climb_flag == true/* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
+					if (Audio_time == 0.00f)
+					{
+						Audio::Start(12);
+					}
+					m_con_flag = true;
+					Audio_time += 0.04f;
 					m_vy = -3.0f;
 					m_ani_time += 1;
 				}
 				else if (Input::GetConVecStickLY(0) < -0.1f && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
+					if (Audio_time == 0.00f)
+					{
+						Audio::Start(12);
+					}
+					m_con_flag = true;
+					Audio_time += 0.04f;
 					m_vy = +3.0f;
 					m_ani_time += 1;
+					Audio::Stop(2);
 				}
 			}
 			if(m_con_num==5)
@@ -295,6 +311,7 @@ void CObjHero::Action()
 					{
 						Audio::Start(12);
 					}
+
 					Audio_time += 0.04f;
 					m_vy = -3.0f;
 					m_ani_time += 1;
@@ -316,7 +333,7 @@ void CObjHero::Action()
 			//1.
 			//2.
 			//3.
-			if ((m_con_num != 5 && m_con_flag == false && Input::GetConVecStickLY(m_con_num) == 0.0f) ||
+			if (((m_con_num != 5 && m_con_flag == false && m_con_x==0.0f) || m_con_y==0.0f) ||
 				(m_con_num == 5 && climb_flag == false && Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false) ||
 				(m_con_num == 5 && climb_flag == true  && Input::GetVKey(VK_UP)    == false && Input::GetVKey(VK_DOWN) == false))
 			{
