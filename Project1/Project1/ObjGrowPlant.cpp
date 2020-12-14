@@ -76,8 +76,8 @@ void CObjGrowPlant::Draw()
 	{
 		src.m_top = 0.0f;
 		src.m_left = 0.0f;
-		src.m_right = 128.0f;
-		src.m_bottom = src.m_top + 128.0f;
+		src.m_right = 1024.0f;
+		src.m_bottom = src.m_top + 1024.0f;
 	}
 
 	//ƒuƒƒbƒNî•ñ‚ðŽ‚Á‚Ä‚­‚é
@@ -86,9 +86,10 @@ void CObjGrowPlant::Draw()
 	if (graphic == false)
 	{
 		dst.m_top = m_py + block->GetScrollY();						
-		dst.m_left = 64.0f + m_px + block->GetScroll();
-		dst.m_right = 0.0f + m_px + block->GetScroll();
+		dst.m_left = 128.0f + m_px + block->GetScroll();
+		dst.m_right = -64.0f + m_px + block->GetScroll();
 		dst.m_bottom = 64.0f*count + m_py + block->GetScrollY();
+		Draw::Draw(10, &src, &dst, c, 0.0f);
 	}
 	else if (graphic==true)
 	{
@@ -96,7 +97,8 @@ void CObjGrowPlant::Draw()
 		dst.m_left = 64.0f + m_px + block->GetScroll();
 		dst.m_right = 0.0f + m_px + block->GetScroll();
 		dst.m_bottom = 64.0f + m_py + block->GetScrollY();
+		//•`‰æ
+		Draw::Draw(20, &src, &dst, c, 0.0f);
 	}
-	//•`‰æ
-	Draw::Draw(10, &src, &dst, c, 0.0f);
-}
+	}
+	

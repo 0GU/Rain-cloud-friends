@@ -31,7 +31,7 @@ void CObjEnemy::Init()
 	m_ani_max_time = 4;  //アニメーション間隔幅
 	m_transparent = 0.0;//描画の透明度
 	m_hp = 2;
-	m_move = true;		 //true=右 false=左
+	m_move = false;		 //true=右 false=左
 	m_damege_flag = false;//被弾フラグ
 	m_escaoe_flag = false;//逃走フラグ
 
