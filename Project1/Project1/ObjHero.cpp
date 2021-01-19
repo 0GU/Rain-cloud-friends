@@ -76,6 +76,11 @@ void CObjHero::Init()
 	Audio_f = false;
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 40, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
+
+	//点滅処理
+	hit_status=1.0f;
+	hit_time_f = 0.1f;
+	hit_f = false;
 }
 
 //アクション
@@ -85,8 +90,21 @@ void CObjHero::Action()
 	if (m_hit_time > 0)
 	{
 		m_hit_time--;
-	}
+		//点滅処理
+		if (m_hit_time%2==0)//奇数
+		{
+			hit_status = 0.3f;
+		}
+		else//偶数
+		{
+			hit_status = 0.8f;
+		}
 		
+	}
+	else//点滅処理終了後元の透明度に戻る
+	{
+		hit_status = 1.0f;
+	}
 
 	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
 	stay_flag = p->GetFlag();
@@ -174,7 +192,7 @@ void CObjHero::Action()
 					if (m_hit_down == true)
 					{
 						Audio::Start(2);
-						m_vy = -8;
+						m_vy = -9;
 						m_hit_down == false;
 					}
 
@@ -222,7 +240,7 @@ void CObjHero::Action()
 					Audio::Stop(2);
 					m_vy = 0.0f;
 				}
-				else if (Input::GetConVecStickLY(0) > 0.1f && climb_flag == true/* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				else if (Input::GetConVecStickLY(0) > 0.1f && climb_flag == true /* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
 					if (Audio_time == 0.00f)
 					{
@@ -233,7 +251,7 @@ void CObjHero::Action()
 					m_vy = -3.0f;
 					m_ani_time += 1;
 				}
-				else if (Input::GetConVecStickLY(0) < -0.1f && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				else if (Input::GetConVecStickLY(0) < -0.1f && climb_flag == true && m_hit_down == false/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
 					if (Audio_time == 0.00f)
 					{
@@ -245,6 +263,11 @@ void CObjHero::Action()
 					m_ani_time += 1;
 					Audio::Stop(2);
 				}
+				else if (Input::GetConVecStickLY(0) < -0.1f && climb_flag == true && m_hit_down == true/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
+					m_ani_frame = 1;
+				}
+
 			}
 			if(m_con_num==5)
 			{
@@ -307,6 +330,7 @@ void CObjHero::Action()
 				}
 				else if (Input::GetVKey(VK_UP) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
+
 					if (Audio_time == 0.00f)
 					{
 						Audio::Start(12);
@@ -317,7 +341,7 @@ void CObjHero::Action()
 					m_ani_time += 1;
 
 				}
-				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true && m_hit_down==false/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
 					if (Audio_time == 0.00f)
 					{
@@ -328,12 +352,17 @@ void CObjHero::Action()
 					m_ani_time += 1;
 					Audio::Stop(2);
 				}
+				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true &&m_hit_down==true/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
 
+					m_ani_frame = 1;  //地面にぶつかっている際は静止フレームにする
+				}
 			}
 			//1.
 			//2.
 			//3.
-			if ((m_con_num != 5 && m_con_flag == false && m_con_x==0.0f && m_con_y==0.0f) ||
+			if ((m_con_num != 5 && m_con_flag == false && climb_flag == false && m_con_x == 0.0f) ||
+				(m_con_num != 5 && m_con_flag == false && climb_flag == true && m_con_y == 0.0f)  ||
 				(m_con_num == 5 && climb_flag == false && Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false) ||
 				(m_con_num == 5 && climb_flag == true  && Input::GetVKey(VK_UP)    == false && Input::GetVKey(VK_DOWN) == false))
 			{
@@ -388,6 +417,7 @@ void CObjHero::Action()
 
 			m_enemynum = 0;//取得し続けるのを防ぐ
 
+			
 			//敵と当たっているか確認
 			if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
 			{
@@ -398,7 +428,6 @@ void CObjHero::Action()
 			
 			if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
 			{
-
 				Audio_time += 0.05f;
 				m_enemynum = 2;
 				EnemyHit(m_enemynum);
@@ -406,7 +435,6 @@ void CObjHero::Action()
 
 			if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
 			{
-		
 				m_enemynum = 3;
 				EnemyHit(m_enemynum);
 			}
@@ -455,6 +483,7 @@ void CObjHero::Action()
 			if(m_enemynum==0||m_enemynum==6)//敵に当たっていなかったら再度SEなるようにする
 			{
 				damageSE_flag = false;
+				
 			}
 
 			//昇降処理  一旦Input系の処理はここでは必要ない
@@ -594,16 +623,21 @@ void CObjHero::Draw()
 	};
 
 	//描画カラー情報
-	float c[4] = { 1.0f,1.0f,1.0f,1.0f };
+	float c[4] = { 1.0f,1.0f,1.0f,hit_status };
+	float c2[4] = { 1.0f,0.0f,0.0f,1.0f };
 
 	RECT_F src; //描画元切り取り位置
 	RECT_F dst; //描画先表示位置
-
+	wchar_t str1[256];
+	wchar_t str2[256];
+	wchar_t str3[256];
 	//表示位置の設定
 	dst.m_top = -16.0f + m_py;
 	dst.m_left = (84.0f * m_posture) + m_px;
 	dst.m_right = (84 - 84.0f * m_posture) + m_px;
 	dst.m_bottom = 64.0f + m_py;
+	swprintf_s(str1, L"1P");
+	Font::StrDraw(str1, m_px+28, m_py-45, 30, c2);
 	//切り取り位置の設定
 	if (over_flag == false&&(climb_flag==false||m_hit_down==true))
 	{
@@ -669,9 +703,7 @@ void CObjHero::Draw()
 	Draw::Draw(0, &src, &dst, cc, 0.0f);
 
 
-	wchar_t str1[256];
-	wchar_t str2[256];
-	wchar_t str3[256];
+
 	/*
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
@@ -724,8 +756,17 @@ void CObjHero::EnemyHit(int m_enemynum)
 					if (m_hit_time == 0)
 					{
 						Audio::Start(4);
-						m_vx -= 5.0f;//左に移動させる
-						m_hit_time = 60;
+						if (m_enemynum == 2)
+						{
+							m_vx -=25.0f;//左に移動させる
+							m_hit_time = 30;
+						}
+						else
+						{
+							m_vx -= 5.0f;//左に移動させる
+							m_hit_time = 60;
+						}
+						
 						m_hp -= 0.1f;//ダメージ
 						hit_flag = false;
 					}
@@ -736,8 +777,17 @@ void CObjHero::EnemyHit(int m_enemynum)
 					if (m_hit_time == 0)
 					{
 						Audio::Start(4);
-						m_vx += 5.0f;//右に移動させる
-						m_hit_time = 60;
+						if (m_enemynum == 2)
+						{
+							m_vx += 25.0f;//左に移動させる
+							m_hit_time = 30;
+						}
+						else
+						{
+							m_vx += 5.0f;//左に移動させる
+							m_hit_time = 60;
+						}
+
 						m_hp -= 0.1f;//ダメージ
 						hit_flag = false;
 					}
@@ -754,6 +804,18 @@ void CObjHero::EnemyHit(int m_enemynum)
 					//敵の移動方向を主人公の位置に加算
 					if (m_enemynum == 1)
 						m_px += ((CObjEnemy*)hit_data[i]->o)->GetVx();
+					else if (m_enemynum == 2)//炎だけ独立処理
+					{
+						if (m_hit_time == 0)
+						{
+							Audio::Start(4);
+							m_vx -= 25.0f;//左に移動させる
+							m_hit_time = 30;
+							m_hp -= 0.1f;//ダメージ
+							hit_flag = false;
+						}
+						
+					}
 					else if (m_enemynum == 5)
 						m_px += ((CObjRushEnemy*)hit_data[i]->o)->GetVx();
 

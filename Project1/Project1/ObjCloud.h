@@ -24,7 +24,7 @@ public:
 	float m_hp;			//‘Ì—Íi‰¼j
 	
 private:
-	int reset;
+	int stage_num;
 
 	float m_px;
 	float m_py;

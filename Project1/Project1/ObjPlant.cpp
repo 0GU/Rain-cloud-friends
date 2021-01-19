@@ -25,7 +25,7 @@ void CObjPlant::Init()
 	m_ani_max_time = 4;  //アニメーション間隔幅
 	stay_flag = false;
 	grow_flag = true;
-	HP = 3;
+	HP = 1;
 
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_PLANT, 1);

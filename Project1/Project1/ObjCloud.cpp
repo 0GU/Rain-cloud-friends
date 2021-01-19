@@ -7,13 +7,14 @@
 
 #include "GameHead.h"
 #include "ObjCloud.h"
+#include "GameL/DrawFont.h"
 
 //使用するネームスペース
 using namespace GameL;
 
 CObjCloud::CObjCloud(int stage)
 {
-	reset = stage;
+	stage_num = stage;
 }
 
 //イニシャライズ
@@ -23,7 +24,14 @@ void CObjCloud::Init()
 	m_py = 500.0f;
 	m_vx = 5.0f;
 	m_vy = 5.0f;
-	m_hp = 1.0f;
+	if (stage_num = 1)
+	{
+		m_hp = 0.5f;
+	}
+	else
+	{
+		m_hp = 1.0f;
+	}
 	stay_flag = false;
 	rain_flag = false;
 
@@ -120,7 +128,7 @@ void CObjCloud::Action()
 				Objs::InsertObj(objr, OBJ_RAIN, 10);
 				rain_flag = false;
 				Audio::Start(5);
-				m_hp -= 0.01f;	//hp減少
+				m_hp -= 0.05f;	//hp減少
 			}
 			if ((Input::GetConButtons(m_con_num, GAMEPAD_B) == false) && rain_flag == false)
 			{
@@ -142,7 +150,7 @@ void CObjCloud::Action()
 				Objs::InsertObj(objr, OBJ_RAIN, 10);
 				rain_flag = false;
 				Audio::Start(5);
-				m_hp -= 0.01f;	//hp減少
+				m_hp -= 0.05f;	//hp減少
 			}
 			if (Input::GetVKey('C') == false   && rain_flag == false)
 			{
@@ -213,17 +221,21 @@ void CObjCloud::Draw()
 
 	//描画カラー情報
 	float c[4] = { 1.0f,1.0f,1.0f,1.0f };
-
+	float c2[4] = { 0.0f,0.0f,1.0f,1.0f };
+	wchar_t str1[256];
+	wchar_t str2[256];
 	RECT_F src; //描画元切り取り位置
 	RECT_F dst; //描画先表示位置
-
+	CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+	swprintf_s(str1, L"2P");
+	Font::StrDraw(str1, m_px + 32 + pbb->GetScroll(), m_py - 32 + pbb->GetScrollY(), 30, c2);
 	//切り取り位置の設定
 	src.m_top = 0.0f;
 	src.m_left = 0.0f + AniData[m_ani_frame] * 218.0;
 	src.m_right = 218.0f + AniData[m_ani_frame] * 218.0;
 	src.m_bottom = 132.5f;
 
-	CObjStage* pbb = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+	
 
 	//表示位置の設定
 	dst.m_top = m_py + pbb->GetScrollY();
@@ -233,4 +245,9 @@ void CObjCloud::Draw()
 
 	//描画
 	Draw::Draw(8, &src, &dst, c, 0.0f);
+	if (m_px + pbb->GetScroll()>=1280 || m_px + pbb->GetScroll() <= -100 || m_py + 96.0f + pbb->GetScrollY() <= 0)
+	{
+		swprintf_s(str2, L"雲が画面外に出ました。Spaceで召喚");
+		Font::StrDraw(str2, 20,0, 50, c2);
+	}
 }
