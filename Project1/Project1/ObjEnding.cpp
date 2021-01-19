@@ -45,5 +45,7 @@ void CObjEnding::Draw()
 	dst.m_right = 1280.0f;
 	dst.m_bottom = 720.0f;
 
+	Draw::Draw(1, &src, &dst, c, 0.0f);
 	Draw::Draw(0, &src, &dst, c, 0.0f);
+	
 }

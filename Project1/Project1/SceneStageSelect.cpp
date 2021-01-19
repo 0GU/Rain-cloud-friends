@@ -47,6 +47,9 @@ void CSceneStageSelect::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰¼/Animation.png", 2, TEX_SIZE_64);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/‚µ‚¸‚­(…).png", 3, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/‚µ‚¸‚­(‚È‚µ).png", 4, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/”wŒi.png", 5, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/—[•û”wŒi.png", 6, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/–é”wŒi.png", 7, TEX_SIZE_1024);
 	
 	Audio::Start(0);
 }

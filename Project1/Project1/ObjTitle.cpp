@@ -76,6 +76,20 @@ void CObjTitle::Action()
 		select_flag = true;//カーソルが上に
 	}
 
+	//カーソルを下に動かす場合スティック
+	if (Input::GetConVecStickLY(0) < -0.1f && select_flag == true && key_flag == true && m_fade_f == true && move_flag == false && move_flag == false)
+	{
+		Audio::Start(2);//効果音作動
+		key_flag = false;//キー操作不能にする
+		select_flag = false;//カーソルが下に
+	}
+	//カーソルを上に動かす場合スティック
+	if (Input::GetConVecStickLY(0) > 0.1f && select_flag == false && description_flag == false && key_flag == true && m_fade_f == true && move_flag == false)
+	{
+		Audio::Start(2);//効果音作動
+		key_flag = false;//キー操作不能にする
+		select_flag = true;//カーソルが上に
+	}
 	//操作説明起動
 	if (Input::GetConButtons(0, GAMEPAD_A) && select_flag == false && description_flag == false && key_flag == true && m_fade_f == true && move_flag == false)
 	{
@@ -116,7 +130,7 @@ void CObjTitle::Action()
 			key_flag = false;//キー操作不能にする
 			select_flag = true;//カーソルが上に
 		}
-
+	
 		//操作説明起動
 		if (Input::GetVKey('Z') == true && select_flag == false && description_flag == false && key_flag == true && m_fade_f == true && move_flag == false)
 		{
@@ -147,7 +161,8 @@ void CObjTitle::Action()
 	}
 
 	//全てのキーを離していると
-	if (Input::GetVKey('Z') == false && Input::GetConButtons(0, GAMEPAD_A)==false && key_flag == false)
+	if (Input::GetVKey('Z') == false && Input::GetConButtons(0, GAMEPAD_A)==false && key_flag == false
+		&& Input::GetConVecStickLY(0) == false)
 	{
 		key_flag = true;//キー入力可能にする
 	}

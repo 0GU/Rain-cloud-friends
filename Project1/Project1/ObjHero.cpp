@@ -333,7 +333,7 @@ void CObjHero::Action()
 			//1.
 			//2.
 			//3.
-			if (((m_con_num != 5 && m_con_flag == false && m_con_x==0.0f) || m_con_y==0.0f) ||
+			if ((m_con_num != 5 && m_con_flag == false && m_con_x==0.0f && m_con_y==0.0f) ||
 				(m_con_num == 5 && climb_flag == false && Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false) ||
 				(m_con_num == 5 && climb_flag == true  && Input::GetVKey(VK_UP)    == false && Input::GetVKey(VK_DOWN) == false))
 			{
