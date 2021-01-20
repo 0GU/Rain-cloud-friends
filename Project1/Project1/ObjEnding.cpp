@@ -10,25 +10,58 @@
 
 void CObjEnding::Init()
 {
-	key_flag = true;
+	key_flag = false;
+	move_flag = false;//２回目のフェード起動用
+	m_fade_f = false;//1回目のフェード起動用
+
+	m_fade = 0.0f;
 }
 
 //アクション
 void CObjEnding::Action()
 {
-	if (Input::GetVKey('Z') == true)
+	//フェードイン用操作起動時
+	if (m_fade_f == false)
 	{
-		Scene::SetScene(new CSceneStageSelect);//ステージセレクト画面に転移する
+		m_fade += 0.01f;//フェードを少しずつ明るくしていく
+		if (m_fade >= 1.0f)//Maxまで来ると
+		{
+			m_fade = 1.0f;//値をMaxに固定し
+			m_fade_f = true;//フェードインを止める
+			if (Input::GetConButtons(0, GAMEPAD_A) || Input::GetVKey('Z') == true)//フェードイン中にキーを押していると
+			{
+				;//何もしない
+			}
+			else
+			{
+				key_flag = true;//キー操作可能にする
+			}
+		}
 	}
 
+	if (Input::GetVKey('Z') == true &&key_flag==true && move_flag == false)
+	{
+		key_flag = false;
+		move_flag = true;
+	}
+	//二回目のフェード処理
+	if (move_flag == true)//起動していると
+	{
+		m_fade -= 0.03f;//フェードアウトしていく
+	}
 
+	if (m_fade <= -0.01f)//完全に真っ暗になったら
+	{
+		Scene::SetScene(new CSceneStageSelect);//ステージセレクト画面に転移する
+
+	}
 }
 
 //ドロー
 void CObjEnding::Draw()
 {
 	//描画カラー情報
-	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
+	float	c[4] = { 1.0f,1.0f,1.0f,m_fade };//
 
 
 	RECT_F src; //描画元切り取り位置の設定

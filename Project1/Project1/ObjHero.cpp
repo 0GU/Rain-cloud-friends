@@ -81,6 +81,7 @@ void CObjHero::Init()
 	hit_status=1.0f;
 	hit_time_f = 0.1f;
 	hit_f = false;
+	keyflag = false;
 }
 
 //アクション
@@ -187,13 +188,15 @@ void CObjHero::Action()
 					m_con_flag = false;
 				}
 
-				if (Input::GetConButtons(0, GAMEPAD_A) == true)
+				if (Input::GetConButtons(0, GAMEPAD_A) == true &&keyflag==false)
 				{
+					keyflag = true;
 					if (m_hit_down == true)
 					{
 						Audio::Start(2);
 						m_vy = -9;
 						m_hit_down == false;
+						
 					}
 
 				}
@@ -612,6 +615,12 @@ void CObjHero::Action()
 	}
 	//HitBoxの位置の変更
 	hit->SetPos(m_px+24, m_py);
+
+	//ジャンプ長押しでジャンプ連打防止用
+	if (Input::GetConButtons(0, GAMEPAD_A) == false &&keyflag==true)
+	{
+		keyflag = false;
+	}
 }
 
 //ドロー
@@ -843,8 +852,8 @@ void CObjHero::EnemyHit(int m_enemynum)
 					{
 						//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 						//また、地面に当たってる判定にする
-						m_vy = 0.0f;
-						m_hit_down = true;
+						//m_vy = 0.0f;
+						//m_hit_down = true;
 					}
 				}
 			}

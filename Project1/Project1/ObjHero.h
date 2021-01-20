@@ -87,7 +87,7 @@ private:
 
 	int m_enemynum;	//接触物の種類判別用
 
-	bool key_flag;//キー押し離し判別用
+	bool keyflag;//キー押し離し判別用
 
 	
 	bool stone_hit;//岩に当たっている状態を返す

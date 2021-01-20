@@ -17,14 +17,15 @@ public:
 	float x, y;
 private:
 	int restart;//リスタート用
-	float m_y1;//黒画面位置(仮)
 	int selectnum;//選択場所
 	int selectnum_c;//選択場所（確認画面）
 
-	bool keyflag;//キー状態　true:押している
-	bool  move_flag;//画面移行中
+	bool  move_flag;//２回目ぼフェードを動かす用
+	bool m_fade_f;//フェードインアウト判別用フラグ
+	bool key_flag;//キー押し確認用
+	bool  move_flag2;//２回目ぼフェードを動かす用
 	bool scroll_flag;//スクロール用　true:停止　false:実行中
 	bool check_flag;//確認用
-
+	float m_fade;//黒画面用(仮)
 	int m_con_num;//仮
 };
