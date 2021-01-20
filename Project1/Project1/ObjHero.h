@@ -102,4 +102,9 @@ private:
 	float Audio_time;
 	float Audio_time_max;
 	bool Audio_f;
+
+	//“_–Åˆ—
+	float hit_status;
+	float hit_time_f;
+	bool  hit_f;
 };

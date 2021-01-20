@@ -105,9 +105,9 @@ void CObjStage::Action()
 	}
 
 	//下方スクロールライン
-	if (hy > 336)
+	if (hy > 436)
 	{
-		hero->SetY(336);			//主人公はラインを超えないようにする
+		hero->SetY(436);			//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -464,7 +464,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 //実験　判定サイズの変更
 //引数14 float size_bx :相手objectのサイズx
 //引数15 float size_by :相手objectのサイズy
-void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
+/*void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 	bool* up, bool* down, bool* left, bool* right,
 	float* vx, float* vy, int* bt, bool climb, float size_x, float size_y,float size_bx,float size_by)
 {
@@ -562,7 +562,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 
 
 }
-
+*/
 void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 	bool* up, bool* down, bool* left, bool* right,
 	float* vx, float* vy, int* bt,bool climb)
