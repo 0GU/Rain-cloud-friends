@@ -41,7 +41,15 @@ void CObjTitle::Action()
 		{
 			m_fade = 1.0f;//値をMaxに固定し
 			m_fade_f = true;//フェードインを止める
-			key_flag = true;//キー操作可能にする
+			if (Input::GetConButtons(0, GAMEPAD_A))//フェードイン中にキーを押していると
+			{
+				;//何もしない
+			}
+			else
+			{
+				key_flag = true;//キー操作可能にする
+			}
+		
 		}
 		
 	}

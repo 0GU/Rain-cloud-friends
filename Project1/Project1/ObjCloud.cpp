@@ -24,11 +24,15 @@ void CObjCloud::Init()
 	m_py = 500.0f;
 	m_vx = 5.0f;
 	m_vy = 5.0f;
-	if (stage_num = 1)
+	if (stage_num == 1)
 	{
-		m_hp = 0.5f;
+		m_hp = 0.05f;
 	}
-	else
+	if(stage_num==2)
+	{
+		m_hp = 1.0f;
+	}
+	if (stage_num == 3)
 	{
 		m_hp = 1.0f;
 	}
