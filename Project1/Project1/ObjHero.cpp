@@ -48,6 +48,8 @@ void CObjHero::Init()
 
 	climb_flag = false;
 
+	damageSE_flag = false;
+
 	falldamage_flag = false;
 
 	reset_falldamage_cacancel_flag = true;
@@ -58,6 +60,10 @@ void CObjHero::Init()
 
 	m_block_type = 0;		//踏んでいるblockの種類を確認用
 
+
+	stone_hit = false;//岩に当たっている状態を返す
+	stone_wall_hit = false;//当たっている岩が壁にぶつかっているかを返す
+
 	//コントローラー用仮変数
 	m_con_x = 0.0f;
 	m_con_y = 0.0f;
@@ -66,9 +72,15 @@ void CObjHero::Init()
 
 	Audio_time = 0.0f;
 	Audio_time_max = 1.0f;
-	Audio_f = true;
+
+	Audio_f = false;
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 40, 64, ELEMENT_PLAYER, OBJ_HERO, 1);
+
+	//点滅処理
+	hit_status=1.0f;
+	hit_time_f = 0.1f;
+	hit_f = false;
 }
 
 //アクション
@@ -76,7 +88,23 @@ void CObjHero::Action()
 {
 	m_con_num = Input::UpdateXControlerConnected();
 	if (m_hit_time > 0)
+	{
 		m_hit_time--;
+		//点滅処理
+		if (m_hit_time%2==0)//奇数
+		{
+			hit_status = 0.3f;
+		}
+		else//偶数
+		{
+			hit_status = 0.8f;
+		}
+		
+	}
+	else//点滅処理終了後元の透明度に戻る
+	{
+		hit_status = 1.0f;
+	}
 
 	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
 	stay_flag = p->GetFlag();
@@ -138,6 +166,11 @@ void CObjHero::Action()
 				{
 					Audio::Start(3);
 				}
+				if (Audio_f == true)
+				{
+					Audio::Stop(3);
+					Audio_f = false;
+				}
 			}
 
 		}
@@ -146,18 +179,20 @@ void CObjHero::Action()
 		{
 			//コントローラー操作仮
 			m_con_x = Input::GetConVecStickLX(0);
+			m_con_y = Input::GetConVecStickLY(0);
 			if (m_con_num==0 || m_con_num==1)
 			{
-				if (m_con_x == 0.0f)
+				if (m_con_x == 0.0f )
 				{
 					m_con_flag = false;
 				}
+
 				if (Input::GetConButtons(0, GAMEPAD_A) == true)
 				{
 					if (m_hit_down == true)
 					{
 						Audio::Start(2);
-						m_vy = -8;
+						m_vy = -9;
 						m_hit_down == false;
 					}
 
@@ -169,7 +204,7 @@ void CObjHero::Action()
 						m_con_x = 0.8f;
 					if (m_con_x < -0.8f)
 						m_con_x = -0.8f;
-					m_ani_max_time = 1.5f;
+					m_ani_max_time = 4.0f;
 				}
 				else
 				{
@@ -194,26 +229,45 @@ void CObjHero::Action()
 					m_ani_time += 1;
 					m_con_flag = true;
 				}
+
 				//昇降処理
 				if (Input::GetConVecStickLY(0) > 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
 				{
 					m_vy = 0.0f;
 				}
 				else if (Input::GetConVecStickLY(0) == 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
-				{
-					//操作なしの場合はその場所に留まる
+				{//操作なしの場合はその場所に留まる
+					Audio::Stop(2);
 					m_vy = 0.0f;
 				}
-				else if (Input::GetConVecStickLY(0) > 0.1f && climb_flag == true/* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				else if (Input::GetConVecStickLY(0) > 0.1f && climb_flag == true /* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
+					if (Audio_time == 0.00f)
+					{
+						Audio::Start(12);
+					}
+					m_con_flag = true;
+					Audio_time += 0.04f;
 					m_vy = -3.0f;
 					m_ani_time += 1;
 				}
-				else if (Input::GetConVecStickLY(0) < -0.1f && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				else if (Input::GetConVecStickLY(0) < -0.1f && climb_flag == true && m_hit_down == false/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
+					if (Audio_time == 0.00f)
+					{
+						Audio::Start(12);
+					}
+					m_con_flag = true;
+					Audio_time += 0.04f;
 					m_vy = +3.0f;
 					m_ani_time += 1;
+					Audio::Stop(2);
 				}
+				else if (Input::GetConVecStickLY(0) < -0.1f && climb_flag == true && m_hit_down == true/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
+					m_ani_frame = 1;
+				}
+
 			}
 			if(m_con_num==5)
 			{
@@ -276,16 +330,18 @@ void CObjHero::Action()
 				}
 				else if (Input::GetVKey(VK_UP) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
+
 					if (Audio_time == 0.00f)
 					{
 						Audio::Start(12);
 					}
+
 					Audio_time += 0.04f;
 					m_vy = -3.0f;
 					m_ani_time += 1;
 
 				}
-				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true && m_hit_down==false/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
 					if (Audio_time == 0.00f)
 					{
@@ -296,12 +352,17 @@ void CObjHero::Action()
 					m_ani_time += 1;
 					Audio::Stop(2);
 				}
+				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true &&m_hit_down==true/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
+				{
 
+					m_ani_frame = 1;  //地面にぶつかっている際は静止フレームにする
+				}
 			}
 			//1.
 			//2.
 			//3.
-			if ((m_con_num != 5 && m_con_flag == false && Input::GetConVecStickLY(m_con_num) == 0.0f) ||
+			if ((m_con_num != 5 && m_con_flag == false && climb_flag == false && m_con_x == 0.0f) ||
+				(m_con_num != 5 && m_con_flag == false && climb_flag == true && m_con_y == 0.0f)  ||
 				(m_con_num == 5 && climb_flag == false && Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false) ||
 				(m_con_num == 5 && climb_flag == true  && Input::GetVKey(VK_UP)    == false && Input::GetVKey(VK_DOWN) == false))
 			{
@@ -356,20 +417,17 @@ void CObjHero::Action()
 
 			m_enemynum = 0;//取得し続けるのを防ぐ
 
+			
 			//敵と当たっているか確認
 			if (hit->CheckObjNameHit(OBJ_ENEMY) != nullptr)
 			{
-				Audio::Start(4);
 				m_enemynum = 1;
 				EnemyHit(m_enemynum);
+				
 			}
 			
 			if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr)
 			{
-				if (Audio_time == 0.00f)
-				{
-					Audio::Start(4);
-				}
 				Audio_time += 0.05f;
 				m_enemynum = 2;
 				EnemyHit(m_enemynum);
@@ -377,39 +435,38 @@ void CObjHero::Action()
 
 			if (hit->CheckObjNameHit(OBJ_SINENEMY) != nullptr)
 			{
-				Audio::Start(4);
 				m_enemynum = 3;
 				EnemyHit(m_enemynum);
 			}
 			if (hit->CheckObjNameHit(OBJ_MAGIC) != nullptr)
 			{
-				Audio::Start(4);
 				m_enemynum = 4;
 				EnemyHit(m_enemynum);
 			}
 			if (hit->CheckObjNameHit(OBJ_RUSH_ENEMY) != nullptr)
 			{
-				Audio::Start(4);
 				m_enemynum = 5;
 
 
 				CObjRushEnemy* Re = (CObjRushEnemy*)Objs::GetObj(OBJ_RUSH_ENEMY);
 				if (Re->GetY() + pb->GetScrollY() < m_py + 50)
 				{
-					if (Re->GetX() + pb->GetScroll() + 75 < m_px + 32)
+					//主人公の左側に当たった場合
+					if (Re->GetX() + pb->GetScroll() + 40 < m_px + 32)
 					{
 						if (m_hit_time == 0)
 						{
 							m_vx = 20.0f;
-							m_vy -= 10.0f;
+							m_vy = -5.0f;
 						}
 					}
+					//主人公の右側に当たった場合
 					if (Re->GetX() + pb->GetScroll() > m_px + 32)
 					{
 						if (m_hit_time == 0)
 						{
 							m_vx = -20.0f;
-							m_vy -= 10.0f;
+							m_vy = -5.0f;
 						}
 
 					}
@@ -423,7 +480,11 @@ void CObjHero::Action()
 				m_enemynum = 6;
 				EnemyHit(m_enemynum);
 			}
-
+			if(m_enemynum==0||m_enemynum==6)//敵に当たっていなかったら再度SEなるようにする
+			{
+				damageSE_flag = false;
+				
+			}
 
 			//昇降処理  一旦Input系の処理はここでは必要ない
 			if (hit->CheckElementHit(ELEMENT_IVY) == true&&( (Input::GetVKey(VK_UP) == true|| Input::GetVKey(VK_DOWN)==true|| Input::GetConVecStickLY(0) != 0.0f)))	//蔓にあたっていて↑キー又は↓キーが押されたら昇降フラグをture
@@ -456,29 +517,53 @@ void CObjHero::Action()
 		{
 			//ジャンプしてる場合は下記の影響を出ないようにする
 		}
-		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&Stone->GetPY() <= m_py + 64 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
+		//else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&Stone->GetPY() <= m_py + 64 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
+		//{
+		//	//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
+		//	//また、地面に当たってる判定にする
+		//	m_py = Stone->GetPY() + pb->GetScrollY() - 63;
+		//	m_vy = 0.0f;
+		//	m_hit_down = true;
+		//}
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&m_hit_down==false)
 		{
 			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 			//また、地面に当たってる判定にする
-			m_py = Stone->GetPY() + pb->GetScrollY() - 63;
-			m_vy = 0.0f;
-			m_hit_down = true;
-		}
-		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
-			((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
-				m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
-		{
-			if (Stone->Gethr()==false)
+			int py = (int)((m_py - pb->GetScrollY()) / 64) * 64;
+			if (py == m_py)
 			{
-				m_vx /= 2;
-				Stone->SetVX(m_vx);
+				m_py = py + pb->GetScrollY() - 64;
 			}
-			else if (Stone->Gethr() ==true)
+			else
 			{
-				m_vx = 0;
+				m_py = py + pb->GetScrollY();
+				Audio_f = true;
 			}
 
+				
+			m_vy = 0.0f;
+			m_hit_down = true;
+
 		}
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true)
+		{
+			m_vx /= 2;
+		}
+			//else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
+		//	((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
+		//		m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
+		//{
+		//
+		//	if (Stone->Gethr()==false)
+		//	{
+		//		m_vx /= 2;
+		//	}
+		//	else if (Stone->Gethr() ==true)
+		//	{
+		//		m_vx = 0;
+		//	}
+
+		//}
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		CObjTurtle* Turtle = (CObjTurtle*)Objs::GetObj(OBJ_TURTLE);
@@ -538,16 +623,21 @@ void CObjHero::Draw()
 	};
 
 	//描画カラー情報
-	float c[4] = { 1.0f,1.0f,1.0f,1.0f };
+	float c[4] = { 1.0f,1.0f,1.0f,hit_status };
+	float c2[4] = { 1.0f,0.0f,0.0f,1.0f };
 
 	RECT_F src; //描画元切り取り位置
 	RECT_F dst; //描画先表示位置
-
+	wchar_t str1[256];
+	wchar_t str2[256];
+	wchar_t str3[256];
 	//表示位置の設定
 	dst.m_top = -16.0f + m_py;
 	dst.m_left = (84.0f * m_posture) + m_px;
 	dst.m_right = (84 - 84.0f * m_posture) + m_px;
 	dst.m_bottom = 64.0f + m_py;
+	swprintf_s(str1, L"1P");
+	Font::StrDraw(str1, m_px+28, m_py-45, 30, c2);
 	//切り取り位置の設定
 	if (over_flag == false&&(climb_flag==false||m_hit_down==true))
 	{
@@ -613,20 +703,18 @@ void CObjHero::Draw()
 	Draw::Draw(0, &src, &dst, cc, 0.0f);
 
 
-	wchar_t str1[256];
-	wchar_t str2[256];
-	wchar_t str3[256];
 
+	/*
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
 	CObjCloud* Cloud = (CObjCloud*)Objs::GetObj(OBJ_CLOUD);
-	swprintf_s(str1, L"X=%f", m_px - block->GetScroll());
+	swprintf_s(str1, L"X=%f,Y=%f", m_px - block->GetScroll(),m_py-block->GetScrollY());
 	Font::StrDraw(str1, 20, 20, 20, c);
 	swprintf_s(str2, L"X=%f", Stone->GetPX_L());
 	Font::StrDraw(str2, 20, 400, 20, c);
 	swprintf_s(str3, L"X=%f", Cloud->GetX());
 	Font::StrDraw(str3, 20, 300, 20, c);
-
+	*/
 
 
 }
@@ -665,21 +753,43 @@ void CObjHero::EnemyHit(int m_enemynum)
 				float r = hit_data[i]->r;
 				if (r < 45 &&( r >= 0 || r>315)&&m_enemynum!=6)
 				{
-					m_vx -= 5.0f;//左に移動させる
-
 					if (m_hit_time == 0)
 					{
-						m_hit_time = 60;
+						Audio::Start(4);
+						if (m_enemynum == 2)
+						{
+							m_vx -=25.0f;//左に移動させる
+							m_hit_time = 30;
+						}
+						else
+						{
+							m_vx -= 5.0f;//左に移動させる
+							m_hit_time = 60;
+						}
+						
 						m_hp -= 0.1f;//ダメージ
+						hit_flag = false;
 					}
 				}
 				if (r > 135 && r < 225 && m_enemynum != 6)
 				{
-					m_vx += 5.0f;//右に移動させる
+				
 					if (m_hit_time == 0)
 					{
-						m_hit_time = 60;
+						Audio::Start(4);
+						if (m_enemynum == 2)
+						{
+							m_vx += 25.0f;//左に移動させる
+							m_hit_time = 30;
+						}
+						else
+						{
+							m_vx += 5.0f;//左に移動させる
+							m_hit_time = 60;
+						}
+
 						m_hp -= 0.1f;//ダメージ
+						hit_flag = false;
 					}
 				}
 				if (r > 45 && r < 135 && m_enemynum != 6)
@@ -694,6 +804,18 @@ void CObjHero::EnemyHit(int m_enemynum)
 					//敵の移動方向を主人公の位置に加算
 					if (m_enemynum == 1)
 						m_px += ((CObjEnemy*)hit_data[i]->o)->GetVx();
+					else if (m_enemynum == 2)//炎だけ独立処理
+					{
+						if (m_hit_time == 0)
+						{
+							Audio::Start(4);
+							m_vx -= 25.0f;//左に移動させる
+							m_hit_time = 30;
+							m_hp -= 0.1f;//ダメージ
+							hit_flag = false;
+						}
+						
+					}
 					else if (m_enemynum == 5)
 						m_px += ((CObjRushEnemy*)hit_data[i]->o)->GetVx();
 
@@ -702,14 +824,14 @@ void CObjHero::EnemyHit(int m_enemynum)
 					if (m_px < 200)
 					{
 						m_px = 200;
-						b->SetScroll(b->GetScroll() + 2.0);
+						b->SetScroll(b->GetScroll() + 2.5);
 					}
 
 					//前方スクロールライン
 					if (m_px > 400)
 					{
 						m_px = 400;
-						b->SetScroll(b->GetScroll() - 2.0);
+						b->SetScroll(b->GetScroll() - 2.5);
 					}
 
 					//頭に乗せる処理

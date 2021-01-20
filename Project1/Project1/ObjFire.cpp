@@ -24,7 +24,7 @@ void CObjFire::Init()
 	m_ani_max_time = 4;  //アニメーション間隔幅
 	stay_flag = false;
 
-	HP = 3;
+	HP = 1;
 
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 128, ELEMENT_RED, OBJ_FIRE, 1);

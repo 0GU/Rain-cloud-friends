@@ -33,6 +33,9 @@ public:
 	void SetLeft(bool b) { m_hit_left = b; }
 	void SetRight(bool b) { m_hit_right = b; }
 
+	void SetSthit(bool b) { stone_hit = b; }
+	void SetSthitW(bool b) { stone_wall_hit = b; }
+
 	void EnemyHit(int enemynume);
 	float m_hp;			//体力（仮）
 private:
@@ -68,6 +71,8 @@ private:
 
 	int   m_hit_time;	//ダメージ間隔
 
+	bool damageSE_flag;//SEなり続けるのを防ぐフラグ
+
 	bool climb_flag;	//昇降フラグ
 
 	bool falldamage_flag;	//落下ダメージフラグ
@@ -83,6 +88,10 @@ private:
 	int m_enemynum;	//接触物の種類判別用
 
 	bool key_flag;//キー押し離し判別用
+
+	
+	bool stone_hit;//岩に当たっている状態を返す
+	bool stone_wall_hit;//当たっている岩が壁にぶつかっているかを返す
 	//コントローラー用仮変数
 
 	float m_con_x;
@@ -93,4 +102,9 @@ private:
 	float Audio_time;
 	float Audio_time_max;
 	bool Audio_f;
+
+	//点滅処理
+	float hit_status;
+	float hit_time_f;
+	bool  hit_f;
 };

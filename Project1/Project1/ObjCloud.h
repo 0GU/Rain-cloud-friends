@@ -24,7 +24,7 @@ public:
 	float m_hp;			//体力（仮）
 	
 private:
-	int reset;
+	int stage_num;
 
 	float m_px;
 	float m_py;
@@ -51,7 +51,7 @@ private:
 	float m_con_x;
 	float m_con_y;
 
-	int   m_ani_time;   //アニメーションフレーム動作間隔
+	float   m_ani_time;   //アニメーションフレーム動作間隔
 	int   m_ani_frame;  //描画フレーム
 
 	float m_speed_power;  //スピードパワー

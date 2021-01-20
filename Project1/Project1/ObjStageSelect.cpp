@@ -102,8 +102,56 @@ void CObjStageSelect::Action()
 			}
 		}
 	}
+	//スティック→
+	if (Input::GetConVecStickLX(0)>0.8f && m_key_f == true && m_fade_f == true && move_flag == false)
+	{
+		m_key_f = false;//キー操作不能にする
+		Audio::Start(1);
+		if (m_selectnum == 3)//セレクトがStage3から超えるのを防ぐ
+		{
+			;//何もしない
+		}
+		//Stage1クリアフラグのみが反応している場合
+		if (Clear_flag[2] == true && Clear_flag2[2] == false)
+		{
+			m_selectnum = 2;//Stage2に移行可能
+		}
+		//Stage1,2クリアフラグが反応している場合
+		if (Clear_flag[2] == true && Clear_flag2[2] == true)
+		{
+			m_selectnum += 1;//1,2,3を選択できるようにする
+			if (m_selectnum >= 3)
+			{
+				m_selectnum = 3;//セレクトがStage3から超えるのを防ぐ
+			}
+		}
+	}
 	//左に動かす場合
 	if (Input::GetConButtons(0,GAMEPAD_DPAD_LEFT)&& m_key_f == true && m_fade_f == true && move_flag == false)
+	{
+		m_key_f = false;//キー操作不能にする
+		Audio::Start(1);//効果音作動
+		if (m_selectnum == 1)//セレクト
+		{
+			;//何もしない
+		}
+		//Stage1クリアフラグが反応している場合
+		if (Clear_flag[2] == true && Clear_flag2[2] == false)
+		{
+			m_selectnum = 1;
+		}
+		//Stage1,2クリアフラグが反応している場合
+		if (Clear_flag[2] == true && Clear_flag2[2] == true)
+		{
+			m_selectnum -= 1;//1,2,3を選択できるようにする
+			if (m_selectnum == 0)
+			{
+				m_selectnum = 1;//セレクトがStage1からマイナスになるのをのを防ぐ
+			}
+		}
+	}
+	//スティック左
+	if (Input::GetConVecStickLX(0) < -0.8f && m_key_f == true && m_fade_f == true && move_flag == false)
 	{
 		m_key_f = false;//キー操作不能にする
 		Audio::Start(1);//効果音作動
@@ -237,7 +285,7 @@ void CObjStageSelect::Action()
 	if (Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false &&
 		Input::GetVKey('X') == false && Input::GetVKey('Z') == false && Input::GetVKey('B') == false &&
 		Input::GetConButtons(0, GAMEPAD_DPAD_RIGHT)==false && Input::GetConButtons(0, GAMEPAD_DPAD_LEFT) == false&&
-		m_key_f == false
+		m_key_f == false && Input::GetConVecStickLX(0)==false
 		)
 	{
 
@@ -385,6 +433,17 @@ void CObjStageSelect::Draw()
 	dst.m_bottom = 321.0f;
 	Draw::Draw(1, &src, &dst, c, 0.0f);
 
+	src.m_top = 0.0f;
+	src.m_left = 0.0f;
+	src.m_right = 1280.0f;
+	src.m_bottom = 720.0f;
+
+	dst.m_top = 360.0f;
+	dst.m_left = 110.0f;
+	dst.m_right = 390.0f;
+	dst.m_bottom = 540.0f;
+	Draw::Draw(5, &src, &dst, c, 0.0f);
+
 	//Stage2
 	if (Clear_flag[2] == true)
 	{
@@ -398,6 +457,17 @@ void CObjStageSelect::Draw()
 		dst.m_right = 800.0f;
 		dst.m_bottom = 321.0f;
 		Draw::Draw(1, &src, &dst, c, 0.0f);
+
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 1280.0f;
+		src.m_bottom = 720.0f;
+
+		dst.m_top = 360.0f;
+		dst.m_left = 510.0f;
+		dst.m_right = 790.0f;
+		dst.m_bottom = 540.0f;
+		Draw::Draw(6, &src, &dst, c, 0.0f);
 	}
 	
 	//Stage3
@@ -413,6 +483,17 @@ void CObjStageSelect::Draw()
 		dst.m_right = 1200.0f;
 		dst.m_bottom = 321.0f;
 		Draw::Draw(1, &src, &dst, c, 0.0f);
+
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 1280.0f;
+		src.m_bottom = 720.0f;
+
+		dst.m_top = 360.0f;
+		dst.m_left = 910.0f;
+		dst.m_right = 1190.0f;
+		dst.m_bottom = 540.0f;
+		Draw::Draw(7, &src, &dst, c, 0.0f);
 	}
 	
 

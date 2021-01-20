@@ -37,7 +37,7 @@ void CSceneGameMain::InitScene()
 	unique_ptr<wchar_t> p;  //ステージ情報ポインター
 	int size;				//ステージ情報の大きさ
 	if(stageselect==1)
-	p = Save::ExternalDataOpen(L"Stage1.csv", &size);//外部データ読み込み
+	p = Save::ExternalDataOpen(L"Stage1x.csv", &size);//外部データ読み込み
 	else if(stageselect==2)
 	p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
 	else if (stageselect == 3)
@@ -104,10 +104,14 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 16, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/死亡.png", 17, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/植物2.png", 18, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/植物成長後花.png", 20, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/押す.png", 19, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/背景.png", 22, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/夕方背景.png", 23, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/夜背景.png", 24, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/HP枠.png", 25, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/HP.png", 26, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/仮/ito.png", 27, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/土ブロック.png", 30, TEX_SIZE_1024);//実験　ぬかるみ床用
 
 	if(stageselect==1)

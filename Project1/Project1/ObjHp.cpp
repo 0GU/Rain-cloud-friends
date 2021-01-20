@@ -80,8 +80,8 @@ void CObjHp::Draw()
 	//表示位置の設定
 	dst.m_top = 53.0f;
 	dst.m_left = 53.0f;
-	dst.m_right = ((174.0f - dst.m_left) * he_hp) + dst.m_left;
-	dst.m_bottom = dst.m_top+10.0f;
+	dst.m_right = ((250.0f - dst.m_left) * he_hp) + dst.m_left;
+	dst.m_bottom = dst.m_top+30.0f;
 
 	//描画
 	Draw::Draw(6, &src, &dst, c, 0.0f);
@@ -108,10 +108,10 @@ void CObjHp::Draw()
 	}
 
 	//表示位置の設定
-	dst.m_top = 73.0f;
+	dst.m_top = 103.0f;
 	dst.m_left = 53.0f;
-	dst.m_right = ((174.0f - dst.m_left) * (cl_hp/cl_MAX_HP)) + dst.m_left;
-	dst.m_bottom = dst.m_top + 10.0f;
+	dst.m_right = ((250.0f - dst.m_left) * (cl_hp/cl_MAX_HP)) + dst.m_left;
+	dst.m_bottom = dst.m_top + 30.0f;
 
 	//描画
 	Draw::Draw(6, &src, &dst, c, 0.0f);
@@ -121,22 +121,22 @@ void CObjHp::Draw()
 	//切り取り位置の設定
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 127.0f;
-	src.m_bottom = 16.0f;
+	src.m_right = 256.0f;
+	src.m_bottom = 64.0f;
 
 	//表示位置：主人公
 	dst.m_top = 50.0f;
 	dst.m_left = 50.0f;
-	dst.m_right = 177.0f;
-	dst.m_bottom = 66.0f;
-	//描画
-	Draw::Draw(6, &src, &dst, c, 0.0f);
-
-	//表示位置：雲
-	dst.m_top = 70.0f;
+	dst.m_right = 250.0f;
 	dst.m_bottom = 86.0f;
 	//描画
-	Draw::Draw(6, &src, &dst, c, 0.0f);
+	Draw::Draw(25, &src, &dst, c, 0.0f);
+
+	//表示位置：雲
+	dst.m_top = 103.0f;
+	dst.m_bottom = 133.0f;
+	//描画
+	Draw::Draw(25, &src, &dst, c, 0.0f);
 
 	//切り取り位置の設定
 	src.m_top = 0.0f;
@@ -146,12 +146,26 @@ void CObjHp::Draw()
 
 
 	//表示位置の設定
-	dst.m_top = 64.0f;;
+	dst.m_top = 106.0f;
 	dst.m_left = 16.0f;
 	dst.m_right = 48.0f;
-	dst.m_bottom = 96.0f;
+	dst.m_bottom = 138.0f;
 
 	//描画
 	Draw::Draw(8, &src, &dst, c, 0.0f);
 
+	//Hp文字
+	//切り取り位置の設定
+	src.m_top = 0.0f;
+	src.m_left = 0.0f;
+	src.m_right = 256.0f;
+	src.m_bottom = 180.0f;
+
+
+	//表示位置の設定
+	dst.m_top = 52.0f;
+	dst.m_left = 16.0f;
+	dst.m_right = 48.0f;
+	dst.m_bottom = 84.0f;
+	Draw::Draw(26, &src, &dst, c, 0.0f);
 }

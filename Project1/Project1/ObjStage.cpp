@@ -105,9 +105,9 @@ void CObjStage::Action()
 	}
 
 	//下方スクロールライン
-	if (hy > 336)
+	if (hy > 436)
 	{
-		hero->SetY(336);			//主人公はラインを超えないようにする
+		hero->SetY(436);			//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -388,7 +388,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 				float scroll_y = scroll_on ? my_scroll : 0;
 				//オブジェクトとブロックの当たり判定
 				//左と上はブロックのサイズ、右と下はオブジェクトのサイズで判定をとる
-				if ((*x + (-scroll) + size_x > bx) && (*x + (-scroll) < bx + 64.0f) && (*y + (-scroll_y) + size_y >= by) && (*y + (-scroll_y) <= by + 64.0f))
+				if ((*x + (-scroll) + size_x > bx) && (*x + (-scroll) < bx + 40.0f) && (*y + (-scroll_y) + size_y >= by) && (*y + (-scroll_y) <= by + 64.0f))
 				{
 					//上下左右判定
 
@@ -416,8 +416,8 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 						{
 							//右
 							*right = true;//オブジェクトから見て右の部分が衝突している
-							*x = bx + 64.0f + (scroll);//ブロックの位置+オブジェクトの幅
-							//*vx = -(*vx) * 0.1f;//-VX*反発係数
+							*x = bx + 40.0f + (scroll);//ブロックの位置+オブジェクトの幅
+							*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
 						if (r > 45 && r < 135 && (climb == false || m_map[i][j] == 13))
@@ -438,7 +438,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 							//左
 							*left = true;//オブジェクトから見て右の部分が衝突している
 							*x = bx - size_x + (scroll);//ブロックの位置-オブジェクトの幅
-							//*vx = -(*vx) * 0.1f;//-VX*反発係数
+							*vx = -(*vx) * 0.1f;//-VX*反発係数
 
 						}
 						if (r > 225 && r < 315 && climb == false)
@@ -464,7 +464,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 //実験　判定サイズの変更
 //引数14 float size_bx :相手objectのサイズx
 //引数15 float size_by :相手objectのサイズy
-void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
+/*void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 	bool* up, bool* down, bool* left, bool* right,
 	float* vx, float* vy, int* bt, bool climb, float size_x, float size_y,float size_bx,float size_by)
 {
@@ -562,7 +562,7 @@ void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 
 
 }
-
+*/
 void CObjStage::BlockHit(float* x, float* y, bool scroll_on,
 	bool* up, bool* down, bool* left, bool* right,
 	float* vx, float* vy, int* bt,bool climb)

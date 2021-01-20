@@ -34,6 +34,10 @@ void CObjPose::Action()
 	{
 		Audio::Start(20);
 		stay_flag = true;
+		Audio::Volume(-0.8, 0);
+		Audio::Volume(-0.8, 1);
+		Audio::Volume(-0.8, 23);
+		Audio::Volume(-0.8, 24);
 	}
 	if (stay_flag == true)
 	{
@@ -99,7 +103,7 @@ void CObjPose::Action()
 			keyflag = false;
 			select_num++;
 		}
-		if (Input::GetVKey(VK_RETURN) && keyflag == true == true)
+		if ((Input::GetVKey(VK_RETURN) || Input::GetVKey ('Z')) && keyflag == true )
 		{
 			switch (select_num)
 			{
