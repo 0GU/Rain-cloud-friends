@@ -899,3 +899,69 @@ void CObjStage::HitCheak(float* cx, float* cy, float size_x, float size_y,
 		}
 	}
 }
+
+void CObjStage::BlockHitStone(float* x, float* y, bool scroll_on,
+	bool* up, bool* down, bool* left, bool* right,
+	float* vx, float* vy, int* bt
+)
+{
+	//衝突状態確認用フラグの初期化
+	*up = false;
+	*down = false;
+	*left = false;
+	*right = false;
+
+	//踏んでいるのblockの種類の初期化
+	*bt = 0;
+
+
+
+	//スクロールの影響
+	float scroll = scroll_on ? mx_scroll : 0;
+	float scroll_y = scroll_on ? my_scroll : 0;
+
+
+	int ix = (*x + (-scroll)) / 64;
+	int iy = (*y + (-scroll_y)) / 64;
+
+
+	//下
+	for (int d_area = 0; d_area < 3; d_area++)
+	{
+		if (m_map[iy + 1][ix + d_area] > 0 && m_map[iy + 1][ix + d_area] != 4)
+		{
+			*up = true;//オブジェクトから見て上の部分が衝突している
+			*y = iy * 64.0f + (scroll_y);
+				*vy = 0.0f;
+		}
+	}
+
+	//右
+	for (int r_area = 0; r_area < 1; r_area++)
+	{
+		if (m_map[iy + r_area][ix + 2] > 0 && m_map[iy + r_area][ix +2 ] != 4)
+		{
+			*left = true;
+		*x = ix*64.0f + (scroll);//ブロックの位置-オブジェクトの幅
+		*vx = -(*vx) * 0.1f;//-VX*反発係数
+		}
+	}
+
+	//左
+	
+		if (m_map[iy ][ix] > 0 && m_map[iy ][ix ] != 4)
+		{
+			*right = true;//オブジェクトから見て右の部分が衝突している
+			*x = (ix+1) *64.0f + (scroll);//ブロックの位置+オブジェクトの幅
+			*vx = -(*vx) * 0.1f;//-VX*反発係数
+		}
+	
+
+	
+}
+			
+		
+	
+
+
+

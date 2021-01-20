@@ -70,12 +70,12 @@ void CObjStone::Action()
 			m_vx = hero->GetVX() ;
 			
 		}
-
+	
 
 		//ブロックとの当たり判定実行
-		block->BlockHit(&m_px, &m_py, false,
+		block->BlockHitStone(&m_px, &m_py, false,
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-			&m_vx, &m_vy, &m_block_type, false,128.0f,64.0f
+			&m_vx, &m_vy, &m_block_type
 		);
 	
 		
