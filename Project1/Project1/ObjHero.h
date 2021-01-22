@@ -107,4 +107,7 @@ private:
 	float hit_status;
 	float hit_time_f;
 	bool  hit_f;
+
+	bool hero_stop_f;//主人公の待機時アニメーション判別用
+	bool jump_f;//ジャンプ時アニメーション判別用
 };

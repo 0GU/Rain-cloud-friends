@@ -113,6 +113,8 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/HP.png", 26, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/ito.png", 27, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/土ブロック.png", 30, TEX_SIZE_1024);//実験　ぬかるみ床用
+	Draw::LoadImageW(L"素材/画像/待機修正.png", 31, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 32, TEX_SIZE_1024);
 
 	if(stageselect==1)
 	{

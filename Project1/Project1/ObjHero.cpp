@@ -82,6 +82,9 @@ void CObjHero::Init()
 	hit_time_f = 0.1f;
 	hit_f = false;
 	keyflag = false;
+
+	hero_stop_f=false;//主人公の待機時アニメーション判別用
+	jump_f = false;//ジャンプ時アニメーション判別用
 }
 
 //アクション
@@ -279,8 +282,14 @@ void CObjHero::Action()
 				{
 					if (m_hit_down == true)
 					{
+						
+						hero_stop_f = false;
 						Audio::Start(2);
 						m_vy = -9;
+					}
+					if (m_hit_down == false)
+					{
+						jump_f = true;
 					}
 				}
 
@@ -304,6 +313,7 @@ void CObjHero::Action()
 				if (Input::GetVKey(VK_RIGHT) == true)
 				{
 					//Audio::Start(3);
+					hero_stop_f = false;
 					m_vx += m_speed_power;
 					m_posture = 1.0f;
 					m_ani_time += 1;
@@ -311,6 +321,7 @@ void CObjHero::Action()
 
 				else if (Input::GetVKey(VK_LEFT) == true)
 				{
+					hero_stop_f = false;
 					m_vx -= m_speed_power;
 					m_posture = 0.0f;
 					m_ani_time += 1;
@@ -369,10 +380,15 @@ void CObjHero::Action()
 				(m_con_num == 5 && climb_flag == false && Input::GetVKey(VK_RIGHT) == false && Input::GetVKey(VK_LEFT) == false) ||
 				(m_con_num == 5 && climb_flag == true  && Input::GetVKey(VK_UP)    == false && Input::GetVKey(VK_DOWN) == false))
 			{
-				m_ani_frame = 1;  //キー入力が無い場合は静止フレームにする
-				m_ani_time = 0;
+				hero_stop_f = true;
+			}
+			//待機時の場合でかつ植物に触れていないかつ地面に着地している場合
+			if (hero_stop_f == true && climb_flag == false && m_hit_down==true)
+			{
+				m_ani_time += 1;
 			}
 
+			
 			if (m_ani_time > m_ani_max_time)
 			{
 				m_ani_frame += 1;
@@ -646,9 +662,9 @@ void CObjHero::Draw()
 	dst.m_right = (84 - 84.0f * m_posture) + m_px;
 	dst.m_bottom = 64.0f + m_py;
 	swprintf_s(str1, L"1P");
-	Font::StrDraw(str1, m_px+28, m_py-45, 30, c2);
+	Font::StrDraw(str1, m_px + 28, m_py - 45, 30, c2);
 	//切り取り位置の設定
-	if (over_flag == false&&(climb_flag==false||m_hit_down==true))
+	if (over_flag == false&& hero_stop_f==false && (climb_flag==false||m_hit_down==true))//移動時
 	{
 		src.m_top = 0.0f;
 		src.m_left = 32.0f + AniData[m_ani_frame] * 256;
@@ -687,6 +703,44 @@ void CObjHero::Draw()
 		Draw::Draw(18, &src, &dst, c, 0.0f);
 
 	}
+	else if (over_flag == false && hero_stop_f == true && jump_f==false &&(climb_flag == false || m_hit_down == true))//待機時が働いている場合
+	{
+		src.m_top = 0.0f;
+		src.m_left = 5.0f + m_ani_frame * 253;
+		src.m_right = 257.0f + m_ani_frame * 253;
+		src.m_bottom = 480.0f;
+		if (m_posture == 1)
+		{
+			dst.m_left = m_px + 40.0f + 20.0f;
+			dst.m_right = m_px + 20.0f;
+		}
+		else
+		{
+			dst.m_left = m_px + 20.0f;
+			dst.m_right = dst.m_left + 40.0f;
+
+		}
+		Draw::Draw(31, &src, &dst, c, 0.0f);
+	}
+	else if (over_flag == false && jump_f == true)
+		{
+		src.m_top = 0.0f;
+		src.m_left = 5.0f + m_ani_frame * 253;
+		src.m_right = 257.0f + m_ani_frame * 253;
+		src.m_bottom = 360.0f;
+		if (m_posture == 1)
+		{
+			dst.m_left = m_px + 64.0f + 20.0f;
+			dst.m_right = m_px + 20.0f;
+		}
+		else
+		{
+			dst.m_left = m_px + 20.0f;
+			dst.m_right = dst.m_left + 64.0f;
+
+		}
+		Draw::Draw(32, &src, &dst, c, 0.0f);
+		}
 	//実験　岩を押しているときのアニメーション描画
 	//src.m_top	= 1.0f;
 	//src.m_left	= 1.0f + AniData[m_ani_frame] * 260;
