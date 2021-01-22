@@ -40,7 +40,7 @@ void CSceneTitle::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰¼/Animation.png", 2, TEX_SIZE_64);
 	Draw::LoadImageW(L"‘fŞ/‰¼/ƒ^ƒCƒgƒ‹Test.png", 3, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰¼/‘I‘ğ.png", 4, TEX_SIZE_1024);
-	Draw::LoadImageW(L"‘fŞ/‰¼/‘€ìà–¾.png", 5, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/“ñlƒvƒŒƒC.png", 5, TEX_SIZE_1024);
 
 	//SEî•ñ‚Ì“o˜^
 	Audio::LoadAudio(0, L"‘fŞ/BGM/rain1.wav", SOUND_TYPE::BACK_MUSIC);
