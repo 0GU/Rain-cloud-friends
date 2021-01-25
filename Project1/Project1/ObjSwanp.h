@@ -22,9 +22,8 @@ private:
 	float m_py;
 	int m_hp;
 	bool m_swanp_flag;	//ぬかるみ判別フラグ
+	bool m_swanp_half;	//半ぬかるみフラグ
 	int m_swanp_time;	//ぬかるみ継続時間
 	bool stay_flag;
-	//実験
-	bool flag;
 
 };

@@ -21,7 +21,7 @@ void CObjSwanp::Init()
 	m_hp = 3;
 	m_swanp_flag = false;
 
-	flag = false;//実験
+	m_swanp_half = false;//実験
 
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_GREEN, OBJ_SWANP, 1);
@@ -44,7 +44,7 @@ void CObjSwanp::Action()
 		{
 			m_swanp_flag = true;
 			m_swanp_time = 300;
-			//HitBoxの属性を変更
+			//HitBoxの属性を　ぬかるみ状態　へ変更
 			Hits::DeleteHitBox(this);//保有するHitBoxに削除する
 			Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_FIELD, OBJ_SWANP, 1);
 		}
@@ -52,24 +52,23 @@ void CObjSwanp::Action()
 		{
 			if (m_swanp_time == 0)
 			{
-				m_swanp_time = 300;//二段階用実験
+				m_swanp_time = 300;
 				m_swanp_flag = false;
-				//HitBoxの属性を変更
+				//HitBoxの属性を　半ぬかるみ状態　へ変更
 				Hits::DeleteHitBox(this);//保有するHitBoxに削除する
 				Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_SWANP, 1);
 			}
 			m_swanp_time--;
-			flag = true;//実験
+			m_swanp_half = true;
 		}
-		else if (flag == true)
+		else if (m_swanp_half == true)
 		{
 			if (m_swanp_time == 0)
 			{
-				flag = false;
-				//HitBoxの属性を変更
+				m_swanp_half = false;
+				//HitBoxの属性を　通常　へ変更
 				Hits::DeleteHitBox(this);//保有するHitBoxに削除する
 				Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_GREEN, OBJ_SWANP, 1);
-
 			}
 			m_swanp_time--;
 		}
