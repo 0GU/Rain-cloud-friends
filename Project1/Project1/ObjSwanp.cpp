@@ -46,7 +46,7 @@ void CObjSwanp::Action()
 			m_swanp_time = 300;
 			//HitBox‚Ì‘®«‚ğ•ÏX
 			Hits::DeleteHitBox(this);//•Û—L‚·‚éHitBox‚Éíœ‚·‚é
-			Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_ENEMY, OBJ_SWANP, 1);
+			Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_FIELD, OBJ_SWANP, 1);
 		}
 		if (m_swanp_flag == true)
 		{

@@ -127,29 +127,46 @@ void CObjTurtle::Action()
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
 			&m_vx, &m_vy, &m_block_type
 		);
-		//敵が１マス分上に上がる処理
-		if (hit->CheckElementHit(ELEMENT_RED) == true && m_hit_down == false)
+
+
+
+		//実験：沼から抜ける処理
+		if (hit->CheckElementHit(ELEMENT_GREEN) == true)//沼から完全に抜ける
 		{
-			int py= (int)(m_py / 64) * 64;
-			if (py == m_py)
-				m_py = py - 32;
-			else
-				m_py = py;
-			m_vy = 0.0f;
-			m_hit_down = true;
+			if (m_hit_down == false)
+			{
+				int py = (int)(m_py / 64) * 64;
+				if (py == m_py)
+					m_py = py - 64;
+				else
+					m_py = py;
+				m_vy = 0.0f;
+			}
 		}
-		//敵が１マス分上に上がる処理
-		if (hit->CheckElementHit(ELEMENT_GREEN) == true && m_hit_down == false)
+		else if (hit->CheckElementHit(ELEMENT_RED) == true)//半分だけ抜ける
 		{
 			int py = (int)(m_py / 64) * 64;
-			if (py == m_py)
-				m_py = py - 64;
+			if (py + 32 == m_py)//半分だけぬけている状態
+				m_vx = 0.0f;//位置を維持
+			else if (py == m_py&&m_swanp==true)//一度完全に沼に落ちた場合にのみ半分ぬける
+			{
+				m_py = py - 32;
+				m_vx = 0.0f;
+				m_swanp = false;
+			}
 			else
-				m_py = py;
+				m_py = py;//沼に落ちていない場合は通過させる
+
 			m_vy = 0.0f;
-			m_hit_down = true;
 		}
-		//二段階沼状態変化実験中
+		else if (hit->CheckElementHit(ELEMENT_FIELD) == true&&m_hit_down==false)
+		{
+			m_swanp = true;//沼に完全に落ちた
+		}
+
+		//沼に落ちた状態では移動不可にする
+		if (m_swanp == true&&m_hit_down==true)
+			m_vx = 0.0f;
 
 		//位置更新
 		m_px += m_vx;
@@ -157,11 +174,6 @@ void CObjTurtle::Action()
 
 		//HitBoxの位置の変更
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
-
-		////実験　雨に当たると動作停止
-		//if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
-		//{
-		//}
 
 		//落下したら消滅
 		if (hit->CheckObjNameHit(OBJ_RESTART) != nullptr)

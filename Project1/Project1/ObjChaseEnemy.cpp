@@ -26,6 +26,7 @@ void CObjChaseEnemy::Init()
 	m_ani_max_time = 4;  //アニメーション間隔幅
 
 	m_move = true;		 //true=右 false=左
+	m_swanp = false;
 
 	m_transparent = 0.0;//描画の透明度
 	m_hp = 2;
@@ -151,15 +152,42 @@ void CObjChaseEnemy::Action()
 		);
 
 		//実験：沼から抜ける処理
-		if (hit->CheckElementHit(ELEMENT_GREEN) == true && m_hit_down == false)
+		if (hit->CheckElementHit(ELEMENT_GREEN) == true )//沼から完全に抜ける
+		{
+			if ( m_hit_down == false)
+			{
+				int py = (int)(m_py / 64) * 64;
+				if (py == m_py)
+					m_py = py - 64;
+				else
+					m_py = py;
+				m_vy = 0.0f;
+			}
+		}
+		else if (hit->CheckElementHit(ELEMENT_RED) == true)//半分だけ抜ける
 		{
 			int py = (int)(m_py / 64) * 64;
-			if (py == m_py)
-				m_py = py - 64;
+			if (py + 32 == m_py)//半分だけぬけている状態
+				m_vx = 0.0f;//位置を維持
+			else if (py == m_py && m_swanp == true)//一度完全に沼に落ちた場合にのみ半分ぬける
+			{
+				m_py = py - 32;
+				m_vx = 0.0f;
+				m_swanp = false;
+			}
 			else
-				m_py = py;
+				m_py = py;//沼に落ちていない場合は通過させる
+
 			m_vy = 0.0f;
 		}
+		else if (hit->CheckElementHit(ELEMENT_FIELD) == true && m_hit_down == false)
+		{
+			m_swanp = true;//沼に完全に落ちた
+		}
+
+		//沼に落ちた状態では移動不可にする
+		if (m_swanp == true)
+			m_vx = 0.0f;
 
 		//位置更新
 		m_px += m_vx;

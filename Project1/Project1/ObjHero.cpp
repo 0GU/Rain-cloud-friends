@@ -908,8 +908,8 @@ void CObjHero::EnemyHit(int m_enemynum)
 					{
 						//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 						//また、地面に当たってる判定にする
-						//m_vy = 0.0f;
-						//m_hit_down = true;
+						m_vy = 0.0f;
+						m_hit_down = true;
 					}
 				}
 			}
