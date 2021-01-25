@@ -30,6 +30,9 @@ void CObjOver::Init()
 	move_flag = false;
 
 	check_flag = false;
+
+	m_ani_time = 0.0f;//アニメーション時間
+	m_ani_max = 8.0f;//アニメーション最大値
 }
 
 //アクション
@@ -63,7 +66,7 @@ void CObjOver::Action()
 	
 
 	//キーボード用------------------------------
-	if (Input::GetVKey(VK_DOWN) == true && key_flag == true && move_flag == false)
+	if (Input::GetVKey(VK_DOWN) == true && key_flag == true && move_flag == false && m_fade_f==true)
 	{
 		key_flag = false;
 		Audio::Start(1);
@@ -89,7 +92,7 @@ void CObjOver::Action()
 			}
 		}
 	}
-	else if (Input::GetVKey(VK_UP) == true && key_flag == true && move_flag == false)
+	else if (Input::GetVKey(VK_UP) == true && key_flag == true && move_flag == false && m_fade_f == true)
 	{
 		key_flag = false;
 		Audio::Start(1);
@@ -118,7 +121,7 @@ void CObjOver::Action()
 	}
 
 	//画面移行
-	if (Input::GetVKey('Z') == true && key_flag == true && move_flag == false)
+	if (Input::GetVKey('Z') == true && key_flag == true && move_flag == false && m_fade_f == true)
 	{
 		key_flag = false;
 		Audio::Start(2);
@@ -147,7 +150,7 @@ void CObjOver::Action()
 		}
 	}
 	//コントローラー用------------------------
-	if (Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) == true && key_flag == true && move_flag == false)
+	if ((Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) || Input::GetConVecStickLY(0) < -0.1f) == true && key_flag == true && move_flag == false && m_fade_f == true)
 	{
 		key_flag = false;
 		Audio::Start(1);
@@ -173,7 +176,7 @@ void CObjOver::Action()
 			}
 		}
 	}
-	if (Input::GetConButtons(0, GAMEPAD_DPAD_UP) && key_flag == true && move_flag == false)
+	if ((Input::GetConButtons(0, GAMEPAD_DPAD_UP) || Input::GetConVecStickLY(0) > 0.1f) && key_flag == true && move_flag == false && m_fade_f == true)
 	{
 		key_flag = false;
 		Audio::Start(1);
@@ -202,7 +205,7 @@ void CObjOver::Action()
 	}
 
 	//画面移行
-	if (Input::GetConButtons(0, GAMEPAD_A) && key_flag == true && move_flag == false)
+	if (Input::GetConButtons(0, GAMEPAD_A) && key_flag == true && move_flag == false && m_fade_f == true)
 	{
 		key_flag = false;
 		Audio::Start(2);
@@ -255,10 +258,17 @@ void CObjOver::Action()
 
 	//キー解放
 	if (Input::GetVKey(VK_DOWN) == false && Input::GetVKey(VK_UP) == false &&
-		Input::GetVKey('Z') == false && key_flag == false && Input::GetConButtons(0, GAMEPAD_A) == false&&
-		Input::GetConButtons(0, GAMEPAD_DPAD_DOWN)==false && Input::GetConButtons(0, GAMEPAD_DPAD_UP)==false)
+		Input::GetVKey('Z') == false && key_flag == false && Input::GetConButtons(0, GAMEPAD_A) == false &&
+		Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) == false && Input::GetConButtons(0, GAMEPAD_DPAD_UP) == false &&
+		Input::GetConVecStickLY(0) == false)
 	{
 		key_flag = true;
+	}
+	//カーソルのアニメーション
+	m_ani_time += 0.2f;
+	if (m_ani_time >= m_ani_max)
+	{
+		m_ani_time = 0.0f;
 	}
 
 }
@@ -350,16 +360,16 @@ void CObjOver::Draw()
 		Draw::Draw(1, &src, &dst, c, 0.0f);
 
 		//カーソル
-		src.m_top = 64.0f;
-		src.m_left = 512.0f;
-		src.m_right = 575.0f;
-		src.m_bottom = 128.0f;
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 64.0f;
+		src.m_bottom = 64.0f;
 
 		dst.m_top = 350.0f + (selectnum - 1) * 90.0f;
-		dst.m_left = 306.0f;
-		dst.m_right = 370.0f;
+		dst.m_left = 306.0f+m_ani_time;
+		dst.m_right = 370.0f + m_ani_time;
 		dst.m_bottom = 414.0f + (selectnum - 1) * 90.0f;
-		Draw::Draw(0, &src, &dst, c, 0.0f);
+		Draw::Draw(2, &src, &dst, c, 0.0f);
 	}
 	else if (check_flag == true)
 	{
@@ -400,16 +410,16 @@ void CObjOver::Draw()
 		Draw::Draw(1, &src, &dst, c, 0.0f);
 
 		//カーソル
-		src.m_top = 64.0f;
-		src.m_left = 512.0f;
-		src.m_right = 575.0f;
-		src.m_bottom = 128.0f;
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 64.0f;
+		src.m_bottom = 64.0f;
 
 		dst.m_top = 300.0f + (selectnum_c - 1) * 100.0f;
-		dst.m_left = 448.0f;
-		dst.m_right = 512.0f;
+		dst.m_left = 448.0f + m_ani_time;
+		dst.m_right = 512.0f + m_ani_time;
 		dst.m_bottom = 364.0f + (selectnum_c - 1) * 100.0f;
-		Draw::Draw(0, &src, &dst, c, 0.0f);
+		Draw::Draw(2, &src, &dst, c, 0.0f);
 	}
 
 

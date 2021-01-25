@@ -41,6 +41,7 @@ void CSceneTitle::InitScene()
 	Draw::LoadImageW(L"素材/仮/タイトルTest.png", 3, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/選択.png", 4, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/二人プレイ.png", 5, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/音ロック保護.png", 6, TEX_SIZE_64);
 
 	//SE情報の登録
 	Audio::LoadAudio(0, L"素材/BGM/rain1.wav", SOUND_TYPE::BACK_MUSIC);

@@ -56,4 +56,8 @@ private:
 
 	float m_speed_power;  //スピードパワー
 	float m_ani_max_time; //アニメーション動作間隔最大値
+
+
+	float Audio_time;//効果音時間
+	float Audio_time_max;//効果音間隔
 };

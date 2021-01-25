@@ -84,6 +84,8 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(22, L"‘fŞ/SE/button02.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(23, L"‘fŞ/BGM/—[•û.wav", SOUND_TYPE::BACK_MUSIC);
 	Audio::LoadAudio(24, L"‘fŞ/BGM/–é.wav", SOUND_TYPE::BACK_MUSIC);
+	Audio::LoadAudio(25, L"‘fŞ/SE/ˆÚ“®‰¹.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(26, L"‘fŞ/SE/‰_ˆÚ“®‰¹.wav", SOUND_TYPE::EFFECT);
 	//‰æ‘œî•ñ‚ğ“o˜^
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/testtt.png", 0, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰¼/mapcip.png", 1, TEX_SIZE_1024);
@@ -115,6 +117,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/“yƒuƒƒbƒN.png", 30, TEX_SIZE_1024);//ÀŒ±@‚Ê‚©‚é‚İ°—p
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/‘Ò‹@C³.png", 31, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/ƒWƒƒƒ“ƒv.png", 32, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/‰Ÿ‚·.png", 33, TEX_SIZE_1024);
 
 	if(stageselect==1)
 	{

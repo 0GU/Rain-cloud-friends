@@ -24,18 +24,9 @@ void CObjCloud::Init()
 	m_py = 500.0f;
 	m_vx = 5.0f;
 	m_vy = 5.0f;
-	if (stage_num == 1)
-	{
-		m_hp = 0.3f;
-	}
-	if(stage_num==2)
-	{
-		m_hp = 1.0f;
-	}
-	if (stage_num == 3)
-	{
-		m_hp = 1.0f;
-	}
+	
+	m_hp = 1.0f;
+	
 	stay_flag = false;
 	rain_flag = false;
 
@@ -61,6 +52,9 @@ void CObjCloud::Init()
 
 	key_flag = false;
 
+
+	Audio_time = 0.0f;
+	Audio_time_max = 1.0f;
 }
 
 //アクション
@@ -83,13 +77,44 @@ void CObjCloud::Action()
 			m_con_x = Input::GetConVecStickRX(m_con_num) * 10;
 			m_con_y = Input::GetConVecStickRY(m_con_num) * -10;
 			if (m_con_x > 5.0f)
+			{
+				if (Audio_time == 0.00f)//着地中に効果音が一周する処理
+				{
+					Audio::Start(26);//移動効果音
+				}
+				Audio_time += 0.04f;//効果音流れてますよ~
 				m_con_x = 5.0f;
+			}
+
 			if (m_con_x < -5.0f)
+			{
+				if (Audio_time == 0.00f)//着地中に効果音が一周する処理
+				{
+					Audio::Start(26);//移動効果音
+				}
+				Audio_time += 0.04f;//効果音流れてますよ~
 				m_con_x = -5.0f;
+			}
+
 			if (m_con_y > 5.0f)
+			{
+				if (Audio_time == 0.00f)//着地中に効果音が一周する処理
+				{
+					Audio::Start(26);//移動効果音
+				}
+				Audio_time += 0.04f;//効果音流れてますよ~
 				m_con_y = 5.0f;
+			}
+
 			if (m_con_y < -5.0f)
+			{
+				if (Audio_time == 0.00f)//着地中に効果音が一周する処理
+				{
+					Audio::Start(26);//移動効果音
+				}
+				Audio_time += 0.04f;//効果音流れてますよ~
 				m_con_y = -5.0f;
+			}
 
 			if ((Input::GetConButtons(m_con_num, GAMEPAD_B) == true) && rain_flag == true && m_hp > 0.0f)
 			{
@@ -97,7 +122,19 @@ void CObjCloud::Action()
 				Objs::InsertObj(objr, OBJ_RAIN, 10);
 				rain_flag = false;
 				Audio::Start(5);
-				m_hp -= 0.01f;	//hp減少
+				if (stage_num == 1)
+				{
+					m_hp -= 0.1f;	//hp減少
+				}
+				if (stage_num == 2)
+				{
+					m_hp -= 0.05f;	//hp減少
+				}
+				if (stage_num == 3)
+				{
+					m_hp -= 0.05f;	//hp減少
+				}
+				
 			}
 			if ((Input::GetConButtons(m_con_num, GAMEPAD_B) == false) && rain_flag == false)
 			{
@@ -118,13 +155,45 @@ void CObjCloud::Action()
 			m_con_x = Input::GetConVecStickLX(1) * 10;
 			m_con_y = Input::GetConVecStickLY(1) * -10;
 			if (m_con_x > 5.0f)
+			{
+				if (Audio_time == 0.00f)//着地中に効果音が一周する処理
+				{
+					Audio::Start(26);//移動効果音
+				}
+				Audio_time += 0.04f;//効果音流れてますよ~
 				m_con_x = 5.0f;
+			}
+				
 			if (m_con_x < -5.0f)
+			{
+				if (Audio_time == 0.00f)//着地中に効果音が一周する処理
+				{
+					Audio::Start(26);//移動効果音
+				}
+				Audio_time += 0.04f;//効果音流れてますよ~
 				m_con_x = -5.0f;
+			}
+				
 			if (m_con_y > 5.0f)
+			{
+				if (Audio_time == 0.00f)//着地中に効果音が一周する処理
+				{
+					Audio::Start(26);//移動効果音
+				}
+				Audio_time += 0.04f;//効果音流れてますよ~
 				m_con_y = 5.0f;
+			}
+				
 			if (m_con_y < -5.0f)
+			{
+				if (Audio_time == 0.00f)//着地中に効果音が一周する処理
+				{
+					Audio::Start(26);//移動効果音
+				}
+				Audio_time += 0.04f;//効果音流れてますよ~
 				m_con_y = -5.0f;
+			}
+				
 
 			if (( Input::GetConButtons(m_con_num, GAMEPAD_B) == true) && rain_flag == true && m_hp > 0.0f)
 			{
@@ -195,6 +264,11 @@ void CObjCloud::Action()
 		if (m_ani_frame == 4)
 		{
 			m_ani_frame = 0;
+		}
+
+		if (Audio_time >= Audio_time_max)
+		{
+			Audio_time = 0.00f;
 		}
 	}
 	

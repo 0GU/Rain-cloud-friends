@@ -70,34 +70,20 @@ void CObjTitle::Action()
 
 	//カーソル移動
 	//カーソルを下に動かす場合
-	if (Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) && select_flag == true && key_flag == true && m_fade_f == true && move_flag==false && move_flag == false)
+	if ((Input::GetConButtons(0, GAMEPAD_DPAD_DOWN)|| Input::GetConVecStickLY(0) < -0.1f )&& select_flag == true && key_flag == true && m_fade_f == true && move_flag==false && move_flag == false)
 	{
 		Audio::Start(2);//効果音作動
 		key_flag = false;//キー操作不能にする
 		select_flag = false;//カーソルが下に
 	}
 	//カーソルを上に動かす場合
-	if (Input::GetConButtons(0, GAMEPAD_DPAD_UP) && select_flag == false && description_flag == false && key_flag == true && m_fade_f == true && move_flag == false)
+	if ((Input::GetConButtons(0, GAMEPAD_DPAD_UP)|| Input::GetConVecStickLY(0) > 0.1f) && select_flag == false && description_flag == false && key_flag == true && m_fade_f == true && move_flag == false)
 	{
 		Audio::Start(2);//効果音作動
 		key_flag = false;//キー操作不能にする
 		select_flag = true;//カーソルが上に
 	}
 
-	//カーソルを下に動かす場合スティック
-	if (Input::GetConVecStickLY(0) < -0.1f && select_flag == true && key_flag == true && m_fade_f == true && move_flag == false && move_flag == false)
-	{
-		Audio::Start(2);//効果音作動
-		key_flag = false;//キー操作不能にする
-		select_flag = false;//カーソルが下に
-	}
-	//カーソルを上に動かす場合スティック
-	if (Input::GetConVecStickLY(0) > 0.1f && select_flag == false && description_flag == false && key_flag == true && m_fade_f == true && move_flag == false)
-	{
-		Audio::Start(2);//効果音作動
-		key_flag = false;//キー操作不能にする
-		select_flag = true;//カーソルが上に
-	}
 	//操作説明起動
 	if (Input::GetConButtons(0, GAMEPAD_A) && select_flag == false && description_flag == false && key_flag == true && m_fade_f == true && move_flag == false)
 	{
@@ -177,7 +163,7 @@ void CObjTitle::Action()
 
 	//カーソルのアニメーション
 	m_ani_time += 0.2f;
-	if (m_ani_time >=8.0f)
+	if (m_ani_time >=m_ani_max)
 	{
 		m_ani_time = 0.0f;
 	}
@@ -194,6 +180,7 @@ void CObjTitle::Draw()
 	RECT_F src; //描画元切り取り位置の設定
 	RECT_F dst; //描画先表示位置
 
+	
 	//
 	if (description_flag == false)
 	{
@@ -291,15 +278,15 @@ void CObjTitle::Draw()
 		dst.m_bottom = 720.0f;
 		Draw::Draw(5, &src, &dst, c, 0.0f);
 	}
-	//黒画面
-/*	src.m_top = 0.0f;
+	//otocogic保護情報
+	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 1024.0f;
-	src.m_bottom = 1024.0f;
+	src.m_right = 176.0f;
+	src.m_bottom = 62.0f;
 
-	dst.m_top = 800.0f + m_fade;
-	dst.m_left = 0.0f;
-	dst.m_right = 1280.0f;
-	dst.m_bottom = 0.0f + m_fade;
-	Draw::Draw(2, &src, &dst, c, 0.0f);*/
+	dst.m_top = 620.0f;
+	dst.m_left = 1100.0f;
+	dst.m_right = 1270.0f;
+	dst.m_bottom = 711.0f;
+	Draw::Draw(6, &src, &dst, c, 0.0f);
 }
