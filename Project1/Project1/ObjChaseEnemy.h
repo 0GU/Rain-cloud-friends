@@ -50,4 +50,6 @@ private:
 	bool m_escaoe_flag;//逃走終了フラグ　trueでオブジェクト破棄
 	int m_hp;
 
+	bool m_swanp;
+
 };
