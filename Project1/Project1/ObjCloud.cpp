@@ -26,7 +26,7 @@ void CObjCloud::Init()
 	m_vy = 5.0f;
 	if (stage_num == 1)
 	{
-		m_hp = 0.05f;
+		m_hp = 0.3f;
 	}
 	if(stage_num==2)
 	{

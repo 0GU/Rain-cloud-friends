@@ -282,8 +282,7 @@ void CObjHero::Action()
 				{
 					if (m_hit_down == true)
 					{
-						
-						hero_stop_f = false;
+					//	hero_stop_f = false;
 						Audio::Start(2);
 						m_vy = -9;
 					}
@@ -388,7 +387,10 @@ void CObjHero::Action()
 				m_ani_time += 1;
 			}
 
-			
+			if (jump_f == true && m_hit_down == true)//ジャンプ後地面に着地した時
+			{
+				jump_f = false;
+			}
 			if (m_ani_time > m_ani_max_time)
 			{
 				m_ani_frame += 1;
