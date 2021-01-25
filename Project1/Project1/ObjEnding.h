@@ -18,4 +18,7 @@ public:
 private:
 	int hoge;//仮
 	bool key_flag;
+	bool  move_flag;//２回目ぼフェードを動かす用
+	bool m_fade_f;//フェードインアウト判別用フラグ
+	float m_fade;//フェード値
 };

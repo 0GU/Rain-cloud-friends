@@ -61,6 +61,11 @@ void CObjPose::Action()
 			switch (select_num)
 			{
 			case 1:
+				Audio::Start(20);
+				Audio::Volume(0.8, 0);
+				Audio::Volume(0.8, 1);
+				Audio::Volume(0.8, 23);
+				Audio::Volume(0.8, 24);
 				stay_flag = false;
 				break;
 			case 2:

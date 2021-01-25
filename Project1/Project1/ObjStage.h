@@ -52,6 +52,11 @@ public:
 		float* out_px, float* out_py, float* out_len
 	);
 
+	void BlockHitStone(float* x, float* y, bool scroll_on,
+		bool* up, bool* down, bool* left, bool* right,
+		float* vx, float* vy, int* bt
+	);
+
 	////オブジェクトが一定距離内にいるかの判定　作るか微妙
 	//bool ObjSearch(
 	//	float x, float y, float obj_x, float obj_y,

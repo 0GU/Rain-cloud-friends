@@ -20,12 +20,15 @@ void CObjOver::Init()
 	//初期化
 	selectnum = 1;
 	selectnum_c = 1;
-	keyflag = true;
+	key_flag = true;
+	move_flag = false;//２回目のフェード起動用
+	m_fade_f = false;//1回目のフェード起動用
+	key_flag = false;//一回だけ　を判別するためのフラグ
 
-	m_y1 = 0.0f;
-
+	m_fade = 0.0f;//フェードの値を入れる
+	move_flag2 = false;
 	move_flag = false;
-	scroll_flag = false;
+
 	check_flag = false;
 }
 
@@ -35,24 +38,34 @@ void CObjOver::Action()
 	//コントローラー操作仮
 	//m_con_num = Input::UpdateXControlerConnected();
 
-	//黒画面スクロール
-	if (scroll_flag == false)
+	//フェードイン用操作起動時
+	if (m_fade_f == false)
 	{
-		m_y1 += 50.0f;
-		if (m_y1 > 800.0f)
+		m_fade += 0.03f;//フェードを少しずつ明るくしていく
+		if (m_fade >= 1.0f)//Maxまで来ると
 		{
-			m_y1 = 800.0f;
-			scroll_flag = true;
+			m_fade = 1.0f;//値をMaxに固定し
+			m_fade_f = true;//フェードインを止める
+			if (Input::GetConButtons(0, GAMEPAD_A) ||Input::GetVKey('Z')==true)//フェードイン中にキーを押していると
+			{
+				;//何もしない
+			}
+			else
+			{
+				key_flag = true;//キー操作可能にする
+			}
+
 		}
+
 	}
 
 	//ここからステージコマンド------------------
 	
 
 	//キーボード用------------------------------
-	if (Input::GetVKey(VK_DOWN) == true && keyflag == true && scroll_flag == true)
+	if (Input::GetVKey(VK_DOWN) == true && key_flag == true && move_flag == false)
 	{
-		keyflag = false;
+		key_flag = false;
 		Audio::Start(1);
 		
 		//通常時
@@ -76,9 +89,9 @@ void CObjOver::Action()
 			}
 		}
 	}
-	else if (Input::GetVKey(VK_UP) == true && keyflag == true && scroll_flag == true)
+	else if (Input::GetVKey(VK_UP) == true && key_flag == true && move_flag == false)
 	{
-		keyflag = false;
+		key_flag = false;
 		Audio::Start(1);
 
 		//通常時
@@ -105,9 +118,9 @@ void CObjOver::Action()
 	}
 
 	//画面移行
-	if (Input::GetVKey('Z') == true && keyflag == true && scroll_flag == true)
+	if (Input::GetVKey('Z') == true && key_flag == true && move_flag == false)
 	{
-		keyflag = false;
+		key_flag = false;
 		Audio::Start(2);
 		//通常時
 		if (check_flag == false)
@@ -134,9 +147,9 @@ void CObjOver::Action()
 		}
 	}
 	//コントローラー用------------------------
-	if (Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) == true && keyflag == true && scroll_flag == true)
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) == true && key_flag == true && move_flag == false)
 	{
-		keyflag = false;
+		key_flag = false;
 		Audio::Start(1);
 
 		//通常時
@@ -160,9 +173,9 @@ void CObjOver::Action()
 			}
 		}
 	}
-	if (Input::GetConButtons(0, GAMEPAD_DPAD_UP) && keyflag == true && scroll_flag == true)
+	if (Input::GetConButtons(0, GAMEPAD_DPAD_UP) && key_flag == true && move_flag == false)
 	{
-		keyflag = false;
+		key_flag = false;
 		Audio::Start(1);
 
 		//通常時
@@ -189,9 +202,9 @@ void CObjOver::Action()
 	}
 
 	//画面移行
-	if (Input::GetConButtons(0, GAMEPAD_A) && keyflag == true && scroll_flag == true)
+	if (Input::GetConButtons(0, GAMEPAD_A) && key_flag == true && move_flag == false)
 	{
-		keyflag = false;
+		key_flag = false;
 		Audio::Start(2);
 		//通常時
 		if (check_flag == false)
@@ -218,12 +231,13 @@ void CObjOver::Action()
 		}
 	}
 
-	//画面移行部分　スクロール終了したら移行
-	if (move_flag == true)
+	//二回目のフェード処理
+	if (move_flag == true)//起動していると
 	{
-		m_y1 -= 50.0f;
+		m_fade -= 0.03f;//フェードアウトしていく
 	}
-	if (m_y1 == 0.0f)
+
+	if (m_fade <= -0.01f)//完全に真っ暗になったら
 	{
 		switch (selectnum)
 		{
@@ -241,10 +255,10 @@ void CObjOver::Action()
 
 	//キー解放
 	if (Input::GetVKey(VK_DOWN) == false && Input::GetVKey(VK_UP) == false &&
-		Input::GetVKey('Z') == false && keyflag == false && Input::GetConButtons(0, GAMEPAD_A) == false&&
+		Input::GetVKey('Z') == false && key_flag == false && Input::GetConButtons(0, GAMEPAD_A) == false&&
 		Input::GetConButtons(0, GAMEPAD_DPAD_DOWN)==false && Input::GetConButtons(0, GAMEPAD_DPAD_UP)==false)
 	{
-		keyflag = true;
+		key_flag = true;
 	}
 
 }
@@ -253,7 +267,7 @@ void CObjOver::Action()
 void CObjOver::Draw()
 {
 	//描画カラー情報
-	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
+	float	c[4] = { 1.0f,1.0f,1.0f,m_fade };//
 
 
 	RECT_F src; //描画元切り取り位置の設定
@@ -262,14 +276,14 @@ void CObjOver::Draw()
 	//背景
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 1023.0f;
-	src.m_bottom = 63.0f;
+	src.m_right = 1280.0f;
+	src.m_bottom = 720.0f;
 
 	dst.m_top = 0.0f;
 	dst.m_left = 0.0f;
 	dst.m_right = 1280.0f;
 	dst.m_bottom = 720.0f;
-	Draw::Draw(0, &src, &dst, c, 0.0f);
+	Draw::Draw(4, &src, &dst, c, 0.0f);
 
 	//画像貼り進捗
 	//画面サイズは 1280*720 っつってんだろくそが！！！！(自分)
@@ -397,16 +411,6 @@ void CObjOver::Draw()
 		dst.m_bottom = 364.0f + (selectnum_c - 1) * 100.0f;
 		Draw::Draw(0, &src, &dst, c, 0.0f);
 	}
-	//黒画面
-	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 1024.0f;
-	src.m_bottom = 1024.0f;
 
-	dst.m_top = 800.0f + m_y1;
-	dst.m_left = 0.0f;
-	dst.m_right = 1280.0f;
-	dst.m_bottom = 0.0f + m_y1;
-	Draw::Draw(3, &src, &dst, c, 0.0f);
 
 }
