@@ -456,14 +456,14 @@ void CObjHero::Action()
 				m_ani_frame == 0;
 				m_ani_time += 1;
 
-				if (m_ani_frame == 2 && climb_flag==false)
+				if (m_ani_frame == 2 && (climb_flag==false||stone_push_f==false))
 				{
 					m_ani_frame = 2;
 					m_ani_time = 0;
 				}
 			}
 			//待機時の場合でかつ植物に触れていないかつ地面に着地している場合
-			if (hero_stop_f == true && climb_flag == false && jump_f==false)
+			if (hero_stop_f == true && climb_flag == false && jump_f==false && stone_push_f==false )
 			{
 				m_ani_time += 1;
 
@@ -502,7 +502,11 @@ void CObjHero::Action()
 				}
 			}
 
-
+			//ここまでブロックとの当たり判定
+			pb->BlockHit(&m_px, &m_py, true,
+				&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
+				&m_vx, &m_vy, &m_block_type, climb_flag, 64.0f, 64.0f
+			);
 			
 
 
@@ -609,11 +613,7 @@ void CObjHero::Action()
 				CObjStageSelect* stage = (CObjStageSelect*)Objs::GetObj(OBJ_STAGE_SELECT);
 				Scene::SetScene(new CSceneClear(m_hp, cloud->m_hp, reset));//HeroのHPと雲からm_hp(雲のＨＰ)とStage情報を持ってくる
 			}
-			//ここまでブロックとの当たり判定
-			pb->BlockHit(&m_px, &m_py, true,
-				&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
-				&m_vx, &m_vy, &m_block_type, climb_flag, 64.0f, 64.0f
-			);
+		
 		//-ここから独自の判定------------------------------------------------------------------------------------
 		//石との当たり判定------------------------------------------------------------------------------------------------------------------------------------------
 		CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
@@ -654,7 +654,10 @@ void CObjHero::Action()
 			stone_push_f = true;
 			m_vx /= 2;
 		}
-
+		else
+		{
+			stone_push_f = false;
+		}
 			//else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
 		//	((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
 		//		m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
@@ -747,7 +750,7 @@ void CObjHero::Draw()
 	swprintf_s(str1, L"1P");
 	Font::StrDraw(str1, m_px + 28, m_py - 45, 30, c2);
 	//切り取り位置の設定
-	if (over_flag == false&& hero_stop_f==false && jump_f== false&& (climb_flag==false||m_hit_down==true))//移動時
+	if (over_flag == false&& hero_stop_f==false && jump_f== false&& stone_push_f==false &&(climb_flag==false||m_hit_down==true))//移動時
 	{
 		src.m_top = 0.0f;
 		src.m_left = 32.0f + AniData[m_ani_frame] * 256;
@@ -830,7 +833,7 @@ void CObjHero::Draw()
 		src.m_left = 5.0f + m_ani_frame * 253;
 		src.m_right = 257.0f + m_ani_frame * 253;
 		src.m_bottom = 431.0f;
-		if (m_posture == 1)
+		if (m_posture == 0)
 		{
 			dst.m_left = m_px + 20.0f;
 			dst.m_right = dst.m_left + 54.0f;
