@@ -46,7 +46,7 @@ void CObjTurtle::Init()
 	stay_flag = false;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_TURTLE, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_ENEMY, OBJ_TURTLE, 1);
 
 }
 
@@ -92,18 +92,18 @@ void CObjTurtle::Action()
 
 
 		//方向　デバッグのため移動停止中
-		//if (m_move == true)
-		//{
-		//	m_vx += m_speed_power;
-		//	m_posture = 1.0f;
-		//	m_ani_time += 1;
-		//}
-		//else if (m_move == false)
-		//{
-		//	m_vx -= m_speed_power;
-		//	m_posture = 0.0f;
-		//	m_ani_time += 1;
-		//}
+		if (m_move == true)
+		{
+			m_vx += m_speed_power;
+			m_posture = 1.0f;
+			m_ani_time += 1;
+		}
+		else if (m_move == false)
+		{
+			m_vx -= m_speed_power;
+			m_posture = 0.0f;
+			m_ani_time += 1;
+		}
 
 		if (m_ani_time > m_ani_max_time)
 		{
@@ -127,17 +127,29 @@ void CObjTurtle::Action()
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
 			&m_vx, &m_vy, &m_block_type
 		);
-
-		if (hit->CheckElementHit(ELEMENT_GREEN) == true && m_hit_down == false)
+		//敵が１マス分上に上がる処理
+		if (hit->CheckElementHit(ELEMENT_RED) == true && m_hit_down == false)
 		{
 			int py= (int)(m_py / 64) * 64;
+			if (py == m_py)
+				m_py = py - 32;
+			else
+				m_py = py;
+			m_vy = 0.0f;
+			m_hit_down = true;
+		}
+		//敵が１マス分上に上がる処理
+		if (hit->CheckElementHit(ELEMENT_GREEN) == true && m_hit_down == false)
+		{
+			int py = (int)(m_py / 64) * 64;
 			if (py == m_py)
 				m_py = py - 64;
 			else
 				m_py = py;
 			m_vy = 0.0f;
+			m_hit_down = true;
 		}
-
+		//二段階沼状態変化実験中
 
 		//位置更新
 		m_px += m_vx;

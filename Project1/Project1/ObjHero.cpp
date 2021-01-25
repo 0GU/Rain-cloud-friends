@@ -839,7 +839,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 					{
 						//ジャンプしてる場合は下記の影響を出ないようにする
 					}
-					else
+					else if(m_enemynum==6)
 					{
 						//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 						//また、地面に当たってる判定にする

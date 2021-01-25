@@ -21,7 +21,10 @@ private:
 	float m_px;			//ˆÊ’u
 	float m_py;
 	int m_hp;
-	bool m_swanp_flag;
-	int m_swanp_time;
+	bool m_swanp_flag;	//‚Ê‚©‚é‚Ý”»•Êƒtƒ‰ƒO
+	int m_swanp_time;	//‚Ê‚©‚é‚ÝŒp‘±ŽžŠÔ
 	bool stay_flag;
+	//ŽÀŒ±
+	bool flag;
+
 };

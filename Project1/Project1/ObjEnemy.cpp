@@ -62,6 +62,7 @@ void CObjEnemy::Action()
 		
 		//ブロック情報を持ってくる
 		CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
+		CHitBox* hit = Hits::GetHitBox(this);
 
 		//落下
 		if (m_py > 1000.0f)
@@ -131,12 +132,23 @@ void CObjEnemy::Action()
 			&m_vx, &m_vy, &d
 		);
 
+		//実験：沼から抜ける処理
+		if (hit->CheckElementHit(ELEMENT_GREEN) == true && m_hit_down == false)
+		{
+			int py = (int)(m_py / 64) * 64;
+			if (py == m_py)
+				m_py = py - 64;
+			else
+				m_py = py;
+			m_vy = 0.0f;
+		}
+
+
 		//位置更新
 		m_px += m_vx;
 		m_py += m_vy;
 
 		//HitBoxの位置の変更
-		CHitBox* hit = Hits::GetHitBox(this);
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 
 		//実験　雨に当たると動作停止

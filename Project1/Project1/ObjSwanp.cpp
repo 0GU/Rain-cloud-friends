@@ -20,6 +20,9 @@ void CObjSwanp::Init()
 	m_swanp_time = 0;
 	m_hp = 3;
 	m_swanp_flag = false;
+
+	flag = false;//実験
+
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_GREEN, OBJ_SWANP, 1);
 }
@@ -34,6 +37,7 @@ void CObjSwanp::Action()
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	CHitBox* hit = Hits::GetHitBox(this);
 
+
 	if (stay_flag == false)
 	{
 		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
@@ -42,19 +46,34 @@ void CObjSwanp::Action()
 			m_swanp_time = 300;
 			//HitBoxの属性を変更
 			Hits::DeleteHitBox(this);//保有するHitBoxに削除する
-			Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_SWANP, 1);
+			Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_ENEMY, OBJ_SWANP, 1);
 		}
 		if (m_swanp_flag == true)
 		{
 			if (m_swanp_time == 0)
 			{
+				m_swanp_time = 300;//二段階用実験
 				m_swanp_flag = false;
 				//HitBoxの属性を変更
 				Hits::DeleteHitBox(this);//保有するHitBoxに削除する
+				Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_SWANP, 1);
+			}
+			m_swanp_time--;
+			flag = true;//実験
+		}
+		else if (flag == true)
+		{
+			if (m_swanp_time == 0)
+			{
+				flag = false;
+				//HitBoxの属性を変更
+				Hits::DeleteHitBox(this);//保有するHitBoxに削除する
 				Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_GREEN, OBJ_SWANP, 1);
+
 			}
 			m_swanp_time--;
 		}
+
 		//HitBoxの位置の変更
 		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
 	}
