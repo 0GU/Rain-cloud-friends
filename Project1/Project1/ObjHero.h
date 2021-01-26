@@ -99,8 +99,8 @@ private:
 	int m_con_num;
 	bool m_con_flag;
 
-	float Audio_time;
-	float Audio_time_max;
+	float Audio_time;//効果音時間
+	float Audio_time_max;//効果音間隔
 	bool Audio_f;
 
 	//点滅処理
@@ -110,4 +110,5 @@ private:
 
 	bool hero_stop_f;//主人公の待機時アニメーション判別用
 	bool jump_f;//ジャンプ時アニメーション判別用
+	bool stone_push_f;//岩を押す判別フラグ
 };

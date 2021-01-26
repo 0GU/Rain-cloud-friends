@@ -9,7 +9,7 @@ using namespace GameL;
 class CObjOver : public CObj
 {
 public:
-	CObjOver(int stagenum) ;
+	CObjOver(int stagenum);
 	~CObjOver() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
@@ -28,4 +28,6 @@ private:
 	bool check_flag;//確認用
 	float m_fade;//黒画面用(仮)
 	int m_con_num;//仮
+	float m_ani_time;//アニメーション時間
+	float m_ani_max;//アニメーション最大値
 };

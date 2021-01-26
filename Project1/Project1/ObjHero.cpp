@@ -85,8 +85,8 @@ void CObjHero::Init()
 
 	hero_stop_f=false;//主人公の待機時アニメーション判別用
 	jump_f = false;//ジャンプ時アニメーション判別用
+	stone_push_f = false;//岩を押してる判別
 }
-
 //アクション
 void CObjHero::Action()
 {
@@ -161,14 +161,15 @@ void CObjHero::Action()
 			}
 		}
 		//----------------------------------------------------------------------------------------------------------------------------------------------
-		if (m_hit_down == true)
+		//着地判定処理（効果音）
+		if (m_hit_down == true)//着地すると
 		{
-			if (landing_flag == false)
+			if (landing_flag == false)//着地フラグがfalseの場合
 			{
 				landing_flag = true;//着地しました
-				if (landing_flag == true)
+				if (landing_flag == true)//すると
 				{
-					Audio::Start(3);
+					Audio::Start(3);//着地効果音が再生されます
 				}
 				if (Audio_f == true)
 				{
@@ -191,48 +192,99 @@ void CObjHero::Action()
 					m_con_flag = false;
 				}
 
-				if (Input::GetConButtons(0, GAMEPAD_A) == true &&keyflag==false)
+				if (Input::GetConButtons(0, GAMEPAD_A) == true)//Aボタンが押されると
 				{
-					keyflag = true;
-					if (m_hit_down == true)
+					if (m_hit_down == true)//着地している場合
 					{
-						Audio::Start(2);
-						m_vy = -9;
-						m_hit_down == false;
-						
+						//	hero_stop_f = false;
+						Audio::Start(2);//ジャンプ効果音が再生
+						m_vy = -9;//上がる
+						m_ani_max_time = 6;//アニメーション速度を遅くする
 					}
-
+					if (m_hit_down == false)//地面から離れると
+					{
+						jump_f = true;//ジャンプしました
+						m_ani_max_time = 4;//アニメーション速度を早くする
+					}
+					if (m_hit_up == true)//天井に当たった場合
+					{
+						Audio::Stop(2);//ジャンプの効果音を停止
+					}
+		
 				}
-				if (Input::GetConButtons(0, GAMEPAD_X) == true)
+				if (Input::GetConButtons(0, GAMEPAD_X) == true)//Xキーを押すと
 				{
 					//ダッシュ時の速度
 					if (m_con_x > 0.8f)
+					{
+						if (Audio_time == 0.00f && m_hit_down == true)//着地中に効果音が一周する処理
+						{
+							Audio::Start(25);//移動効果音
+						}
+						Audio_time += 0.04f;//効果音流れてますよ~
+						hero_stop_f = false;
 						m_con_x = 0.8f;
+					}
+						
 					if (m_con_x < -0.8f)
+					{
+						if (Audio_time == 0.00f && m_hit_down == true)
+						{
+							Audio::Start(25);
+						}
+						Audio_time += 0.04f;
+						hero_stop_f = false;//主人公が動いています！
 						m_con_x = -0.8f;
+
+					}
+						
 					m_ani_max_time = 4.0f;
 				}
 				else
 				{
 					//通常速度
-					if (m_con_x > 0.5f)
+					if (m_con_x > 0.1f)
+					{
+						hero_stop_f = false;//主人公が動いています！
 						m_con_x = 0.5f;
-					if (m_con_x < -0.5f)
+					}
+					
+					if (m_con_x < -0.1f)
+					{
+						hero_stop_f = false;//主人公が動いています！
 						m_con_x = -0.5f;
+					}
 					m_ani_max_time = 4;
 				}
 				if (m_con_x > 0.0f)
 				{
+					if (Audio_time == 0.00f && m_hit_down==true)
+					{
+						Audio::Start(25);
+					}
+					Audio_time += 0.04f;
 					m_vx += m_con_x;
 					m_posture = 1.0f;
-					m_ani_time += 1;
+					if (jump_f == false)
+					{
+						m_ani_time += 1;
+					}
 					m_con_flag = true;
 				}
 				if (m_con_x < 0.0f)
 				{
+					if (Audio_time == 0.00f && m_hit_down == true)
+					{
+						Audio::Start(25);
+					}
+					Audio_time += 0.04f;
 					m_vx += m_con_x;
 					m_posture = 0.0f;
-					m_ani_time += 1;
+					if (jump_f == false)
+					{
+						m_ani_time += 1;
+					}
+
 					m_con_flag = true;
 				}
 
@@ -240,11 +292,13 @@ void CObjHero::Action()
 				if (Input::GetConVecStickLY(0) > 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == true)
 				{
 					m_vy = 0.0f;
+					jump_f = true;
 				}
 				else if (Input::GetConVecStickLY(0) == 0.0f && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
 				{//操作なしの場合はその場所に留まる
 					Audio::Stop(2);
 					m_vy = 0.0f;
+					jump_f = true;
 				}
 				else if (Input::GetConVecStickLY(0) > 0.1f && climb_flag == true /* && hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
@@ -256,6 +310,7 @@ void CObjHero::Action()
 					Audio_time += 0.04f;
 					m_vy = -3.0f;
 					m_ani_time += 1;
+					jump_f = true;
 				}
 				else if (Input::GetConVecStickLY(0) < -0.1f && climb_flag == true && m_hit_down == false/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
@@ -268,10 +323,12 @@ void CObjHero::Action()
 					m_vy = +3.0f;
 					m_ani_time += 1;
 					Audio::Stop(2);
+					jump_f = true;
 				}
 				else if (Input::GetConVecStickLY(0) < -0.1f && climb_flag == true && m_hit_down == true/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
 					m_ani_frame = 1;
+					jump_f = true;
 				}
 
 			}
@@ -285,10 +342,12 @@ void CObjHero::Action()
 					//	hero_stop_f = false;
 						Audio::Start(2);
 						m_vy = -9;
+						m_ani_max_time = 6;
 					}
 					if (m_hit_down == false)
 					{
 						jump_f = true;
+						m_ani_max_time = 4;
 					}
 				}
 
@@ -297,7 +356,7 @@ void CObjHero::Action()
 				{
 					//ダッシュ時の速度
 					m_speed_power = 0.8f;
-					m_ani_max_time = 4;
+					m_ani_max_time = 3;
 				}
 				else
 				{
@@ -315,7 +374,11 @@ void CObjHero::Action()
 					hero_stop_f = false;
 					m_vx += m_speed_power;
 					m_posture = 1.0f;
-					m_ani_time += 1;
+					if (jump_f == false)
+					{
+						m_ani_time += 1;
+					}
+					
 				}
 
 				else if (Input::GetVKey(VK_LEFT) == true)
@@ -323,7 +386,11 @@ void CObjHero::Action()
 					hero_stop_f = false;
 					m_vx -= m_speed_power;
 					m_posture = 0.0f;
-					m_ani_time += 1;
+
+					if (jump_f == false)
+					{
+						m_ani_time += 1;
+					}
 				}
 
 
@@ -334,12 +401,14 @@ void CObjHero::Action()
 				{
 					//植物の一番上に当たっている場合は上に移動不可
 					m_vy = 0.0f;
+					jump_f = true;
 				}
 				else if (Input::GetVKey(VK_UP) == false && Input::GetVKey(VK_DOWN) == false && climb_flag == true && hit->CheckElementHit(ELEMENT_FLOWER) == false)
 				{
 					//操作なしの場合はその場所に留まる
 					Audio::Stop(2);
 					m_vy = 0.0f;
+					jump_f = true;
 				}
 				else if (Input::GetVKey(VK_UP) == true && climb_flag == true /*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
@@ -352,7 +421,7 @@ void CObjHero::Action()
 					Audio_time += 0.04f;
 					m_vy = -3.0f;
 					m_ani_time += 1;
-
+					jump_f = true;
 				}
 				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true && m_hit_down==false/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
@@ -364,6 +433,7 @@ void CObjHero::Action()
 					m_vy = +3.0f;
 					m_ani_time += 1;
 					Audio::Stop(2);
+					jump_f = true;
 				}
 				else if (Input::GetVKey(VK_DOWN) == true && climb_flag == true &&m_hit_down==true/*&& hit->CheckElementHit(ELEMENT_FLOWER) == false*/)
 				{
@@ -381,12 +451,24 @@ void CObjHero::Action()
 			{
 				hero_stop_f = true;
 			}
+			if (jump_f == true && climb_flag==false)
+			{
+				m_ani_frame == 0;
+				m_ani_time += 1;
+
+				if (m_ani_frame == 2 && (climb_flag==false||stone_push_f==false))
+				{
+					m_ani_frame = 2;
+					m_ani_time = 0;
+				}
+			}
 			//待機時の場合でかつ植物に触れていないかつ地面に着地している場合
-			if (hero_stop_f == true && climb_flag == false && m_hit_down==true)
+			if (hero_stop_f == true && climb_flag == false && jump_f==false && stone_push_f==false )
 			{
 				m_ani_time += 1;
-			}
 
+			}
+			
 			if (jump_f == true && m_hit_down == true)//ジャンプ後地面に着地した時
 			{
 				jump_f = false;
@@ -420,12 +502,12 @@ void CObjHero::Action()
 				}
 			}
 
-
+			//ここまでブロックとの当たり判定
 			pb->BlockHit(&m_px, &m_py, true,
 				&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
 				&m_vx, &m_vy, &m_block_type, climb_flag, 64.0f, 64.0f
 			);
-
+			
 
 
 			//高速移動によるBlock判定
@@ -531,7 +613,8 @@ void CObjHero::Action()
 				CObjStageSelect* stage = (CObjStageSelect*)Objs::GetObj(OBJ_STAGE_SELECT);
 				Scene::SetScene(new CSceneClear(m_hp, cloud->m_hp, reset));//HeroのHPと雲からm_hp(雲のＨＰ)とStage情報を持ってくる
 			}
-
+		
+		//-ここから独自の判定------------------------------------------------------------------------------------
 		//石との当たり判定------------------------------------------------------------------------------------------------------------------------------------------
 		CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
 		if (m_vy < -1.0f)
@@ -566,7 +649,7 @@ void CObjHero::Action()
 			m_hit_down = true;
 
 		}
-		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true)
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true )
 		{
 			if (Stone->GetlockflagR() == true)
 				if (m_vx < 0)
@@ -614,6 +697,7 @@ void CObjHero::Action()
 			m_hit_down = true;
 		}
 
+		
 
 			//位置の更新
 			m_px += m_vx;
@@ -646,11 +730,6 @@ void CObjHero::Action()
 	//HitBoxの位置の変更
 	hit->SetPos(m_px+24, m_py);
 
-	//ジャンプ長押しでジャンプ連打防止用
-	if (Input::GetConButtons(0, GAMEPAD_A) == false &&keyflag==true)
-	{
-		keyflag = false;
-	}
 }
 
 //ドロー
@@ -674,11 +753,11 @@ void CObjHero::Draw()
 	dst.m_top = -16.0f + m_py;
 	dst.m_left = (84.0f * m_posture) + m_px;
 	dst.m_right = (84 - 84.0f * m_posture) + m_px;
-	dst.m_bottom = 64.0f + m_py;
+	dst.m_bottom = 74.0f + m_py;
 	swprintf_s(str1, L"1P");
 	Font::StrDraw(str1, m_px + 28, m_py - 45, 30, c2);
 	//切り取り位置の設定
-	if (over_flag == false&& hero_stop_f==false && (climb_flag==false||m_hit_down==true))//移動時
+	if (over_flag == false&& hero_stop_f==false && jump_f== false&& stone_push_f==false &&(climb_flag==false||m_hit_down==true))//移動時
 	{
 		src.m_top = 0.0f;
 		src.m_left = 32.0f + AniData[m_ani_frame] * 256;
@@ -717,7 +796,7 @@ void CObjHero::Draw()
 		Draw::Draw(18, &src, &dst, c, 0.0f);
 
 	}
-	else if (over_flag == false && hero_stop_f == true && jump_f==false &&(climb_flag == false || m_hit_down == true))//待機時が働いている場合
+	else if (over_flag == false && hero_stop_f == true && jump_f==false && stone_push_f==false (climb_flag == false || m_hit_down == true))//待機時が働いている場合
 	{
 		src.m_top = 0.0f;
 		src.m_left = 5.0f + m_ani_frame * 253;
@@ -755,6 +834,25 @@ void CObjHero::Draw()
 		}
 		Draw::Draw(32, &src, &dst, c, 0.0f);
 		}
+	else if (over_flag == false && jump_f == false && stone_push_f == true)
+	{
+		src.m_top = 0.0f;
+		src.m_left = 5.0f + m_ani_frame * 253;
+		src.m_right = 257.0f + m_ani_frame * 253;
+		src.m_bottom = 431.0f;
+		if (m_posture == 0)
+		{
+			dst.m_left = m_px + 20.0f;
+			dst.m_right = dst.m_left + 54.0f;
+		}
+		else
+		{
+			dst.m_left = m_px + 54.0f + 20.0f;
+			dst.m_right = m_px + 20.0f;
+		}
+		//描画
+		Draw::Draw(33, &src, &dst, c, 0.0f);
+	}
 	//実験　岩を押しているときのアニメーション描画
 	//src.m_top	= 1.0f;
 	//src.m_left	= 1.0f + AniData[m_ani_frame] * 260;
@@ -916,12 +1014,12 @@ void CObjHero::EnemyHit(int m_enemynum)
 					{
 						//ジャンプしてる場合は下記の影響を出ないようにする
 					}
-					else
+					else if(m_enemynum==6)
 					{
 						//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 						//また、地面に当たってる判定にする
-						//m_vy = 0.0f;
-						//m_hit_down = true;
+						m_vy = 0.0f;
+						m_hit_down = true;
 					}
 				}
 			}
