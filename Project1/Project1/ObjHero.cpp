@@ -568,7 +568,19 @@ void CObjHero::Action()
 		}
 		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true)
 		{
-			m_vx /= 2;
+			if (Stone->GetlockflagR() == true)
+				if (m_vx < 0)
+				{
+					m_vx = 0;
+					m_px += 5.5;
+				}
+				else if (Stone->GetlockflagL() == true)
+					if (m_vx > 0)
+					{
+						m_vx = 0;
+						m_px -= 5.5;
+					}
+						m_vx /= 2;
 		}
 			//else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
 		//	((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||

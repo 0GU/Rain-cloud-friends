@@ -21,6 +21,8 @@ public:
 	float GetPY() { return m_py; };
 	bool Gethr() { return m_hit_right; };
 	bool Getflag() { return hit_flag; };
+	bool GetlockflagL() { return lock_flag_l; };
+	bool GetlockflagR() { return lock_flag_r; };
 	//block‚Æ‚ÌÕ“Ëó‘ÔŠm”F—p
 	bool m_hit_up;
 	bool m_hit_down;
@@ -35,4 +37,7 @@ public:
 private:
 	bool stay_flag;
 	bool hit_flag;
+
+	bool lock_flag_r;
+	bool lock_flag_l;
 };
