@@ -657,7 +657,7 @@ void CObjHero::Action()
 					m_vx = 0;
 					m_px += 5.5;
 				}
-				else if (Stone->GetlockflagL() == true)
+				if (Stone->GetlockflagL() == true)
 					if (m_vx > 0)
 					{
 						m_vx = 0;
