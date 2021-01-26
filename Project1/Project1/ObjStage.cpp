@@ -25,6 +25,9 @@ void CObjStage::Init()
 	m_y1 = 0.0f;
 	black_scroll = false;
 	stay_flag = false;
+
+	m_x1 = 0.0f;
+	m_x2 = 800.0f;
 }
 
 //アクション
@@ -43,6 +46,8 @@ void CObjStage::Action()
 				m_y1 = 800.0f;
 			}
 		}
+
+
 		//主人公の位置を取得
 		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
 		float hx = hero->GetX();
@@ -152,10 +157,10 @@ void CObjStage::Draw()
 	src.m_right = 1280.0f;
 	src.m_bottom = 720.0f;
 
-	dst.m_top = ZERO_G;
-	dst.m_left = ZERO_G;
-	dst.m_right = HD_RIGIT;
-	dst.m_bottom = HD_BUTTOM;
+	dst.m_top = 0.0f;
+	dst.m_left = 0.0f;
+	dst.m_right = 1280.0f;
+	dst.m_bottom = 720.0f;
 	if (stage_num == 1)
 		Draw::Draw(22, &src, &dst, c, 0.0f);
 	if(stage_num==2)

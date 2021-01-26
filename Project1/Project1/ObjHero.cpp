@@ -35,7 +35,7 @@ void CObjHero::Init()
 	m_ani_frame = 1;		//静止フレームを初期にする
 
 	m_speed_power = 0.5f;//通常速度
-	m_ani_max_time = 3;  //アニメーション間隔幅
+	m_ani_max_time = 16;  //アニメーション間隔幅
 
 	m_enemynum = 0;	//接触物の種類判別用
 	//blockとの衝突状態確認用
@@ -238,7 +238,7 @@ void CObjHero::Action()
 
 					}
 						
-					m_ani_max_time = 4.0f;
+					m_ani_max_time = 8.0f;
 				}
 				else
 				{
@@ -254,7 +254,7 @@ void CObjHero::Action()
 						hero_stop_f = false;//主人公が動いています！
 						m_con_x = -0.5f;
 					}
-					m_ani_max_time = 4;
+					m_ani_max_time = 10;
 				}
 				if (m_con_x > 0.0f)
 				{
@@ -347,7 +347,7 @@ void CObjHero::Action()
 					if (m_hit_down == false)
 					{
 						jump_f = true;
-						m_ani_max_time = 4;
+						m_ani_max_time = 10;
 					}
 				}
 
@@ -356,13 +356,13 @@ void CObjHero::Action()
 				{
 					//ダッシュ時の速度
 					m_speed_power = 0.8f;
-					m_ani_max_time = 3;
+					m_ani_max_time = 5;
 				}
 				else
 				{
 					//通常速度
 					m_speed_power = 0.5f;
-					m_ani_max_time = 4;
+					m_ani_max_time = 10;
 				}
 
 

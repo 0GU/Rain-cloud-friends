@@ -82,4 +82,7 @@ private:
 	bool black_scroll;
 	bool stay_flag;
 	int stage_num;
+	
+	float m_x1;
+	float m_x2;
 };

@@ -28,6 +28,7 @@ enum OBJ_NAME
 	OBJ_TURTLE,
 	OBJ_SWANP,
 	OBJ_ENDING,
+	OBJ_SIGN,
 };
 //------------------------------------------------
 
@@ -119,6 +120,7 @@ class Enemy
 #include"ObjEnding.h"
 #include"ObjTurtle.h"
 #include"ObjSwanp.h"
+#include"ObjSign.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
