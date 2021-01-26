@@ -9,12 +9,13 @@ using namespace GameL;
 class CObjSign : public CObj
 {
 public:
-	CObjSign() {};
+	CObjSign(float x, float y) ;
 	~CObjSign() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
 	void Draw();	//ドロー
 	float x, y;
 private:
-	int hoge;//仮
+	float m_px;			//位置
+	float m_py;
 };

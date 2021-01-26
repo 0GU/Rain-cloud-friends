@@ -285,6 +285,12 @@ void CObjStage::Draw()
 					Objs::InsertObj(objh, OBJ_STONE, 10);
 					m_map[i][j] = 0;
 				}
+				else if (m_map[i][j] == 90)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
 				else if (m_map[i][j] == 90)//é¿å±ópÅ@Ç Ç©ÇÈÇﬁè∞
 				{
 					CObjSwanp* objsw = new CObjSwanp(j * 64.0f, i * 64.0f);

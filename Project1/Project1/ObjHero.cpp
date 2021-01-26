@@ -35,7 +35,7 @@ void CObjHero::Init()
 	m_ani_frame = 1;		//静止フレームを初期にする
 
 	m_speed_power = 0.5f;//通常速度
-	m_ani_max_time = 16;  //アニメーション間隔幅
+	m_ani_max_time = 3;  //アニメーション間隔幅
 
 	m_enemynum = 0;	//接触物の種類判別用
 	//blockとの衝突状態確認用
@@ -238,7 +238,7 @@ void CObjHero::Action()
 
 					}
 						
-					m_ani_max_time = 8.0f;
+					m_ani_max_time = 4.0f;
 				}
 				else
 				{
@@ -254,7 +254,7 @@ void CObjHero::Action()
 						hero_stop_f = false;//主人公が動いています！
 						m_con_x = -0.5f;
 					}
-					m_ani_max_time = 10;
+					m_ani_max_time = 5;
 				}
 				if (m_con_x > 0.0f)
 				{
@@ -342,12 +342,12 @@ void CObjHero::Action()
 					//	hero_stop_f = false;
 						Audio::Start(2);
 						m_vy = -9;
-						m_ani_max_time = 6;
+						m_ani_max_time = 4;
 					}
 					if (m_hit_down == false)
 					{
 						jump_f = true;
-						m_ani_max_time = 10;
+						m_ani_max_time = 4;
 					}
 				}
 
@@ -651,19 +651,26 @@ void CObjHero::Action()
 		}
 		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true )
 		{
+			stone_push_f = true;
 			if (Stone->GetlockflagR() == true)
 				if (m_vx < 0)
 				{
 					m_vx = 0;
 					m_px += 5.5;
+					m_ani_frame = 0;
 				}
 				else if (Stone->GetlockflagL() == true)
 					if (m_vx > 0)
 					{
 						m_vx = 0;
 						m_px -= 5.5;
+						m_ani_frame = 0;
 					}
 						m_vx /= 2;
+		}
+		else
+		{
+			stone_push_f = false;
 		}
 			//else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
 		//	((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||

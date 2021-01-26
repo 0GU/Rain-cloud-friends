@@ -9,6 +9,11 @@
 #include"GameHead.h"
 #include"ObjSign.h"
 
+CObjSign::CObjSign(float x, float y)
+{
+	m_px = x;			//ˆÊ’u
+	m_py = y;
+}
 void CObjSign::Init()
 {
 
@@ -33,13 +38,16 @@ void CObjSign::Draw()
 	//hoge1
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 0.0f;
-	src.m_bottom = 0.0f;
+	src.m_right = 256.0f;
+	src.m_bottom = 256.0f;
+	//ƒuƒƒbƒNî•ñ‚ðŽ‚Á‚Ä‚­‚é
+	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
-	dst.m_top = 0.0f;
-	dst.m_left = 0.0f;
-	dst.m_right = 0.0f;
-	dst.m_bottom = 0.0f;
-
+	dst.m_top = m_py + block->GetScrollY();						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ð—^‚¦‚é
+	dst.m_left = 64.0f + m_px + block->GetScroll();
+	dst.m_right = 0.0f + m_px + block->GetScroll();
+	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
+	//•`‰æ
+	Draw::Draw(34, &src, &dst, c, 0.0f);
 
 }
