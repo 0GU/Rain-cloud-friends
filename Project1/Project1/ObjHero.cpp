@@ -689,10 +689,7 @@ void CObjHero::Action()
 		{
 			stone_push_f = false;
 		}
-		else
-		{
-			stone_push_f = false;
-		}
+
 			//else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
 		//	((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
 		//		m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
