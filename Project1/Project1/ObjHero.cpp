@@ -647,6 +647,18 @@ void CObjHero::Action()
 		//}
 		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true  && stone_hit == true )
 		{
+			if (Stone->GetlockflagR() == true)
+				if (m_vx < 0)
+				{
+					m_vx = 0;
+					m_px += 5.5;
+				}
+			if (Stone->GetlockflagL() == true)
+				if (m_vx > 0)
+				{
+					m_vx = 0;
+					m_px -= 5.5;
+				}
 			stone_push_f = true;
 			m_vx /= 2;
 		}

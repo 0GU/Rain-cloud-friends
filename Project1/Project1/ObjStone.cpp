@@ -30,6 +30,8 @@ void CObjStone::Init()
 	m_hit_right = false;
 	stay_flag = false;
 	hit_flag = false;
+	lock_flag_r = false;
+	lock_flag_l = false;
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 128, 64, ELEMENT_RED, OBJ_STONE, 1);
 }
@@ -79,11 +81,26 @@ void CObjStone::Action()
 		}
 
 		//ブロックとの当たり判定実行
+
 		block->BlockHitStone(&m_px, &m_py, false,
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
 			&m_vx, &m_vy, &m_block_type
 		);
 	
+		if (m_hit_left==true)
+		{
+			lock_flag_l= true;
+		}
+		else if (m_hit_right == true)
+		{
+			lock_flag_r = true;
+		}
+		
+		if (m_hit_up==false)
+		{
+			lock_flag_l = false;
+			lock_flag_r = false;
+		}
 		//実験：沼から抜ける処理
 		if (hit->CheckElementHit(ELEMENT_GREEN) == true)//沼から完全に抜ける
 		{
