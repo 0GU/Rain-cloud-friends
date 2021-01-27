@@ -86,6 +86,9 @@ void CObjHero::Init()
 	hero_stop_f=false;//主人公の待機時アニメーション判別用
 	jump_f = false;//ジャンプ時アニメーション判別用
 	stone_push_f = false;//岩を押してる判別
+
+	stone_lock_r = false;//当たっている岩が右方向に移動不可かを返す
+	stone_lock_l = false;//当たっている岩が左方向に移動不可かを返す
 }
 //アクション
 void CObjHero::Action()
@@ -615,7 +618,8 @@ void CObjHero::Action()
 			}
 		
 
-			if (hit->CheckElementHit(ELEMENT_GREEN) == true)//沼から完全に抜ける
+			if (hit->CheckElementHit(ELEMENT_GREEN) == true|| hit->CheckElementHit(ELEMENT_SWANP) == true||
+				hit->CheckElementHit(ELEMENT_FIELD) == true)//主人公は沼には落ちない（ジャンプは不可）
 			{
 				if (m_hit_down == false)
 				{
@@ -647,13 +651,13 @@ void CObjHero::Action()
 		//}
 		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true  && stone_hit == true )
 		{
-			if (Stone->GetlockflagR() == true)
+			if (stone_lock_r == true)
 				if (m_vx < 0)
 				{
 					m_vx = 0;
 					m_px += 5.5;
 				}
-			if (Stone->GetlockflagL() == true)
+			if (stone_lock_l == true)
 				if (m_vx > 0)
 				{
 					m_vx = 0;
@@ -714,6 +718,7 @@ void CObjHero::Action()
 			m_px += Turtle->GetVx();
 			m_py = Turtle->GetPY() + pb->GetScrollY() - 63;
 			m_vy = 0.0f;
+			m_hit_down = true;
 		}
 
 

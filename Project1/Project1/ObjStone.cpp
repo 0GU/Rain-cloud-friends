@@ -89,17 +89,17 @@ void CObjStone::Action()
 	
 		if (m_hit_left==true)
 		{
-			lock_flag_l= true;
+			hero->SetStlockL(true);
 		}
 		else if (m_hit_right == true)
 		{
-			lock_flag_r = true;
+			hero->SetStlockR(true);
 		}
 		
 		if (m_hit_up==false)
 		{
-			lock_flag_l = false;
-			lock_flag_r = false;
+			hero->SetStlockL(false);
+			hero->SetStlockR(false);
 		}
 		//ÀŒ±FÀ‚©‚ç”²‚¯‚éˆ—
 		if (hit->CheckElementHit(ELEMENT_GREEN) == true)//À‚©‚çŠ®‘S‚É”²‚¯‚é
