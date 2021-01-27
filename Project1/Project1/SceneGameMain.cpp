@@ -119,6 +119,8 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 32, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/押す.png", 33, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/看板.png", 34, TEX_SIZE_256);
+	Draw::LoadImageW(L"素材/画像/テキストボックス.png", 35, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス2.png", 36, TEX_SIZE_1024);
 
 	if(stageselect==1)
 	{

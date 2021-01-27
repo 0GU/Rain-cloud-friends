@@ -730,6 +730,9 @@ void CObjHero::Action()
 			Scene::SetScene(new CSceneOver(reset));
 		}
 	}
+	
+
+	//効果音発生タイミング調整
 	if (Audio_time >= Audio_time_max)
 	{
 		Audio_time = 0.00f;

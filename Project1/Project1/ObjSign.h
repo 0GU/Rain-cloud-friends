@@ -18,4 +18,5 @@ public:
 private:
 	float m_px;			//ˆÊ’u
 	float m_py;
+	bool m_hit_f;//“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
 };
