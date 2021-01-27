@@ -64,13 +64,19 @@ void CObjStone::Action()
 
 		//主人公と当たっている
 		if (hit->CheckObjNameHit(OBJ_HERO) != nullptr && hero->GetX()-block->GetScroll() + 64 > m_px && 
-			hero->GetX() - block->GetScroll() < m_px + 124 && hero->GetY()-block->GetScrollY() == m_py)
+			hero->GetX() - block->GetScroll() < m_px + 124 && fabs(hero->GetY()-block->GetScrollY() - m_py) <=0.2f)
 		{
 			hero->SetSthit(true);
 			m_vx = hero->GetVX() ;
-			
+			if (m_vx >= 0.1f)
+			{
+				m_vx += 0.0f;
+			}
 		}
-	
+		else if(hit->CheckObjNameHit(OBJ_HERO) != nullptr)
+		{
+			hero->SetSthit(false);
+		}
 
 		//ブロックとの当たり判定実行
 		block->BlockHitStone(&m_px, &m_py, false,
@@ -78,7 +84,18 @@ void CObjStone::Action()
 			&m_vx, &m_vy, &m_block_type
 		);
 	
-		
+		//実験：沼から抜ける処理
+		if (hit->CheckElementHit(ELEMENT_GREEN) == true)//沼から完全に抜ける
+		{
+			if (m_hit_down == false)
+			{
+				int py = (int)(m_py / 64) * 64;
+				if (py != m_py)
+					m_py = py+0.01f;
+				m_vy = 0.0f;
+			}
+		}
+
 
 
 		//HitBoxの位置の変更
