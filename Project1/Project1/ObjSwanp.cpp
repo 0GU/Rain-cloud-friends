@@ -56,7 +56,7 @@ void CObjSwanp::Action()
 				m_swanp_flag = false;
 				//HitBoxの属性を　半ぬかるみ状態　へ変更
 				Hits::DeleteHitBox(this);//保有するHitBoxに削除する
-				Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_SWANP, 1);
+				Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_SWANP, OBJ_SWANP, 1);
 			}
 			m_swanp_time--;
 			m_swanp_half = true;

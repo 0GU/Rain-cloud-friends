@@ -86,6 +86,9 @@ void CObjHero::Init()
 	hero_stop_f=false;//主人公の待機時アニメーション判別用
 	jump_f = false;//ジャンプ時アニメーション判別用
 	stone_push_f = false;//岩を押してる判別
+
+	stone_lock_r = false;//当たっている岩が右方向に移動不可かを返す
+	stone_lock_l = false;//当たっている岩が左方向に移動不可かを返す
 }
 //アクション
 void CObjHero::Action()
@@ -578,11 +581,11 @@ void CObjHero::Action()
 				EnemyHit(m_enemynum);
 
 			}
-			if (hit->CheckObjNameHit(OBJ_SWANP) != nullptr)
-			{
-				m_enemynum = 6;
-				EnemyHit(m_enemynum);
-			}
+			//if (hit->CheckObjNameHit(OBJ_SWANP) != nullptr)
+			//{
+			//	m_enemynum = 6;
+			//	EnemyHit(m_enemynum);
+			//}
 			if(m_enemynum==0||m_enemynum==6)//敵に当たっていなかったら再度SEなるようにする
 			{
 				damageSE_flag = false;
@@ -614,6 +617,23 @@ void CObjHero::Action()
 				Scene::SetScene(new CSceneClear(m_hp, cloud->m_hp, reset));//HeroのHPと雲からm_hp(雲のＨＰ)とStage情報を持ってくる
 			}
 		
+
+			if (hit->CheckElementHit(ELEMENT_GREEN) == true|| hit->CheckElementHit(ELEMENT_SWANP) == true||
+				hit->CheckElementHit(ELEMENT_FIELD) == true)//主人公は沼には落ちない（ジャンプは不可）
+			{
+				if (m_hit_down == false)
+				{
+					int py = (int)((m_py - pb->GetScrollY()) / 64) * 64;
+					if (py == m_py - pb->GetScrollY())
+						m_py = py + pb->GetScrollY() - 63.9f;
+					else
+						m_py = py + pb->GetScrollY() + 0.01f;
+					m_vy = 0.0f;
+					m_hit_down = true;
+				}
+			}
+
+
 		//-ここから独自の判定------------------------------------------------------------------------------------
 		//石との当たり判定------------------------------------------------------------------------------------------------------------------------------------------
 		CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
@@ -629,44 +649,45 @@ void CObjHero::Action()
 		//	m_vy = 0.0f;
 		//	m_hit_down = true;
 		//}
-		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&m_hit_down==false)
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true  && stone_hit == true )
 		{
-			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
-			//また、地面に当たってる判定にする
-			int py = (int)((m_py - pb->GetScrollY()) / 64) * 64;
-			if (py == m_py)
-			{
-				m_py = py + pb->GetScrollY() - 64;
-			}
-			else
-			{
-				m_py = py + pb->GetScrollY();
-				Audio_f = true;
-			}
-
-				
-			m_vy = 0.0f;
-			m_hit_down = true;
-
-		}
-		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true )
-		{
-			stone_push_f = true;
-			if (Stone->GetlockflagR() == true)
+			if (stone_lock_r == true)
 				if (m_vx < 0)
 				{
 					m_vx = 0;
 					m_px += 5.5;
-					m_ani_frame = 0;
 				}
-				else if (Stone->GetlockflagL() == true)
-					if (m_vx > 0)
-					{
-						m_vx = 0;
-						m_px -= 5.5;
-						m_ani_frame = 0;
-					}
-						m_vx /= 2;
+			if (stone_lock_l == true)
+				if (m_vx > 0)
+				{
+					m_vx = 0;
+					m_px -= 5.5;
+				}
+			stone_push_f = true;
+			m_vx /= 2;
+		}
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == false && stone_hit == false)
+		{
+			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
+			//また、地面に当たってる判定にする
+			int py = (int)((m_py - pb->GetScrollY()) / 64) * 64;
+			if (py == m_py- pb->GetScrollY())
+			{
+				m_py = py + pb->GetScrollY() - 63;
+			}
+			else
+			{
+				m_py = py + pb->GetScrollY()+0.01f;
+				Audio_f = true;
+				m_vy = 0.0f;
+			}
+				
+			m_hit_down = true;
+
+		}
+		else
+		{
+			stone_push_f = false;
 		}
 		else
 		{
@@ -704,7 +725,6 @@ void CObjHero::Action()
 			m_hit_down = true;
 		}
 
-		
 
 			//位置の更新
 			m_px += m_vx;

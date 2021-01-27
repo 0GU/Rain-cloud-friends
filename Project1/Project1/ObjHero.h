@@ -35,6 +35,8 @@ public:
 
 	void SetSthit(bool b) { stone_hit = b; }
 	void SetSthitW(bool b) { stone_wall_hit = b; }
+	void SetStlockR(bool b) { stone_lock_r = b; }
+	void SetStlockL(bool b) { stone_lock_l = b; }
 
 	void EnemyHit(int enemynume);
 	float m_hp;			//体力（仮）
@@ -111,4 +113,7 @@ private:
 	bool hero_stop_f;//主人公の待機時アニメーション判別用
 	bool jump_f;//ジャンプ時アニメーション判別用
 	bool stone_push_f;//岩を押す判別フラグ
+
+	bool stone_lock_r;//当たっている岩が右方向に移動不可かを返す
+	bool stone_lock_l;//当たっている岩が左方向に移動不可かを返す
 };
