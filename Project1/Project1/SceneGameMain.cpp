@@ -160,13 +160,13 @@ void CSceneGameMain::InitScene()
 	Objs::InsertObj(objh, OBJ_HP, 11);
 
 	//実験　亀
-	CObjTurtle* objt = new CObjTurtle(400,600);
+/*	CObjTurtle* objt = new CObjTurtle(400,600);
 	Objs::InsertObj(objt, OBJ_TURTLE, 12);
 
 	//実験　亀
 	CObjTurtle* objt2 = new CObjTurtle(480, 600);
 	Objs::InsertObj(objt2, OBJ_TURTLE, 12);
-
+	*/
 }
 
 //ゲームメイン実行メソッド

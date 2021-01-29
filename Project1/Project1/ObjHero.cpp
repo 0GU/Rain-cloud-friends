@@ -20,8 +20,8 @@ CObjHero::CObjHero(int stage)
 //イニシャライズ
 void CObjHero::Init()
 {
-	m_px = 70.0f;			//位置
-	m_py = 900.0f;
+	m_px = 150.0f;			//位置
+	m_py = 000.0f;
 	m_vx = 0.0f;			//移動ベクトル
 	m_vy = 0.0f;
 	m_posture = 1.0f;		//右向き0.0f  左向き1.0f

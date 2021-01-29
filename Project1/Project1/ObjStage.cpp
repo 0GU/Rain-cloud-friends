@@ -90,15 +90,16 @@ void CObjStage::Action()
 	//後方スクロールライン
 	if (hx < 200)
 	{
+		mx_scroll -= hx - 200;
 		hero->SetX(200);				//主人公はラインを超えないようにする
-		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
+		//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
 	//前方スクロールライン
-	if (hx > 400)
+	if (hx > 600)
 	{
-		mx_scroll -= hx-400;	//実験　乗った状態で動けるようにするため
-		hero->SetX(400);			//主人公はラインを超えないようにする
+		mx_scroll -= hx-600;	//実験　乗った状態で動けるようにするため
+		hero->SetX(600);			//主人公はラインを超えないようにする
 		//mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -110,9 +111,9 @@ void CObjStage::Action()
 	}
 
 	//下方スクロールライン
-	if (hy > 436)
+	if (hy > 400)
 	{
-		hero->SetY(436);			//主人公はラインを超えないようにする
+		hero->SetY(400);			//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
