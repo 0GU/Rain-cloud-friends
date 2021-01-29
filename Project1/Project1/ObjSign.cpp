@@ -11,10 +11,11 @@
 #include"ObjSign.h"
 #include "GameL/DrawFont.h"
 
-CObjSign::CObjSign(float x, float y)
+CObjSign::CObjSign(float x, float y,int i)
 {
 	m_px = x;			//ˆÊ’u
 	m_py = y;
+	sign_num = i;
 }
 void CObjSign::Init()
 {
@@ -80,6 +81,6 @@ void CObjSign::Draw()
 		dst.m_left =50.0f;
 		dst.m_right = 550.0f;
 		dst.m_bottom = 425.0f;
-		Draw::Draw(35, &src, &dst, c, 0.0f);
+		Draw::Draw(35+sign_num, &src, &dst, c, 0.0f);
 	}
 }
