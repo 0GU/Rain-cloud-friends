@@ -87,7 +87,7 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(25, L"素材/SE/移動音.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(26, L"素材/SE/雲移動音.wav", SOUND_TYPE::EFFECT);
 	//画像情報を登録
-	Draw::LoadImageW(L"素材/画像/testtt.png", 0, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/testtt.png", 0, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/仮/mapcip.png", 1, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/Animation.png", 2, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/ポーズ.png", 3, TEX_SIZE_1024);
@@ -121,6 +121,14 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/看板.png", 34, TEX_SIZE_256);
 	Draw::LoadImageW(L"素材/画像/テキストボックス.png", 35, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/テキストボックス2.png", 36, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス3.png", 37, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス4.png", 38, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス5.png", 39, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス6.png", 40, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス7.png", 41, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス8.png", 42, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス9.png", 43, TEX_SIZE_1024);
+
 
 	if(stageselect==1)
 	{

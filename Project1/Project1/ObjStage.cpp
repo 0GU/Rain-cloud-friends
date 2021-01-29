@@ -288,7 +288,61 @@ void CObjStage::Draw()
 				}
 				else if (m_map[i][j] == 80)
 				{
-				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f);
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f,m_map[i][j]-80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 81)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 82)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 83)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 84)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 85)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 86)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 87)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 88)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 89)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
 				Objs::InsertObj(objs, OBJ_SIGN, 10);
 				m_map[i][j] = 0;
 				}
