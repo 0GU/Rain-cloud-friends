@@ -43,19 +43,19 @@ void CObjClear::Action()
 	//if(CObjStage)
 	//クリア状態の管理
 
-	if (hero_hp >= 0.75f && cloud_hp >= 0.75f)//主人公と雲の体力が一定以上の場合
+	if (hero_hp >= 0.5f && cloud_hp >= 0.5f)//主人公と雲の体力が一定以上の場合
 	{
 		Clear_flag[0] = true;
 		Clear_flag[1] = true;
 		Clear_flag[2] = true;
 	}
-    if (hero_hp >= 0.75f || cloud_hp >= 0.75f)//主人公か雲の体力のどちらかが一定の場合
+    if (hero_hp >= 0.5f || cloud_hp >= 0.5f)//主人公か雲の体力のどちらかが一定の場合
 	{
 		Clear_flag[1] = true;
 		Clear_flag[2] = true;
 	}
 
-	if(hero_hp <= 0.75f || cloud_hp <= 0.75f) //どちらも一定以下の場合
+	if(hero_hp <= 0.5f || cloud_hp <= 0.5f) //どちらも一定以下の場合
 	{
 		Clear_flag[2] = true;
 	}

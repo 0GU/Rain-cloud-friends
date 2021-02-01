@@ -48,6 +48,7 @@
     <ClInclude Include="ObjRain.h" />
     <ClInclude Include="ObjRestart.h" />
     <ClInclude Include="ObjRushEnemy.h" />
+    <ClInclude Include="ObjSand.h" />
     <ClInclude Include="ObjSign.h" />
     <ClInclude Include="ObjStage.h" />
     <ClInclude Include="ObjStageSelect.h" />
@@ -110,6 +111,7 @@
     <ClCompile Include="ObjRain.cpp" />
     <ClCompile Include="ObjRestart.cpp" />
     <ClCompile Include="ObjRushEnemy.cpp" />
+    <ClCompile Include="ObjSand.cpp" />
     <ClCompile Include="ObjSign.cpp" />
     <ClCompile Include="ObjStage.cpp" />
     <ClCompile Include="ObjStageSelect.cpp" />

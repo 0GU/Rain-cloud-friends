@@ -111,9 +111,6 @@
     <ClInclude Include="SceneTitle.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ObjRestart.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ObjGrowPlant.h">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClInclude>
@@ -172,6 +169,12 @@
       <Filter>ソース ファイル\ギミック</Filter>
     </ClInclude>
     <ClInclude Include="ObjSign.h">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjRestart.h">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjSand.h">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClInclude>
   </ItemGroup>
@@ -248,9 +251,6 @@
     <ClCompile Include="SceneTitle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ObjRestart.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ObjGrowPlant.cpp">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
@@ -309,6 +309,12 @@
       <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
     <ClCompile Include="ObjSign.cpp">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjRestart.cpp">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjSand.cpp">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
   </ItemGroup>

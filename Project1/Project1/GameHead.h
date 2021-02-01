@@ -122,6 +122,7 @@ class Enemy
 #include"ObjTurtle.h"
 #include"ObjSwanp.h"
 #include"ObjSign.h"
+#include"ObjSand.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
