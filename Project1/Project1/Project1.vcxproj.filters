@@ -171,6 +171,9 @@
     <ClInclude Include="ObjSwanp.h">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClInclude>
+    <ClInclude Include="ObjSign.h">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -303,6 +306,9 @@
       <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
     <ClCompile Include="ObjSwanp.cpp">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjSign.cpp">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
   </ItemGroup>

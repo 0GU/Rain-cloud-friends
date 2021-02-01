@@ -143,7 +143,7 @@ void CObjTurtle::Action()
 				m_vy = 0.0f;
 			}
 		}
-		else if (hit->CheckElementHit(ELEMENT_RED) == true)//”¼•ª‚¾‚¯”²‚¯‚é
+		else if (hit->CheckElementHit(ELEMENT_SWANP) == true)//”¼•ª‚¾‚¯”²‚¯‚é
 		{
 			int py = (int)(m_py / 64) * 64;
 			if (py + 32 == m_py)//”¼•ª‚¾‚¯‚Ê‚¯‚Ä‚¢‚éó‘Ô

@@ -87,7 +87,7 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(25, L"素材/SE/移動音.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(26, L"素材/SE/雲移動音.wav", SOUND_TYPE::EFFECT);
 	//画像情報を登録
-	Draw::LoadImageW(L"素材/画像/testtt.png", 0, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/testtt.png", 0, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/仮/mapcip.png", 1, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/Animation.png", 2, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/ポーズ.png", 3, TEX_SIZE_1024);
@@ -118,6 +118,17 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/待機修正.png", 31, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 32, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/押す.png", 33, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/看板.png", 34, TEX_SIZE_256);
+	Draw::LoadImageW(L"素材/画像/テキストボックス.png", 35, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス2.png", 36, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス3.png", 37, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス4.png", 38, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス5.png", 39, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス6.png", 40, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス7.png", 41, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス8.png", 42, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス9.png", 43, TEX_SIZE_1024);
+
 
 	if(stageselect==1)
 	{
@@ -157,13 +168,13 @@ void CSceneGameMain::InitScene()
 	Objs::InsertObj(objh, OBJ_HP, 11);
 
 	//実験　亀
-	CObjTurtle* objt = new CObjTurtle(400,600);
+/*	CObjTurtle* objt = new CObjTurtle(400,600);
 	Objs::InsertObj(objt, OBJ_TURTLE, 12);
 
 	//実験　亀
 	CObjTurtle* objt2 = new CObjTurtle(480, 600);
 	Objs::InsertObj(objt2, OBJ_TURTLE, 12);
-
+	*/
 }
 
 //ゲームメイン実行メソッド

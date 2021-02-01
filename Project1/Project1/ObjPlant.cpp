@@ -28,7 +28,7 @@ void CObjPlant::Init()
 	HP = 1;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_RED, OBJ_PLANT, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 32, ELEMENT_RED, OBJ_PLANT, 1);
 }
 
 //アクション
@@ -45,7 +45,7 @@ void CObjPlant::Action()
 
 		//HitBoxの位置の変更
 		CHitBox* hit = Hits::GetHitBox(this);
-		hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
+		hit->SetPos(m_px + block->GetScroll(), (m_py+32) + block->GetScrollY());
 
 		if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)	//雨が当たるとHP減少
 		{

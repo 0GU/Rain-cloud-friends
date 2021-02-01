@@ -25,6 +25,9 @@ void CObjStage::Init()
 	m_y1 = 0.0f;
 	black_scroll = false;
 	stay_flag = false;
+
+	m_x1 = 0.0f;
+	m_x2 = 800.0f;
 }
 
 //アクション
@@ -43,6 +46,8 @@ void CObjStage::Action()
 				m_y1 = 800.0f;
 			}
 		}
+
+
 		//主人公の位置を取得
 		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
 		float hx = hero->GetX();
@@ -85,15 +90,16 @@ void CObjStage::Action()
 	//後方スクロールライン
 	if (hx < 200)
 	{
+		mx_scroll -= hx - 200;
 		hero->SetX(200);				//主人公はラインを超えないようにする
-		mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
+		//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
 	//前方スクロールライン
-	if (hx > 400)
+	if (hx > 600)
 	{
-		mx_scroll -= hx-400;	//実験　乗った状態で動けるようにするため
-		hero->SetX(400);			//主人公はラインを超えないようにする
+		mx_scroll -= hx-600;	//実験　乗った状態で動けるようにするため
+		hero->SetX(600);			//主人公はラインを超えないようにする
 		//mx_scroll -= hero->GetVX();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -105,9 +111,9 @@ void CObjStage::Action()
 	}
 
 	//下方スクロールライン
-	if (hy > 436)
+	if (hy > 400)
 	{
-		hero->SetY(436);			//主人公はラインを超えないようにする
+		hero->SetY(400);			//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
 	}
 
@@ -152,10 +158,10 @@ void CObjStage::Draw()
 	src.m_right = 1280.0f;
 	src.m_bottom = 720.0f;
 
-	dst.m_top = ZERO_G;
-	dst.m_left = ZERO_G;
-	dst.m_right = HD_RIGIT;
-	dst.m_bottom = HD_BUTTOM;
+	dst.m_top = 0.0f;
+	dst.m_left = 0.0f;
+	dst.m_right = 1280.0f;
+	dst.m_bottom = 720.0f;
 	if (stage_num == 1)
 		Draw::Draw(22, &src, &dst, c, 0.0f);
 	if(stage_num==2)
@@ -279,6 +285,66 @@ void CObjStage::Draw()
 					CObjStone* objh = new CObjStone(j * 64.0f, i * 64.0f);
 					Objs::InsertObj(objh, OBJ_STONE, 10);
 					m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 80)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f,m_map[i][j]-80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 81)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 82)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 83)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 84)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 85)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 86)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 87)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 88)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
+				}
+				else if (m_map[i][j] == 89)
+				{
+				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+				Objs::InsertObj(objs, OBJ_SIGN, 10);
+				m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 90)//実験用　ぬかるむ床
 				{

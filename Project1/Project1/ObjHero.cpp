@@ -20,8 +20,8 @@ CObjHero::CObjHero(int stage)
 //イニシャライズ
 void CObjHero::Init()
 {
-	m_px = 70.0f;			//位置
-	m_py = 900.0f;
+	m_px = 150.0f;			//位置
+	m_py = 000.0f;
 	m_vx = 0.0f;			//移動ベクトル
 	m_vy = 0.0f;
 	m_posture = 1.0f;		//右向き0.0f  左向き1.0f
@@ -86,6 +86,9 @@ void CObjHero::Init()
 	hero_stop_f=false;//主人公の待機時アニメーション判別用
 	jump_f = false;//ジャンプ時アニメーション判別用
 	stone_push_f = false;//岩を押してる判別
+
+	stone_lock_r = false;//当たっている岩が右方向に移動不可かを返す
+	stone_lock_l = false;//当たっている岩が左方向に移動不可かを返す
 }
 //アクション
 void CObjHero::Action()
@@ -254,7 +257,7 @@ void CObjHero::Action()
 						hero_stop_f = false;//主人公が動いています！
 						m_con_x = -0.5f;
 					}
-					m_ani_max_time = 4;
+					m_ani_max_time = 5;
 				}
 				if (m_con_x > 0.0f)
 				{
@@ -342,7 +345,7 @@ void CObjHero::Action()
 					//	hero_stop_f = false;
 						Audio::Start(2);
 						m_vy = -9;
-						m_ani_max_time = 6;
+						m_ani_max_time = 4;
 					}
 					if (m_hit_down == false)
 					{
@@ -356,13 +359,13 @@ void CObjHero::Action()
 				{
 					//ダッシュ時の速度
 					m_speed_power = 0.8f;
-					m_ani_max_time = 3;
+					m_ani_max_time = 5;
 				}
 				else
 				{
 					//通常速度
 					m_speed_power = 0.5f;
-					m_ani_max_time = 4;
+					m_ani_max_time = 10;
 				}
 
 
@@ -578,11 +581,11 @@ void CObjHero::Action()
 				EnemyHit(m_enemynum);
 
 			}
-			if (hit->CheckObjNameHit(OBJ_SWANP) != nullptr)
-			{
-				m_enemynum = 6;
-				EnemyHit(m_enemynum);
-			}
+			//if (hit->CheckObjNameHit(OBJ_SWANP) != nullptr)
+			//{
+			//	m_enemynum = 6;
+			//	EnemyHit(m_enemynum);
+			//}
 			if(m_enemynum==0||m_enemynum==6)//敵に当たっていなかったら再度SEなるようにする
 			{
 				damageSE_flag = false;
@@ -614,6 +617,23 @@ void CObjHero::Action()
 				Scene::SetScene(new CSceneClear(m_hp, cloud->m_hp, reset));//HeroのHPと雲からm_hp(雲のＨＰ)とStage情報を持ってくる
 			}
 		
+
+			if (hit->CheckElementHit(ELEMENT_GREEN) == true|| hit->CheckElementHit(ELEMENT_SWANP) == true||
+				hit->CheckElementHit(ELEMENT_FIELD) == true)//主人公は沼には落ちない（ジャンプは不可）
+			{
+				if (m_hit_down == false)
+				{
+					int py = (int)((m_py - pb->GetScrollY()) / 64) * 64;
+					if (py == m_py - pb->GetScrollY())
+						m_py = py + pb->GetScrollY() - 63.9f;
+					else
+						m_py = py + pb->GetScrollY() + 0.01f;
+					m_vy = 0.0f;
+					m_hit_down = true;
+				}
+			}
+
+
 		//-ここから独自の判定------------------------------------------------------------------------------------
 		//石との当たり判定------------------------------------------------------------------------------------------------------------------------------------------
 		CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
@@ -629,42 +649,47 @@ void CObjHero::Action()
 		//	m_vy = 0.0f;
 		//	m_hit_down = true;
 		//}
-		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&m_hit_down==false)
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true  && stone_hit == true )
 		{
-			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
-			//また、地面に当たってる判定にする
-			int py = (int)((m_py - pb->GetScrollY()) / 64) * 64;
-			if (py == m_py)
-			{
-				m_py = py + pb->GetScrollY() - 64;
-			}
-			else
-			{
-				m_py = py + pb->GetScrollY();
-				Audio_f = true;
-			}
-
-				
-			m_vy = 0.0f;
-			m_hit_down = true;
-
-		}
-		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true )
-		{
-			if (Stone->GetlockflagR() == true)
+			if (stone_lock_r == true)
 				if (m_vx < 0)
 				{
 					m_vx = 0;
 					m_px += 5.5;
 				}
-				if (Stone->GetlockflagL() == true)
-					if (m_vx > 0)
-					{
-						m_vx = 0;
-						m_px -= 5.5;
-					}
-						m_vx /= 2;
+			if (stone_lock_l == true)
+				if (m_vx > 0)
+				{
+					m_vx = 0;
+					m_px -= 5.5;
+				}
+			stone_push_f = true;
+			m_vx /= 2;
 		}
+		else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == false && stone_hit == false)
+		{
+			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
+			//また、地面に当たってる判定にする
+			int py = (int)((m_py - pb->GetScrollY()) / 64) * 64;
+			if (py == m_py- pb->GetScrollY())
+			{
+				m_py = py + pb->GetScrollY() - 63;
+			}
+			else
+			{
+				m_py = py + pb->GetScrollY()+0.01f;
+				Audio_f = true;
+				m_vy = 0.0f;
+			}
+				
+			m_hit_down = true;
+
+		}
+		else
+		{
+			stone_push_f = false;
+		}
+
 			//else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr &&
 		//	((m_posture == 1 && Stone->GetPX_L() < m_px + 64 - block->GetScroll() && Stone->GetPX_R() > m_px + 64 - block->GetScroll()) ||
 		//		m_posture == 0 && Stone->GetPX_R() > m_px - block->GetScroll() && Stone->GetPX_L() < m_px - block->GetScroll()))
@@ -697,7 +722,6 @@ void CObjHero::Action()
 			m_hit_down = true;
 		}
 
-		
 
 			//位置の更新
 			m_px += m_vx;
@@ -723,6 +747,9 @@ void CObjHero::Action()
 			Scene::SetScene(new CSceneOver(reset));
 		}
 	}
+	
+
+	//効果音発生タイミング調整
 	if (Audio_time >= Audio_time_max)
 	{
 		Audio_time = 0.00f;

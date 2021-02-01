@@ -28,6 +28,7 @@ enum OBJ_NAME
 	OBJ_TURTLE,
 	OBJ_SWANP,
 	OBJ_ENDING,
+	OBJ_SIGN,
 };
 //------------------------------------------------
 
@@ -51,6 +52,7 @@ enum HIT_ELEMENTS
 	ELEMENT_IVY,
 	ELEMENT_FLOWER,
 	ELEMENT_STONE,
+	ELEMENT_SWANP,
 };
 //------------------------------------------------h
 
@@ -119,6 +121,7 @@ class Enemy
 #include"ObjEnding.h"
 #include"ObjTurtle.h"
 #include"ObjSwanp.h"
+#include"ObjSign.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
