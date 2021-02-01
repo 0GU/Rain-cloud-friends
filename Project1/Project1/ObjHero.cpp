@@ -20,8 +20,8 @@ CObjHero::CObjHero(int stage)
 //イニシャライズ
 void CObjHero::Init()
 {
-	m_px = 70.0f;			//位置
-	m_py = 900.0f;
+	m_px = 150.0f;			//位置
+	m_py = 000.0f;
 	m_vx = 0.0f;			//移動ベクトル
 	m_vy = 0.0f;
 	m_posture = 1.0f;		//右向き0.0f  左向き1.0f
@@ -1128,3 +1128,54 @@ int CObjHero::GetHitDown()
 	else
 		return 0;
 }
+
+
+//CObjStone* Stone = (CObjStone*)Objs::GetObj(OBJ_STONE);
+//if (m_vy < -1.0f)
+//{
+//	//ジャンプしてる場合は下記の影響を出ないようにする
+//}
+////else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr&&Stone->GetPY() <= m_py + 64 - block->GetScrollY() && Stone->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
+////{
+////	//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
+////	//また、地面に当たってる判定にする
+////	m_py = Stone->GetPY() + pb->GetScrollY() - 63;
+////	m_vy = 0.0f;
+////	m_hit_down = true;
+////}
+//else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == false)
+//{
+//	//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
+//	//また、地面に当たってる判定にする
+//	int py = (int)((m_py - pb->GetScrollY()) / 64) * 64;
+//	if (py == m_py)
+//	{
+//		m_py = py + pb->GetScrollY() - 64;
+//	}
+//	else
+//	{
+//		m_py = py + pb->GetScrollY();
+//		Audio_f = true;
+//	}
+//
+//
+//	m_vy = 0.0f;
+//	m_hit_down = true;
+//
+//}
+//else if (hit->CheckObjNameHit(OBJ_STONE) != nullptr && m_hit_down == true)
+//{
+//	if (Stone->GetlockflagR() == true)
+//		if (m_vx < 0)
+//		{
+//			m_vx = 0;
+//			m_px += 5.5;
+//		}
+//	if (Stone->GetlockflagL() == true)
+//		if (m_vx > 0)
+//		{
+//			m_vx = 0;
+//			m_px -= 5.5;
+//		}
+//	m_vx /= 2;
+//}
