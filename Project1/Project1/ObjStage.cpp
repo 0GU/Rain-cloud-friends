@@ -28,6 +28,9 @@ void CObjStage::Init()
 
 	m_x1 = 0.0f;
 	m_x2 = 800.0f;
+
+	d_num1 = 0;
+	d_num2=0;
 }
 
 //アクション
@@ -286,6 +289,24 @@ void CObjStage::Draw()
 					Objs::InsertObj(objh, OBJ_STONE, 10);
 					m_map[i][j] = 0;
 				}
+
+				//50-59　ドアオブジェクト用
+				else if (m_map[i][j] == 50)
+				{
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f,0,d_num1);
+				Objs::InsertObj(objd, OBJ_DOOR, 10);
+				m_map[i][j] = 0;
+				d_num1++;
+				}
+
+				else if (m_map[i][j] == 51)
+				{
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f, 1, d_num2);
+				Objs::InsertObj(objd, OBJ_DOOR, 10);
+				m_map[i][j] = 0;
+				d_num2++;
+				}
+
 				else if (m_map[i][j] == 80)
 				{
 				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f,m_map[i][j]-80);
