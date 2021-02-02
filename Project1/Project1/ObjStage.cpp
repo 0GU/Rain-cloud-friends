@@ -294,8 +294,6 @@ void CObjStage::Draw()
 						CObjSand* objsand = new CObjSand(j * 64.0f, i * 64.0f);
 						Objs::InsertObj(objsand, OBJ_SAND, 10);
 					}
-
-
 				}
 				else if (m_map[i][j] == 80)
 				{
