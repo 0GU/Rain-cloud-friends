@@ -24,5 +24,6 @@ public:
 private:
 	int hoge;//仮
 	bool m_hit_rain;//雨に当たったか当たっていないか
+	float m_fade_num;//徐々にフェードアウトする値を入れる
 };
 

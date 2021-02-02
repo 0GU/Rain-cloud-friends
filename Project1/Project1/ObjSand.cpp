@@ -20,6 +20,7 @@ void CObjSand::Init()
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_GREEN, OBJ_SAND, 1);
 	m_hit_rain = false;//雨に当たていない
+	m_fade_num = 1.0f;
 }
 
 //アクション
@@ -37,25 +38,28 @@ void CObjSand::Action()
 	//実験　雨に当たると動作停止
 	if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
 	{
-		this->SetStatus(false);
-		Hits::DeleteHitBox(this);
-		block->DeleteSand(m_py / 64.0f, m_px / 64.0f);
-		//m_hit_rain = true;
+		
+		m_hit_rain = true;
 	}
 	//逃走　徐々に透明化
-/*	if (m_hit_rain == true)
+	if (m_hit_rain == true)
 	{
-		m_transparent += 0.01;
-	}*/
+		m_fade_num -= 0.05;
+	}
+	if (m_fade_num <= 0.0f)
+	{
+		this->SetStatus(false);
+		Hits::DeleteHitBox(this);
+		block->DeleteSand(m_py / 64.0f, m_px / 64.0f);//プレイヤーの座標をブロック分(64px)で割ったブロックを削除
+	}
 }
 
 //ドロー
 void CObjSand::Draw()
 {
 	//描画カラー情報
-	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
-	/*if (c[3] <= 0.0f)
-		m_escaoe_flag = true;*/
+	float	c[4] = { 1.0f,1.0f,1.0f,m_fade_num };//
+
 
 	RECT_F src; //描画元切り取り位置の設定
 	RECT_F dst; //描画先表示位置

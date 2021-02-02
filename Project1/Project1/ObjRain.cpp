@@ -44,7 +44,7 @@ void CObjRain::Action()
 	}
 	if (hit->CheckObjNameHit(OBJ_FIRE) != nullptr || hit->CheckObjNameHit(OBJ_PLANT) != nullptr ||
 		hit->CheckObjNameHit(OBJ_SWANP) != nullptr || hit->CheckElementHit(ELEMENT_ENEMY) != false ||
-		hit->CheckObjNameHit(OBJ_STONE) != nullptr)//該当オブジェクトに当たると削除
+		hit->CheckObjNameHit(OBJ_STONE) != nullptr || hit->CheckObjNameHit(OBJ_SAND) != nullptr)//該当オブジェクトに当たると削除
 	{
 		this->SetStatus(false);//自身に削除命令を出す
 		Hits::DeleteHitBox(this);//保有するHitBoxに削除する
