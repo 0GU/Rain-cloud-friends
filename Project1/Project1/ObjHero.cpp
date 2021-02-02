@@ -745,39 +745,75 @@ void CObjHero::Action()
 				}
 				else//一番後ろの場合　
 				{
-					if (m_px < 0)//主人公を0以下にしない
+					if (m_px < 0)//主人公をステージ外に出さない
 						m_px = 0;
-					pb->SetScroll(0);//スクロールを0以下にしない
+					pb->SetScroll(0);//ステージ端以上にスクロールしない
 				}
 			}
 
 			//前方スクロールライン
 			else if (m_px > 400 && m_vx > 0.0f)
 			{
-				if (m_px - m_vx > 400)
+				if (pb->GetScroll() > -5054)//ステージの一番端ではない
 				{
-					m_px -= m_vx / 0.5;		//スクロールを加速させる分移動量を減らす
-					pb->SetScroll(pb->GetScroll() - (m_vx * 2));//通常よりスクロールを加速する
+					if (m_px - m_vx > 400)
+					{
+						m_px -= m_vx / 0.5;		//スクロールを加速させる分移動量を減らす
+						pb->SetScroll(pb->GetScroll() - (m_vx * 2));//通常よりスクロールを加速する
+					}
+					else if (m_px - m_vx <= 400)
+					{
+						m_px = 400;				//主人公はラインを超えないようにする
+						pb->SetScroll(pb->GetScroll() - m_vx);
+					}
 				}
-				else if (m_px - m_vx <= 400)
+				else
 				{
-					m_px = 400;				//主人公はラインを超えないようにする
-					pb->SetScroll(pb->GetScroll() - m_vx);
+					if (m_px >1216)//主人公をステージ外に出さない
+						m_px = 1216;
+					pb->SetScroll(-5054);//ステージ端以上にスクロールしない
+
 				}
 			}
 
+			//ジャンプ中に一定以上の高さになると上方スクロール
+			//一定ラインより上で横移動すると主人公の位置が一定になる、または限界値まで上方スクロール
+			//y軸中央あたりより下に移動する場合は、主人公がy軸中央を維持するように下方向へスクロール、限界の場合はしない
+			//
+
 			//上方スクロールライン
-			if (m_py < 256)
+			if (m_py < 200 && pb->GetScrollY() < 0 && m_vy < 0.0f)
 			{
-				m_py = 256;				//主人公はラインを超えないようにする
+				m_py = 200;				//主人公はラインを超えないようにする
 				pb->SetScrollY(pb->GetScrollY() - m_vy);	//主人公が本来動くべき分の値をm_scrollに加える
+				if (pb->GetScrollY() > 0)//スクロールによって限界値を超えた場合、主人公のみ移動、スクロール固定
+				{
+					m_py -= pb->GetScrollY();
+					pb->SetScrollY(0);
+				}
+			}
+			//一定ライン以上で横移動したらスクロールを上にあげる
+			else if (m_py < 350 && pb->GetScrollY() < 0 && fabs(m_vx) >= 0.3f&&m_vy==0.0f)
+			{
+				m_py += 2.0f;
+				pb->SetScrollY(pb->GetScrollY() + 2.0f);
+				if (pb->GetScrollY() > 0)
+				{
+					m_py -= pb->GetScrollY();
+					pb->SetScrollY(0);
+				}
 			}
 
 			//下方スクロールライン
-			else if (m_py > 436)
+			else if (m_py > 360&&pb->GetScrollY()>-560)
 			{
-				m_py = 436;			//主人公はラインを超えないようにする
+				m_py = 360;			//主人公はラインを超えないようにする
 				pb->SetScrollY(pb->GetScrollY() - m_vy);	//主人公が本来動くべき分の値をm_scrollに加える
+				if (pb->GetScrollY() <= -560)//スクロールによって限界値を超えた場合、主人公のみ移動、スクロール固定
+				{
+					m_py -= (pb->GetScrollY() + 560);
+					pb->SetScrollY(-560);
+				}
 			}
 
 			//HitBoxの位置の変更
