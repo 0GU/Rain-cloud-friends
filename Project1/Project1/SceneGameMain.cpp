@@ -119,15 +119,16 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 32, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/押す.png", 33, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/看板.png", 34, TEX_SIZE_256);
-	Draw::LoadImageW(L"素材/画像/テキストボックス.png", 35, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス2.png", 36, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス3.png", 37, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス4.png", 38, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス5.png", 39, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス6.png", 40, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス7.png", 41, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス8.png", 42, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス9.png", 43, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/砂.png", 35, TEX_SIZE_512);
+	Draw::LoadImageW(L"素材/画像/テキストボックス.png", 45, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス2.png", 46, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス3.png", 47, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス4.png", 48, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス5.png", 49, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス6.png", 50, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス7.png", 51, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス8.png", 52, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス9.png", 53, TEX_SIZE_1024);
 
 
 	if(stageselect==1)

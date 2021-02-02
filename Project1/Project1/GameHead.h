@@ -29,6 +29,7 @@ enum OBJ_NAME
 	OBJ_SWANP,
 	OBJ_ENDING,
 	OBJ_SIGN,
+	OBJ_SAND,
 };
 //------------------------------------------------
 

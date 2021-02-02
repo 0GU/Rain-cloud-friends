@@ -81,6 +81,6 @@ void CObjSign::Draw()
 		dst.m_left =50.0f;
 		dst.m_right = 550.0f;
 		dst.m_bottom = 425.0f;
-		Draw::Draw(35+sign_num, &src, &dst, c, 0.0f);
+		Draw::Draw(45+sign_num, &src, &dst, c, 0.0f);
 	}
 }
