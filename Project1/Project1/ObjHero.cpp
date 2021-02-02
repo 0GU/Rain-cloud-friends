@@ -726,6 +726,59 @@ void CObjHero::Action()
 			//位置の更新
 			m_px += m_vx;
 			m_py += m_vy;
+			
+			//後方スクロールライン
+			if (m_px < 800 && m_vx < 0.0f)
+			{
+				if (pb->GetScroll() - m_vx < 0)
+				{
+					if (m_px - m_vx < 800)
+					{
+						m_px -= m_vx / 0.5;		//スクロールを加速させる分移動量を減らす
+						pb->SetScroll(pb->GetScroll() -( m_vx*2));//通常よりスクロールを加速する
+					}
+					else if (m_px - m_vx >= 800)
+					{
+						m_px = 800;				//主人公はラインを超えないようにする
+						pb->SetScroll(pb->GetScroll() - m_vx);
+					}
+				}
+				else//一番後ろの場合　
+				{
+					if (m_px < 0)//主人公を0以下にしない
+						m_px = 0;
+					pb->SetScroll(0);//スクロールを0以下にしない
+				}
+			}
+
+			//前方スクロールライン
+			else if (m_px > 400 && m_vx > 0.0f)
+			{
+				if (m_px - m_vx > 400)
+				{
+					m_px -= m_vx / 0.5;		//スクロールを加速させる分移動量を減らす
+					pb->SetScroll(pb->GetScroll() - (m_vx * 2));//通常よりスクロールを加速する
+				}
+				else if (m_px - m_vx <= 400)
+				{
+					m_px = 400;				//主人公はラインを超えないようにする
+					pb->SetScroll(pb->GetScroll() - m_vx);
+				}
+			}
+
+			//上方スクロールライン
+			if (m_py < 256)
+			{
+				m_py = 256;				//主人公はラインを超えないようにする
+				pb->SetScrollY(pb->GetScrollY() - m_vy);	//主人公が本来動くべき分の値をm_scrollに加える
+			}
+
+			//下方スクロールライン
+			else if (m_py > 436)
+			{
+				m_py = 436;			//主人公はラインを超えないようにする
+				pb->SetScrollY(pb->GetScrollY() - m_vy);	//主人公が本来動くべき分の値をm_scrollに加える
+			}
 
 			//HitBoxの位置の変更
 			hit->SetPos(m_px, m_py);
