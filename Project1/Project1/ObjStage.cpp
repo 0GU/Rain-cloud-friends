@@ -29,8 +29,10 @@ void CObjStage::Init()
 	m_x1 = 0.0f;
 	m_x2 = 800.0f;
 
-	d_num1 = 0;
-	d_num2=0;
+	for (int i = 0; i < 10; i++)
+	{
+		d_num[i] = false;
+	}
 }
 
 //アクション
@@ -293,20 +295,75 @@ void CObjStage::Draw()
 				//50-59　ドアオブジェクト用
 				else if (m_map[i][j] == 50)
 				{
-				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f,0,d_num1);
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f,0,d_num[0]);
 				Objs::InsertObj(objd, OBJ_DOOR, 10);
 				m_map[i][j] = 0;
-				d_num1++;
+				d_num[0]++;
 				}
 
 				else if (m_map[i][j] == 51)
 				{
-				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f, 1, d_num2);
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f, 1, d_num[1]);
 				Objs::InsertObj(objd, OBJ_DOOR, 10);
 				m_map[i][j] = 0;
-				d_num2++;
+				d_num[1]++;
 				}
-
+				else if (m_map[i][j] == 52)
+				{
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f, 2, d_num[2]);
+				Objs::InsertObj(objd, OBJ_DOOR, 10);
+				m_map[i][j] = 0;
+				d_num[2]++;
+				}
+				else if (m_map[i][j] == 53)
+				{
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f, 3, d_num[3]);
+				Objs::InsertObj(objd, OBJ_DOOR, 10);
+				m_map[i][j] = 0;
+				d_num[3]++;
+				}
+				else if (m_map[i][j] == 54)
+				{
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f, 4, d_num[4]);
+				Objs::InsertObj(objd, OBJ_DOOR, 10);
+				m_map[i][j] = 0;
+				d_num[4]++;
+				}
+				else if (m_map[i][j] == 55)
+				{
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f, 5, d_num[5]);
+				Objs::InsertObj(objd, OBJ_DOOR, 10);
+				m_map[i][j] = 0;
+				d_num[5]++;
+				}
+				else if (m_map[i][j] == 56)
+				{
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f, 6, d_num[6]);
+				Objs::InsertObj(objd, OBJ_DOOR, 10);
+				m_map[i][j] = 0;
+				d_num[6]++;
+				}
+				else if (m_map[i][j] == 57)
+				{
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f, 7, d_num[7]);
+				Objs::InsertObj(objd, OBJ_DOOR, 10);
+				m_map[i][j] = 0;
+				d_num[7]++;
+				}
+				else if (m_map[i][j] == 58)
+				{
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f, 8, d_num[8]);
+				Objs::InsertObj(objd, OBJ_DOOR, 10);
+				m_map[i][j] = 0;
+				d_num[8]++;
+				}
+				else if (m_map[i][j] == 59)
+				{
+				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f, 9, d_num[9]);
+				Objs::InsertObj(objd, OBJ_DOOR, 10);
+				m_map[i][j] = 0;
+				d_num[9]++;
+				}
 				else if (m_map[i][j] == 80)
 				{
 				CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f,m_map[i][j]-80);

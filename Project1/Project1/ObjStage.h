@@ -86,6 +86,5 @@ private:
 	float m_x1;
 	float m_x2;
 
-	int d_num1;
-	int d_num2;
+	int d_num[10];
 };

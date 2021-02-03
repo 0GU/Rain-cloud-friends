@@ -18,7 +18,7 @@ public:
 	void MoveDoor(int D_num, int binary);
 	
 private:
-	bool Key[2];
-	 float pos[2][2][2];//[ドア番号][対になっているドアの識別][ドアの座標]
+	bool Key[10];
+	 float pos[10][2][2];//[ドア番号][対になっているドアの識別][ドアの座標]
 	
 };

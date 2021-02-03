@@ -11,7 +11,7 @@ using namespace GameL;
 
 void CObjDoormanager::Init()
 {
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 2; j++)
 		{
@@ -50,17 +50,21 @@ void CObjDoormanager::MoveDoor(int D_num, int binary)
 
 	if (binary == 0)
 	{
-		if ((-(pos[D_num][1][0] - 400)) > -5054)
+		if ((-(pos[D_num][1][0] - 400)) > -5054&& (-(pos[D_num][1][0] - 800)) < 0)
 		{
-			block->SetScroll(-(pos[D_num][1][0] - 400));
-			Hero->SetX(pos[D_num][1][0] + block->GetScroll());
+				block->SetScroll(-(pos[D_num][1][0] - 400));
+				Hero->SetX(pos[D_num][1][0] + block->GetScroll());
 		}
-		else
+		else if(!((-(pos[D_num][1][0] - 400)) > -5054))
 		{
 			block->SetScroll(-5054);
 			Hero->SetX(pos[D_num][1][0] + block->GetScroll());
 		}
-
+		else
+		{
+			block->SetScroll(0);
+			Hero->SetX(pos[D_num][1][0] + block->GetScroll());
+		}
 		block->SetScrollY(-(pos[D_num][1][1] - 360));
 			Hero->SetY(pos[D_num][1][1] + block->GetScrollY());
 		////上方スクロールライン
@@ -86,14 +90,19 @@ void CObjDoormanager::MoveDoor(int D_num, int binary)
 	}
 	if (binary == 1)
 	{
-		if ((-(pos[D_num][0][0] - 400)) > -5054)
+		if ((-(pos[D_num][0][0] - 400)) > -5054 && (-(pos[D_num][0][0] - 800)) < 0)
 		{
 			block->SetScroll(-(pos[D_num][0][0] - 400));
 			Hero->SetX(pos[D_num][0][0] + block->GetScroll());
 		}
-		else
+		else if (!((-(pos[D_num][0][0] - 400)) > -5054))
 		{
 			block->SetScroll(-5054);
+			Hero->SetX(pos[D_num][0][0] + block->GetScroll());
+		}
+		else
+		{
+			block->SetScroll(0);
 			Hero->SetX(pos[D_num][0][0] + block->GetScroll());
 		}
 		
