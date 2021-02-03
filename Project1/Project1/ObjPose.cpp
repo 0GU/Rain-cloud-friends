@@ -8,10 +8,12 @@
 #include"GameHead.h"
 #include"ObjPose.h"
 
-CObjPose::CObjPose(float x, float y)
+CObjPose::CObjPose(float x, float y, int stage)
 {
 	m_px = x;			//位置
 	m_py = y;
+
+	stage_num = stage;
 }
 
 //イニシャライズ
@@ -69,10 +71,10 @@ void CObjPose::Action()
 				stay_flag = false;
 				break;
 			case 2:
-				Scene::SetScene(new CSceneStageSelect);
+				Scene::SetScene(new CSceneGameMain(stage_num));
 				break;
 			case 3:
-				Scene::SetScene(new CSceneTitle);
+				Scene::SetScene(new CSceneStageSelect);
 				break;
 			}
 
@@ -122,10 +124,10 @@ void CObjPose::Action()
 				stay_flag = false;
 				break;
 			case 2:
-				Scene::SetScene(new CSceneStageSelect);
+				Scene::SetScene(new CSceneGameMain(stage_num));
 				break;
 			case 3:
-				Scene::SetScene(new CSceneTitle);
+				Scene::SetScene(new CSceneStageSelect);
 				break;
 			}
 
