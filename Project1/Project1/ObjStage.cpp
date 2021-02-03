@@ -105,7 +105,7 @@ void CObjStage::Action()
 	//}
 
 	//上方スクロールライン
-	if (hy < 256/*&&heroからジャンプフラグを持ってきてtrueの場合*/)
+	/*if (hy < 256/*&&heroからジャンプフラグを持ってきてtrueの場合)
 	{
 		hero->SetY(256);				//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
@@ -116,7 +116,7 @@ void CObjStage::Action()
 	{
 		hero->SetY(300);			//主人公はラインを超えないようにする
 		my_scroll -= hero->GetVY();	//主人公が本来動くべき分の値をm_scrollに加える
-	}
+	}*/
 
 	//敵出現ライン
 	//主人公の位置+500を敵出現ラインにする
@@ -284,7 +284,7 @@ void CObjStage::Draw()
 				else if (m_map[i][j] == 23)
 				{
 					CObjStone* objh = new CObjStone(j * 64.0f, i * 64.0f);
-					Objs::InsertObj(objh, OBJ_STONE, 10);
+					Objs::InsertObj(objh, OBJ_STONE, 100);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 24)

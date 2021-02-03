@@ -36,7 +36,7 @@ void CObjMagic::Init()
 	//当たり判定用HitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 32, 32, ELEMENT_ENEMY, OBJ_MAGIC, 1);
 
-
+	
 }
 
 //アクション

@@ -28,7 +28,7 @@ void CObjSinEnemy::Init()
 	m_ani_time = 0;
 	m_ani_frame = 1;		//静止フレームを初期にする
 
-	m_ani_max_time = 4;  //アニメーション間隔幅
+	m_ani_max_time = 8;  //アニメーション間隔幅
 
 	m_transparent = 0.0;//描画の透明度
 	m_hp = 2;
@@ -130,7 +130,7 @@ void CObjSinEnemy::Action()
 		//逃走　徐々に透明化
 		if (m_damege_flag == true)
 		{
-			m_transparent += 0.01;
+			m_transparent += 0.05;
 		}
 
 		//方向
@@ -203,12 +203,28 @@ void CObjSinEnemy::Action()
 			this->SetStatus(false);
 			Hits::DeleteHitBox(this);
 		}
+		m_ani_time += 0.1;
+		if (m_ani_time > m_ani_max_time)
+		{
+			m_ani_frame += 1;
+			m_ani_time = 0;
+		}
+
+		if (m_ani_frame == 4)
+		{
+			m_ani_frame = 0;
+		}
 
 	}
 }
 //ドロー
 void CObjSinEnemy::Draw()
 {
+	int AniData[4] =
+	{
+		1,0,2,0,
+	};
+
 	//描画カラー情報　R=RED G=Green　B=Blue A=alpha(透過情報)
 	float c[4] = { 1.0f,1.0f,1.0f,1.0f - m_transparent };
 	if (c[3] <= 0.0f)
@@ -219,9 +235,9 @@ void CObjSinEnemy::Draw()
 
 	//切り取り位置の設定
 	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 650.0f;
-	src.m_bottom = 750.0f;
+	src.m_left = 0.0f + AniData[m_ani_frame] * 256;
+	src.m_right = 245.0f + AniData[m_ani_frame] * 256;
+	src.m_bottom = 320.0f;
 
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);

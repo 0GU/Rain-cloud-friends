@@ -955,16 +955,16 @@ void CObjHero::Draw()
 		src.m_top = 0.0f;
 		src.m_left = 5.0f + m_ani_frame * 253;
 		src.m_right = 257.0f + m_ani_frame * 253;
-		src.m_bottom = 431.0f;
+		src.m_bottom = 528.0f;
 		if (m_posture == 0)
 		{
-			dst.m_left = m_px + 20.0f;
-			dst.m_right = dst.m_left + 54.0f;
+			dst.m_left = m_px + 15.0f;
+			dst.m_right = dst.m_left + 49.0f;
 		}
 		else
 		{
-			dst.m_left = m_px + 54.0f + 20.0f;
-			dst.m_right = m_px + 20.0f;
+			dst.m_left = m_px + 49.0f + 15.0f;
+			dst.m_right = m_px + 15.0f;
 		}
 		//描画
 		Draw::Draw(33, &src, &dst, c, 0.0f);
@@ -1094,7 +1094,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 				{
 					//敵の移動方向を主人公の位置に加算
 					if (m_enemynum == 1)
-						m_px += ((CObjEnemy*)hit_data[i]->o)->GetVx();
+						m_vx = ((CObjEnemy*)hit_data[i]->o)->GetVx();
 					else if (m_enemynum == 2)//炎だけ独立処理
 					{
 						if (m_hit_time == 0)
@@ -1107,21 +1107,21 @@ void CObjHero::EnemyHit(int m_enemynum)
 						}
 						
 					}
-					else if (m_enemynum == 5)
-						m_px += ((CObjRushEnemy*)hit_data[i]->o)->GetVx();
+					//else if (m_enemynum == 5)
+						//m_px += ((CObjRushEnemy*)hit_data[i]->o)->GetVx();
 
 					CObjStage* b = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 					//後方スクロールライン
-					if (m_px < 200)
+					if (m_px < 400)
 					{
-						m_px = 200;
+						m_px = 400;
 						b->SetScroll(b->GetScroll() + 2.5);
 					}
 
 					//前方スクロールライン
-					if (m_px > 400)
+					if (m_px > 800)
 					{
-						m_px = 400;
+						m_px = 800;
 						b->SetScroll(b->GetScroll() - 2.5);
 					}
 
@@ -1130,7 +1130,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 					{
 						//ジャンプしてる場合は下記の影響を出ないようにする
 					}
-					else if(m_enemynum==6)
+					if(m_enemynum==6)
 					{
 						//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 						//また、地面に当たってる判定にする

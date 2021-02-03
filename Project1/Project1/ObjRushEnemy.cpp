@@ -3,7 +3,7 @@
 #include "GameL\WinInputs.h"
 #include "GameL\SceneManager.h"
 #include "GameL\HitBoxManager.h"
-
+#include"GameL/Audio.h"
 #include "GameHead.h"
 #include "ObjRushEnemy.h"
 
@@ -28,7 +28,7 @@ void CObjRushEnemy::Init()
 	m_ani_frame = 1;		//静止フレームを初期にする
 
 	m_speed_power = 0.2f;//通常速度
-	m_ani_max_time = 4;  //アニメーション間隔幅
+	m_ani_max_time = 10;  //アニメーション間隔幅
 
 	m_move = false;		 //true=右 false=左
 
@@ -53,7 +53,7 @@ void CObjRushEnemy::Init()
 	stay_flag = false;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 75, 60, ELEMENT_ENEMY, OBJ_RUSH_ENEMY, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_ENEMY, OBJ_RUSH_ENEMY, 1);
 
 }
 
@@ -115,7 +115,7 @@ void CObjRushEnemy::Action()
 			//逃走　徐々に透明化
 			if (m_damege_flag == true)
 			{
-				m_transparent += 0.01;
+				m_transparent += 0.05;
 			}
 
 			//通常移動
@@ -248,10 +248,21 @@ void CObjRushEnemy::Action()
 		//逃走終了したら消滅
 		if (m_escaoe_flag == true)
 		{
+			Audio::Start(27);
 			this->SetStatus(false);
 			Hits::DeleteHitBox(this);
 		}
+		m_ani_time += 0.1;
+		if (m_ani_time > m_ani_max_time)
+		{
+			m_ani_frame += 1;
+			m_ani_time = 0;
+		}
 
+		if (m_ani_frame == 4)
+		{
+			m_ani_frame = 0;
+		}
 	}
 
 }
@@ -274,9 +285,9 @@ void CObjRushEnemy::Draw()
 
 //切り取り位置の設定
 	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 512.0f;
-	src.m_bottom =420.0f;
+	src.m_left = 0.0f + AniData[m_ani_frame] * 244;
+	src.m_right = 244.0f + AniData[m_ani_frame] * 244;
+	src.m_bottom =180.0f;
 
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);

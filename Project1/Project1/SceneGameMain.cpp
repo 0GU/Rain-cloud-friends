@@ -86,11 +86,12 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(24, L"素材/BGM/夜.wav", SOUND_TYPE::BACK_MUSIC);
 	Audio::LoadAudio(25, L"素材/SE/移動音.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(26, L"素材/SE/雲移動音.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(27, L"素材/SE/逃走.wav", SOUND_TYPE::EFFECT);
 	//画像情報を登録
 	Draw::LoadImageW(L"素材/画像/testtt.png", 0, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/仮/mapcip.png", 1, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/Animation.png", 2, TEX_SIZE_64);
-	Draw::LoadImageW(L"素材/仮/ポーズ.png", 3, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/ポーズ画像.png", 3, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/選択.png", 4, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/蜘蛛.png", 5, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/HP(透過).png", 6, TEX_SIZE_128);
@@ -99,9 +100,9 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/仮/スライム.png", 9, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/画像/植物ミニ.png", 10, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/画像/追尾敵0.png", 11, TEX_SIZE_2048);
-	Draw::LoadImageW(L"素材/画像/妖精.png", 12, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/妖精2.png", 12, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/岩.png", 13, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/イノシシ.png", 14, TEX_SIZE_256);
+	Draw::LoadImageW(L"素材/画像/イノシシ2.png", 14, TEX_SIZE_256);
 	Draw::LoadImageW(L"素材/仮/test女の子.png", 15, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 16, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/死亡.png", 17, TEX_SIZE_1024);
@@ -117,9 +118,10 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/土ブロック.png", 30, TEX_SIZE_1024);//実験　ぬかるみ床用
 	Draw::LoadImageW(L"素材/画像/待機修正.png", 31, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 32, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/押す.png", 33, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/押す修正版.png", 33, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/看板.png", 34, TEX_SIZE_256);
 	Draw::LoadImageW(L"素材/画像/砂.png", 35, TEX_SIZE_512);
+	Draw::LoadImageW(L"素材/画像/亀2.png", 36, TEX_SIZE_512);
 	Draw::LoadImageW(L"素材/画像/テキストボックス.png", 45, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/テキストボックス2.png", 46, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/テキストボックス3.png", 47, TEX_SIZE_1024);
