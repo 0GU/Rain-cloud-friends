@@ -29,6 +29,8 @@ enum OBJ_NAME
 	OBJ_SWANP,
 	OBJ_ENDING,
 	OBJ_SIGN,
+	OBJ_DOOR,
+	OBJ_DOORMANAGER,
 	OBJ_SAND,
 };
 //------------------------------------------------
@@ -123,6 +125,8 @@ class Enemy
 #include"ObjTurtle.h"
 #include"ObjSwanp.h"
 #include"ObjSign.h"
+#include"ObjDoormanager.h"
+#include"ObjDoor.h"
 #include"ObjSand.h"
 //------------------------------------------------
 

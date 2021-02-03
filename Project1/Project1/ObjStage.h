@@ -88,4 +88,6 @@ private:
 	float m_x1;
 	float m_x2;
 	bool DrawStop_Sand;
+
+	int d_num[10];
 };

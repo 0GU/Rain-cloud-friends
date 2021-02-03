@@ -41,7 +41,7 @@ void CSceneGameMain::InitScene()
 	else if(stageselect==2)
 	p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
 	else if (stageselect == 3)
-		p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
+		p = Save::ExternalDataOpen(L"ギミック確認.csv", &size);//外部データ読み込み
 	int map[20][100];
 	int count = 1;
 	for (int i = 0; i < 20; i++)
@@ -169,6 +169,9 @@ void CSceneGameMain::InitScene()
 	//体力バーオブジェクト作成
 	CObjHp* objh = new CObjHp();
 	Objs::InsertObj(objh, OBJ_HP, 11);
+
+	CObjDoormanager* objd = new CObjDoormanager();
+	Objs::InsertObj(objd, OBJ_DOORMANAGER, 10);
 
 	//実験　亀
 /*	CObjTurtle* objt = new CObjTurtle(400,600);

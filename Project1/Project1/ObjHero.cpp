@@ -137,7 +137,7 @@ void CObjHero::Action()
 
 	if (over_flag == false)
 	{
-		if (m_hit_down == true)
+		/*if (m_hit_down == true)
 		{
 			
 			if (falldamage_flag == false)
@@ -162,7 +162,7 @@ void CObjHero::Action()
 			{
 				m_py_h = m_py - block->GetScrollY();
 			}
-		}
+		}*/
 		//----------------------------------------------------------------------------------------------------------------------------------------------
 		//着地判定処理（効果音）
 		if (m_hit_down == true)//着地すると
@@ -845,6 +845,11 @@ void CObjHero::Action()
 	}
 	//HitBoxの位置の変更
 	hit->SetPos(m_px+24, m_py);
+
+	if (Input::GetVKey('Q')==true)
+	{
+		pb->SetScroll(pb->GetScroll() - 10.0);
+	}
 
 }
 
