@@ -846,6 +846,11 @@ void CObjHero::Action()
 	//HitBoxの位置の変更
 	hit->SetPos(m_px+24, m_py);
 
+	if (Input::GetVKey('Q')==true)
+	{
+		pb->SetScroll(pb->GetScroll() - 10.0);
+	}
+
 }
 
 //ドロー
