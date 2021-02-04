@@ -50,6 +50,7 @@ void CObjDoor::Action()
 		if ((Input::GetVKey(VK_UP) == true || Input::GetConVecStickLY(0) > 0.1f) &&flag==false)
 		{
 			p->MoveDoor(num, bin);
+			Audio::Start(29);
 		}
 	}
 
