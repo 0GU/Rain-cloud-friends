@@ -37,6 +37,7 @@ private:
 	bool m_hit_down;
 	bool m_hit_left;
 	bool m_hit_right;
+	bool m_swanp;
 
 	//’Ç‰Á‚µ‚½‚â‚Â
 	float pos_init;	//•¦‚¢‚½Žž‚ÌˆÊ’u‹L‰¯—p

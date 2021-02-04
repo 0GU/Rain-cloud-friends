@@ -41,7 +41,7 @@ void CSceneGameMain::InitScene()
 	else if(stageselect==2)
 	p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
 	else if (stageselect == 3)
-		p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
+		p = Save::ExternalDataOpen(L"ギミック確認.csv", &size);//外部データ読み込み
 	int map[20][100];
 	int count = 1;
 	for (int i = 0; i < 20; i++)
@@ -72,7 +72,7 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(3, L"素材/SE/着地.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(4, L"素材/SE/ダメージ音.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(5, L"素材/SE/雨.wav", SOUND_TYPE::EFFECT);
-	Audio::LoadAudio(6, L"素材/SE/被弾.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(6, L"素材/SE/消火.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(7, L"素材/SE/成長.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(8, L"素材/SE/発射音.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(9, L"素材/SE/警告.wav", SOUND_TYPE::EFFECT);
@@ -86,11 +86,14 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(24, L"素材/BGM/夜.wav", SOUND_TYPE::BACK_MUSIC);
 	Audio::LoadAudio(25, L"素材/SE/移動音.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(26, L"素材/SE/雲移動音.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(27, L"素材/SE/逃走.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(28, L"素材/SE/レーダー.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(29, L"素材/SE/ドアあける.wav", SOUND_TYPE::EFFECT);
 	//画像情報を登録
-	Draw::LoadImageW(L"素材/画像/testtt.png", 0, TEX_SIZE_128);
+	Draw::LoadImageW(L"素材/画像/ブロック描画.png", 0, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/仮/mapcip.png", 1, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/Animation.png", 2, TEX_SIZE_64);
-	Draw::LoadImageW(L"素材/仮/ポーズ.png", 3, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/ポーズ画像.png", 3, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/選択.png", 4, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/蜘蛛.png", 5, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/仮/HP(透過).png", 6, TEX_SIZE_128);
@@ -99,9 +102,9 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/仮/スライム.png", 9, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/画像/植物ミニ.png", 10, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/画像/追尾敵0.png", 11, TEX_SIZE_2048);
-	Draw::LoadImageW(L"素材/画像/妖精.png", 12, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/妖精2.png", 12, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/岩.png", 13, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/イノシシ.png", 14, TEX_SIZE_256);
+	Draw::LoadImageW(L"素材/画像/イノシシ2.png", 14, TEX_SIZE_256);
 	Draw::LoadImageW(L"素材/仮/test女の子.png", 15, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 16, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/死亡.png", 17, TEX_SIZE_1024);
@@ -117,17 +120,19 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/土ブロック.png", 30, TEX_SIZE_1024);//実験　ぬかるみ床用
 	Draw::LoadImageW(L"素材/画像/待機修正.png", 31, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 32, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/押す.png", 33, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/押す修正版.png", 33, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/看板.png", 34, TEX_SIZE_256);
-	Draw::LoadImageW(L"素材/画像/テキストボックス.png", 35, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス2.png", 36, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス3.png", 37, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス4.png", 38, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス5.png", 39, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス6.png", 40, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス7.png", 41, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス8.png", 42, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/画像/テキストボックス9.png", 43, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/砂.png", 35, TEX_SIZE_512);
+	Draw::LoadImageW(L"素材/画像/亀2.png", 36, TEX_SIZE_512);
+	Draw::LoadImageW(L"素材/画像/テキストボックス.png", 45, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス2.png", 46, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス3.png", 47, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス4.png", 48, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス5.png", 49, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス6.png", 50, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス7.png", 51, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス8.png", 52, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/テキストボックス9.png", 53, TEX_SIZE_1024);
 
 
 	if(stageselect==1)
@@ -156,7 +161,7 @@ void CSceneGameMain::InitScene()
 	Objs::InsertObj(objb, OBJ_STAGE, 9);
 
 	//Poseオブジェクト作成
-	CObjPose* objp = new CObjPose(0,0);
+	CObjPose* objp = new CObjPose(0,0,stageselect);
 	Objs::InsertObj(objp, OBJ_POSE, 11);
 
 	//主人公オブジェクト作成
@@ -166,6 +171,9 @@ void CSceneGameMain::InitScene()
 	//体力バーオブジェクト作成
 	CObjHp* objh = new CObjHp();
 	Objs::InsertObj(objh, OBJ_HP, 11);
+
+	CObjDoormanager* objd = new CObjDoormanager();
+	Objs::InsertObj(objd, OBJ_DOORMANAGER, 10);
 
 	//実験　亀
 /*	CObjTurtle* objt = new CObjTurtle(400,600);

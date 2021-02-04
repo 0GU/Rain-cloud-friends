@@ -3,7 +3,7 @@
 #include "GameL\WinInputs.h"
 #include "GameL\SceneManager.h"
 #include "GameL\HitBoxManager.h"
-
+#include"GameL/Audio.h"
 #include "GameHead.h"
 #include "ObjRushEnemy.h"
 
@@ -28,7 +28,7 @@ void CObjRushEnemy::Init()
 	m_ani_frame = 1;		//静止フレームを初期にする
 
 	m_speed_power = 0.2f;//通常速度
-	m_ani_max_time = 4;  //アニメーション間隔幅
+	m_ani_max_time = 10;  //アニメーション間隔幅
 
 	m_move = false;		 //true=右 false=左
 
@@ -50,10 +50,11 @@ void CObjRushEnemy::Init()
 	m_hit_down = false;
 	m_hit_left = false;
 	m_hit_right = false;
+	m_swanp = false;
 	stay_flag = false;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 75, 60, ELEMENT_ENEMY, OBJ_RUSH_ENEMY, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_ENEMY, OBJ_RUSH_ENEMY, 1);
 
 }
 
@@ -115,7 +116,7 @@ void CObjRushEnemy::Action()
 			//逃走　徐々に透明化
 			if (m_damege_flag == true)
 			{
-				m_transparent += 0.01;
+				m_transparent += 0.05;
 			}
 
 			//通常移動
@@ -184,6 +185,23 @@ void CObjRushEnemy::Action()
 						m_vx = -9.0f;
 				}
 			}
+			//ダメージ処理
+			if (m_py + block->GetScrollY() < hero->GetY() + 50)
+			{
+				//主人公の左側に当たった場合
+				if (m_px + block->GetScroll() + 32 < hero->GetX() + 44)
+				{
+
+				}
+				//主人公の右側に当たった場合
+				//if (Re->GetX() + pb->GetScroll() > m_px + 32)
+				else
+				{
+
+				}
+			}
+
+
 		}
 		//アニメーション進める
 		if (m_ani_time > m_ani_max_time)
@@ -221,6 +239,40 @@ void CObjRushEnemy::Action()
 			&m_vx, &m_vy, &d
 		);
 
+		//実験：沼から抜ける処理
+		if (hit->CheckElementHit(ELEMENT_GREEN) == true)//沼から完全に抜ける
+		{
+			if (m_hit_down == false)
+			{
+				int py = (int)(m_py / 64) * 64;
+				if (py == m_py)
+					m_py = py - 64;
+				else
+					m_py = py;
+				m_vy = 0.0f;
+			}
+		}
+		else if (hit->CheckElementHit(ELEMENT_SWANP) == true)//半分だけ抜ける
+		{
+			int py = (int)(m_py / 64) * 64;
+			if (py + 32 == m_py)//半分だけぬけている状態
+				m_vx = 0.0f;//位置を維持
+			else if (py == m_py && m_swanp == true)//一度完全に沼に落ちた場合にのみ半分ぬける
+			{
+				m_py = py - 32;
+				m_vx = 0.0f;
+				m_swanp = false;
+			}
+			else
+				m_py = py;//沼に落ちていない場合は通過させる
+
+			m_vy = 0.0f;
+		}
+		else if (hit->CheckElementHit(ELEMENT_FIELD) == true && m_hit_down == false)
+		{
+			m_swanp = true;//沼に完全に落ちた
+		}
+
 
 		//位置更新
 		m_px += m_vx;
@@ -248,10 +300,21 @@ void CObjRushEnemy::Action()
 		//逃走終了したら消滅
 		if (m_escaoe_flag == true)
 		{
+			Audio::Start(27);
 			this->SetStatus(false);
 			Hits::DeleteHitBox(this);
 		}
+		m_ani_time += 0.1;
+		if (m_ani_time > m_ani_max_time)
+		{
+			m_ani_frame += 1;
+			m_ani_time = 0;
+		}
 
+		if (m_ani_frame == 4)
+		{
+			m_ani_frame = 0;
+		}
 	}
 
 }
@@ -274,9 +337,9 @@ void CObjRushEnemy::Draw()
 
 //切り取り位置の設定
 	src.m_top = 0.0f;
-	src.m_left = 0.0f;
-	src.m_right = 512.0f;
-	src.m_bottom =420.0f;
+	src.m_left = 0.0f + AniData[m_ani_frame] * 244;
+	src.m_right = 244.0f + AniData[m_ani_frame] * 244;
+	src.m_bottom =180.0f;
 
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
@@ -284,7 +347,7 @@ void CObjRushEnemy::Draw()
 	dst.m_top = 0.0f + m_py + block->GetScrollY();						//↓描画に対してスクロールの影響を与える
 	dst.m_left = (64.0f * m_posture) + m_px + block->GetScroll();
 	dst.m_right = (64 - 64.0f * m_posture) + m_px + block->GetScroll();
-	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
+	dst.m_bottom = 74.0f + m_py + block->GetScrollY();
 
 	//描画
 	Draw::Draw(14, &src, &dst, c, 0.0f);

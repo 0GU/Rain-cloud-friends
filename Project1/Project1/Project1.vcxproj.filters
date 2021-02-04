@@ -37,6 +37,9 @@
     <Filter Include="ソース ファイル\Ending">
       <UniqueIdentifier>{f1abe822-cef4-485f-b416-fd7f7d4afa6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ギミック\ドア">
+      <UniqueIdentifier>{f421f591-268c-4add-893e-91bddce5cc71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameHead.h">
@@ -111,9 +114,6 @@
     <ClInclude Include="SceneTitle.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ObjRestart.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ObjGrowPlant.h">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClInclude>
@@ -172,6 +172,18 @@
       <Filter>ソース ファイル\ギミック</Filter>
     </ClInclude>
     <ClInclude Include="ObjSign.h">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjDoormanager.h">
+      <Filter>ソース ファイル\ギミック\ドア</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjDoor.h">
+      <Filter>ソース ファイル\ギミック\ドア</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjRestart.h">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjSand.h">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClInclude>
   </ItemGroup>
@@ -248,9 +260,6 @@
     <ClCompile Include="SceneTitle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ObjRestart.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ObjGrowPlant.cpp">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
@@ -309,6 +318,18 @@
       <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
     <ClCompile Include="ObjSign.cpp">
+      <Filter>ソース ファイル\ギミック</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjDoormanager.cpp">
+      <Filter>ソース ファイル\ギミック\ドア</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjDoor.cpp">
+      <Filter>ソース ファイル\ギミック\ドア</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjRestart.cpp">
+      <Filter>ソース ファイル\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjSand.cpp">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClCompile>
   </ItemGroup>

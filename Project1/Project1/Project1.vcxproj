@@ -19,6 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ObjDoor.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="ObjDoormanager.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="ObjEnding.h" />
     <ClInclude Include="ObjGrowPlant.h" />
     <ClInclude Include="ObjChaseEnemy.h" />
@@ -48,6 +54,7 @@
     <ClInclude Include="ObjRain.h" />
     <ClInclude Include="ObjRestart.h" />
     <ClInclude Include="ObjRushEnemy.h" />
+    <ClInclude Include="ObjSand.h" />
     <ClInclude Include="ObjSign.h" />
     <ClInclude Include="ObjStage.h" />
     <ClInclude Include="ObjStageSelect.h" />
@@ -81,6 +88,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ObjDoor.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="ObjDoormanager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="ObjEnding.cpp" />
     <ClCompile Include="ObjGrowPlant.cpp" />
     <ClCompile Include="ObjChaseEnemy.cpp" />
@@ -110,6 +123,7 @@
     <ClCompile Include="ObjRain.cpp" />
     <ClCompile Include="ObjRestart.cpp" />
     <ClCompile Include="ObjRushEnemy.cpp" />
+    <ClCompile Include="ObjSand.cpp" />
     <ClCompile Include="ObjSign.cpp" />
     <ClCompile Include="ObjStage.cpp" />
     <ClCompile Include="ObjStageSelect.cpp" />

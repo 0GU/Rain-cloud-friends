@@ -77,10 +77,10 @@ void CObjSign::Draw()
 		src.m_left = 0.0f;
 		src.m_right = 500.0f;
 		src.m_bottom = 300.0f;
-		dst.m_top =125.0f;						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ğ—^‚¦‚é
-		dst.m_left =50.0f;
-		dst.m_right = 550.0f;
-		dst.m_bottom = 425.0f;
-		Draw::Draw(35+sign_num, &src, &dst, c, 0.0f);
+		dst.m_top =25.0f;						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ğ—^‚¦‚é
+		dst.m_left =600.0f;
+		dst.m_right = 1150.0f;
+		dst.m_bottom = 325.0f;
+		Draw::Draw(45+sign_num, &src, &dst, c, 0.0f);
 	}
 }

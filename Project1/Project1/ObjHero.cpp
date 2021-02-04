@@ -137,7 +137,7 @@ void CObjHero::Action()
 
 	if (over_flag == false)
 	{
-		if (m_hit_down == true)
+		/*if (m_hit_down == true)
 		{
 			
 			if (falldamage_flag == false)
@@ -162,7 +162,7 @@ void CObjHero::Action()
 			{
 				m_py_h = m_py - block->GetScrollY();
 			}
-		}
+		}*/
 		//----------------------------------------------------------------------------------------------------------------------------------------------
 		//着地判定処理（効果音）
 		if (m_hit_down == true)//着地すると
@@ -182,7 +182,10 @@ void CObjHero::Action()
 			}
 
 		}
-
+		else
+		{
+			landing_flag = false;
+		}
 		if (stay_flag == false)
 		{
 			//コントローラー操作仮
@@ -554,29 +557,6 @@ void CObjHero::Action()
 				m_enemynum = 5;
 
 
-				CObjRushEnemy* Re = (CObjRushEnemy*)Objs::GetObj(OBJ_RUSH_ENEMY);
-				if (Re->GetY() + pb->GetScrollY() < m_py + 50)
-				{
-					//主人公の左側に当たった場合
-					if (Re->GetX() + pb->GetScroll() + 40 < m_px + 32)
-					{
-						if (m_hit_time == 0)
-						{
-							m_vx = 20.0f;
-							m_vy = -5.0f;
-						}
-					}
-					//主人公の右側に当たった場合
-					if (Re->GetX() + pb->GetScroll() > m_px + 32)
-					{
-						if (m_hit_time == 0)
-						{
-							m_vx = -20.0f;
-							m_vy = -5.0f;
-						}
-
-					}
-				}
 
 				EnemyHit(m_enemynum);
 
@@ -745,39 +725,75 @@ void CObjHero::Action()
 				}
 				else//一番後ろの場合　
 				{
-					if (m_px < 0)//主人公を0以下にしない
+					if (m_px < 0)//主人公をステージ外に出さない
 						m_px = 0;
-					pb->SetScroll(0);//スクロールを0以下にしない
+					pb->SetScroll(0);//ステージ端以上にスクロールしない
 				}
 			}
 
 			//前方スクロールライン
 			else if (m_px > 400 && m_vx > 0.0f)
 			{
-				if (m_px - m_vx > 400)
+				if (pb->GetScroll() > -5054)//ステージの一番端ではない
 				{
-					m_px -= m_vx / 0.5;		//スクロールを加速させる分移動量を減らす
-					pb->SetScroll(pb->GetScroll() - (m_vx * 2));//通常よりスクロールを加速する
+					if (m_px - m_vx > 400)
+					{
+						m_px -= m_vx / 0.5;		//スクロールを加速させる分移動量を減らす
+						pb->SetScroll(pb->GetScroll() - (m_vx * 2));//通常よりスクロールを加速する
+					}
+					else if (m_px - m_vx <= 400)
+					{
+						m_px = 400;				//主人公はラインを超えないようにする
+						pb->SetScroll(pb->GetScroll() - m_vx);
+					}
 				}
-				else if (m_px - m_vx <= 400)
+				else
 				{
-					m_px = 400;				//主人公はラインを超えないようにする
-					pb->SetScroll(pb->GetScroll() - m_vx);
+					if (m_px >1216)//主人公をステージ外に出さない
+						m_px = 1216;
+					pb->SetScroll(-5054);//ステージ端以上にスクロールしない
+
 				}
 			}
 
+			//ジャンプ中に一定以上の高さになると上方スクロール
+			//一定ラインより上で横移動すると主人公の位置が一定になる、または限界値まで上方スクロール
+			//y軸中央あたりより下に移動する場合は、主人公がy軸中央を維持するように下方向へスクロール、限界の場合はしない
+			//
+
 			//上方スクロールライン
-			if (m_py < 256)
+			if (m_py < 200 && pb->GetScrollY() < 0 && m_vy < 0.0f)
 			{
-				m_py = 256;				//主人公はラインを超えないようにする
+				m_py = 200;				//主人公はラインを超えないようにする
 				pb->SetScrollY(pb->GetScrollY() - m_vy);	//主人公が本来動くべき分の値をm_scrollに加える
+				if (pb->GetScrollY() > 0)//スクロールによって限界値を超えた場合、主人公のみ移動、スクロール固定
+				{
+					m_py -= pb->GetScrollY();
+					pb->SetScrollY(0);
+				}
+			}
+			//一定ライン以上で横移動したらスクロールを上にあげる
+			else if (m_py < 350 && pb->GetScrollY() < 0 && fabs(m_vx) >= 0.3f&&m_vy==0.0f)
+			{
+				m_py += 2.0f;
+				pb->SetScrollY(pb->GetScrollY() + 2.0f);
+				if (pb->GetScrollY() > 0)
+				{
+					m_py -= pb->GetScrollY();
+					pb->SetScrollY(0);
+				}
 			}
 
 			//下方スクロールライン
-			else if (m_py > 436)
+			else if (m_py > 360&&pb->GetScrollY()>-560)
 			{
-				m_py = 436;			//主人公はラインを超えないようにする
+				m_py = 360;			//主人公はラインを超えないようにする
 				pb->SetScrollY(pb->GetScrollY() - m_vy);	//主人公が本来動くべき分の値をm_scrollに加える
+				if (pb->GetScrollY() <= -560)//スクロールによって限界値を超えた場合、主人公のみ移動、スクロール固定
+				{
+					m_py -= (pb->GetScrollY() + 560);
+					pb->SetScrollY(-560);
+				}
 			}
 
 			//HitBoxの位置の変更
@@ -790,12 +806,12 @@ void CObjHero::Action()
 	{
 		m_ani_time++;
 
-		if (m_ani_time > m_ani_max_time * 5)
+		if (m_ani_time > m_ani_max_time * 3)
 		{
 			m_ani_frame += 1;
 			m_ani_time = 0;
 		}
-		if (m_ani_frame == 3 && m_ani_time >= m_ani_max_time * 5)
+		if (m_ani_frame == 3 && m_ani_time >= m_ani_max_time * 3)
 		{
 			Scene::SetScene(new CSceneOver(reset));
 		}
@@ -809,6 +825,11 @@ void CObjHero::Action()
 	}
 	//HitBoxの位置の変更
 	hit->SetPos(m_px+24, m_py);
+
+	if (Input::GetVKey('Q')==true)
+	{
+		pb->SetScroll(pb->GetScroll() - 10.0);
+	}
 
 }
 
@@ -919,16 +940,16 @@ void CObjHero::Draw()
 		src.m_top = 0.0f;
 		src.m_left = 5.0f + m_ani_frame * 253;
 		src.m_right = 257.0f + m_ani_frame * 253;
-		src.m_bottom = 431.0f;
+		src.m_bottom = 528.0f;
 		if (m_posture == 0)
 		{
-			dst.m_left = m_px + 20.0f;
-			dst.m_right = dst.m_left + 54.0f;
+			dst.m_left = m_px + 15.0f;
+			dst.m_right = dst.m_left + 49.0f;
 		}
 		else
 		{
-			dst.m_left = m_px + 54.0f + 20.0f;
-			dst.m_right = m_px + 20.0f;
+			dst.m_left = m_px + 49.0f + 15.0f;
+			dst.m_right = m_px + 15.0f;
 		}
 		//描画
 		Draw::Draw(33, &src, &dst, c, 0.0f);
@@ -1016,6 +1037,12 @@ void CObjHero::EnemyHit(int m_enemynum)
 							m_vx -=25.0f;//左に移動させる
 							m_hit_time = 30;
 						}
+						else if (m_enemynum == 5)
+						{
+							m_vx -= 20.0f;
+							m_vy = -5.0f;
+							m_hit_time = 80;
+						}
 						else
 						{
 							m_vx -= 5.0f;//左に移動させる
@@ -1034,12 +1061,18 @@ void CObjHero::EnemyHit(int m_enemynum)
 						Audio::Start(4);
 						if (m_enemynum == 2)
 						{
-							m_vx += 25.0f;//左に移動させる
+							m_vx += 25.0f;//右に移動させる
 							m_hit_time = 30;
+						}
+						else if (m_enemynum == 5)
+						{
+							m_vx += 20.0f;//右に移動させる
+							m_vy = -5.0f;
+							m_hit_time = 80;
 						}
 						else
 						{
-							m_vx += 5.0f;//左に移動させる
+							m_vx += 5.0f;//右に移動させる
 							m_hit_time = 60;
 						}
 
@@ -1058,7 +1091,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 				{
 					//敵の移動方向を主人公の位置に加算
 					if (m_enemynum == 1)
-						m_px += ((CObjEnemy*)hit_data[i]->o)->GetVx();
+						m_vx = ((CObjEnemy*)hit_data[i]->o)->GetVx();
 					else if (m_enemynum == 2)//炎だけ独立処理
 					{
 						if (m_hit_time == 0)
@@ -1071,30 +1104,14 @@ void CObjHero::EnemyHit(int m_enemynum)
 						}
 						
 					}
-					else if (m_enemynum == 5)
-						m_px += ((CObjRushEnemy*)hit_data[i]->o)->GetVx();
 
-					CObjStage* b = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-					//後方スクロールライン
-					if (m_px < 200)
-					{
-						m_px = 200;
-						b->SetScroll(b->GetScroll() + 2.5);
-					}
-
-					//前方スクロールライン
-					if (m_px > 400)
-					{
-						m_px = 400;
-						b->SetScroll(b->GetScroll() - 2.5);
-					}
 
 					//頭に乗せる処理
 					if (m_vy < -1.0f)
 					{
 						//ジャンプしてる場合は下記の影響を出ないようにする
 					}
-					else if(m_enemynum==6)
+					if(m_enemynum==6)
 					{
 						//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 						//また、地面に当たってる判定にする

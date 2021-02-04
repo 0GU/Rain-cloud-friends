@@ -57,6 +57,8 @@ public:
 		float* vx, float* vy, int* bt
 	);
 
+	void DeleteSand(int y, int x);
+
 	////オブジェクトが一定距離内にいるかの判定　作るか微妙
 	//bool ObjSearch(
 	//	float x, float y, float obj_x, float obj_y,
@@ -85,4 +87,7 @@ private:
 	
 	float m_x1;
 	float m_x2;
+	bool DrawStop_Sand;
+
+	int d_num[10];
 };

@@ -9,12 +9,13 @@ using namespace GameL;
 class CObjPose : public CObj
 {
 public:
-	CObjPose(float x, float y);
+	CObjPose(float x, float y,int stage);
 	~CObjPose() {};
 	void Init();	//イニシャライズ
 	void Action();	//アクション
 	void Draw();	//ドロー
 	bool GetFlag() { return stay_flag; }
+	int stage_num;
 private:
 
 	float m_px;

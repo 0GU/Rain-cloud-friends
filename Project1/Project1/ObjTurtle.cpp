@@ -28,7 +28,7 @@ void CObjTurtle::Init()
 	m_ani_frame = 1;		//静止フレームを初期にする
 
 	m_speed_power = 0.5f;//通常速度
-	m_ani_max_time = 4;  //アニメーション間隔幅
+	m_ani_max_time = 10;  //アニメーション間隔幅
 	m_transparent = 0.0;//描画の透明度
 	m_hp = 2;
 	m_move = true;		 //true=右 false=左
@@ -86,7 +86,7 @@ void CObjTurtle::Action()
 		//逃走　徐々に透明化
 		if (m_damege_flag == true)
 		{
-			m_transparent += 0.01;
+			m_transparent += 0.05;
 		}
 
 
@@ -181,7 +181,17 @@ void CObjTurtle::Action()
 			this->SetStatus(false);
 			Hits::DeleteHitBox(this);
 		}
+		m_ani_time += 0.1;
+		if (m_ani_time > m_ani_max_time)
+		{
+			m_ani_frame += 1;
+			m_ani_time = 0;
+		}
 
+		if (m_ani_frame == 4)
+		{
+			m_ani_frame = 0;
+		}
 	}
 
 }
@@ -202,11 +212,11 @@ void CObjTurtle::Draw()
 	RECT_F dst; //描画先表示位置
 
 //切り取り位置の設定
+	//切り取り位置の設定
 	src.m_top = 0.0f;
-	src.m_left = 0.0f + AniData[m_ani_frame] * 64;
-	src.m_right = 64.0f + AniData[m_ani_frame] * 64;
-	src.m_bottom = src.m_top + 64.0f;
-
+	src.m_left = 0.0f + AniData[m_ani_frame] * 256;
+	src.m_right = 256.0f + AniData[m_ani_frame] * 256;
+	src.m_bottom = 320.0f;
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	//表示位置の設定
@@ -216,5 +226,5 @@ void CObjTurtle::Draw()
 	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
 
 	//描画
-	Draw::Draw(9, &src, &dst, c, 0.0f);
+	Draw::Draw(36, &src, &dst, c, 0.0f);
 }

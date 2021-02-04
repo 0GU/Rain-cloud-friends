@@ -3,6 +3,7 @@
 #include "GameL\WinInputs.h"
 #include "GameL\SceneManager.h"
 #include "GameL\HitBoxManager.h"
+#include"GameL/Audio.h"
 
 #include "GameHead.h"
 #include "ObjEnemy.h"
@@ -92,7 +93,8 @@ void CObjEnemy::Action()
 		//逃走　徐々に透明化
 		if (m_damege_flag == true)
 		{
-			m_transparent += 0.01;
+			
+			m_transparent += 0.05;
 		}
 		//方向
 		if (m_move == true)
@@ -107,6 +109,14 @@ void CObjEnemy::Action()
 			m_posture = 0.0f;
 			m_ani_time += 1;
 		}
+		if (m_vx <= -3.0f)
+		{
+			m_vx = -3.0f;
+		}
+		if (m_vx >= 3.0f)
+		{
+			m_vx = 3.0f;
+		}
 
 		if (m_ani_time > m_ani_max_time)
 		{
@@ -120,8 +130,8 @@ void CObjEnemy::Action()
 		}
 
 		//摩擦
-		m_vx += -(m_vx * 0.098);
-
+		//m_vx  *= 0.9f;
+		//m_vx += -(m_vx * 0.098);
 		//自由落下速度
 		m_vy += 9.8 / (16.0f);
 
@@ -193,6 +203,7 @@ void CObjEnemy::Action()
 		//逃走終了したら消滅
 		if (m_escaoe_flag == true)
 		{
+			Audio::Start(27);
 			this->SetStatus(false);
 			Hits::DeleteHitBox(this);
 		}

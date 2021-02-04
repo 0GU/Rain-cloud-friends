@@ -3,9 +3,10 @@
 #include"GameL/WinInputs.h"
 #include"GameL/SceneManager.h"
 #include "GameL\HitBoxManager.h"
-
+#include"GameL/Audio.h"
 #include"GameHead.h"
 #include"ObjChaseEnemy.h"
+
 
 CObjChaseEnemy::CObjChaseEnemy(float x, float y)
 {
@@ -108,7 +109,7 @@ void CObjChaseEnemy::Action()
 		//“¦‘–@™X‚É“§–¾‰»
 		if (m_damege_flag == true)
 		{
-			m_transparent += 0.01;
+			m_transparent += 0.05;
 		}
 
 		//•ûŒü
@@ -212,6 +213,7 @@ void CObjChaseEnemy::Action()
 		//“¦‘–I—¹‚µ‚½‚çÁ–Å
 		if (m_escaoe_flag == true)
 		{
+			Audio::Start(27);
 			this->SetStatus(false);
 			Hits::DeleteHitBox(this);
 		}

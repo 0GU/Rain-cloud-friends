@@ -85,7 +85,7 @@ void CObjPlant::Draw()
 	//ƒuƒƒbƒNî•ñ‚ðŽ‚Á‚Ä‚­‚é
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 	//•\Ž¦ˆÊ’u‚ÌÝ’è
-	dst.m_top = m_py + block->GetScrollY();						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ð—^‚¦‚é
+	dst.m_top = 0.0f+m_py + block->GetScrollY();						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ð—^‚¦‚é
 	dst.m_left = 64.0f + m_px + block->GetScroll();
 	dst.m_right = 0.0f + m_px + block->GetScroll();
 	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
