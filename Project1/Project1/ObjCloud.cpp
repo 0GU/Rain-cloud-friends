@@ -330,7 +330,7 @@ void CObjCloud::Draw()
 		{
 			Audio::Start(28);
 		}	
-		Audio_time += 0.01f;//Œø‰Ê‰¹—¬‚ê‚Ä‚Ü‚·‚æ~
+		Audio_time += 0.005f;//Œø‰Ê‰¹—¬‚ê‚Ä‚Ü‚·‚æ~
 		
 		swprintf_s(str2, L"‰_‚ª‰æ–ÊŠO‚Éo‚Ü‚µ‚½BSpace‚Å¢Š«");
 		Font::StrDraw(str2, 20,0, 50, c2);
