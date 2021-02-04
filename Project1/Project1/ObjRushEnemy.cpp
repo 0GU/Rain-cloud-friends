@@ -347,7 +347,7 @@ void CObjRushEnemy::Draw()
 	dst.m_top = 0.0f + m_py + block->GetScrollY();						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ð—^‚¦‚é
 	dst.m_left = (64.0f * m_posture) + m_px + block->GetScroll();
 	dst.m_right = (64 - 64.0f * m_posture) + m_px + block->GetScroll();
-	dst.m_bottom = 64.0f + m_py + block->GetScrollY();
+	dst.m_bottom = 74.0f + m_py + block->GetScrollY();
 
 	//•`‰æ
 	Draw::Draw(14, &src, &dst, c, 0.0f);
