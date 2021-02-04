@@ -826,12 +826,12 @@ void CObjHero::Action()
 	{
 		m_ani_time++;
 
-		if (m_ani_time > m_ani_max_time * 5)
+		if (m_ani_time > m_ani_max_time * 3)
 		{
 			m_ani_frame += 1;
 			m_ani_time = 0;
 		}
-		if (m_ani_frame == 3 && m_ani_time >= m_ani_max_time * 5)
+		if (m_ani_frame == 3 && m_ani_time >= m_ani_max_time * 3)
 		{
 			Scene::SetScene(new CSceneOver(reset));
 		}
