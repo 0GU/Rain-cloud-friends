@@ -175,6 +175,12 @@ void CSceneGameMain::InitScene()
 	CObjDoormanager* objd = new CObjDoormanager();
 	Objs::InsertObj(objd, OBJ_DOORMANAGER, 10);
 
+	if (stageselect == 2)
+	{
+		//砂オブジェクト作成
+		CObjSand* objsand = new CObjSand(64 *1, 64 * 13);
+		Objs::InsertObj(objsand, OBJ_SAND, 101);
+	}
 	//実験　亀
 /*	CObjTurtle* objt = new CObjTurtle(400,600);
 	Objs::InsertObj(objt, OBJ_TURTLE, 12);

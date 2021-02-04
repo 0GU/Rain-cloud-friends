@@ -18,7 +18,7 @@ CObjSand::CObjSand(float x, float y)
 void CObjSand::Init()
 {
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_GREEN, OBJ_SAND, 1);
+	Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_BLUE, OBJ_SAND, 1);
 	m_hit_rain = false;//雨に当たていない
 	m_fade_num = 1.0f;
 }
@@ -34,6 +34,7 @@ void CObjSand::Action()
 	//位置の更新用に主人公の位置を持ってくる
 	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
 	hit->SetPos(m_px + block->GetScroll(), m_py + block->GetScrollY());
+
 
 	//実験　雨に当たると動作停止
 	if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
