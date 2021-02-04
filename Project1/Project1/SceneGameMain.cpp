@@ -116,7 +116,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/–é”wŒi.png", 24, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/HP˜g.png", 25, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/HP.png", 26, TEX_SIZE_1024);
-	Draw::LoadImageW(L"‘fŞ/‰¼/ito.png", 27, TEX_SIZE_1024);
+	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/—d¸‹….png", 27, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/“yƒuƒƒbƒN.png", 30, TEX_SIZE_1024);//ÀŒ±@‚Ê‚©‚é‚İ°—p
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/‘Ò‹@C³.png", 31, TEX_SIZE_1024);
 	Draw::LoadImageW(L"‘fŞ/‰æ‘œ/ƒWƒƒƒ“ƒv.png", 32, TEX_SIZE_1024);
