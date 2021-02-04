@@ -50,6 +50,7 @@ void CObjRushEnemy::Init()
 	m_hit_down = false;
 	m_hit_left = false;
 	m_hit_right = false;
+	m_swanp = false;
 	stay_flag = false;
 
 	//当たり判定用のHitBoxを作成
@@ -184,6 +185,23 @@ void CObjRushEnemy::Action()
 						m_vx = -9.0f;
 				}
 			}
+			//ダメージ処理
+			if (m_py + block->GetScrollY() < hero->GetY() + 50)
+			{
+				//主人公の左側に当たった場合
+				if (m_px + block->GetScroll() + 32 < hero->GetX() + 44)
+				{
+
+				}
+				//主人公の右側に当たった場合
+				//if (Re->GetX() + pb->GetScroll() > m_px + 32)
+				else
+				{
+
+				}
+			}
+
+
 		}
 		//アニメーション進める
 		if (m_ani_time > m_ani_max_time)
@@ -220,6 +238,40 @@ void CObjRushEnemy::Action()
 			&m_hit_up, &m_hit_down, &m_hit_left, &m_hit_right,
 			&m_vx, &m_vy, &d
 		);
+
+		//実験：沼から抜ける処理
+		if (hit->CheckElementHit(ELEMENT_GREEN) == true)//沼から完全に抜ける
+		{
+			if (m_hit_down == false)
+			{
+				int py = (int)(m_py / 64) * 64;
+				if (py == m_py)
+					m_py = py - 64;
+				else
+					m_py = py;
+				m_vy = 0.0f;
+			}
+		}
+		else if (hit->CheckElementHit(ELEMENT_SWANP) == true)//半分だけ抜ける
+		{
+			int py = (int)(m_py / 64) * 64;
+			if (py + 32 == m_py)//半分だけぬけている状態
+				m_vx = 0.0f;//位置を維持
+			else if (py == m_py && m_swanp == true)//一度完全に沼に落ちた場合にのみ半分ぬける
+			{
+				m_py = py - 32;
+				m_vx = 0.0f;
+				m_swanp = false;
+			}
+			else
+				m_py = py;//沼に落ちていない場合は通過させる
+
+			m_vy = 0.0f;
+		}
+		else if (hit->CheckElementHit(ELEMENT_FIELD) == true && m_hit_down == false)
+		{
+			m_swanp = true;//沼に完全に落ちた
+		}
 
 
 		//位置更新
