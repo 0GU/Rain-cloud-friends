@@ -554,29 +554,6 @@ void CObjHero::Action()
 				m_enemynum = 5;
 
 
-				CObjRushEnemy* Re = (CObjRushEnemy*)Objs::GetObj(OBJ_RUSH_ENEMY);
-				if (Re->GetY() + pb->GetScrollY() < m_py + 50)
-				{
-					//主人公の左側に当たった場合
-					if (Re->GetX() + pb->GetScroll() + 40 < m_px + 32)
-					{
-						if (m_hit_time == 0)
-						{
-							m_vx = 20.0f;
-							m_vy = -5.0f;
-						}
-					}
-					//主人公の右側に当たった場合
-					if (Re->GetX() + pb->GetScroll() > m_px + 32)
-					{
-						if (m_hit_time == 0)
-						{
-							m_vx = -20.0f;
-							m_vy = -5.0f;
-						}
-
-					}
-				}
 
 				EnemyHit(m_enemynum);
 
@@ -1057,6 +1034,12 @@ void CObjHero::EnemyHit(int m_enemynum)
 							m_vx -=25.0f;//左に移動させる
 							m_hit_time = 30;
 						}
+						else if (m_enemynum == 5)
+						{
+							m_vx -= 20.0f;
+							m_vy = -5.0f;
+							m_hit_time = 80;
+						}
 						else
 						{
 							m_vx -= 5.0f;//左に移動させる
@@ -1075,12 +1058,18 @@ void CObjHero::EnemyHit(int m_enemynum)
 						Audio::Start(4);
 						if (m_enemynum == 2)
 						{
-							m_vx += 25.0f;//左に移動させる
+							m_vx += 25.0f;//右に移動させる
 							m_hit_time = 30;
+						}
+						else if (m_enemynum == 5)
+						{
+							m_vx += 20.0f;//右に移動させる
+							m_vy = -5.0f;
+							m_hit_time = 80;
 						}
 						else
 						{
-							m_vx += 5.0f;//左に移動させる
+							m_vx += 5.0f;//右に移動させる
 							m_hit_time = 60;
 						}
 
@@ -1112,23 +1101,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 						}
 						
 					}
-					//else if (m_enemynum == 5)
-						//m_px += ((CObjRushEnemy*)hit_data[i]->o)->GetVx();
 
-					CObjStage* b = (CObjStage*)Objs::GetObj(OBJ_STAGE);
-					//後方スクロールライン
-					if (m_px < 400)
-					{
-						m_px = 400;
-						b->SetScroll(b->GetScroll() + 2.5);
-					}
-
-					//前方スクロールライン
-					if (m_px > 800)
-					{
-						m_px = 800;
-						b->SetScroll(b->GetScroll() - 2.5);
-					}
 
 					//頭に乗せる処理
 					if (m_vy < -1.0f)
