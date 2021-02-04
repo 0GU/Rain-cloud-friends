@@ -182,7 +182,10 @@ void CObjHero::Action()
 			}
 
 		}
-
+		else
+		{
+			landing_flag = false;
+		}
 		if (stay_flag == false)
 		{
 			//コントローラー操作仮

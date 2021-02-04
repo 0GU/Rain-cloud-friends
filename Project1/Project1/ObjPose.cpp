@@ -44,13 +44,13 @@ void CObjPose::Action()
 	if (stay_flag == true)
 	{
 
-		if (Input::GetConButtons(0, GAMEPAD_DPAD_UP) && keyflag == true && select_num > 1 && select_num <= 3)
+		if ((Input::GetConButtons(0, GAMEPAD_DPAD_UP) || Input::GetConVecStickLY(0) > 0.1f) && keyflag == true && select_num > 1 && select_num <= 3)
 		{
 			Audio::Start(21);
 			keyflag = false;
 			select_num--;
 		}
-		if (Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) && keyflag == true && select_num >= 1 && select_num < 3)
+		if ((Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) || Input::GetConVecStickLY(0) < -0.1f) == true && keyflag == true && select_num >= 1 && select_num < 3)
 		{
 			Audio::Start(21);
 			keyflag = false;
@@ -137,7 +137,8 @@ void CObjPose::Action()
 
 	if (Input::GetVKey(VK_DOWN) == false && Input::GetVKey(VK_UP) == false &&
 		Input::GetVKey('Z') == false && keyflag == false && Input::GetConButtons(0, GAMEPAD_A) == false &&
-		Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) == false && Input::GetConButtons(0, GAMEPAD_DPAD_UP) == false)
+		Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) == false && Input::GetConButtons(0, GAMEPAD_DPAD_UP) == false &&
+		Input::GetConVecStickLY(0) == false)
 	{
 		keyflag = true;
 	}
