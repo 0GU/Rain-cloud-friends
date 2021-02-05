@@ -1089,10 +1089,7 @@ void CObjHero::EnemyHit(int m_enemynum)
 				}
 				if (r >= 225 && r < 315)
 				{
-					//“G‚ÌˆÚ“®•ûŒü‚ğålŒö‚ÌˆÊ’u‚É‰ÁZ
-					if (m_enemynum == 1)
-						m_vx = ((CObjEnemy*)hit_data[i]->o)->GetVx();
-					else if (m_enemynum == 2)//‰Š‚¾‚¯“Æ—§ˆ—
+				 if (m_enemynum == 2)//‰Š‚¾‚¯“Æ—§ˆ—
 					{
 						if (m_hit_time == 0)
 						{
