@@ -33,6 +33,10 @@ void CObjMagic::Init()
 	m_hit_right = false;
 
 	stay_flag = false;
+
+	light_flag = false;
+	m_light = 0.7f;
+
 	//当たり判定用HitBoxを作成
 	Hits::SetHitBox(this, m_px, m_py, 32, 32, ELEMENT_ENEMY, OBJ_MAGIC, 1);
 
@@ -115,8 +119,22 @@ void CObjMagic::Action()
 //ドロー
 void CObjMagic::Draw()
 {
+	//明るさ変える
+	if (light_flag == true)//明るく
+	{
+		m_light += 0.01f;
+		if (m_light >= 1.0f)
+			light_flag = false;
+	}
+	else//暗く
+	{
+		m_light -= 0.01f;
+		if (m_light <= 0.4f)
+			light_flag = true;
+	}
+
 	//描画カラー情報
-	float	c[4] = { 1.0f,1.0f,1.0f,1.0f };//
+	float	c[4] = { 1.0f,1.0f,1.0f,m_light };//
 
 
 	RECT_F src; //描画元切り取り位置の設定

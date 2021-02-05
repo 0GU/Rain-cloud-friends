@@ -601,7 +601,7 @@ void CObjHero::Action()
 			if (hit->CheckElementHit(ELEMENT_GREEN) == true|| hit->CheckElementHit(ELEMENT_SWANP) == true||
 				hit->CheckElementHit(ELEMENT_FIELD) == true)//主人公は沼には落ちない（ジャンプは不可）
 			{
-				if (m_hit_down == false)
+				if (m_hit_down == false&&m_vy>0.0f)
 				{
 					int py = (int)((m_py - pb->GetScrollY()) / 64) * 64;
 					if (py == m_py - pb->GetScrollY())

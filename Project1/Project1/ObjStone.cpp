@@ -70,6 +70,13 @@ void CObjStone::Action()
 		{
 			hero->SetSthit(true);
 			m_vx = hero->GetVX() ;
+
+			//Šâ‚ª‰Ÿ‚³‚ê‚Ä‚È‚¢Žž‚Í–„‚Ü‚é‚Ì‚ð–h‚®‚½‚ß‰Ÿ‚µo‚·
+			if (m_px > hero->GetX() - block->GetScroll() && hero->GetVX() < 0.1f)
+				hero->SetX(hero->GetX() - 0.35f);//Šâ‰Ÿ‚µ’†‚ÌˆÚ“®—Ê‚ÌŠÖŒW‚Å‚±‚ê‚ªŒÀŠE
+			else if (m_px < hero->GetX() - block->GetScroll() && hero->GetVX() > -0.1f)
+				hero->SetX(hero->GetX() + 0.35f); 
+			
 			if (m_vx >= 0.1f)
 			{
 				m_vx += 0.0f;
