@@ -7,70 +7,53 @@
 #include"GameL/Audio.h"
 
 #include "GameHead.h"
-#include "ObjDoor.h"
+#include "ObjKey.h"
 
 //使用するネームスペース
 using namespace GameL;
 
 
 
-CObjDoor::CObjDoor(float x, float y, int d_num, int binary)
+CObjKey::CObjKey(float x, float y, int k_num)
 {
 	m_x = x;
 	m_y = y;
-	num = d_num;
-	bin = binary;
+	Key_num = k_num;
 }
 
-void CObjDoor::Init()
+void CObjKey::Init()
 {
-	CObjDoormanager* p = (CObjDoormanager*)Objs::GetObj(OBJ_DOORMANAGER);
-	p->SetPos(num, bin, m_x, m_y);
-	
-	flag = false;
+
+	delete_flag = false;
 
 	//当たり判定用のHitBoxを作成
-	Hits::SetHitBox(this, m_x, m_y, 64, 64, ELEMENT_RED, OBJ_DOOR, 1);
+	Hits::SetHitBox(this, m_x, m_y, 64, 64, ELEMENT_RED, OBJ_KEY, 1);
 }
 
-void CObjDoor::Action()
+void CObjKey::Action()
 {
-
-
-	CObjDoormanager* p = (CObjDoormanager*)Objs::GetObj(OBJ_DOORMANAGER);
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
-	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
-
-	//HitBoxの位置の変更
 	CHitBox* hit = Hits::GetHitBox(this);
 	hit->SetPos(m_x + block->GetScroll(), m_y + block->GetScrollY());
 
-	if (hit->CheckObjNameHit(OBJ_HERO) != nullptr&&hero->GetKey(num)==true)
-	{
-		if ((Input::GetVKey(VK_UP) == true || Input::GetConVecStickLY(0) > 0.1f) &&flag==false)
-		{
-			p->MoveDoor(num, bin);
-			Audio::Start(29);
-		}
-	}
+	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
 
-	if ((Input::GetVKey(VK_UP) == true || Input::GetConVecStickLY(0) > 0.1f)&&flag==false)
+	if (hit->CheckObjNameHit(OBJ_HERO) != nullptr)
 	{
-		flag = true;
-	}
+		hero->SetKey(Key_num);
 
-	if ((Input::GetVKey(VK_UP) == false && Input::GetConVecStickLY(0)==false)&&flag==true)
-	{
-		flag = false;
+		this->SetStatus(false);//自身に削除命令を出す
+		Hits::DeleteHitBox(this);//保有するHitBoxに削除する
 	}
-
+		
 	
+
 
 }
 
-void CObjDoor::Draw()
+void CObjKey::Draw()
 {
 
 	//描画カラー情報
@@ -88,7 +71,7 @@ void CObjDoor::Draw()
 
 
 	//表示位置の設定
-	dst.m_top = -64.0f+m_y + block->GetScrollY();						//↓描画に対してスクロールの影響を与える
+	dst.m_top = -64.0f + m_y + block->GetScrollY();						//↓描画に対してスクロールの影響を与える
 	dst.m_left = 0.0f + m_x + block->GetScroll();
 	dst.m_right = dst.m_left + 64.0f;
 	dst.m_bottom = 64.0f + m_y + block->GetScrollY();
@@ -96,3 +79,4 @@ void CObjDoor::Draw()
 	//描画
 	Draw::Draw(13, &src, &dst, c, 0.0f);
 }
+

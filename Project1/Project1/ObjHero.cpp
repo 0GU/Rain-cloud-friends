@@ -89,6 +89,12 @@ void CObjHero::Init()
 
 	stone_lock_r = false;//当たっている岩が右方向に移動不可かを返す
 	stone_lock_l = false;//当たっている岩が左方向に移動不可かを返す
+
+	//鍵フラグの初期化
+	for (int i = 0; i < 10; i++)
+	{
+		Key_Pos[i] = true;
+	}
 }
 //アクション
 void CObjHero::Action()
@@ -817,6 +823,7 @@ void CObjHero::Action()
 		}
 	}
 	
+
 
 	//効果音発生タイミング調整
 	if (Audio_time >= Audio_time_max)

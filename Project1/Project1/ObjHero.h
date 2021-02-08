@@ -38,6 +38,9 @@ public:
 	void SetStlockR(bool b) { stone_lock_r = b; }
 	void SetStlockL(bool b) { stone_lock_l = b; }
 
+	void SetKey(int k_num) { Key_Pos[k_num] = true; }
+	bool GetKey(int k_num) { return Key_Pos[k_num]; }
+
 	void EnemyHit(int enemynume);
 	float m_hp;			//体力（仮）
 private:
@@ -116,4 +119,6 @@ private:
 
 	bool stone_lock_r;//当たっている岩が右方向に移動不可かを返す
 	bool stone_lock_l;//当たっている岩が左方向に移動不可かを返す
+
+	bool Key_Pos[10];//入手した鍵用フラグ
 };
