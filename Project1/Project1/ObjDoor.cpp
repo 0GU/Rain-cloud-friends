@@ -41,11 +41,13 @@ void CObjDoor::Action()
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
+	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+
 	//HitBoxの位置の変更
 	CHitBox* hit = Hits::GetHitBox(this);
 	hit->SetPos(m_x + block->GetScroll(), m_y + block->GetScrollY());
 
-	if (hit->CheckObjNameHit(OBJ_HERO) != nullptr)
+	if (hit->CheckObjNameHit(OBJ_HERO) != nullptr&&hero->GetKey(num)==true)
 	{
 		if ((Input::GetVKey(VK_UP) == true || Input::GetConVecStickLY(0) > 0.1f) &&flag==false)
 		{

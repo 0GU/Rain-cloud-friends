@@ -31,6 +31,7 @@ enum OBJ_NAME
 	OBJ_SIGN,
 	OBJ_DOOR,
 	OBJ_DOORMANAGER,
+	OBJ_KEY,
 	OBJ_SAND,
 };
 //------------------------------------------------
@@ -56,6 +57,7 @@ enum HIT_ELEMENTS
 	ELEMENT_FLOWER,
 	ELEMENT_STONE,
 	ELEMENT_SWANP,
+	ELEMENT_TURTLE,
 };
 //------------------------------------------------h
 
@@ -127,6 +129,7 @@ class Enemy
 #include"ObjSign.h"
 #include"ObjDoormanager.h"
 #include"ObjDoor.h"
+#include"ObjKey.h"
 #include"ObjSand.h"
 //------------------------------------------------
 

@@ -186,6 +186,9 @@
     <ClInclude Include="ObjSand.h">
       <Filter>ソース ファイル\ギミック</Filter>
     </ClInclude>
+    <ClInclude Include="ObjKey.h">
+      <Filter>ソース ファイル\ギミック\ドア</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameL\Audio.cpp">
@@ -331,6 +334,9 @@
     </ClCompile>
     <ClCompile Include="ObjSand.cpp">
       <Filter>ソース ファイル\ギミック</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjKey.cpp">
+      <Filter>ソース ファイル\ギミック\ドア</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -47,6 +47,7 @@
     <ClInclude Include="ObjFire.h" />
     <ClInclude Include="ObjHero.h" />
     <ClInclude Include="ObjHp.h" />
+    <ClInclude Include="ObjKey.h" />
     <ClInclude Include="ObjMagic.h" />
     <ClInclude Include="ObjOver.h" />
     <ClInclude Include="ObjPlant.h" />
@@ -116,6 +117,7 @@
     <ClCompile Include="ObjFire.cpp" />
     <ClCompile Include="ObjHero.cpp" />
     <ClCompile Include="ObjHp.cpp" />
+    <ClCompile Include="ObjKey.cpp" />
     <ClCompile Include="ObjMagic.cpp" />
     <ClCompile Include="ObjOver.cpp" />
     <ClCompile Include="ObjPlant.cpp" />

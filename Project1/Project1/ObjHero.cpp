@@ -89,6 +89,12 @@ void CObjHero::Init()
 
 	stone_lock_r = false;//当たっている岩が右方向に移動不可かを返す
 	stone_lock_l = false;//当たっている岩が左方向に移動不可かを返す
+
+	//鍵フラグの初期化
+	for (int i = 0; i < 10; i++)
+	{
+		Key_Pos[i] = false;
+	}
 }
 //アクション
 void CObjHero::Action()
@@ -692,14 +698,16 @@ void CObjHero::Action()
 		{
 			//ジャンプしてる場合は下記の影響を出ないようにする
 		}
-		else if (hit->CheckObjNameHit(OBJ_TURTLE) != nullptr && Turtle->GetPY() <= m_py + 64 - block->GetScrollY() && Turtle->GetPY() + 32 >= m_py + 64 - block->GetScrollY())
+		else if (hit->CheckElementHit(ELEMENT_TURTLE) == true && turtle_hit==true)
 		{
 			//主人公が敵の頭に乗ってるので、Vvecは0にして落下させない
 			//また、地面に当たってる判定にする
-			m_px += Turtle->GetVx();
-			m_py = Turtle->GetPY() + pb->GetScrollY() - 63;
 			m_vy = 0.0f;
 			m_hit_down = true;
+		}
+		else
+		{
+			turtle_hit = false;//どの亀とも当たっていないときにfalseにする
 		}
 
 
@@ -817,6 +825,7 @@ void CObjHero::Action()
 		}
 	}
 	
+
 
 	//効果音発生タイミング調整
 	if (Audio_time >= Audio_time_max)
