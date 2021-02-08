@@ -67,24 +67,6 @@ void CObjDoormanager::MoveDoor(int D_num, int binary)
 		}
 		block->SetScrollY(-(pos[D_num][1][1] - 360));
 			Hero->SetY(pos[D_num][1][1] + block->GetScrollY());
-		////上方スクロールライン
-		//if (pos[D_num][1][1] < 200 && block->GetScrollY() < 0)
-		//{
-		//	Hero->SetY(200);				//主人公はラインを超えないようにする
-		//	block->SetScrollY(-(pos[D_num][1][1] - 200));	//主人公が本来動くべき分の値をm_scrollに加える
-
-		//}
-
-		////下方スクロールライン
-		//else if (pos[D_num][1][1] > 360 && block->GetScrollY() > -560)
-		//{
-		//	pos[D_num][1][1] = 360;			//主人公はラインを超えないようにする
-		//	block->SetScrollY(-(pos[D_num][0][1] - 360));	//主人公が本来動くべき分の値をm_scrollに加える
-		//}
-		//else
-		//{
-		//	Hero->SetY(pos[D_num][0][1] + block->GetScrollY());
-		//}
 
 		return;
 	}
@@ -108,29 +90,7 @@ void CObjDoormanager::MoveDoor(int D_num, int binary)
 		
 		block->SetScrollY(-(pos[D_num][0][1] - 360));
 		Hero->SetY(pos[D_num][0][1] + block->GetScrollY());
-		////上方スクロールライン
-		//if (pos[D_num][0][1] < 200 && block->GetScrollY() < 0)
-		//{
-		//	Hero->SetY(200);				//主人公はラインを超えないようにする
-		//	block->SetScrollY(-(pos[D_num][0][1] - 200));	//主人公が本来動くべき分の値をm_scrollに加える
-
-		//}
-
-
-		////下方スクロールライン
-		//else if (pos[D_num][0][1] > 360 && block->GetScrollY() > -560)
-		//{
-		//	pos[D_num][0][1] = 360;			//主人公はラインを超えないようにする
-		//	block->SetScrollY(-(pos[D_num][0][1] - 360));	//主人公が本来動くべき分の値をm_scrollに加える
-
-
-
-		//}
-		//else
-		//{
-		//	Hero->SetY(pos[D_num][0][1] + block->GetScrollY());
-		//}
-
+		
 		return;
 	}
 }
