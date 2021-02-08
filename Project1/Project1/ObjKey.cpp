@@ -71,7 +71,7 @@ void CObjKey::Draw()
 
 
 	//•\Ž¦ˆÊ’u‚ÌÝ’è
-	dst.m_top = -64.0f + m_y + block->GetScrollY();						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ð—^‚¦‚é
+	dst.m_top = 0.0f + m_y + block->GetScrollY();						//«•`‰æ‚É‘Î‚µ‚ÄƒXƒNƒ[ƒ‹‚Ì‰e‹¿‚ð—^‚¦‚é
 	dst.m_left = 0.0f + m_x + block->GetScroll();
 	dst.m_right = dst.m_left + 64.0f;
 	dst.m_bottom = 64.0f + m_y + block->GetScrollY();

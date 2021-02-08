@@ -93,7 +93,7 @@ void CObjHero::Init()
 	//鍵フラグの初期化
 	for (int i = 0; i < 10; i++)
 	{
-		Key_Pos[i] = true;
+		Key_Pos[i] = false;
 	}
 }
 //アクション
