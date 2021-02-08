@@ -72,7 +72,7 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(3, L"素材/SE/着地.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(4, L"素材/SE/ダメージ音.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(5, L"素材/SE/雨.wav", SOUND_TYPE::EFFECT);
-	Audio::LoadAudio(6, L"素材/SE/被弾.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(6, L"素材/SE/消火.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(7, L"素材/SE/成長.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(8, L"素材/SE/発射音.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(9, L"素材/SE/警告.wav", SOUND_TYPE::EFFECT);
@@ -87,8 +87,10 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(25, L"素材/SE/移動音.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(26, L"素材/SE/雲移動音.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(27, L"素材/SE/逃走.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(28, L"素材/SE/レーダー.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(29, L"素材/SE/ドアあける.wav", SOUND_TYPE::EFFECT);
 	//画像情報を登録
-	Draw::LoadImageW(L"素材/画像/testtt.png", 0, TEX_SIZE_128);
+	Draw::LoadImageW(L"素材/画像/ブロック描画.png", 0, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/仮/mapcip.png", 1, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/仮/Animation.png", 2, TEX_SIZE_64);
 	Draw::LoadImageW(L"素材/画像/ポーズ画像.png", 3, TEX_SIZE_1024);
@@ -114,7 +116,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/夜背景.png", 24, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/HP枠.png", 25, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/HP.png", 26, TEX_SIZE_1024);
-	Draw::LoadImageW(L"素材/仮/ito.png", 27, TEX_SIZE_1024);
+	Draw::LoadImageW(L"素材/画像/妖精球.png", 27, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/土ブロック.png", 30, TEX_SIZE_1024);//実験　ぬかるみ床用
 	Draw::LoadImageW(L"素材/画像/待機修正.png", 31, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/ジャンプ.png", 32, TEX_SIZE_1024);
@@ -159,7 +161,7 @@ void CSceneGameMain::InitScene()
 	Objs::InsertObj(objb, OBJ_STAGE, 9);
 
 	//Poseオブジェクト作成
-	CObjPose* objp = new CObjPose(0,0);
+	CObjPose* objp = new CObjPose(0,0,stageselect);
 	Objs::InsertObj(objp, OBJ_POSE, 11);
 
 	//主人公オブジェクト作成
@@ -173,6 +175,12 @@ void CSceneGameMain::InitScene()
 	CObjDoormanager* objd = new CObjDoormanager();
 	Objs::InsertObj(objd, OBJ_DOORMANAGER, 10);
 
+	if (stageselect == 2)
+	{
+		//砂オブジェクト作成
+		CObjSand* objsand = new CObjSand(64 *1, 64 * 13);
+		Objs::InsertObj(objsand, OBJ_SAND, 101);
+	}
 	//実験　亀
 /*	CObjTurtle* objt = new CObjTurtle(400,600);
 	Objs::InsertObj(objt, OBJ_TURTLE, 12);

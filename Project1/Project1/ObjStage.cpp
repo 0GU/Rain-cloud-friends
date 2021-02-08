@@ -227,6 +227,13 @@ void CObjStage::Draw()
 					Objs::InsertObj(objc, OBJ_CHASE_ENEMY, 10);
 					m_map[i][j] = 0;
 				}
+				else if (m_map[i][j] == 9)
+				{
+					//亀オブジェクト作成（仮）
+					CObjTurtle* objt = new CObjTurtle(j * 64.0f, i * 64.0f);
+					Objs::InsertObj(objt, OBJ_TURTLE, 10);
+					m_map[i][j] = 0;
+				}
 				/*else if (m_map[i][j] == 13)
 				{
 				ObjPlantの床用のため、何もしない

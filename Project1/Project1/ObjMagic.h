@@ -36,4 +36,8 @@ private:
 	bool m_hit_right;
 
 	bool stay_flag;
+
+
+	bool light_flag;//–¾‚é‚³•ÏX
+	float m_light;
 };

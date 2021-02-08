@@ -124,7 +124,7 @@ void CObjCloud::Action()
 				Audio::Start(5);
 				if (stage_num == 1)
 				{
-					m_hp -= 0.1f;	//hp減少
+					m_hp -= 0.075f;	//hp減少
 				}
 				if (stage_num == 2)
 				{
@@ -211,6 +211,7 @@ void CObjCloud::Action()
 			{
 				m_px = hero->GetX() - pbb->GetScroll();
 				m_py = hero->GetY() - pbb->GetScrollY() - 100;//主人公の頭上の上に雲を召喚
+				Audio::Stop(28);
 			}
 			m_px += m_con_x;
 			m_py += m_con_y;
@@ -325,6 +326,12 @@ void CObjCloud::Draw()
 	Draw::Draw(8, &src, &dst, c, 0.0f);
 	if (m_px + pbb->GetScroll()>=1280 || m_px + pbb->GetScroll() <= -100 || m_py + 96.0f + pbb->GetScrollY() <= 0)
 	{
+		if (Audio_time == 0.00f)//着地中に効果音が一周する処理
+		{
+			Audio::Start(28);
+		}	
+		Audio_time += 0.005f;//効果音流れてますよ~
+		
 		swprintf_s(str2, L"雲が画面外に出ました。Spaceで召喚");
 		Font::StrDraw(str2, 20,0, 50, c2);
 	}

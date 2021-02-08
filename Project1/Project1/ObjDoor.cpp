@@ -47,18 +47,19 @@ void CObjDoor::Action()
 
 	if (hit->CheckObjNameHit(OBJ_HERO) != nullptr)
 	{
-		if (Input::GetVKey(VK_UP) == true&&flag==false)
+		if ((Input::GetVKey(VK_UP) == true || Input::GetConVecStickLY(0) > 0.1f) &&flag==false)
 		{
 			p->MoveDoor(num, bin);
+			Audio::Start(29);
 		}
 	}
 
-	if (Input::GetVKey(VK_UP) == true)
+	if ((Input::GetVKey(VK_UP) == true || Input::GetConVecStickLY(0) > 0.1f)&&flag==false)
 	{
 		flag = true;
 	}
 
-	if (Input::GetVKey(VK_UP) == false)
+	if ((Input::GetVKey(VK_UP) == false && Input::GetConVecStickLY(0)==false)&&flag==true)
 	{
 		flag = false;
 	}

@@ -8,10 +8,12 @@
 #include"GameHead.h"
 #include"ObjPose.h"
 
-CObjPose::CObjPose(float x, float y)
+CObjPose::CObjPose(float x, float y, int stage)
 {
 	m_px = x;			//位置
 	m_py = y;
+
+	stage_num = stage;
 }
 
 //イニシャライズ
@@ -42,13 +44,13 @@ void CObjPose::Action()
 	if (stay_flag == true)
 	{
 
-		if (Input::GetConButtons(0, GAMEPAD_DPAD_UP) && keyflag == true && select_num > 1 && select_num <= 3)
+		if ((Input::GetConButtons(0, GAMEPAD_DPAD_UP) || Input::GetConVecStickLY(0) > 0.1f) && keyflag == true && select_num > 1 && select_num <= 3)
 		{
 			Audio::Start(21);
 			keyflag = false;
 			select_num--;
 		}
-		if (Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) && keyflag == true && select_num >= 1 && select_num < 3)
+		if ((Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) || Input::GetConVecStickLY(0) < -0.1f) == true && keyflag == true && select_num >= 1 && select_num < 3)
 		{
 			Audio::Start(21);
 			keyflag = false;
@@ -69,10 +71,10 @@ void CObjPose::Action()
 				stay_flag = false;
 				break;
 			case 2:
-				Scene::SetScene(new CSceneStageSelect);
+				Scene::SetScene(new CSceneGameMain(stage_num));
 				break;
 			case 3:
-				Scene::SetScene(new CSceneTitle);
+				Scene::SetScene(new CSceneStageSelect);
 				break;
 			}
 
@@ -122,10 +124,10 @@ void CObjPose::Action()
 				stay_flag = false;
 				break;
 			case 2:
-				Scene::SetScene(new CSceneStageSelect);
+				Scene::SetScene(new CSceneGameMain(stage_num));
 				break;
 			case 3:
-				Scene::SetScene(new CSceneTitle);
+				Scene::SetScene(new CSceneStageSelect);
 				break;
 			}
 
@@ -135,7 +137,8 @@ void CObjPose::Action()
 
 	if (Input::GetVKey(VK_DOWN) == false && Input::GetVKey(VK_UP) == false &&
 		Input::GetVKey('Z') == false && keyflag == false && Input::GetConButtons(0, GAMEPAD_A) == false &&
-		Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) == false && Input::GetConButtons(0, GAMEPAD_DPAD_UP) == false)
+		Input::GetConButtons(0, GAMEPAD_DPAD_DOWN) == false && Input::GetConButtons(0, GAMEPAD_DPAD_UP) == false &&
+		Input::GetConVecStickLY(0) == false)
 	{
 		keyflag = true;
 	}
