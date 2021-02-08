@@ -28,7 +28,7 @@ void CObjEnding::Action()
 		{
 			m_fade = 1.0f;//値をMaxに固定し
 			m_fade_f = true;//フェードインを止める
-			if (Input::GetConButtons(0, GAMEPAD_A) || Input::GetVKey('Z') == true)//フェードイン中にキーを押していると
+			if (Input::GetConButtons(0, GAMEPAD_A) ==true || Input::GetVKey('Z') == true)//フェードイン中にキーを押していると
 			{
 				;//何もしない
 			}

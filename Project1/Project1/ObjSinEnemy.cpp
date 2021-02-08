@@ -94,7 +94,7 @@ void CObjSinEnemy::Action()
 				m_atk_time++;
 			}
 			//5•bŠÔŠu‚Å”­ŽË
-			if (m_atk_time >= 360)
+			if (m_atk_time >= 180)
 			{
 				m_atk_time = 0;
 				//m_charge_flag = true;
@@ -160,7 +160,7 @@ void CObjSinEnemy::Action()
 		if (m_atk_flag == false)
 		{
 			//Šp“x‰ÁŽZ
-			m_r += 1.0f;
+			m_r += 2.0f;
 
 			//360‹‚Å‰Šú’l‚É–ß‚·
 			if (m_r > 360.0f)

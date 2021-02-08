@@ -500,7 +500,7 @@ void CObjStageSelect::Draw()
 	//ステージ選択
 	src.m_top = 423.0f;
 	src.m_left = 0.0f;
-	src.m_right = 801.0f;
+	src.m_right = 820.0f;
 	src.m_bottom = 544.0f;
 
 	dst.m_top = 50.0f;
@@ -511,14 +511,14 @@ void CObjStageSelect::Draw()
 
 	//下の説明文
 	src.m_top = 200.0f;
-	src.m_left = .0f;
+	src.m_left = 0.0f;
 	src.m_right = 800.0f;
 	src.m_bottom = 320.0f;
 
-	dst.m_top = 630.0f;
+	dst.m_top = 610.0f;
 	dst.m_left = 200.0f;
 	dst.m_right = 1100.0f;
-	dst.m_bottom = 700.0f;
+	dst.m_bottom = 715.0f;
 	Draw::Draw(1, &src, &dst, c, 0.0f);
 
 	//--------------ここから雫
