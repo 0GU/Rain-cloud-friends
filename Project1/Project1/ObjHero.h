@@ -37,6 +37,7 @@ public:
 	void SetSthitW(bool b) { stone_wall_hit = b; }
 	void SetStlockR(bool b) { stone_lock_r = b; }
 	void SetStlockL(bool b) { stone_lock_l = b; }
+	void SetTurhit(bool b) { turtle_hit = b; }
 
 	void SetKey(int k_num) { Key_Pos[k_num] = true; }
 	bool GetKey(int k_num) { return Key_Pos[k_num]; }
@@ -119,6 +120,8 @@ private:
 
 	bool stone_lock_r;//当たっている岩が右方向に移動不可かを返す
 	bool stone_lock_l;//当たっている岩が左方向に移動不可かを返す
+
+	bool turtle_hit;//亀に当たっている状態を返す
 
 	bool Key_Pos[10];//入手した鍵用フラグ
 };

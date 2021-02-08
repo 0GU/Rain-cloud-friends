@@ -57,6 +57,7 @@ enum HIT_ELEMENTS
 	ELEMENT_FLOWER,
 	ELEMENT_STONE,
 	ELEMENT_SWANP,
+	ELEMENT_TURTLE,
 };
 //------------------------------------------------h
 
