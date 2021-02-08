@@ -37,6 +37,7 @@ public:
 	void SetSthitW(bool b) { stone_wall_hit = b; }
 	void SetStlockR(bool b) { stone_lock_r = b; }
 	void SetStlockL(bool b) { stone_lock_l = b; }
+	void SetTurhit(bool b) { turtle_hit = b; }
 
 	void EnemyHit(int enemynume);
 	float m_hp;			//体力（仮）
@@ -116,4 +117,6 @@ private:
 
 	bool stone_lock_r;//当たっている岩が右方向に移動不可かを返す
 	bool stone_lock_l;//当たっている岩が左方向に移動不可かを返す
+
+	bool turtle_hit;//亀に当たっている状態を返す
 };

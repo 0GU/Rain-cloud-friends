@@ -130,7 +130,7 @@ void CObjTurtle::Action()
 
 
 
-		//実験：沼から抜ける処理
+		//沼との判定--------------------------
 		if (hit->CheckElementHit(ELEMENT_GREEN) == true)//沼から完全に抜ける
 		{
 			if (m_hit_down == false)
@@ -142,24 +142,34 @@ void CObjTurtle::Action()
 					m_py = py;
 				m_vy = 0.0f;
 			}
-		}
+					if (hit->GetStatus()->e==ELEMENT_TURTLE)
+				{
+					//HitBoxの属性を　通常状態　へ変更　乗れなくする
+					Hits::DeleteHitBox(this);//保有するHitBoxに削除する
+					Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_ENEMY, OBJ_TURTLE, 1);
+				}
+	}
 		else if (hit->CheckElementHit(ELEMENT_SWANP) == true)//半分だけ抜ける
 		{
 			int py = (int)(m_py / 64) * 64;
-			if (py + 32 == m_py)//半分だけぬけている状態
+			if (py + 32 == (int)m_py)//半分だけぬけている状態
 				m_vx = 0.0f;//位置を維持
 			else if (py == m_py&&m_swanp==true)//一度完全に沼に落ちた場合にのみ半分ぬける
 			{
 				m_py = py - 32;
 				m_vx = 0.0f;
 				m_swanp = false;
+				//HitBoxの属性を　ぬかるみ状態　へ変更　主人公が上に乗れるようにする
+				Hits::DeleteHitBox(this);//保有するHitBoxに削除する
+				Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_TURTLE, OBJ_TURTLE, 1);
 			}
 			else
+			{
 				m_py = py;//沼に落ちていない場合は通過させる
-
+			}
 			m_vy = 0.0f;
 		}
-		else if (hit->CheckElementHit(ELEMENT_FIELD) == true&&m_hit_down==false)
+		else if (hit->CheckElementHit(ELEMENT_FIELD) == true/*&&m_hit_down==false*/)
 		{
 			m_swanp = true;//沼に完全に落ちた
 		}
@@ -167,6 +177,21 @@ void CObjTurtle::Action()
 		//沼に落ちた状態では移動不可にする
 		if (m_swanp == true&&m_hit_down==true)
 			m_vx = 0.0f;
+
+		//-----------------------------------------------
+
+		//主人公との判定---------
+		CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
+		
+		//亀が半分埋まっている時のみ当たり判定を取る
+		if (hit->CheckObjNameHit(OBJ_HERO) != nullptr && hit->GetStatus()->e == ELEMENT_TURTLE &&
+			m_py <= hero->GetY() - block->GetScrollY()+64 && m_py + 32 >= hero->GetY() + 64 - block->GetScrollY())
+		{
+			hero->SetX(hero->GetX() + m_vx);
+			hero->SetY(m_py + block->GetScrollY() - 63);
+			hero->SetTurhit(true);//当たっている状態を返す
+		}
+		//-------------------------
 
 		//位置更新
 		m_px += m_vx;
