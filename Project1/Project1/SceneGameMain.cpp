@@ -33,6 +33,11 @@ CSceneGameMain::~CSceneGameMain()
 //ゲームメイン初期化メソッド
 void CSceneGameMain::InitScene()
 {
+	float x = 150.0f;
+	float y = 0.0f;
+	float scroll_x = 0.0f;
+	float scroll_y = 0.0f;
+
 	//外部データの読み込み(ステージ情報)
 	unique_ptr<wchar_t> p;  //ステージ情報ポインター
 	int size;				//ステージ情報の大きさ
@@ -42,9 +47,9 @@ void CSceneGameMain::InitScene()
 	p = Save::ExternalDataOpen(L"Stage2.csv", &size);//外部データ読み込み
 	else if (stageselect == 3)
 		p = Save::ExternalDataOpen(L"ギミック確認.csv", &size);//外部データ読み込み
-	int map[20][100];
+	int map[40][100];
 	int count = 1;
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 40; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
@@ -53,13 +58,81 @@ void CSceneGameMain::InitScene()
 
 			map[i][j] = w;
 			
-			if (w >= 10)
+			if (w==100)
+			{
+				x = j * 64.0f;
+				if (i<=20)
+				{
+					y = i * 64.0f;
+				}
+				else
+				{
+					y = (i - 20) * 64.0f;
+				}
+				
+			}
+			if (w >= 100)
+			{
+				count += 4;
+			}
+			else if (w >= 10)
 			{
 				count += 3;
 			}
 			else
 			{
 				count += 2;
+			}
+		}
+	}
+
+
+	if ((-(x - 400)) > -5054 && (-(x - 800)) < 0)
+	{
+		 scroll_x=-(x - 400);
+		x=x + scroll_x;
+	}
+	else if (!((-(x - 400)) > -5054))
+	{
+		scroll_x=-5054;
+		x=x + scroll_x;
+	}
+	else
+	{
+		scroll_x=0;
+		x=x+scroll_x;
+	}
+
+	if (-(y - 360) < 0 && -(y - 200) > -560)
+	{
+		scroll_y=-(y - 360);
+		y=y + scroll_y;
+	}
+	else if (!(-(y - 360) < 0))
+	{
+		scroll_y=0;
+		y=y+scroll_y;
+	}
+	else
+	{
+		scroll_y=-560;
+		y=y+scroll_y;
+		for (;;)
+		{
+			if (y < 350 && scroll_y < 0)
+			{
+				y += 2.0f;
+				scroll_y+=2.0f;
+				if (scroll_y > 0)
+				{
+					y=y-scroll_y;
+
+					scroll_y=0;
+				}
+			}
+			else
+			{
+				break;
 			}
 		}
 	}
@@ -154,11 +227,11 @@ void CSceneGameMain::InitScene()
 	//Audio::Start(0);
 
 	//主人公オブジェクト作成
-	CObjHero* obj = new CObjHero(stageselect);
+	CObjHero* obj = new CObjHero(stageselect,x,y);
 	Objs::InsertObj(obj, OBJ_HERO, 10);
 
 	//stageオブジェクト作成
-	CObjStage* objb = new CObjStage(map,stageselect);
+	CObjStage* objb = new CObjStage(map,stageselect, scroll_x, scroll_y);
 	Objs::InsertObj(objb, OBJ_STAGE, 9);
 
 	//Poseオブジェクト作成
@@ -176,12 +249,7 @@ void CSceneGameMain::InitScene()
 	CObjDoormanager* objd = new CObjDoormanager();
 	Objs::InsertObj(objd, OBJ_DOORMANAGER, 10);
 
-	if (stageselect == 2)
-	{
-		//砂オブジェクト作成
-		CObjSand* objsand = new CObjSand(64 *1, 64 * 13);
-		Objs::InsertObj(objsand, OBJ_SAND, 101);
-	}
+	
 	//実験　亀
 /*	CObjTurtle* objt = new CObjTurtle(400,600);
 	Objs::InsertObj(objt, OBJ_TURTLE, 12);

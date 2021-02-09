@@ -11,7 +11,7 @@ using namespace GameL;
 
 void CObjDoormanager::Init()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 2; j++)
 		{
@@ -20,7 +20,6 @@ void CObjDoormanager::Init()
 				pos[i][j][k] = 0.0f;
 			}
 		}
-		Key[i] = false;
 	}
 }
 

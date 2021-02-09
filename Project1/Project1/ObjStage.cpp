@@ -10,18 +10,18 @@
 //使用するネームスペース
 using namespace GameL;
 
-CObjStage::CObjStage(int map[20][100],int stage)
+CObjStage::CObjStage(int map[40][100],int stage, float scr_x, float scr_y)
 {
 	stage_num = stage;
-
+	mx_scroll = scr_x;
+	my_scroll = scr_y;
 	//マップデータをコピー
-	memcpy(m_map, map, sizeof(int) * (20 * 100));
+	memcpy(m_map, map, sizeof(int) * (40 * 100));
 }
 //イニシャライズ
 void CObjStage::Init()
 {
-	mx_scroll = 0.0f;
-	my_scroll = 0.0f;
+	
 	m_y1 = 0.0f;
 	black_scroll = false;
 	stay_flag = false;
@@ -30,7 +30,7 @@ void CObjStage::Init()
 	m_x1 = 0.0f;
 	m_x2 = 800.0f;
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		d_num[i] = false;
 	}
@@ -131,14 +131,23 @@ void CObjStage::Action()
 		int ex = ((int)line) / 64;
 
 	//敵出現ラインの列を検索
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 40; i++)
 	{
 		//列の中から4を探す
 		if (m_map[i][ex] == 4)
 		{
 			//4があれば　敵を出現
-			CObjEnemy* obje = new CObjEnemy(ex * 64.0f, i * 64.0f);
-			Objs::InsertObj(obje, OBJ_ENEMY, 10);
+			if (i<=20)
+			{
+				CObjEnemy* obje = new CObjEnemy(ex * 64.0f, i * 64.0f);
+				Objs::InsertObj(obje, OBJ_ENEMY, 10);
+			}
+			else
+			{
+				CObjEnemy* obje = new CObjEnemy(ex * 64.0f, (i-20) * 64.0f);
+				Objs::InsertObj(obje, OBJ_ENEMY, 10);
+			}
+			
 
 				//敵出現場所の値を0にする
 				m_map[i][ex] = 0;
@@ -152,6 +161,8 @@ void CObjStage::Action()
 //ドロー
 void CObjStage::Draw()
 {
+	int y = 0;
+
 	//描画カラー情報
 	float c[4] = { 1.0f,1.0f,1.0f,1.0f };
 
@@ -175,14 +186,22 @@ void CObjStage::Draw()
 	if (stage_num == 3)
 		Draw::Draw(24, &src, &dst, c, 0.0f);
 	//マップチップによるblock設置
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 40; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
 			if (m_map[i][j] > 0)
 			{
+				if (i <= 20)
+				{
+					y = i;
+				}
+				else
+				{
+					y = i - 20;
+				}
 				//表示位置の設定
-				dst.m_top = i * 64.0f + my_scroll;
+				dst.m_top = y * 64.0f + my_scroll;
 				dst.m_left = j * 64.0f + mx_scroll;
 				dst.m_right = dst.m_left + 64.0;
 				dst.m_bottom = dst.m_top + 64.0;
@@ -202,35 +221,35 @@ void CObjStage::Draw()
 				}
 				else if (m_map[i][j] == 5)
 				{
-					CObjFire* objf = new CObjFire(j * 64.0f, i * 64.0f);
+					CObjFire* objf = new CObjFire(j * 64.0f, y * 64.0f);
 					Objs::InsertObj(objf, OBJ_FIRE, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 6)
 				{
 					//遠距離敵オブジェクト
-					CObjSinEnemy* objs = new CObjSinEnemy(j * 64.0f, i * 64.0f);
+					CObjSinEnemy* objs = new CObjSinEnemy(j * 64.0f, y * 64.0f);
 					Objs::InsertObj(objs, OBJ_SINENEMY, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 7)
 				{
 					//突進敵オブジェクト作成（仮）
-					CObjRushEnemy* objr = new CObjRushEnemy(j * 64.0f, i * 64.0f);
+					CObjRushEnemy* objr = new CObjRushEnemy(j * 64.0f, y * 64.0f);
 					Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 8)
 				{
 					//追尾敵オブジェクト作成（仮）
-					CObjChaseEnemy* objc = new CObjChaseEnemy(j * 64.0f, i * 64.0f);
+					CObjChaseEnemy* objc = new CObjChaseEnemy(j * 64.0f, y * 64.0f);
 					Objs::InsertObj(objc, OBJ_CHASE_ENEMY, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 9)
 				{
 					//亀オブジェクト作成（仮）
-					CObjTurtle* objt = new CObjTurtle(j * 64.0f, i * 64.0f);
+					CObjTurtle* objt = new CObjTurtle(j * 64.0f, y * 64.0f);
 					Objs::InsertObj(objt, OBJ_TURTLE, 10);
 					m_map[i][j] = 0;
 				}
@@ -241,155 +260,164 @@ void CObjStage::Draw()
 				//ObjPlant(14=4マス　15=5マス …　22=12マス)
 				else if (m_map[i][j] == 14)
 				{
-					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 4);
+					CObjPlant* objg = new CObjPlant(j * 64.0f, y * 64.0f, 4);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 15)
 				{
-					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 5);
+					CObjPlant* objg = new CObjPlant(j * 64.0f, y * 64.0f, 5);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 16)
 				{
-					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 6);
+					CObjPlant* objg = new CObjPlant(j * 64.0f,y * 64.0f, 6);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 17)
 				{
-					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 7);
+					CObjPlant* objg = new CObjPlant(j * 64.0f, y * 64.0f, 7);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 18)
 				{
-					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 8);
+					CObjPlant* objg = new CObjPlant(j * 64.0f, y * 64.0f, 8);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 19)
 				{
-					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 9);
+					CObjPlant* objg = new CObjPlant(j * 64.0f, y * 64.0f, 9);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 20)
 				{
-					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 10);
+					CObjPlant* objg = new CObjPlant(j * 64.0f, y * 64.0f, 10);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 21)
 				{
-					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 11);
+					CObjPlant* objg = new CObjPlant(j * 64.0f, y * 64.0f, 11);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 22)
 				{
-					CObjPlant* objg = new CObjPlant(j * 64.0f, i * 64.0f, 12);
+					CObjPlant* objg = new CObjPlant(j * 64.0f, y * 64.0f, 12);
 					Objs::InsertObj(objg, OBJ_PLANT, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 23)
 				{
-					CObjStone* objh = new CObjStone(j * 64.0f, i * 64.0f);
+					CObjStone* objh = new CObjStone(j * 64.0f, y * 64.0f);
 					Objs::InsertObj(objh, OBJ_STONE, 100);
 					m_map[i][j] = 0;
 				}
 
-				//50-59　ドアオブジェクト用
-				else if (m_map[i][j] >= 50&& m_map[i][j] <= 59)
+				//40-49　鍵なしドアオブジェクト用
+				else if (m_map[i][j] >= 40 && m_map[i][j] <= 49)
 				{
-				CObjDoor* objd = new CObjDoor(j * 64.0f, i * 64.0f,m_map[i][j]-50,d_num[m_map[i][j]-50]);
-				Objs::InsertObj(objd, OBJ_DOOR, 10);
-				d_num[m_map[i][j]-50]+=1;
-				m_map[i][j] = 0;
-				
+					CObjDoor* objd = new CObjDoor(j * 64.0f, y * 64.0f, m_map[i][j] - 30, d_num[m_map[i][j] - 30]);
+					Objs::InsertObj(objd, OBJ_DOOR, 10);
+					d_num[m_map[i][j] - 30] += 1;
+					m_map[i][j] = 0;
+
+				}
+				//50-59　鍵付きドアオブジェクト用
+				else if (m_map[i][j] >= 50 && m_map[i][j] <= 59)
+				{
+					CObjDoor* objd = new CObjDoor(j * 64.0f, y * 64.0f, m_map[i][j] - 50, d_num[m_map[i][j] - 50]);
+					Objs::InsertObj(objd, OBJ_DOOR, 10);
+					d_num[m_map[i][j] - 50] += 1;
+					m_map[i][j] = 0;
+
 				}
 				//60-69　鍵オブジェクト用
 				else if (m_map[i][j] >= 60 && m_map[i][j] <= 69)
 				{
-				CObjKey* objk = new CObjKey(j * 64.0f, i * 64.0f, m_map[i][j] - 60);
-				Objs::InsertObj(objk, OBJ_KEY, 10);
-				m_map[i][j] = 0;
+					CObjKey* objk = new CObjKey(j * 64.0f, y * 64.0f, m_map[i][j] - 60);
+					Objs::InsertObj(objk, OBJ_KEY, 10);
+					m_map[i][j] = 0;
 
 				}
 
-				
+
 				else if (m_map[i][j] == 24)
 				{
 					if (DrawStop_Sand == false)
 					{
-						CObjSand* objsand = new CObjSand(j * 64.0f, i * 64.0f);
+						CObjSand* objsand = new CObjSand(j * 64.0f, y * 64.0f);
 						Objs::InsertObj(objsand, OBJ_SAND, 10);
 					}
 				}
 				else if (m_map[i][j] == 80)
 				{
-					CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+					CObjSign* objs = new CObjSign(j * 64.0f, y * 64.0f, m_map[i][j] - 80);
 					Objs::InsertObj(objs, OBJ_SIGN, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 81)
 				{
-					CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+					CObjSign* objs = new CObjSign(j * 64.0f, y * 64.0f, m_map[i][j] - 80);
 					Objs::InsertObj(objs, OBJ_SIGN, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 82)
 				{
-					CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+					CObjSign* objs = new CObjSign(j * 64.0f, y * 64.0f, m_map[i][j] - 80);
 					Objs::InsertObj(objs, OBJ_SIGN, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 83)
 				{
-					CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+					CObjSign* objs = new CObjSign(j * 64.0f, y * 64.0f, m_map[i][j] - 80);
 					Objs::InsertObj(objs, OBJ_SIGN, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 84)
 				{
-					CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+					CObjSign* objs = new CObjSign(j * 64.0f, y * 64.0f, m_map[i][j] - 80);
 					Objs::InsertObj(objs, OBJ_SIGN, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 85)
 				{
-					CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+					CObjSign* objs = new CObjSign(j * 64.0f, y * 64.0f, m_map[i][j] - 80);
 					Objs::InsertObj(objs, OBJ_SIGN, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 86)
 				{
-					CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+					CObjSign* objs = new CObjSign(j * 64.0f, y * 64.0f, m_map[i][j] - 80);
 					Objs::InsertObj(objs, OBJ_SIGN, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 87)
 				{
-					CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+					CObjSign* objs = new CObjSign(j * 64.0f, y * 64.0f, m_map[i][j] - 80);
 					Objs::InsertObj(objs, OBJ_SIGN, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 88)
 				{
-					CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+					CObjSign* objs = new CObjSign(j * 64.0f, y * 64.0f, m_map[i][j] - 80);
 					Objs::InsertObj(objs, OBJ_SIGN, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 89)
 				{
-					CObjSign* objs = new CObjSign(j * 64.0f, i * 64.0f, m_map[i][j] - 80);
+					CObjSign* objs = new CObjSign(j * 64.0f, y * 64.0f, m_map[i][j] - 80);
 					Objs::InsertObj(objs, OBJ_SIGN, 10);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 90)//実験用　ぬかるむ床
 				{
-					CObjSwanp* objsw = new CObjSwanp(j * 64.0f, i * 64.0f);
+					CObjSwanp* objsw = new CObjSwanp(j * 64.0f, y * 64.0f);
 					Objs::InsertObj(objsw, OBJ_SWANP, 10);
 					m_map[i][j] = 0;
 				}
@@ -399,6 +427,11 @@ void CObjStage::Draw()
 					//土ブロック
 					BlockDraw(64.0f, 64.0f, &dst, c);
 				}
+				else if (m_map[i][j] == 100)
+				{
+					;//主人公の生成場所なので何もしない
+					m_map[i][j] = 0;
+				}
 				else
 				{
 					BlockDraw(64.0f, 0.0f, &dst, c);
@@ -406,6 +439,7 @@ void CObjStage::Draw()
 			}
 		}
 	}
+
 
 	if (DrawStop_Sand==false)
 	{

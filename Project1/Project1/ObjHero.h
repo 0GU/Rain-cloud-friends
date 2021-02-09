@@ -8,7 +8,7 @@ using namespace GameL;
 class CObjHero : public CObj
 {
 public:
-	CObjHero(int stage) ;
+	CObjHero(int stage,float x,float y) ;
 	~CObjHero() {};
 	void Init();	//イニシャライズ
 	void Action();  //アクション
