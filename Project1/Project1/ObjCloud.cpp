@@ -128,7 +128,7 @@ void CObjCloud::Action()
 				}
 				if (stage_num == 2)
 				{
-					m_hp -= 0.05f;	//hpå∏è≠
+					m_hp -= 0.025f;	//hpå∏è≠
 				}
 				if (stage_num == 3)
 				{

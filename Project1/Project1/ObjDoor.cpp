@@ -83,8 +83,8 @@ void CObjDoor::Draw()
 	//Ø‚èŽæ‚èˆÊ’u‚ÌÝ’è
 	src.m_top = 0.0f;
 	src.m_left = 0.0f;
-	src.m_right = 512.0f;
-	src.m_bottom = src.m_top + 512.0f;
+	src.m_right = 64.0f;
+	src.m_bottom = src.m_top + 64.0f;
 
 
 	//•\Ž¦ˆÊ’u‚ÌÝ’è
@@ -94,5 +94,5 @@ void CObjDoor::Draw()
 	dst.m_bottom = 64.0f + m_y + block->GetScrollY();
 
 	//•`‰æ
-	Draw::Draw(13, &src, &dst, c, 0.0f);
+	Draw::Draw(37, &src, &dst, c, 0.0f);
 }

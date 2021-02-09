@@ -124,6 +124,7 @@ void CSceneGameMain::InitScene()
 	Draw::LoadImageW(L"素材/画像/看板.png", 34, TEX_SIZE_256);
 	Draw::LoadImageW(L"素材/画像/砂.png", 35, TEX_SIZE_512);
 	Draw::LoadImageW(L"素材/画像/亀2.png", 36, TEX_SIZE_512);
+	Draw::LoadImageW(L"素材/画像/ドア.png", 37, TEX_SIZE_512);
 	Draw::LoadImageW(L"素材/画像/テキストボックス.png", 45, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/テキストボックス2.png", 46, TEX_SIZE_1024);
 	Draw::LoadImageW(L"素材/画像/テキストボックス3.png", 47, TEX_SIZE_1024);
