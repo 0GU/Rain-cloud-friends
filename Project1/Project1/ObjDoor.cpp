@@ -47,7 +47,7 @@ void CObjDoor::Action()
 	CHitBox* hit = Hits::GetHitBox(this);
 	hit->SetPos(m_x + block->GetScroll(), m_y + block->GetScrollY());
 
-	if (hit->CheckObjNameHit(OBJ_HERO) != nullptr&&hero->GetKey(num)==true)
+	if (hit->CheckObjNameHit(OBJ_HERO) != nullptr&&hero->GetKey(num)==true&&hero->GetDown()==true)
 	{
 		if ((Input::GetVKey(VK_UP) == true || Input::GetConVecStickLY(0) > 0.1f) &&flag==false)
 		{

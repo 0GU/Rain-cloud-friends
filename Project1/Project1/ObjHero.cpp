@@ -143,7 +143,7 @@ void CObjHero::Action()
 
 	if (over_flag == false)
 	{
-		/*if (m_hit_down == true)
+		if (m_hit_down == true)
 		{
 			
 			if (falldamage_flag == false)
@@ -168,7 +168,12 @@ void CObjHero::Action()
 			{
 				m_py_h = m_py - block->GetScrollY();
 			}
-		}*/
+		}
+
+		if (hit->CheckObjNameHit(OBJ_DOOR) != nullptr&&(Input::GetVKey(VK_UP) || Input::GetConVecStickLY(0) > 0.1f)&&m_hit_down==true)
+		{
+			reset_falldamage_cacancel_flag = true;
+		}
 		//----------------------------------------------------------------------------------------------------------------------------------------------
 		//着地判定処理（効果音）
 		if (m_hit_down == true)//着地すると

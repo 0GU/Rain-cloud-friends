@@ -33,6 +33,8 @@ public:
 	void SetLeft(bool b) { m_hit_left = b; }
 	void SetRight(bool b) { m_hit_right = b; }
 
+	bool GetDown() { return m_hit_down; }
+
 	void SetSthit(bool b) { stone_hit = b; }
 	void SetSthitW(bool b) { stone_wall_hit = b; }
 	void SetStlockR(bool b) { stone_lock_r = b; }
