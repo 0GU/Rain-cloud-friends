@@ -143,13 +143,13 @@ void CObjHero::Action()
 
 	if (over_flag == false)
 	{
-		if (m_hit_down == true)
+		if (m_hit_down == true || hit->CheckElementHit(ELEMENT_IVY) == true)
 		{
 			
 			if (falldamage_flag == false)
 			{
 				falldamage_flag = true;
-				if ((m_py - m_py_h - block->GetScrollY()) / 64 >= 5 && hit->CheckElementHit(ELEMENT_IVY) == false && reset_falldamage_cacancel_flag == false)
+				if ((m_py - m_py_h - block->GetScrollY()) / 64 >= 5 && reset_falldamage_cacancel_flag == false)
 				{
 					Audio::Stop(3);
 					Audio::Start(4);
