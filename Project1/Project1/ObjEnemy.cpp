@@ -262,7 +262,7 @@ void CObjEnemy::ModeChange(float* x, float* y, float* hx, float* hy, float* pos_
 	int range = 1;
 
 	if (searchY == true)
-		range = 8;
+		range = 4;
 
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
@@ -273,7 +273,7 @@ void CObjEnemy::ModeChange(float* x, float* y, float* hx, float* hy, float* pos_
 	//1行目:左に一定距離　2行目:右に一定距離　3行目:上下に一定距離
 	if (((*x + sl_x - *hx <= 400.0f && *x + sl_x - *hx > 0.0f && *posture == false) ||
 		(*x + sl_x - *hx >= -400.0f && *x + sl_x - *hx < 0.0f && *posture == true)) &&
-		*y + sl_y - *hy <= 200 * range && *y + sl_y - *hy >= -200 * range)
+		fabs(*y + sl_y - *hy) <= 192 * range )
 	{
 		*mode = true;
 	}
