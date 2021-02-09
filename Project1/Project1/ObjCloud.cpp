@@ -124,7 +124,7 @@ void CObjCloud::Action()
 				Audio::Start(5);
 				if (stage_num == 1)
 				{
-					m_hp -= 0.075f;	//hpå∏è≠
+					m_hp -= 0.05f;	//hpå∏è≠
 				}
 				if (stage_num == 2)
 				{

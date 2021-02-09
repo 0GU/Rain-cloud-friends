@@ -24,18 +24,16 @@ void CObjEnding::Action()
 	if (m_fade_f == false)
 	{
 		m_fade += 0.01f;//フェードを少しずつ明るくしていく
+		if (Input::GetConButtons(0, GAMEPAD_A) == true || Input::GetVKey('Z') == true)//フェードイン中にキーを押していると
+		{
+			;//何もしない
+		}
 		if (m_fade >= 1.0f)//Maxまで来ると
 		{
 			m_fade = 1.0f;//値をMaxに固定し
 			m_fade_f = true;//フェードインを止める
-			if (Input::GetConButtons(0, GAMEPAD_A) ==true || Input::GetVKey('Z') == true)//フェードイン中にキーを押していると
-			{
-				;//何もしない
-			}
-			else
-			{
-				key_flag = true;//キー操作可能にする
-			}
+			key_flag = true;//キー操作可能にする
+			
 		}
 	}
 
