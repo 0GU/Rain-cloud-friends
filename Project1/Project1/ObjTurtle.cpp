@@ -142,26 +142,24 @@ void CObjTurtle::Action()
 					m_py = py;
 				m_vy = 0.0f;
 			}
-					if (hit->GetStatus()->e==ELEMENT_TURTLE)
-				{
-					//HitBoxの属性を　通常状態　へ変更　乗れなくする
-					Hits::DeleteHitBox(this);//保有するHitBoxに削除する
-					Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_ENEMY, OBJ_TURTLE, 1);
-				}
-	}
+			if (hit->GetStatus()->e==ELEMENT_TURTLE)
+			{
+				//HitBoxの属性を　通常状態　へ変更　乗れなくする
+				hit->SetStatus(ELEMENT_ENEMY, OBJ_TURTLE, 1);
+			}
+		}
 		else if (hit->CheckElementHit(ELEMENT_SWANP) == true)//半分だけ抜ける
 		{
 			int py = (int)(m_py / 64) * 64;
 			if (py + 32 == (int)m_py)//半分だけぬけている状態
 				m_vx = 0.0f;//位置を維持
-			else if (py == m_py&&m_swanp==true)//一度完全に沼に落ちた場合にのみ半分ぬける
+			else if (py == m_py && m_swanp == true)//一度完全に沼に落ちた場合にのみ半分ぬける
 			{
 				m_py = py - 32;
 				m_vx = 0.0f;
 				m_swanp = false;
 				//HitBoxの属性を　ぬかるみ状態　へ変更　主人公が上に乗れるようにする
-				Hits::DeleteHitBox(this);//保有するHitBoxに削除する
-				Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_TURTLE, OBJ_TURTLE, 1);
+				hit->SetStatus(ELEMENT_TURTLE, OBJ_TURTLE, 1);
 			}
 			else
 			{

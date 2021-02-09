@@ -45,8 +45,7 @@ void CObjSwanp::Action()
 			m_swanp_flag = true;
 			m_swanp_time = 300;
 			//HitBoxの属性を　ぬかるみ状態　へ変更
-			Hits::DeleteHitBox(this);//保有するHitBoxに削除する
-			Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_FIELD, OBJ_SWANP, 1);
+			hit->SetStatus(ELEMENT_FIELD, OBJ_SWANP, 1);
 		}
 		if (m_swanp_flag == true)
 		{
@@ -55,8 +54,7 @@ void CObjSwanp::Action()
 				m_swanp_time = 300;
 				m_swanp_flag = false;
 				//HitBoxの属性を　半ぬかるみ状態　へ変更
-				Hits::DeleteHitBox(this);//保有するHitBoxに削除する
-				Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_SWANP, OBJ_SWANP, 1);
+				hit->SetStatus(ELEMENT_SWANP, OBJ_SWANP, 1);
 			}
 			m_swanp_time--;
 			m_swanp_half = true;
@@ -67,8 +65,7 @@ void CObjSwanp::Action()
 			{
 				m_swanp_half = false;
 				//HitBoxの属性を　通常　へ変更
-				Hits::DeleteHitBox(this);//保有するHitBoxに削除する
-				Hits::SetHitBox(this, m_px, m_py, 64, 64, ELEMENT_GREEN, OBJ_SWANP, 1);
+				hit->SetStatus(ELEMENT_GREEN, OBJ_SWANP, 1);
 			}
 			m_swanp_time--;
 		}
