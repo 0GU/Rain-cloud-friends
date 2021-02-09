@@ -210,21 +210,21 @@ void CObjStage::Draw()
 				{
 					//遠距離敵オブジェクト
 					CObjSinEnemy* objs = new CObjSinEnemy(j * 64.0f, i * 64.0f);
-					Objs::InsertObj(objs, OBJ_SINENEMY, 10);
+					Objs::InsertObj(objs, OBJ_SINENEMY, 11);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 7)
 				{
 					//突進敵オブジェクト作成（仮）
 					CObjRushEnemy* objr = new CObjRushEnemy(j * 64.0f, i * 64.0f);
-					Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 10);
+					Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 11);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 8)
 				{
 					//追尾敵オブジェクト作成（仮）
 					CObjChaseEnemy* objc = new CObjChaseEnemy(j * 64.0f, i * 64.0f);
-					Objs::InsertObj(objc, OBJ_CHASE_ENEMY, 10);
+					Objs::InsertObj(objc, OBJ_CHASE_ENEMY, 11);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 9)
@@ -296,7 +296,7 @@ void CObjStage::Draw()
 				else if (m_map[i][j] == 23)
 				{
 					CObjStone* objh = new CObjStone(j * 64.0f, i * 64.0f);
-					Objs::InsertObj(objh, OBJ_STONE, 100);
+					Objs::InsertObj(objh, OBJ_STONE, 11);
 					m_map[i][j] = 0;
 				}
 

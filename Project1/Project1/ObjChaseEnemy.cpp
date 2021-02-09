@@ -126,6 +126,10 @@ void CObjChaseEnemy::Action()
 			m_ani_time += 1;
 		}
 
+		//’ÇÕ’†‚É•Ç‚É‘Î‚µ‚ÄˆÚ“®‚µ‘±‚¯‚é‚Ì‚ð–h‚®
+		if ((m_hit_right == true || m_hit_left == true) && m_chase == true)
+			m_vx = 0.0f;
+
 		if (m_ani_time > m_ani_max_time)
 		{
 			m_ani_frame += 1;
