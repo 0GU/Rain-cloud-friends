@@ -149,7 +149,7 @@ void CObjHero::Action()
 			if (falldamage_flag == false)
 			{
 				falldamage_flag = true;
-				if ((m_py - m_py_h - block->GetScrollY()) / 64 >= 5 && reset_falldamage_cacancel_flag == false)
+				if ((m_py - m_py_h - block->GetScrollY()) / 64 >= 9 && reset_falldamage_cacancel_flag == false)
 				{
 					Audio::Stop(3);
 					Audio::Start(4);
