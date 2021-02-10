@@ -250,7 +250,7 @@ void CObjStage::Draw()
 				{
 					//亀オブジェクト作成（仮）
 					CObjTurtle* objt = new CObjTurtle(j * 64.0f, y * 64.0f);
-					Objs::InsertObj(objt, OBJ_TURTLE, 10);
+					Objs::InsertObj(objt, OBJ_TURTLE, 11);
 					m_map[i][j] = 0;
 				}
 				/*else if (m_map[i][j] == 13)
