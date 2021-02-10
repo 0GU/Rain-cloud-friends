@@ -129,12 +129,12 @@ void CObjMagic::Draw()
 	else//ˆÃ‚­
 	{
 		m_light -= 0.01f;
-		if (m_light <= 0.4f)
+		if (m_light <= 0.6f)
 			light_flag = true;
 	}
 
 	//•`‰æƒJƒ‰[î•ñ
-	float	c[4] = { 1.0f,1.0f,1.0f,m_light };//
+	float	c[4] = { 1.0f,0.8f,0.8f,m_light };//
 
 
 	RECT_F src; //•`‰æŒ³Ø‚èŽæ‚èˆÊ’u‚ÌÝ’è

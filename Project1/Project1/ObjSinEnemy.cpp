@@ -94,7 +94,7 @@ void CObjSinEnemy::Action()
 				m_atk_time++;
 			}
 			//5•bŠÔŠu‚Å”­ŽË
-			if (m_atk_time >= 180)
+			if (m_atk_time >= 240)
 			{
 				m_atk_time = 0;
 				//m_charge_flag = true;
