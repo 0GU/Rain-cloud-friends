@@ -21,7 +21,15 @@ CObjCloud::CObjCloud(int stage)
 void CObjCloud::Init()
 {
 	m_px = 100.0f;
-	m_py = 500.0f;
+	if (stage_num == 2)
+	{
+		m_py = 500.0f;
+	}
+	else
+	{
+		m_py = 1000.0f;
+	}
+	
 	m_vx = 5.0f;
 	m_vy = 5.0f;
 	

@@ -47,8 +47,10 @@ void CSceneClear::InitScene()
 
 	//BGM情報登録
 	Audio::LoadAudio(0, L"素材/BGM/GameClear.wav", SOUND_TYPE::BACK_MUSIC);
+	Audio::LoadAudio(1, L"素材/SE/きらきら.wav", SOUND_TYPE::EFFECT);
 
 	Audio::Start(0);
+	Audio::Start(1);
 }
 
 //ゲームタイトル実行メソッド
