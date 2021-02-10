@@ -236,7 +236,7 @@ void CSceneGameMain::InitScene()
 
 	//Poseオブジェクト作成
 	CObjPose* objp = new CObjPose(0,0,stageselect);
-	Objs::InsertObj(objp, OBJ_POSE, 12);
+	Objs::InsertObj(objp, OBJ_POSE, 13);
 
 	//主人公オブジェクト作成
 	CObjCloud* objc = new CObjCloud(stageselect);

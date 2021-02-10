@@ -140,12 +140,12 @@ void CObjStage::Action()
 			if (i<=20)
 			{
 				CObjEnemy* obje = new CObjEnemy(ex * 64.0f, i * 64.0f);
-				Objs::InsertObj(obje, OBJ_ENEMY, 10);
+				Objs::InsertObj(obje, OBJ_ENEMY, 12);
 			}
 			else
 			{
 				CObjEnemy* obje = new CObjEnemy(ex * 64.0f, (i-20) * 64.0f);
-				Objs::InsertObj(obje, OBJ_ENEMY, 10);
+				Objs::InsertObj(obje, OBJ_ENEMY, 12);
 			}
 			
 
@@ -229,21 +229,21 @@ void CObjStage::Draw()
 				{
 					//遠距離敵オブジェクト
 					CObjSinEnemy* objs = new CObjSinEnemy(j * 64.0f, y * 64.0f);
-					Objs::InsertObj(objs, OBJ_SINENEMY, 11);
+					Objs::InsertObj(objs, OBJ_SINENEMY, 12);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 7)
 				{
 					//突進敵オブジェクト作成（仮）
 					CObjRushEnemy* objr = new CObjRushEnemy(j * 64.0f, y * 64.0f);
-					Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 11);
+					Objs::InsertObj(objr, OBJ_RUSH_ENEMY, 12);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 8)
 				{
 					//追尾敵オブジェクト作成（仮）
 					CObjChaseEnemy* objc = new CObjChaseEnemy(j * 64.0f, y * 64.0f);
-					Objs::InsertObj(objc, OBJ_CHASE_ENEMY, 11);
+					Objs::InsertObj(objc, OBJ_CHASE_ENEMY, 12);
 					m_map[i][j] = 0;
 				}
 				else if (m_map[i][j] == 9)
