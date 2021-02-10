@@ -162,6 +162,9 @@ void CSceneGameMain::InitScene()
 	Audio::LoadAudio(27, L"素材/SE/逃走.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(28, L"素材/SE/レーダー.wav", SOUND_TYPE::EFFECT);
 	Audio::LoadAudio(29, L"素材/SE/ドアあける.wav", SOUND_TYPE::EFFECT);
+	Audio::LoadAudio(30, L"素材/SE/沼移動音.wav", SOUND_TYPE::EFFECT);
+	//Audio::LoadAudio(31, L"素材/SE/.wav", SOUND_TYPE::EFFECT);
+
 	//画像情報を登録
 	Draw::LoadImageW(L"素材/画像/ブロック描画.png", 0, TEX_SIZE_128);
 	Draw::LoadImageW(L"素材/仮/mapcip.png", 1, TEX_SIZE_1024);

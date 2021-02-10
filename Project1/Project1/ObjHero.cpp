@@ -236,7 +236,10 @@ void CObjHero::Action()
 					{
 						if (Audio_time == 0.00f && m_hit_down == true)//’…’n’†‚ÉŒø‰Ê‰¹‚ªˆêŽü‚·‚éˆ—
 						{
-							Audio::Start(25);//ˆÚ“®Œø‰Ê‰¹
+							if (hit->CheckObjNameHit(OBJ_SWANP) != nullptr)
+								Audio::Start(30);
+							else
+								Audio::Start(25);
 						}
 						Audio_time += 0.04f;//Œø‰Ê‰¹—¬‚ê‚Ä‚Ü‚·‚æ~
 						hero_stop_f = false;
@@ -247,7 +250,10 @@ void CObjHero::Action()
 					{
 						if (Audio_time == 0.00f && m_hit_down == true)
 						{
-							Audio::Start(25);
+							if (hit->CheckObjNameHit(OBJ_SWANP) != nullptr)
+								Audio::Start(30);
+							else
+								Audio::Start(25);
 						}
 						Audio_time += 0.04f;
 						hero_stop_f = false;//ŽålŒö‚ª“®‚¢‚Ä‚¢‚Ü‚·I
@@ -277,7 +283,10 @@ void CObjHero::Action()
 				{
 					if (Audio_time == 0.00f && m_hit_down==true)
 					{
-						Audio::Start(25);
+						if (hit->CheckObjNameHit(OBJ_SWANP) != nullptr)
+							Audio::Start(30);
+						else
+							Audio::Start(25);
 					}
 					Audio_time += 0.04f;
 					m_vx += m_con_x;
@@ -292,7 +301,10 @@ void CObjHero::Action()
 				{
 					if (Audio_time == 0.00f && m_hit_down == true)
 					{
-						Audio::Start(25);
+						if (hit->CheckObjNameHit(OBJ_SWANP) != nullptr)
+							Audio::Start(30);
+						else
+							Audio::Start(25);
 					}
 					Audio_time += 0.04f;
 					m_vx += m_con_x;
