@@ -39,7 +39,8 @@ void CObjSand::Action()
 	//ÀŒ±@‰J‚É“–‚½‚é‚Æ“®ì’â~
 	if (hit->CheckObjNameHit(OBJ_RAIN) != nullptr)
 	{
-		
+		Audio::Stop(31);
+		Audio::Start(31);
 		m_hit_rain = true;
 	}
 	//“¦‘–@™X‚É“§–¾‰»
