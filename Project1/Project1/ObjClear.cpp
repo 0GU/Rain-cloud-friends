@@ -179,29 +179,42 @@ void CObjClear::Draw()
 
 	Draw::Draw(0, &src, &dst, c, 0.0f);
 
-	//StageClear
-	src.m_top = 370.0f;
+	//Stage
+	src.m_top = 438.0f;
 	src.m_left = 1.0f;
-	src.m_right = 899.0f;
-	src.m_bottom = 529.0f;
+	src.m_right = 450.0f;
+	src.m_bottom = 579.0f;
 
 	dst.m_top = 50.0f;
 	dst.m_left = 200.0f;
+	dst.m_right = 650.0f;
+	dst.m_bottom = 200.0f;
+
+	Draw::Draw(5, &src, &dst, c, 0.0f);
+
+
+	//Clear
+	src.m_top = 585.0f;
+	src.m_left = 1.0f;
+	src.m_right = 604.0f;
+	src.m_bottom = 720.0f;
+
+	dst.m_top = 50.0f;
+	dst.m_left = 700.0f;
 	dst.m_right = 1100.0f;
-	dst.m_bottom = 211.0f;
+	dst.m_bottom = 200.0f;
 
-	Draw::Draw(1, &src, &dst, c, 0.0f);
-
+	Draw::Draw(5, &src, &dst, c, 0.0f);
 
 	if (Clear_flag[0] == true)
 	{
 		//Excerent
-		src.m_top = 150.0f;
+		src.m_top = 155.0f;
 		src.m_left = 0.0f;
-		src.m_right = 815.0f;
+		src.m_right = 810.0f;
 		src.m_bottom = 292.0f;
 
-		dst.m_top = 420.0f;
+		dst.m_top = 370.0f;
 		dst.m_left = 650.0f;
 		dst.m_right = 1200.0f;
 		dst.m_bottom = 570.0f;
@@ -212,12 +225,12 @@ void CObjClear::Draw()
 	if (Clear_flag[1] == true &&Clear_flag[0]==false)
 	{
 		//Great
-		src.m_top = 293.0f;
+		src.m_top = 298.0f;
 		src.m_left = 0.0f;
-		src.m_right = 815.0f;
-		src.m_bottom = 437.0f;
+		src.m_right = 410.0f;
+		src.m_bottom = 432.0f;
 
-		dst.m_top = 420.0f;
+		dst.m_top = 370.0f;
 		dst.m_left = 650.0f;
 		dst.m_right = 1200.0f;
 		dst.m_bottom = 570.0f;
@@ -230,13 +243,13 @@ void CObjClear::Draw()
 		//Good
 		src.m_top = 0.0f;
 		src.m_left = 0.0f;
-		src.m_right = 815.0f;
+		src.m_right = 510.0f;
 		src.m_bottom = 149.0f;
 
-		dst.m_top = 420.0f;
+		dst.m_top = 370.0f;
 		dst.m_left = 650.0f;
 		dst.m_right = 1200.0f;
-		dst.m_bottom = 570.0f;
+		dst.m_bottom = 565.0f;
 
 		Draw::Draw(5, &src, &dst, c, 0.0f);
 	}

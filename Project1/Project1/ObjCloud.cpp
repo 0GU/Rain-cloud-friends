@@ -33,7 +33,7 @@ void CObjCloud::Init()
 	m_vx = 5.0f;
 	m_vy = 5.0f;
 	
-	m_hp = 2.0f;
+	m_hp = 1.0f;
 	
 	stay_flag = false;
 	rain_flag = false;
