@@ -22,4 +22,6 @@ private:
 	int bin;
 
 	bool flag;
+	bool stay_flag;
+
 };

@@ -24,11 +24,12 @@ CObjDoor::CObjDoor(float x, float y, int d_num, int binary)
 
 void CObjDoor::Init()
 {
-	CObjDoormanager* p = (CObjDoormanager*)Objs::GetObj(OBJ_DOORMANAGER);
-	p->SetPos(num, bin, m_x, m_y);
+	CObjDoormanager* d = (CObjDoormanager*)Objs::GetObj(OBJ_DOORMANAGER);
+	d->SetPos(num, bin, m_x, m_y);
 	
 	flag = false;
 
+	stay_flag = false;
 	//当たり判定用のHitBoxを作成
 	Hits::SetHitBox(this, m_x, m_y, 64, 64, ELEMENT_RED, OBJ_DOOR, 1);
 }
@@ -37,35 +38,40 @@ void CObjDoor::Action()
 {
 
 
-	CObjDoormanager* p = (CObjDoormanager*)Objs::GetObj(OBJ_DOORMANAGER);
+	CObjDoormanager* d = (CObjDoormanager*)Objs::GetObj(OBJ_DOORMANAGER);
 	//ブロック情報を持ってくる
 	CObjStage* block = (CObjStage*)Objs::GetObj(OBJ_STAGE);
 
 	CObjHero* hero = (CObjHero*)Objs::GetObj(OBJ_HERO);
 
-	//HitBoxの位置の変更
-	CHitBox* hit = Hits::GetHitBox(this);
-	hit->SetPos(m_x + block->GetScroll(), m_y + block->GetScrollY());
-
-	if (hit->CheckObjNameHit(OBJ_HERO) != nullptr&&(hero->GetKey(num)==true||num>=10&&num<=19)&&hero->GetDown()==true)
+	CObjPose* p = (CObjPose*)Objs::GetObj(OBJ_POSE);
+	stay_flag = p->GetFlag();
+	if (stay_flag == false)
 	{
-		if ((Input::GetVKey(VK_UP) == true || Input::GetConVecStickLY(0) > 0.1f) &&flag==false)
+
+		//HitBoxの位置の変更
+		CHitBox* hit = Hits::GetHitBox(this);
+		hit->SetPos(m_x + block->GetScroll(), m_y + block->GetScrollY());
+
+		if (hit->CheckObjNameHit(OBJ_HERO) != nullptr && (hero->GetKey(num) == true || num >= 10 && num <= 19) && hero->GetDown() == true)
 		{
-			p->MoveDoor(num, bin);
-			Audio::Start(29);
+			if ((Input::GetVKey(VK_UP) == true || Input::GetConVecStickLY(0) > 0.1f) && flag == false)
+			{
+				d->MoveDoor(num, bin);
+				Audio::Start(29);
+			}
+		}
+
+		if ((Input::GetVKey(VK_UP) == true || Input::GetConVecStickLY(0) > 0.1f) && flag == false)
+		{
+			flag = true;
+		}
+
+		if ((Input::GetVKey(VK_UP) == false && Input::GetConVecStickLY(0) == false) && flag == true)
+		{
+			flag = false;
 		}
 	}
-
-	if ((Input::GetVKey(VK_UP) == true || Input::GetConVecStickLY(0) > 0.1f)&&flag==false)
-	{
-		flag = true;
-	}
-
-	if ((Input::GetVKey(VK_UP) == false && Input::GetConVecStickLY(0)==false)&&flag==true)
-	{
-		flag = false;
-	}
-
 	
 
 }
