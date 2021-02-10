@@ -60,4 +60,5 @@ private:
 
 	float Audio_time;//Œø‰Ê‰¹ŽžŠÔ
 	float Audio_time_max;//Œø‰Ê‰¹ŠÔŠu
+	bool Audio_f;//
 };

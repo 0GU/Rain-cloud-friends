@@ -236,8 +236,8 @@ void CObjTurtle::Draw()
 
 //切り取り位置の設定
 	//切り取り位置の設定
-	src.m_top = 0.0f;
-	src.m_left = 0.0f + AniData[m_ani_frame] * 256;
+	src.m_top = 5.0f;
+	src.m_left = 5.0f + AniData[m_ani_frame] * 256;
 	src.m_right = 256.0f + AniData[m_ani_frame] * 256;
 	src.m_bottom = 155.0f;
 	//ブロック情報を持ってくる

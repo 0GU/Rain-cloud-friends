@@ -55,6 +55,7 @@ void CObjCloud::Init()
 
 	Audio_time = 0.0f;
 	Audio_time_max = 1.0f;
+	Audio_f = false;
 }
 
 //アクション
@@ -266,7 +267,19 @@ void CObjCloud::Action()
 		{
 			m_ani_frame = 0;
 		}
-
+		if (m_px + pbb->GetScroll() >= 1280 || m_px + pbb->GetScroll() <= -100 || m_py + 96.0f + pbb->GetScrollY() <= 0)
+		{
+			Audio_f = true;
+			if (Audio_time == 0.00f)//着地中に効果音が一周する処理
+			{
+				Audio::Start(28);
+			}
+			
+		}
+		if (Audio_f == true)
+		{
+			Audio_time += 0.005f;//効果音流れてますよ~
+		}
 		if (Audio_time >= Audio_time_max)
 		{
 			Audio_time = 0.00f;
@@ -332,7 +345,18 @@ void CObjCloud::Draw()
 		}	
 		Audio_time += 0.005f;//効果音流れてますよ~
 		
-		swprintf_s(str2, L"雲が画面外に出ました。Spaceで召喚");
-		Font::StrDraw(str2, 20,0, 50, c2);
+		//切り取り位置の設定
+		src.m_top = 0.0f;
+		src.m_left = 0.0f;
+		src.m_right = 512.0f;
+		src.m_bottom = 150.0f;
+
+		//表示位置の設定
+		dst.m_top = 200.0f;
+		dst.m_left = 300.0f;
+		dst.m_right = 1000.0f;
+		dst.m_bottom = 400.0f;
+		//描画
+		Draw::Draw(38, &src, &dst, c, 0.0f);
 	}
 }

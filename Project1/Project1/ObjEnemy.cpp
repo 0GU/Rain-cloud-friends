@@ -230,8 +230,8 @@ void CObjEnemy::Draw()
 	RECT_F dst; //•`‰ææ•\¦ˆÊ’u
 
 //Ø‚èæ‚èˆÊ’u‚Ìİ’è
-	src.m_top = 0.0f;
-	src.m_left = 0.0f + AniData[m_ani_frame] * 64;
+	src.m_top = 1.0f;
+	src.m_left = 1.0f + AniData[m_ani_frame] * 63;
 	src.m_right = 64.0f + AniData[m_ani_frame] * 64;
 	src.m_bottom = src.m_top + 64.0f;
 

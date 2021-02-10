@@ -930,7 +930,7 @@ void CObjHero::Draw()
 		}
 		Draw::Draw(31, &src, &dst, c, 0.0f);
 	}
-	else if (over_flag == false && jump_f == true)
+	else if (over_flag == false && jump_f == true)//ƒWƒƒƒ“ƒv’†
 		{
 		src.m_top = 0.0f;
 		src.m_left = 5.0f + m_ani_frame * 253;
@@ -949,11 +949,11 @@ void CObjHero::Draw()
 		}
 		Draw::Draw(32, &src, &dst, c, 0.0f);
 		}
-	else if (over_flag == false && jump_f == false && stone_push_f == true)
+	else if (over_flag == false && jump_f == false && stone_push_f == true)//Šâ‚ð‰Ÿ‚µ‚Ä‚¢‚éŠÔ
 	{
 		src.m_top = 0.0f;
-		src.m_left = 5.0f + m_ani_frame * 253;
-		src.m_right = 257.0f + m_ani_frame * 253;
+		src.m_left = 5.0f + m_ani_frame * 260;
+		src.m_right = 257.0f + m_ani_frame * 260;
 		src.m_bottom = 528.0f;
 		if (m_posture == 0)
 		{
