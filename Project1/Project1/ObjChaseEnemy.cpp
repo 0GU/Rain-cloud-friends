@@ -130,6 +130,10 @@ void CObjChaseEnemy::Action()
 		if ((m_hit_right == true || m_hit_left == true) && m_chase == true)
 			m_vx = 0.0f;
 
+		//’ÇÕ’†‚ÉŽ©M‚Ìã‚ÉŽålŒö‚ª‚¢‚éê‡‚ÍˆÚ“®‚³‚¹‚È‚¢
+		if (fabs(m_px + block->GetScroll() - hx) < 0.5f&&m_chase==true)
+			m_vx = 0.0f;
+
 		if (m_ani_time > m_ani_max_time)
 		{
 			m_ani_frame += 1;
